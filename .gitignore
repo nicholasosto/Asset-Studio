@@ -1,0 +1,6 @@
+.DS_Store
+node_modules/
+
+# external-locations/* are symlinks into the shared library and canonical kit.
+# Git tracks the links themselves (not their contents); nothing to ignore for the
+# payload, but never commit a materialized copy if a link is ever replaced by a dir.

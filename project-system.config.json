@@ -1,0 +1,247 @@
+{
+  "$schema": "./.project-system/schema/project-config.schema.json",
+  "project": "asset-studio",
+  "kinds": {
+    "decision": {
+      "folder": "decisions",
+      "status": [
+        "proposed",
+        "accepted",
+        "superseded",
+        "rejected"
+      ],
+      "initialStatus": "proposed",
+      "filename": "serial",
+      "serialPad": 4,
+      "requiredSections": [
+        "Context"
+      ],
+      "scaffoldSections": [
+        "Context",
+        "Decision",
+        "Consequences",
+        "Options considered",
+        "Cites",
+        "Re-open if"
+      ]
+    },
+    "report": {
+      "folder": "reports",
+      "status": [
+        "draft",
+        "complete"
+      ],
+      "initialStatus": "draft",
+      "filename": "date-slug",
+      "scaffoldSections": [
+        "Outcome",
+        "Surprises",
+        "Decisions made",
+        "Carry-forward",
+        "Verification evidence"
+      ]
+    },
+    "pipeline": {
+      "folder": "pipeline",
+      "status": [
+        "design",
+        "qualify",
+        "build",
+        "ship",
+        "archive",
+        "shelved"
+      ],
+      "initialStatus": "design",
+      "filename": "slug",
+      "scaffoldSections": [
+        "Context",
+        "Build plan",
+        "Exit criteria"
+      ]
+    },
+    "roadmap": {
+      "folder": "roadmap",
+      "status": [
+        "proposed",
+        "active",
+        "superseded",
+        "complete"
+      ],
+      "initialStatus": "proposed",
+      "filename": "slug",
+      "requiredSections": [
+        "Context"
+      ],
+      "scaffoldSections": [
+        "Context",
+        "Plan",
+        "Open questions"
+      ]
+    },
+    "session": {
+      "folder": "sessions",
+      "status": [
+        "planned",
+        "active",
+        "blocked",
+        "completed",
+        "shelved"
+      ],
+      "initialStatus": "planned",
+      "filename": "date-slug",
+      "requiredSections": [
+        "Goal",
+        "Success Criteria",
+        "Source References",
+        "Decisions",
+        "Outputs",
+        "Blockers",
+        "Next Action",
+        "Handoff Notes"
+      ]
+    },
+    "workflow": {
+      "folder": "workflows",
+      "status": [
+        "draft",
+        "active",
+        "deprecated"
+      ],
+      "initialStatus": "draft",
+      "filename": "slug",
+      "requiredSections": [
+        "Workflow"
+      ],
+      "scaffoldSections": [
+        "Purpose",
+        "Workflow"
+      ],
+      "carriesSwimlanes": true
+    },
+    "medium": {
+      "folder": "mediums",
+      "status": [
+        "experimental",
+        "supported",
+        "deprecated"
+      ],
+      "initialStatus": "experimental",
+      "filename": "slug",
+      "requiredSections": [
+        "Purpose",
+        "Standard",
+        "Tooling"
+      ],
+      "scaffoldSections": [
+        "Purpose",
+        "Standard",
+        "Tooling",
+        "Output convention",
+        "Quality bar"
+      ],
+      "render": {
+        "tag": "medium",
+        "name": "Mediums",
+        "sub": "Production capabilities by asset type",
+        "dot": "#5BC8AF"
+      }
+    }
+  },
+  "sectionHints": {
+    "Workflow": "<!-- lanes: who acts; kind is one of human, ai, system, tool, neutral.\n     steps: each needs a lane + label. Optional: status (done|active|pending|blocked|skipped)\n     tints the card; detail shows on the card; note shows in the inspector when the step is\n     clicked; to[] lists the next step id(s) ([] marks a terminal step). -->\n```json\n{\n  \"caption\": \"<one line: what this process reliably produces>\",\n  \"lanes\": [\n    { \"id\": \"you\", \"label\": \"You\", \"kind\": \"human\" },\n    { \"id\": \"system\", \"label\": \"System\", \"kind\": \"system\" }\n  ],\n  \"steps\": [\n    { \"id\": \"start\", \"lane\": \"you\", \"label\": \"<trigger>\", \"status\": \"done\", \"detail\": \"<shown on the card>\", \"to\": [\"work\"] },\n    { \"id\": \"work\", \"lane\": \"system\", \"label\": \"<step>\", \"status\": \"active\", \"note\": \"<shown in the inspector on click>\", \"to\": [] }\n  ]\n}\n```"
+  },
+  "tagRegistry": {
+    "mediumType": {
+      "type": "string",
+      "lintAgainst": [
+        "image",
+        "texture",
+        "ui",
+        "audio-music",
+        "audio-sfx",
+        "audio-voice",
+        "3d-model",
+        "3d-rig",
+        "animation"
+      ],
+      "unknownAllowed": true
+    },
+    "tool": {
+      "type": "string",
+      "lintAgainst": [
+        "blender",
+        "elevenlabs",
+        "figma",
+        "openai",
+        "roblox-studio"
+      ],
+      "unknownAllowed": true
+    },
+    "pattern": {
+      "type": "enum",
+      "values": [
+        "symlink",
+        "upload"
+      ]
+    }
+  },
+  "relTargetKinds": {
+    "supersedes": [
+      "decision",
+      "roadmap"
+    ],
+    "superseded-by": [
+      "decision",
+      "roadmap"
+    ],
+    "predecessor": [
+      "pipeline",
+      "report"
+    ],
+    "successor": [
+      "pipeline",
+      "report"
+    ],
+    "decided-in": [
+      "decision"
+    ],
+    "milestone": "marker",
+    "implements": "external",
+    "references": "any"
+  },
+  "proseStatusEnforcement": {
+    "rollout": "warn"
+  },
+  "swimlaneEnforcement": {
+    "rollout": "error"
+  },
+  "render": {
+    "brand": "Asset Studio",
+    "code": "ASSET-STUDIO",
+    "tagline": "The asset factory's planning layer — repeatable production workflows for every medium.",
+    "tone": "#5BC8AF",
+    "sub": "Game-agnostic production processes. References the shared Assets/ library; never duplicates it.",
+    "hex": {
+      "petals": [
+        {
+          "kind": "medium"
+        },
+        {
+          "kind": "workflow"
+        },
+        {
+          "kind": "pipeline"
+        },
+        {
+          "kind": "decision"
+        },
+        {
+          "facet": "guide"
+        },
+        {
+          "facet": "commands"
+        }
+      ]
+    }
+  }
+}
