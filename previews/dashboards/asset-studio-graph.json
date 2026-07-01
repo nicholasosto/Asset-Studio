@@ -10,8 +10,8 @@
     "workflow": "workflows",
     "medium": "mediums"
   },
-  "entities": 15,
-  "migrated": 15,
+  "entities": 16,
+  "migrated": 16,
   "counts": {
     "error": 0,
     "warning": 0,
@@ -44,6 +44,15 @@
       "updated": "2026-07-01",
       "file": "_project/decisions/0003-roadmap-equals-one-initiative-the-ribbon-is-the-project-mile.md",
       "excerpt": "The word \"roadmap\" was carrying three meanings at once and getting muddy: the Roadmap panel (a view in the Command Center), the roadmap kind (a _project/roadmap/*.md entity), and \"the Roadmap\" (the project's forward pla…"
+    },
+    {
+      "id": "2026-07-01-session-review-explorer-migration-and-tcl-round-trip",
+      "kind": "report",
+      "title": "Session review — Explorer migration and TCL round-trip",
+      "status": "complete",
+      "updated": "2026-07-01",
+      "file": "_project/reports/2026-07-01-session-review-explorer-migration-and-tcl-round-trip.md",
+      "excerpt": "What shipped (commits c8a475b … d28dc36, all on origin/main)"
     },
     {
       "id": "example-prop-batch",
@@ -189,9 +198,13 @@
       ]
     },
     "report": {
-      "total": 0,
-      "byStatus": {},
-      "ids": [],
+      "total": 1,
+      "byStatus": {
+        "complete": 1
+      },
+      "ids": [
+        "2026-07-01-session-review-explorer-migration-and-tcl-round-trip"
+      ],
       "tone": "warning",
       "statusOrder": [
         "draft",
@@ -301,6 +314,12 @@
       "target": "roadmap/migrate-asset-explorer-into-the-command-center"
     },
     {
+      "from": "2026-07-01-session-review-explorer-migration-and-tcl-round-trip",
+      "fromKind": "report",
+      "rel": "references",
+      "target": "roadmap/migrate-asset-explorer-into-the-command-center"
+    },
+    {
       "from": "example-prop-batch",
       "fromKind": "pipeline",
       "rel": "references",
@@ -350,7 +369,7 @@
     }
   ],
   "edgesByRel": {
-    "references": 9,
+    "references": 10,
     "decided-in": 1
   },
   "workflows": {
