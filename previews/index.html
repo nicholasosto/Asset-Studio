@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Asset Studio — Previews</title>
+<!-- ============================================================
+     Project-owned site shell (NOT a generated phenotype).
+     This is the stable entry point the Claude Preview server
+     serves at "/". It frames the generated dashboards under
+     dashboards/ and is the home for the three render-status-board
+     lenses as each comes online. Safe to hand-edit.
+     ============================================================ -->
+<style>
+:root {
+  --page:        #0a0d12;
+  --surface:     #1c2128;
+  --surface-2:   #161b22;
+  --border:      #2a3038;
+  --border-soft: #1f242c;
+  --text:        #e6edf3;
+  --text-dim:    #8b949e;
+  --text-faint:  #5a6371;
+  --tone:        #5BC8AF;
+  --gold:        #d4af37;
+  --sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", system-ui, sans-serif;
+  --mono: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; min-height: 100%; }
+body {
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(91,200,175,0.08), transparent 60%),
+    var(--page);
+  color: var(--text);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.45;
+}
+.wrap { max-width: 980px; margin: 0 auto; padding: 56px 28px 72px; }
+
+header { border-bottom: 1px solid var(--border-soft); padding-bottom: 28px; margin-bottom: 36px; }
+.eyebrow {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--tone); margin: 0 0 10px;
+}
+h1 { font-size: 30px; font-weight: 600; margin: 0 0 8px; letter-spacing: -0.01em; }
+.tagline { color: var(--text-dim); font-size: 15px; margin: 0; max-width: 64ch; }
+.sub { color: var(--text-faint); font-size: 13px; margin: 12px 0 0; max-width: 70ch; }
+
+nav.lenses {
+  display: grid; gap: 14px; margin: 0 0 36px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+a.lens, div.lens {
+  display: block; text-decoration: none; color: inherit;
+  background: linear-gradient(180deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--border); border-radius: 14px;
+  padding: 20px 20px 18px; transition: border-color .2s var(--ease), transform .2s var(--ease);
+  position: relative;
+}
+a.lens:hover { border-color: var(--tone); transform: translateY(-2px); }
+.lens .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; margin-right: 9px; vertical-align: 1px; }
+.lens h2 { font-size: 16px; margin: 0 0 6px; font-weight: 600; }
+.lens p { margin: 0; font-size: 13px; color: var(--text-dim); }
+.lens .tag {
+  position: absolute; top: 16px; right: 16px; font-family: var(--mono);
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 999px; border: 1px solid var(--border);
+  color: var(--text-faint);
+}
+.lens.live .tag { color: var(--tone); border-color: rgba(91,200,175,0.4); }
+.lens.soon { opacity: 0.62; }
+.lens.soon:hover { transform: none; border-color: var(--border); cursor: default; }
+
+.stats { display: flex; gap: 26px; flex-wrap: wrap; margin: 0 0 30px; }
+.stat { font-family: var(--mono); }
+.stat .n { font-size: 22px; color: var(--text); }
+.stat .l { display: block; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); margin-top: 2px; }
+
+footer {
+  border-top: 1px solid var(--border-soft); margin-top: 8px; padding-top: 20px;
+  font-family: var(--mono); font-size: 11px; color: var(--text-faint); line-height: 1.7;
+}
+footer code { color: var(--text-dim); background: var(--surface); padding: 1px 6px; border-radius: 5px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">ASSET-STUDIO · Previews</p>
+    <h1>Asset Studio</h1>
+    <p class="tagline">The asset factory's planning layer — repeatable production workflows for every medium.</p>
+    <p class="sub">Game-agnostic production processes. References the shared <code>Assets/</code> library; never duplicates it. The dashboards below are <em>derived phenotypes</em> — regenerated from the validated <code>_project/</code> graph, not hand-edited.</p>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><span class="n">9</span><span class="l">Entities</span></div>
+    <div class="stat"><span class="n">5</span><span class="l">Kinds</span></div>
+    <div class="stat"><span class="n">4</span><span class="l">Edges</span></div>
+    <div class="stat"><span class="n" style="color:#43AA8B">0</span><span class="l">Errors</span></div>
+  </div>
+
+  <nav class="lenses">
+    <a class="lens live" href="dashboards/asset-studio-command-center.html">
+      <span class="tag">Live</span>
+      <h2><span class="dot" style="background:#5BC8AF"></span>Command Center</h2>
+      <p>The hexagonal Hub — contract, kinds, the Field Guide, and the command surface. In-page tabs for each lens.</p>
+    </a>
+    <div class="lens soon">
+      <span class="tag">Soon</span>
+      <h2><span class="dot" style="background:#B884FF"></span>Decision Tree</h2>
+      <p>The decision/ADR ledger lens — the accepted decisions and what they supersede, as a tree.</p>
+    </div>
+    <div class="lens soon">
+      <span class="tag">Soon</span>
+      <h2><span class="dot" style="background:#7BD88F"></span>Plan / Pipeline Board</h2>
+      <p>The Plan-Progress command board — pipelines and their runs against exit criteria.</p>
+    </div>
+  </nav>
+
+  <footer>
+    source-of-truth: validated <code>_project/</code> entities · generated by <code>tools/render-hub.mjs</code><br>
+    regenerate: <code>node .project-system/tools/render-hub.mjs</code> &nbsp;·&nbsp; serve: <code>preview_start("command-center")</code> → <code>http://localhost:4317/</code>
+  </footer>
+</div>
+</body>
+</html>

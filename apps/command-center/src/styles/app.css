@@ -1,0 +1,1022 @@
+/* App chrome only — colors come from the @trembus/* token layer (var(--tcl-*)) carried by
+   the imported dist styles. Fallbacks keep it legible even if a token name shifts. */
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+.cc-app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+/* Slim app bar — just the wordmark. The Overview hub owns the full hero (brand, tagline,
+   stats, axis), so the top bar stays out of its way and reads as persistent app identity. */
+.cc-head {
+  padding: 1.25rem 1.75rem;
+  border-bottom: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.1));
+}
+
+.cc-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+}
+
+/* Tab shell — fills the space under the header; the active panel flexes to the viewport. */
+.cc-tabs {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cc-tablist {
+  padding: 0 1.75rem;
+}
+
+.cc-panel {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 1rem 1.75rem;
+}
+
+/* The Overview panel hosts the hex-flower hub on the left and the detail drawer on the right. */
+.cc-panel--hub {
+  display: block;
+}
+
+/* Hub beside its detail drawer: the flower fills the space; the drawer opens on the right when a
+   tile is selected (collapsed to zero width otherwise). */
+.cc-overview {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 76rem;
+  margin: 0 auto;
+}
+
+.cc-overview__hub {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* The Hub ships its own inspector + axis below the petals; the right-side drawer replaces the
+   inspector, so hide both here — the Overview reads as just the flower, with details on the right. */
+.cc-overview .tcl-hub__inspector,
+.cc-overview .tcl-hub__axis {
+  display: none;
+}
+
+/* Declutter the tiles: with detail now in the drawer, drop each hex's descriptive sub-line so the
+   flower reads as tag · name · status instead of four stacked text rows. The `sub` text stays in
+   the contract (the drawer's Brief still uses it) — it's only hidden on the tile face. */
+.cc-overview .tcl-hub__tile-sub {
+  display: none;
+}
+
+/* Simplify the hub banner: the ProjectEntity drawer now carries the full prose, so drop the long
+   descriptive paragraph and the redundant tag-note (the stat row already says "N entities · K
+   kinds"). Brand, code, the tagline pill, and stats stay as a tight identity header. Like the
+   tile-sub above, the copy stays in the contract — it's only hidden here. */
+.cc-overview .tcl-hub__sub,
+.cc-overview .tcl-hub__tagnote {
+  display: none;
+}
+
+/* Badges read on one line — never wrap into 2–3 stacked rows. The tagline pill and each tile's
+   status chip stay single-row. The chips are now short (a count, or the center's M/N ratio — the
+   full prose moved to the drawer), so they sit inside the hex's narrow content band without wrapping. */
+.cc-overview .tcl-hub__pill,
+.cc-overview .tcl-hub__status {
+  white-space: nowrap;
+}
+
+/* Dots: one uniform neutral grey across the flower, a green glow only on the selected tile. The Hub
+   sets each dot's hue via an inline `color` that its fill AND glow inherit (currentColor), so
+   overriding `color` (!important to beat the inline value) recolors both at once. */
+.cc-overview .tcl-hub__dot {
+  color: #5a6478 !important;
+}
+.cc-overview .tcl-hub__tile.is-selected .tcl-hub__dot {
+  color: #43aa8b !important;
+}
+
+/* Right detail drawer — collapsed to 0 width until a hex is selected, then slides open. Sticky so
+   it stays in view while the (taller) hub scrolls. */
+.cc-detailpanel {
+  flex: 0 0 0;
+  align-self: stretch;
+  overflow: hidden;
+  opacity: 0;
+  position: sticky;
+  top: 0.25rem;
+  transition: flex-basis 0.22s ease, opacity 0.18s ease;
+}
+
+.cc-detailpanel[data-open='true'] {
+  flex-basis: 25rem;
+  opacity: 1;
+}
+
+/* Fixed inner width so the Brief content doesn't reflow/squish during the flex-basis transition. */
+.cc-detailpanel__inner {
+  width: 25rem;
+}
+
+.cc-detailpanel__card {
+  position: relative;
+  padding: 1.15rem 1.25rem;
+}
+
+.cc-detailpanel__close {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.6rem;
+  z-index: 1;
+  font: inherit;
+  line-height: 1;
+  padding: 0.2rem 0.4rem;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.55));
+  cursor: pointer;
+}
+
+.cc-detailpanel__close:hover {
+  color: var(--tcl-text, #fff);
+  background: var(--tcl-surface-raised, rgba(255, 255, 255, 0.06));
+}
+
+/* ── Card Brief — tune @trembus/ui's <Brief> for reading inside a detail card. Scoped to
+   .cc-detailpanel__card, shared by the Overview hex drawer AND the Field Guide detail pane (both
+   wrap the Brief in that card), so the Progress board's Brief is untouched. We restyle the slots
+   the component exposes (tcl-brief__*) rather than fork it: a readable lead, toned meta chips,
+   hairline-separated sections, and list rows that align the mono command/date pointer + chip right. ── */
+
+/* Eyebrow now carries the source path (e.g. .claude/settings.json) — let it break, not truncate. */
+.cc-detailpanel__card .tcl-brief__id {
+  font-size: 0.72rem;
+  word-break: break-word;
+}
+
+/* The summary is a one-line lead now, not a wall — give it a comfortable measure + leading. */
+.cc-detailpanel__card .tcl-brief__summary {
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.72));
+}
+
+/* Meta pills: the component sets border + text color from each pill's `tone` inline; we add a faint
+   tone-matched fill, pill radius, and a small-caps label so the counts scan as chips. */
+.cc-detailpanel__card .tcl-brief__meta {
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+}
+.cc-detailpanel__card .tcl-brief__metapill {
+  align-items: baseline;
+  padding: 0.18rem 0.55rem;
+  border-radius: var(--tcl-radius-full, 9999px);
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  font-size: 0.72rem;
+}
+.cc-detailpanel__card .tcl-brief__metalabel {
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  opacity: 0.8;
+  margin-right: 0.32rem;
+}
+.cc-detailpanel__card .tcl-brief__metavalue {
+  font-weight: 600;
+}
+
+/* Sections: separate with a hairline; the heading carries the meaning, so hide the redundant
+   kind tag (the component prints REFERENCE / ARTIFACTS beside the heading). */
+.cc-detailpanel__card .tcl-brief__section {
+  margin-top: 1.05rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.1));
+}
+.cc-detailpanel__card .tcl-brief__section-kind {
+  display: none;
+}
+.cc-detailpanel__card .tcl-brief__section-h {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  opacity: 0.6;
+}
+
+/* List rows (hooks · planning artifacts · sources): one row = bold label (left), with the mono
+   command/date pointer + role chip pushed hard-right. */
+.cc-detailpanel__card .tcl-brief__ref {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.55rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.06));
+}
+.cc-detailpanel__card .tcl-brief__ref:last-child {
+  border-bottom: none;
+}
+.cc-detailpanel__card .tcl-brief__ref-main {
+  flex: 1 1 8rem;
+  min-width: 0;
+  font-weight: 600;
+  font-size: 0.82rem;
+}
+/* Role chip sits right after the label (order 1); the mono command trails (order 2) so a long
+   command wraps to its own line while the role stays beside the event. */
+.cc-detailpanel__card .tcl-brief__status {
+  order: 1;
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.12rem 0.45rem;
+  border-radius: var(--tcl-radius-full, 9999px);
+  background: var(--tcl-surface-raised, rgba(255, 255, 255, 0.08));
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.72));
+}
+/* The mono command/path pointer (the ref renders as <code class="tcl-brief__chip">). */
+.cc-detailpanel__card .tcl-brief__chip,
+.cc-detailpanel__card .tcl-brief__code {
+  order: 2;
+  font-size: 0.72rem;
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.62));
+  background: var(--tcl-surface-raised, rgba(255, 255, 255, 0.05));
+  padding: 0.08rem 0.4rem;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+/* Stack on narrow viewports — the drawer becomes a full-width panel below the hub. */
+@media (max-width: 60rem) {
+  .cc-overview,
+  .cc-workflow__layout {
+    flex-direction: column;
+  }
+  .cc-detailpanel {
+    position: static;
+    width: 100%;
+  }
+  .cc-detailpanel[data-open='true'] {
+    flex-basis: auto;
+  }
+  .cc-detailpanel__inner {
+    width: 100%;
+  }
+}
+
+/* ── Field Guide: an expandable convention tree (left) beside the selected node's brief (right) —
+   a docs explorer. The brief reuses .cc-detailpanel__card so it inherits the tuned Brief styling. ── */
+.cc-guide {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 76rem;
+  margin: 0 auto;
+}
+
+.cc-guide__tree {
+  flex: 0 0 20rem;
+  min-width: 0;
+  align-self: stretch;
+  position: sticky;
+  top: 0.25rem;
+  max-height: calc(100vh - 1rem);
+  overflow: auto;
+}
+
+.cc-guide__intro {
+  margin: 0 0 0.85rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.62));
+}
+
+.cc-guide__detail {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* The tree itself is @trembus/ui's <FolderTree> (its own styles via styles.css). */
+
+/* The deep-link button from the Overview hex tile into the Field Guide tab. */
+.cc-guide__cta {
+  display: inline-block;
+  margin-top: 0.9rem;
+  padding: 0.35rem 0.8rem;
+  font: inherit;
+  font-size: 0.8rem;
+  color: var(--tcl-text, inherit);
+  background: transparent;
+  border: 1px solid var(--tcl-accent, #d4af37);
+  border-radius: var(--tcl-radius-full, 9999px);
+  cursor: pointer;
+}
+.cc-guide__cta:hover {
+  background: color-mix(in srgb, var(--tcl-accent, #d4af37) 16%, transparent);
+}
+
+/* Stack on narrow viewports — tree above, brief below. */
+@media (max-width: 60rem) {
+  .cc-guide {
+    flex-direction: column;
+  }
+  .cc-guide__tree {
+    flex-basis: auto;
+    width: 100%;
+    position: static;
+    max-height: none;
+  }
+}
+
+/* Progress board — the development view in the slot the Graph used to hold. */
+.cc-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+/* ── Feature catalog (the Roadmap lead): availability groups of bordered feature rows, each with a
+   status dot + a required/optional tier pill. Dense rows, not cards (CDS density). ── */
+.cc-featcatalog {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.cc-feat-group {
+  background: var(--tcl-surface-raised, rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.08));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.cc-feat-group__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0.9rem;
+}
+.cc-feat-group__title {
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+.cc-feat-group__count {
+  font-size: 0.72rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.55));
+}
+.cc-feat-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 0.9rem;
+  border-top: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.06));
+}
+.cc-feat-dot {
+  flex: 0 0 auto;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+}
+.cc-feat-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 0.88rem;
+  color: var(--tcl-text, rgba(255, 255, 255, 0.92));
+}
+.cc-feat-tier {
+  flex: 0 0 auto;
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.12rem 0.5rem;
+  border-radius: var(--tcl-radius-full, 9999px);
+}
+.cc-feat-tier[data-tier='required'] {
+  color: var(--tcl-text, #fff);
+  background: color-mix(in srgb, #6bc9ff 22%, transparent);
+}
+.cc-feat-tier[data-tier='optional'] {
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.62));
+  border: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.16));
+}
+
+/* Switcher card — Brief ⇄ Timeline over the same plan, behind a tab strip. */
+.cc-switchcard {
+  padding: 0.6rem 0.9rem 1.1rem;
+}
+
+.cc-switch__list {
+  margin-bottom: 1rem;
+}
+
+/* Workflow picker — pill buttons to choose which workflow the console shows. */
+.cc-wf-picker {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.cc-wf-picker__btn {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--tcl-radius-full, 9999px);
+  border: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.12));
+  background: var(--tcl-surface-raised, transparent);
+  color: var(--tcl-text-dim, inherit);
+  cursor: pointer;
+}
+
+.cc-wf-picker__btn[data-active='true'] {
+  color: var(--tcl-text, inherit);
+  border-color: var(--tcl-accent, #d4af37);
+}
+
+/* Workflow console — the flow (Swimlane) over its optional run history. */
+.cc-workflow {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Workflow layout: the swimlane board fills; the step-detail drawer sits on the right, reusing the
+   Overview .cc-detailpanel chrome. Stacks below the board on narrow viewports (shared @media rule). */
+.cc-workflow__layout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+.cc-workflow__board {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Step-detail drawer body (inside the shared .cc-detailpanel__card). */
+.cc-stepdetail__eyebrow {
+  margin: 0;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.6;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.cc-stepdetail__title {
+  margin: 0.2rem 0 0;
+  font-size: 1.1rem;
+  font-weight: 650;
+  padding-right: 1.5rem; /* clear the close button */
+}
+.cc-stepdetail__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+}
+.cc-stepdetail__detail {
+  margin: 0.85rem 0 0;
+  font-size: 0.82rem;
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.62));
+}
+.cc-stepdetail__note {
+  margin: 0.6rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--tcl-text, rgba(255, 255, 255, 0.9));
+}
+.cc-stepdetail__section {
+  margin-top: 1.05rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.1));
+}
+.cc-stepdetail__section-head {
+  margin: 0 0 0.4rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  opacity: 0.6;
+}
+.cc-stepdetail__handoffs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.cc-stepdetail__handoff {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  padding: 0.4rem 0.55rem;
+  border: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.1));
+  border-radius: var(--tcl-radius-md, 8px);
+  background: var(--tcl-surface-raised, rgba(255, 255, 255, 0.04));
+  color: inherit;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.cc-stepdetail__handoff:hover {
+  border-color: var(--tcl-border-strong, rgba(255, 255, 255, 0.25));
+  background: var(--tcl-surface-raised, rgba(255, 255, 255, 0.08));
+}
+.cc-stepdetail__handoff-lane {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.6;
+  flex: none;
+}
+.cc-stepdetail__handoff-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+/* References: clickable cross-links to the ProjectEntities a step implements (decision / feature /
+   spec). A resolved ref navigates the board to that entity; an unresolved one renders disabled. */
+.cc-stepdetail__refs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.cc-stepdetail__ref {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  padding: 0.4rem 0.55rem;
+  border: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.1));
+  border-radius: var(--tcl-radius-md, 8px);
+  background: var(--tcl-surface-raised, rgba(255, 255, 255, 0.04));
+  color: inherit;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.cc-stepdetail__ref:hover:not(:disabled) {
+  border-color: var(--tcl-border-strong, rgba(255, 255, 255, 0.25));
+  background: var(--tcl-surface-raised, rgba(255, 255, 255, 0.08));
+}
+.cc-stepdetail__ref:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+.cc-stepdetail__ref-rel {
+  flex: none;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.75;
+  padding: 0.12rem 0.4rem;
+  border-radius: var(--tcl-radius-full, 9999px);
+  background: color-mix(in srgb, currentColor 14%, transparent);
+}
+.cc-stepdetail__ref-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+.cc-stepdetail__terminal {
+  margin-top: 1.05rem;
+  font-size: 0.78rem;
+  font-style: italic;
+  opacity: 0.6;
+}
+
+.cc-workflow__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.cc-eyebrow {
+  margin: 0;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  opacity: 0.6;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.cc-workflow__title {
+  margin: 0.15rem 0 0;
+  font-size: 1.15rem;
+  font-weight: 650;
+}
+
+.cc-section {
+  margin-top: 2rem;
+}
+
+.cc-section-title {
+  margin: 0 0 0.6rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+}
+
+/* The Progress board owns its section rhythm via flex `gap`; drop the standalone margin so
+   the first section doesn't stack a gap on top of a margin. */
+.cc-progress .cc-section {
+  margin-top: 0;
+}
+
+/* Tabs hide inactive panels with [hidden]; our explicit `display` on --hub would otherwise
+   beat the UA [hidden]{display:none} (equal specificity, later source), leaking the hub's
+   flex layout onto other tabs. This out-specifies it so inactive panels truly collapse. */
+.cc-panel[hidden] {
+  display: none;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════════════════
+   Decision Surface — the bespoke `decision` panel. Three stacked layers: the impact
+   constellation (system view), the status-grouped ledger (master), and the ego-graph + axes
+   detail drawer (reusing the shared .cc-detailpanel chrome). Decision accent is cyan (#44DDFF);
+   lineage (decision↔decision) reads violet (#B884FF) to distinguish it from cross-kind reach.
+   ════════════════════════════════════════════════════════════════════════════════════════ */
+.cc-decisions {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  width: 100%;
+  max-width: 76rem;
+  margin: 0 auto;
+}
+/* The constellation section owns its rhythm via the parent flex `gap` — drop the standalone margin. */
+.cc-decisions .cc-section {
+  margin-top: 0;
+}
+
+/* ── Impact constellation: a decisions × other-kinds grid. Each row is a button; cell fill scales
+   with how many of that kind reference the decision (what depends on it). ── */
+.cc-constellation {
+  border: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.08));
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--tcl-surface-raised, rgba(255, 255, 255, 0.03));
+}
+.cc-constellation__row {
+  display: grid;
+  align-items: center;
+  gap: 0.4rem;
+  width: 100%;
+  padding: 0.4rem 0.8rem;
+  text-align: left;
+}
+.cc-constellation__row--head {
+  border-bottom: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.12));
+}
+.cc-constellation__row--data {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.05));
+  cursor: pointer;
+  transition: background 0.14s ease, box-shadow 0.14s ease;
+}
+.cc-constellation__row--data:hover {
+  background: var(--tcl-surface-raised, rgba(255, 255, 255, 0.05));
+}
+.cc-constellation__row--data[data-selected='true'] {
+  background: color-mix(in srgb, #44ddff 12%, transparent);
+  box-shadow: inset 3px 0 0 #44ddff;
+}
+.cc-constellation__corner,
+.cc-constellation__colhead {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  opacity: 0.6;
+}
+.cc-constellation__colhead {
+  text-align: center;
+}
+.cc-constellation__label {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.cc-constellation__serial {
+  flex: none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem;
+  color: #44ddff;
+}
+.cc-constellation__title {
+  min-width: 0;
+  font-size: 0.82rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--tcl-text, rgba(255, 255, 255, 0.9));
+}
+.cc-constellation__cell {
+  text-align: center;
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  padding: 0.18rem 0;
+  border-radius: 6px;
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.4));
+}
+.cc-constellation__cell[data-on='true'] {
+  color: var(--tcl-text, #fff);
+  background: color-mix(in srgb, #44ddff calc(var(--heat, 1) * 18%), transparent);
+}
+.cc-constellation__cell--lineage[data-on='true'] {
+  background: color-mix(in srgb, #b884ff calc(var(--heat, 1) * 18%), transparent);
+}
+
+/* ── Master-detail body: the ledger fills; the detail drawer rides on the right (shared
+   .cc-detailpanel chrome — sticky, slides open on selection). ── */
+.cc-decisions__body {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+.cc-decisions__ledger {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+/* ── The ledger: status groups of impact-aware rows (serial · title + excerpt · relationship strip). ── */
+.cc-ledger__group {
+  border: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.08));
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--tcl-surface-raised, rgba(255, 255, 255, 0.03));
+}
+.cc-ledger__grouphead {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.85rem;
+  border-bottom: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.08));
+}
+.cc-ledger__count {
+  margin-left: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem;
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.5));
+}
+.cc-ledger__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.05));
+  cursor: pointer;
+  transition: background 0.14s ease, box-shadow 0.14s ease;
+}
+.cc-ledger__row:hover {
+  background: var(--tcl-surface-raised, rgba(255, 255, 255, 0.05));
+}
+.cc-ledger__row[data-selected='true'] {
+  background: color-mix(in srgb, #44ddff 12%, transparent);
+  box-shadow: inset 3px 0 0 #44ddff;
+}
+.cc-ledger__serial {
+  flex: 0 0 2.5rem;
+  padding-top: 0.1rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.74rem;
+  color: #44ddff;
+}
+.cc-ledger__main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.cc-ledger__title {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.cc-ledger__excerpt {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.6));
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.cc-ledger__impact {
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  justify-content: flex-end;
+  max-width: 11rem;
+}
+.cc-ledger__chip {
+  font-size: 0.64rem;
+  white-space: nowrap;
+  padding: 0.12rem 0.45rem;
+  border-radius: var(--tcl-radius-full, 9999px);
+  background: var(--tcl-surface-raised, rgba(255, 255, 255, 0.06));
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.62));
+}
+.cc-ledger__chip--governs {
+  color: var(--tcl-text, #fff);
+  background: color-mix(in srgb, #44ddff 20%, transparent);
+}
+.cc-ledger__chip--builds {
+  color: var(--tcl-text, #fff);
+  background: color-mix(in srgb, #b884ff 20%, transparent);
+}
+.cc-ledger__noimpact {
+  font-size: 0.74rem;
+  opacity: 0.4;
+}
+
+/* ── The detail drawer body (inside the shared .cc-detailpanel__card): header, excerpt, the
+   ego-graph, the three relationship axes, then the source path. ── */
+.cc-decision-detail__eyebrow {
+  margin: 0;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.6;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.cc-decision-detail__title {
+  margin: 0.2rem 0 0;
+  font-size: 1.1rem;
+  font-weight: 650;
+  padding-right: 1.5rem; /* clear the close button */
+}
+.cc-decision-detail__meta {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.cc-decision-detail__updated {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem;
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.55));
+}
+.cc-decision-detail__excerpt {
+  margin: 0.85rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.72));
+}
+.cc-decision-detail__graph {
+  margin-top: 1.05rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.1));
+  max-height: 20rem;
+  overflow: auto;
+}
+.cc-decision-detail__alone {
+  margin-top: 1.05rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.1));
+  font-size: 0.8rem;
+  font-style: italic;
+  opacity: 0.6;
+}
+.cc-decision-detail__source {
+  margin: 1.05rem 0 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.1));
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.68rem;
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.5));
+  word-break: break-all;
+}
+
+/* Relationship axis: a labeled list of clickable cross-links (Provenance / Lineage / Impact),
+   styled like StepDetail's reference list. */
+.cc-axis {
+  margin-top: 1.05rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.1));
+}
+.cc-axis__head {
+  margin: 0 0 0.5rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  opacity: 0.6;
+}
+.cc-axis__count {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.7rem;
+}
+.cc-axis__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.cc-axis__link {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  padding: 0.4rem 0.55rem;
+  border: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.1));
+  border-radius: var(--tcl-radius-md, 8px);
+  background: var(--tcl-surface-raised, rgba(255, 255, 255, 0.04));
+  color: inherit;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.cc-axis__link:hover {
+  border-color: var(--tcl-border-strong, rgba(255, 255, 255, 0.25));
+  background: var(--tcl-surface-raised, rgba(255, 255, 255, 0.08));
+}
+.cc-axis__rel {
+  flex: none;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.75;
+  padding: 0.12rem 0.4rem;
+  border-radius: var(--tcl-radius-full, 9999px);
+  background: color-mix(in srgb, currentColor 14%, transparent);
+}
+.cc-axis__title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* The decision drawer can exceed the viewport (excerpt + ego-graph + three axes), and the shared
+   .cc-detailpanel is sticky — so cap it to the viewport and let it scroll internally (the Field
+   Guide tree's pattern), keeping the lower axes reachable instead of clipped below the fold. */
+.cc-decisions .cc-detailpanel[data-open='true'] {
+  max-height: calc(100vh - 0.75rem);
+  overflow: hidden auto;
+}
+
+/* Stack the ledger above the drawer on narrow viewports (the shared 60rem rule already restyles
+   .cc-detailpanel to a static full-width panel). */
+@media (max-width: 60rem) {
+  .cc-decisions__body {
+    flex-direction: column;
+  }
+  .cc-decisions .cc-detailpanel[data-open='true'] {
+    max-height: none;
+    overflow: visible;
+  }
+}

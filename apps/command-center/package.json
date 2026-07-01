@@ -1,0 +1,32 @@
+{
+  "name": "@asset-studio/command-center",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Live web command center for Asset-Studio — consumes the space's emitted JSON contract (previews/dashboards/asset-studio-*.json) and renders it with the Trembus Component Library. A separate dependency island; the vendored framework core (.project-system/) stays zero-dep.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "verify:contract": "node scripts/verify-contract.mjs"
+  },
+  "dependencies": {
+    "@trembus/ui": "^0.2.0",
+    "@trembus/viz": "^0.3.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "vite": "^7.0.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "typescript": "^5.9.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/node": "^22.10.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  }
+}

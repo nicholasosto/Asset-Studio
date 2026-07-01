@@ -10,8 +10,8 @@
     "workflow": "workflows",
     "medium": "mediums"
   },
-  "entities": 8,
-  "migrated": 8,
+  "entities": 9,
+  "migrated": 9,
   "counts": {
     "error": 0,
     "warning": 0,
@@ -35,6 +35,15 @@
       "updated": "2026-06-30",
       "file": "_project/pipeline/example-prop-batch.md",
       "excerpt": "An illustrative production instance — a small batch of tower-defense-style props run end-to-end through the [[3d-asset]] workflow to exercise the studio's 3D path. Example — replace with (or delete in favor of) real bat…"
+    },
+    {
+      "id": "2026-06-30-stand-up-the-launchable-previews-site",
+      "kind": "session",
+      "title": "Stand up the launchable previews site",
+      "status": "completed",
+      "updated": "2026-06-30",
+      "file": "_project/sessions/2026-06-30-stand-up-the-launchable-previews-site.md",
+      "excerpt": "Make the command center launchable from inside the project space, and give it a project-owned entry shell that can grow to hold all three render-status-board lenses — without touching the generated phenotypes or the ven…"
     },
     {
       "id": "3d-asset",
@@ -164,9 +173,13 @@
       ]
     },
     "session": {
-      "total": 0,
-      "byStatus": {},
-      "ids": [],
+      "total": 1,
+      "byStatus": {
+        "completed": 1
+      },
+      "ids": [
+        "2026-06-30-stand-up-the-launchable-previews-site"
+      ],
       "tone": "warning",
       "statusOrder": [
         "planned",

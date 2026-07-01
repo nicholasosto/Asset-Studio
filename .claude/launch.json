@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "command-center",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--dir", "apps/command-center", "run", "dev"],
+      "autoPort": true,
+      "port": 5175
+    },
+    {
+      "name": "previews-static",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "4317", "--directory", "previews"],
+      "port": 4317
+    }
+  ]
+}
