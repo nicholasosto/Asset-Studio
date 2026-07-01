@@ -10,8 +10,8 @@
     "workflow": "workflows",
     "medium": "mediums"
   },
-  "entities": 9,
-  "migrated": 9,
+  "entities": 12,
+  "migrated": 12,
   "counts": {
     "error": 0,
     "warning": 0,
@@ -28,6 +28,15 @@
       "excerpt": "Asset production (images, audio, 3D) had no dedicated planning home — its processes lived as sub-plans inside game spaces (e.g. Soul-Steel's inner-doll-1-asset-pipelines.md). Meanwhile the assets themselves already live…"
     },
     {
+      "id": "0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy",
+      "kind": "decision",
+      "title": "Adopt medium and mediumType as the Asset Explorer taxonomy",
+      "status": "accepted",
+      "updated": "2026-07-01",
+      "file": "_project/decisions/0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy.md",
+      "excerpt": "The Asset Explorer being migrated in [[migrate-asset-explorer-into-the-command-center]] arrives with two category axes that don't belong in a game-agnostic studio: domain (blood · robotic · fateless · decay · spirit · h…"
+    },
+    {
       "id": "example-prop-batch",
       "kind": "pipeline",
       "title": "Example prop batch",
@@ -37,6 +46,15 @@
       "excerpt": "An illustrative production instance — a small batch of tower-defense-style props run end-to-end through the [[3d-asset]] workflow to exercise the studio's 3D path. Example — replace with (or delete in favor of) real bat…"
     },
     {
+      "id": "migrate-asset-explorer-into-the-command-center",
+      "kind": "roadmap",
+      "title": "Migrate Asset Explorer into the Command Center",
+      "status": "active",
+      "updated": "2026-07-01",
+      "file": "_project/roadmap/migrate-asset-explorer-into-the-command-center.md",
+      "excerpt": "The Asset Explorer is a browser we like and want to keep — but it lives in another space and is wired to Soul-Steel. Today it is a single 349 KB hand-built HTML file at Roblox-Development/Soul-Steel-Official/previews/da…"
+    },
+    {
       "id": "2026-06-30-stand-up-the-launchable-previews-site",
       "kind": "session",
       "title": "Stand up the launchable previews site",
@@ -44,6 +62,15 @@
       "updated": "2026-06-30",
       "file": "_project/sessions/2026-06-30-stand-up-the-launchable-previews-site.md",
       "excerpt": "Make the command center launchable from inside the project space, and give it a project-owned entry shell that can grow to hold all three render-status-board lenses — without touching the generated phenotypes or the ven…"
+    },
+    {
+      "id": "2026-07-01-audit-asset-explorer-and-design-the-asset-registry-contract",
+      "kind": "session",
+      "title": "Audit Asset Explorer and design the asset-registry contract",
+      "status": "active",
+      "updated": "2026-07-01",
+      "file": "_project/sessions/2026-07-01-audit-asset-explorer-and-design-the-asset-registry-contract.md",
+      "excerpt": "Establish the real current-state of the Soul-Steel Asset Explorer and agree the target category system, so [[migrate-asset-explorer-into-the-command-center]] can plan on evidence rather than guesses."
     },
     {
       "id": "3d-asset",
@@ -117,12 +144,13 @@
   ],
   "byKind": {
     "decision": {
-      "total": 1,
+      "total": 2,
       "byStatus": {
-        "accepted": 1
+        "accepted": 2
       },
       "ids": [
-        "0001-reference-the-shared-asset-library-via-external-locations"
+        "0001-reference-the-shared-asset-library-via-external-locations",
+        "0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy"
       ],
       "tone": "info",
       "statusOrder": [
@@ -161,9 +189,13 @@
       ]
     },
     "roadmap": {
-      "total": 0,
-      "byStatus": {},
-      "ids": [],
+      "total": 1,
+      "byStatus": {
+        "active": 1
+      },
+      "ids": [
+        "migrate-asset-explorer-into-the-command-center"
+      ],
       "tone": "accent",
       "statusOrder": [
         "proposed",
@@ -173,12 +205,14 @@
       ]
     },
     "session": {
-      "total": 1,
+      "total": 2,
       "byStatus": {
-        "completed": 1
+        "completed": 1,
+        "active": 1
       },
       "ids": [
-        "2026-06-30-stand-up-the-launchable-previews-site"
+        "2026-06-30-stand-up-the-launchable-previews-site",
+        "2026-07-01-audit-asset-explorer-and-design-the-asset-registry-contract"
       ],
       "tone": "warning",
       "statusOrder": [
@@ -226,10 +260,28 @@
   },
   "edges": [
     {
+      "from": "0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy",
+      "fromKind": "decision",
+      "rel": "references",
+      "target": "roadmap/migrate-asset-explorer-into-the-command-center"
+    },
+    {
       "from": "example-prop-batch",
       "fromKind": "pipeline",
       "rel": "references",
       "target": "workflows/3d-asset"
+    },
+    {
+      "from": "2026-07-01-audit-asset-explorer-and-design-the-asset-registry-contract",
+      "fromKind": "session",
+      "rel": "references",
+      "target": "roadmap/migrate-asset-explorer-into-the-command-center"
+    },
+    {
+      "from": "2026-07-01-audit-asset-explorer-and-design-the-asset-registry-contract",
+      "fromKind": "session",
+      "rel": "decided-in",
+      "target": "decisions/0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy"
     },
     {
       "from": "3d",
@@ -251,7 +303,8 @@
     }
   ],
   "edgesByRel": {
-    "references": 4
+    "references": 6,
+    "decided-in": 1
   },
   "workflows": {
     "3d-asset": {
@@ -938,7 +991,7 @@
               "children": [
                 {
                   "id": "project/report/example",
-                  "label": "2026-06-30-example-title.md",
+                  "label": "2026-07-01-example-title.md",
                   "path": null,
                   "nodeType": "kind-file",
                   "origin": "derived",
@@ -1124,7 +1177,7 @@
               "children": [
                 {
                   "id": "project/session/example",
-                  "label": "2026-06-30-example-title.md",
+                  "label": "2026-07-01-example-title.md",
                   "path": null,
                   "nodeType": "kind-file",
                   "origin": "derived",
