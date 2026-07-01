@@ -12,7 +12,7 @@
   "stats": [
     {
       "label": "entities",
-      "value": 12
+      "value": 13
     },
     {
       "label": "kinds",
@@ -25,19 +25,19 @@
     },
     {
       "label": "edges",
-      "value": 7
+      "value": 8
     }
   ],
   "scopeTitle": "Contract · coverage",
   "scope": [
     {
       "label": "Entities",
-      "num": "12",
+      "num": "13",
       "value": "across 6 kinds"
     },
     {
       "label": "Conformant",
-      "num": "12/12",
+      "num": "13/13",
       "value": "carry frontmatter · 0 pending"
     },
     {
@@ -47,7 +47,7 @@
     },
     {
       "label": "Edges",
-      "num": "7",
+      "num": "8",
       "value": "typed links · decided-in · references"
     },
     {
@@ -70,7 +70,7 @@
       "tag": "Contract",
       "name": "ProjectEntity",
       "sub": "3 primitives · 1 shape",
-      "status": "12/12",
+      "status": "13/13",
       "dot": "#5BC8AF",
       "note": "One non-optional contract every _project/ file derives from — Identity (kind·id·title) · State (status·updated) · Relation (links). kind & id are loader-derived from the path; the authored surface is just title/status/updated (+links/tags). The validator, scaffolder, guard, and this dashboard all read this single source.",
       "sources": [
@@ -127,9 +127,9 @@
       "tag": "Decisions",
       "name": "Decision log",
       "sub": "decisions/ · per-kind status enum",
-      "status": "2",
+      "status": "3",
       "dot": "#B884FF",
-      "note": "2 decision entities — status over the per-kind enum (all accepted). 2 typed links touch this kind.",
+      "note": "3 decision entities — status over the per-kind enum (all accepted). 3 typed links touch this kind.",
       "sources": [
         "_project/decisions/"
       ]
@@ -222,5 +222,20 @@
         ".claude/commands/"
       ]
     }
-  ]
+  ],
+  "ribbon": [
+    {
+      "code": "M1",
+      "name": "Launchable previews site",
+      "kind": "shipped",
+      "date": "2026-06-30"
+    },
+    {
+      "code": "M2",
+      "name": "Asset Explorer → Command Center",
+      "kind": "current",
+      "date": "2026-07-01"
+    }
+  ],
+  "ribbonTitle": "Milestones"
 }

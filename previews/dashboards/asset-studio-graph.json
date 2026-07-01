@@ -10,8 +10,8 @@
     "workflow": "workflows",
     "medium": "mediums"
   },
-  "entities": 12,
-  "migrated": 12,
+  "entities": 13,
+  "migrated": 13,
   "counts": {
     "error": 0,
     "warning": 0,
@@ -35,6 +35,15 @@
       "updated": "2026-07-01",
       "file": "_project/decisions/0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy.md",
       "excerpt": "The Asset Explorer being migrated in [[migrate-asset-explorer-into-the-command-center]] arrives with two category axes that don't belong in a game-agnostic studio: domain (blood · robotic · fateless · decay · spirit · h…"
+    },
+    {
+      "id": "0003-roadmap-equals-one-initiative-the-ribbon-is-the-project-mile",
+      "kind": "decision",
+      "title": "Roadmap equals one initiative; the ribbon is the project milestone index",
+      "status": "accepted",
+      "updated": "2026-07-01",
+      "file": "_project/decisions/0003-roadmap-equals-one-initiative-the-ribbon-is-the-project-mile.md",
+      "excerpt": "The word \"roadmap\" was carrying three meanings at once and getting muddy: the Roadmap panel (a view in the Command Center), the roadmap kind (a _project/roadmap/*.md entity), and \"the Roadmap\" (the project's forward pla…"
     },
     {
       "id": "example-prop-batch",
@@ -144,13 +153,14 @@
   ],
   "byKind": {
     "decision": {
-      "total": 2,
+      "total": 3,
       "byStatus": {
-        "accepted": 2
+        "accepted": 3
       },
       "ids": [
         "0001-reference-the-shared-asset-library-via-external-locations",
-        "0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy"
+        "0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy",
+        "0003-roadmap-equals-one-initiative-the-ribbon-is-the-project-mile"
       ],
       "tone": "info",
       "statusOrder": [
@@ -266,6 +276,12 @@
       "target": "roadmap/migrate-asset-explorer-into-the-command-center"
     },
     {
+      "from": "0003-roadmap-equals-one-initiative-the-ribbon-is-the-project-mile",
+      "fromKind": "decision",
+      "rel": "references",
+      "target": "roadmap/migrate-asset-explorer-into-the-command-center"
+    },
+    {
       "from": "example-prop-batch",
       "fromKind": "pipeline",
       "rel": "references",
@@ -303,7 +319,7 @@
     }
   ],
   "edgesByRel": {
-    "references": 6,
+    "references": 7,
     "decided-in": 1
   },
   "workflows": {

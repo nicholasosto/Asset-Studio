@@ -38,6 +38,13 @@ Asset-Studio never duplicates that library or its id registry.
 - **Tooling:** Blender MCP (`blender-mcp-craft`), ElevenLabs (audio), Figma/OpenAI (image), Roblox
   Studio MCP (3D import). Dashboards render via `render-hub.mjs` → the Command Center / visual-grammar kit.
 - **Render the dashboard:** `node .project-system/tools/render-hub.mjs` after `_project/` edits.
+- **Roadmap = one initiative.** One `roadmap` per milestone-sized initiative; author its plan as a
+  `## Phases` fenced-JSON block (not just prose `## Plan`) so the Command Center renders its Timeline.
+  "The Roadmap" (the milestone-progress ribbon) is the curated `render.ribbon` list in the config —
+  see [decision 0003](_project/decisions/0003-roadmap-equals-one-initiative-the-ribbon-is-the-project-mile.md).
+- **Internal links are folder-qualified:** frontmatter `links[].target` must be `<folder>/<stem>`
+  (e.g. `roadmap/migrate-asset-explorer-into-the-command-center`) to form a real graph edge; a bare
+  stem resolves as an off-graph external ref.
 
 ## Status
 

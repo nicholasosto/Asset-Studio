@@ -221,6 +221,11 @@
     "tagline": "The asset factory's planning layer — repeatable production workflows for every medium.",
     "tone": "#5BC8AF",
     "sub": "Game-agnostic production processes. References the shared Assets/ library; never duplicates it.",
+    "ribbonTitle": "Milestones",
+    "ribbon": [
+      { "code": "M1", "name": "Launchable previews site", "kind": "shipped", "date": "2026-06-30" },
+      { "code": "M2", "name": "Asset Explorer → Command Center", "kind": "current", "date": "2026-07-01" }
+    ],
     "hex": {
       "petals": [
         {
