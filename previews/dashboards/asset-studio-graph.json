@@ -76,7 +76,7 @@
       "id": "2026-07-01-audit-asset-explorer-and-design-the-asset-registry-contract",
       "kind": "session",
       "title": "Audit Asset Explorer and design the asset-registry contract",
-      "status": "active",
+      "status": "completed",
       "updated": "2026-07-01",
       "file": "_project/sessions/2026-07-01-audit-asset-explorer-and-design-the-asset-registry-contract.md",
       "excerpt": "Establish the real current-state of the Soul-Steel Asset Explorer and agree the target category system, so [[migrate-asset-explorer-into-the-command-center]] can plan on evidence rather than guesses."
@@ -217,8 +217,7 @@
     "session": {
       "total": 2,
       "byStatus": {
-        "completed": 1,
-        "active": 1
+        "completed": 2
       },
       "ids": [
         "2026-06-30-stand-up-the-launchable-previews-site",
@@ -725,14 +724,14 @@
       {
         "id": "p1",
         "label": "Asset-registry contract",
-        "status": "planned",
-        "detail": "Next: a scanner over external-locations/assets emits asset-registry.json, preserving every existing metadata field — same emit-a-contract pattern as render-hub.mjs."
+        "status": "done",
+        "detail": "tools/build-asset-registry.mjs (zero-dep) scans external-locations/assets → previews/dashboards/asset-registry.json: 769 records, every existing metadata field preserved."
       },
       {
         "id": "p2",
         "label": "Taxonomy refactor",
-        "status": "planned",
-        "detail": "Derive medium/mediumType from kind + ext + area + filename per ADR 0002; domain retained only as an optional hidden tag."
+        "status": "done",
+        "detail": "Deterministic medium/mediumType derivation in the scanner (leans on the TGL filename grammar); domain kept as a tag only; 0 unknown. Confirmed by a 3-way adversarial verify."
       },
       {
         "id": "p3",

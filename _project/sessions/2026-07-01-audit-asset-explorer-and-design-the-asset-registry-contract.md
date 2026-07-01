@@ -1,6 +1,6 @@
 ---
 title: "Audit Asset Explorer and design the asset-registry contract"
-status: active
+status: completed
 updated: 2026-07-01
 links:
   - { rel: references, target: roadmap/migrate-asset-explorer-into-the-command-center }
@@ -9,7 +9,7 @@ links:
 
 # Audit Asset Explorer and design the asset-registry contract
 
-> **Status:** active (2026-07-01)
+> **Status:** completed (2026-07-01)
 
 ## Goal
 
@@ -50,6 +50,12 @@ Establish the real current-state of the Soul-Steel Asset Explorer and agree the 
   - `domain`: robotic 30 · fateless 14 · shared 10 · blood 9 · decay 8 · spirit 6 · hub 1 → **Soul-Steel-specific, drop**
   - `status`: BLK 394 · FNL 3 · ALPHA 2
 - Scaffolded [[migrate-asset-explorer-into-the-command-center]] (roadmap) + this session.
+- **Phases 1–2 built** — `tools/build-asset-registry.mjs`, a zero-dep scanner emitting
+  `previews/dashboards/asset-registry.json` (769 records). Preserves every existing field and adds derived
+  `medium`/`mediumType` (leaning on the `CAT_SUB_name_STATUS` TGL grammar); `domain` kept as a tag, not a
+  grouping axis; 0 `unknown`. Built + adversarially verified (3/3 checks pass) via a 4-phase workflow.
+  Distribution: ui 220 · image 79 · 3d-model 73 · texture 63 · audio-sfx 33 · audio-voice 20 · 3d-rig 6 ·
+  audio-music 6 · source/non-asset 269.
 
 ## Blockers
 
@@ -57,10 +63,9 @@ Establish the real current-state of the Soul-Steel Asset Explorer and agree the 
 
 ## Next Action
 
-Start Phase 1 — build the `asset-registry.json` scanner over `external-locations/assets`, emitting a
-derived `medium` / `mediumType` per record (rules per
-[[0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy]]) while preserving every existing
-metadata field.
+Phase 3 — build the Explorer *view* in `apps/command-center`: a React gallery on `@trembus/ui` + `viz` +
+`tokens` that reads `asset-registry.json`, browsing by `medium ▸ mediumType` with status/ext/recency
+filters and a detail inspector. (Gets its own session when it starts.)
 
 ## Handoff Notes
 
@@ -70,6 +75,10 @@ metadata field.
   regenerating, pending the "thumbnails" open question.
 - Keep every raw metadata field on each record; the refactor *adds* a derived `medium`/`mediumType` and
   stops using `domain` for structure — it does not remove data.
+- **Phase-2 polish (deferred, non-blocking):** the `reg` registry join matches 0 rows — a data reality (the
+  `__master-asset-ids` CSV has empty `name` cells on its error rows), not a bug; meshy `texture_0.png`
+  exports fall to `image` rather than `texture`; thumbnail generation + image dimensions are deferred to a
+  later enrichment pass (the scanner reserves the content-hash `thumb` path but writes no PNGs yet).
 - After these `_project/` edits, re-run `node .project-system/tools/render-hub.mjs` so the Command Center
   picks up the new roadmap + session.
 </content>
