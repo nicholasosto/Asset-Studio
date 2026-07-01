@@ -130,6 +130,16 @@ function normalizeNav(raw: unknown): NavEntry[] | undefined {
 
 const AREAS: NavEntry[] = normalizeNav(hub.nav) ?? deriveNav();
 
+// Deep-link support: the static landing shell (previews/index.html) links to `app/#explorer`,
+// `app/#roadmap`, etc. Honor a leading hash that names a real nav tab on first load; anything
+// unknown (or no hash) falls back to Overview. Read once at mount — the tabs are in-page state,
+// not routes, so we don't sync back to the URL.
+function initialTab(): string {
+  if (typeof window === 'undefined') return 'overview';
+  const hash = window.location.hash.replace(/^#/, '');
+  return AREAS.some((a) => a.value === hash) ? hash : 'overview';
+}
+
 // Map an entity kind → the nav tab that surfaces it (for step-ref cross-navigation): a
 // swimlane-carrier or pipeline → Workflows, a kind the Roadmap panel shows → Roadmap, else the
 // kind's own auto-tab, falling back to Overview. Derived from the same seams deriveNav() uses.
@@ -527,7 +537,7 @@ function RoadmapBoard() {
 }
 
 export function App() {
-  const [tab, setTab] = useState('overview');
+  const [tab, setTab] = useState(initialTab);
   const [hubSel, setHubSel] = useState<string | undefined>(undefined);
   const [wfId, setWfId] = useState<string>(WORKFLOWS[0]?.id ?? '');
   const activeWorkflow = WORKFLOWS.find((w) => w.id === wfId) ?? WORKFLOWS[0];

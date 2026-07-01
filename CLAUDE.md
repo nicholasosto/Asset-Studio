@@ -39,7 +39,9 @@ Asset-Studio never duplicates that library or its id registry.
 - **Tags:** `mediumType` · `tool` · `pattern` (symlink = Pattern A; upload = Pattern B).
 - **Tooling:** Blender MCP (`blender-mcp-craft`), ElevenLabs (audio), Figma/OpenAI (image), Roblox
   Studio MCP (3D import). Dashboards render via `render-hub.mjs` → the Command Center / visual-grammar kit.
-- **Render the dashboard:** `node .project-system/tools/render-hub.mjs` after `_project/` edits.
+- **Render the dashboard:** `node .project-system/tools/render-hub.mjs` after `_project/` edits (emits
+  JSON only). The **dev** server hot-reloads it automatically; to refresh the **committed static site**
+  also run `pnpm --dir apps/command-center build` → `previews/app/`. See [[dashboard-regen-is-two-steps]].
 - **Roadmap = one initiative.** One `roadmap` per milestone-sized initiative; author its plan as a
   `## Phases` fenced-JSON block (not just prose `## Plan`) so the Command Center renders its Timeline.
   "The Roadmap" (the milestone-progress ribbon) is the curated `render.ribbon` list in the config —
@@ -60,10 +62,15 @@ Asset-Studio never duplicates that library or its id registry.
 ## Status
 
 Migrating the Asset Explorer into the Command Center
-([[migrate-asset-explorer-into-the-command-center]]) — **4/6 phases done** (2026-07-01): the
-`asset-registry.json` scanner, the `medium`/`mediumType` taxonomy, the React Explorer view, and its
-adoption of the Trembus `MediaFrame`. Remaining: surface it on the landing shell, then retire the
-Soul-Steel `asset-explorer.html`. Corpus: 15 entities (3 decision · 1 roadmap · 4 session · 3 workflow ·
-3 medium · 1 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.4.0` + `game-viz 0.2.0`.
+([[migrate-asset-explorer-into-the-command-center]]) — **5/6 phases done** (2026-07-01): the
+`asset-registry.json` scanner, the `medium`/`mediumType` taxonomy, the React Explorer view, its
+adoption of the Trembus `MediaFrame`, and now **surfaced live** — the Command Center builds as a
+self-contained SPA into `previews/app/` (`vite build`, `base: './'`, contracts inlined) and
+`previews/index.html` is a five-card Live launcher with a deep-linked Asset Explorer (`app/#explorer`).
+The orphaned static `asset-studio-command-center.html` is retired. **P5 (retire the Soul-Steel
+`asset-explorer.html`) is parked on preview parity (CF-1):** that source is generated and still has
+working thumbnails the migrated Explorer renders as placeholders. Corpus: 17 entities (3 decision ·
+1 roadmap · 1 report · 5 session · 3 workflow · 3 medium · 1 pipeline), validates 0/0/0. Command
+Center on `@trembus/ui 0.4.0` + `game-viz 0.2.0`.
 **Deferred:** real image/audio/3D previews wait on served asset URLs — `MediaFrame`/`AudioWaveform` render
-placeholders until then. `proseStatusEnforcement` still `warn` — ratchet to `error` once the corpus settles.
+placeholders until then (CF-1, the Phase 5 blocker). `proseStatusEnforcement` still `warn` — ratchet to `error` once the corpus settles.

@@ -10,8 +10,8 @@
     "workflow": "workflows",
     "medium": "mediums"
   },
-  "entities": 16,
-  "migrated": 16,
+  "entities": 17,
+  "migrated": 17,
   "counts": {
     "error": 0,
     "warning": 0,
@@ -107,6 +107,15 @@
       "updated": "2026-07-01",
       "file": "_project/sessions/2026-07-01-build-the-asset-explorer-view.md",
       "excerpt": "Phase 3 of [[migrate-asset-explorer-into-the-command-center]] — turn asset-registry.json into a browsable Explorer view inside the Command Center, on the Trembus component library."
+    },
+    {
+      "id": "2026-07-01-surface-the-asset-explorer-live-and-hold-the-soul-steel-reti",
+      "kind": "session",
+      "title": "Surface the Asset Explorer live and hold the Soul-Steel retire",
+      "status": "completed",
+      "updated": "2026-07-01",
+      "file": "_project/sessions/2026-07-01-surface-the-asset-explorer-live-and-hold-the-soul-steel-reti.md",
+      "excerpt": "Close [[migrate-asset-explorer-into-the-command-center]] Phase 4 — make the Explorer reachable from the previews site as a first-class, Live lens — and resolve Phase 5 (retire the Soul-Steel source)."
     },
     {
       "id": "3d-asset",
@@ -246,15 +255,16 @@
       ]
     },
     "session": {
-      "total": 4,
+      "total": 5,
       "byStatus": {
-        "completed": 4
+        "completed": 5
       },
       "ids": [
         "2026-06-30-stand-up-the-launchable-previews-site",
         "2026-07-01-adopt-the-tcl-mediaframe-in-the-explorer",
         "2026-07-01-audit-asset-explorer-and-design-the-asset-registry-contract",
-        "2026-07-01-build-the-asset-explorer-view"
+        "2026-07-01-build-the-asset-explorer-view",
+        "2026-07-01-surface-the-asset-explorer-live-and-hold-the-soul-steel-reti"
       ],
       "tone": "warning",
       "statusOrder": [
@@ -350,6 +360,12 @@
       "target": "roadmap/migrate-asset-explorer-into-the-command-center"
     },
     {
+      "from": "2026-07-01-surface-the-asset-explorer-live-and-hold-the-soul-steel-reti",
+      "fromKind": "session",
+      "rel": "references",
+      "target": "roadmap/migrate-asset-explorer-into-the-command-center"
+    },
+    {
       "from": "3d",
       "fromKind": "medium",
       "rel": "references",
@@ -369,7 +385,7 @@
     }
   ],
   "edgesByRel": {
-    "references": 10,
+    "references": 11,
     "decided-in": 1
   },
   "workflows": {
@@ -793,14 +809,14 @@
       {
         "id": "p4",
         "label": "Wire it Live",
-        "status": "planned",
-        "detail": "Add the Explorer to previews/index.html and flip its card Soon → Live, alongside the Hub lens."
+        "status": "done",
+        "detail": "The Command Center now builds as a self-contained SPA into previews/app/ (relative base; all contracts inlined); previews/index.html reworked to five Live lens cards incl. a deep-linked Asset Explorer (app/#explorer); the orphaned static command-center.html retired. Verified served from the :4317 static site."
       },
       {
         "id": "p5",
         "label": "Retire the source artifact",
-        "status": "planned",
-        "detail": "Cross-link from Soul-Steel and deprecate the standalone asset-explorer.html once parity is verified."
+        "status": "parked",
+        "detail": "Parked on CF-1 preview parity: the Soul-Steel asset-explorer.html keeps working baked thumbnails + full-size image/audio previews that the migrated Explorer still renders as placeholders until asset URLs/posters are served. Deprecate + cross-link once parity lands — no cross-repo change made this session (the source file is generated; a banner must go in its generator)."
       }
     ]
   },

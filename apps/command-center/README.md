@@ -12,7 +12,8 @@ The framework core (`.project-system/`) is **zero runtime dependencies**. This a
 
 - It consumes the core only as the **emitted JSON contract** — never by importing
   `.project-system/tools/` or `lib/` as packages. So the app's deps never leak into the core.
-- Build artifacts (`dist/`, `node_modules/`, `.vite/`) are git-ignored.
+- The production build lands in the committed `previews/app/` — the self-contained static bundle
+  the previews site serves at `/app/`. Dev artifacts (`node_modules/`, `.vite/`) stay git-ignored.
 
 ## Data flow
 
@@ -21,13 +22,14 @@ _project/*.md ──(node .project-system/tools/render-hub.mjs)──▶ preview
    source of truth            zero-dep JSON emit                        the input contract             Trembus viz
 ```
 
-The app reads **only** `previews/dashboards/asset-studio-graph.json` and `asset-studio-hub.json`.
-It never re-reads `_project/`. `src/contract.ts` is the single consumer of that contract.
+The app reads the planning contract (`previews/dashboards/asset-studio-graph.json` +
+`asset-studio-hub.json`, via `src/contract.ts`) and the Asset Explorer's `asset-registry.json`
+(via `src/registry.ts`). It never re-reads `_project/`.
 
-> **Two renderers, one contract.** This React app is the *live, interactive* surface (swimlanes,
-> step drawer, run replay). The static `previews/dashboards/asset-studio-command-center.html`
-> (built by the visual-grammar `build.mjs`) is the *self-contained* phenotype. Both read the same
-> emitted JSON — see the project memory `dashboard-regen-is-two-steps`.
+> **One renderer.** This React app is the only surface. `pnpm build` emits a self-contained static
+> bundle into `previews/app/` (all contracts inlined), which the previews site serves at `/app/`.
+> The old single-file `asset-studio-command-center.html` phenotype was retired once this app
+> superseded it — `render-hub.mjs` now emits JSON only.
 
 ## Run it
 
@@ -40,6 +42,14 @@ pnpm dev            # http://localhost:5175
 `pnpm dev` runs Vite with a `liveContract` plugin that watches `_project/**.md` +
 `project-system.config.json` + `.project-system/schema/` and re-runs `render-hub.mjs` on save, so
 edits hot-reload. From the Claude preview: `preview_start("command-center")`.
+
+To refresh the committed static bundle the previews site serves:
+
+```sh
+pnpm --dir apps/command-center build   # tsc --noEmit && vite build → previews/app/
+```
+
+Serve the whole previews site (shell + `app/`) with `preview_start("previews-static")` → `http://localhost:4317/`.
 
 ## How the Trembus packages are wired
 

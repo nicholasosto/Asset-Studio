@@ -37,8 +37,8 @@ through `external-locations/`; it never duplicates it. Current-state established
 
 ## Phases
 
-The structured plan the Command Center renders as a Timeline. Phases 0–3 are complete (data + view);
-Phase 4 — surfacing it — is next.
+The structured plan the Command Center renders as a Timeline. Phases 0–4 are complete (data + view +
+surfaced live); Phase 5 — retiring the Soul-Steel source — is parked on preview parity (CF-1).
 
 ```json
 [
@@ -46,8 +46,8 @@ Phase 4 — surfacing it — is next.
   { "id": "p1", "label": "Asset-registry contract", "status": "done", "detail": "tools/build-asset-registry.mjs (zero-dep) scans external-locations/assets → previews/dashboards/asset-registry.json: 769 records, every existing metadata field preserved." },
   { "id": "p2", "label": "Taxonomy refactor", "status": "done", "detail": "Deterministic medium/mediumType derivation in the scanner (leans on the TGL filename grammar); domain kept as a tag only; 0 unknown. Confirmed by a 3-way adversarial verify." },
   { "id": "p3", "label": "Explorer view in the app", "status": "done", "detail": "AssetExplorer.tsx + registry.ts in apps/command-center: summary stats + donut, medium/mediumType/status/ext/search filters, grouped card grid, detail inspector. Built on @trembus/ui; typecheck + build clean; adversarially verified." },
-  { "id": "p4", "label": "Wire it Live", "status": "planned", "detail": "Add the Explorer to previews/index.html and flip its card Soon → Live, alongside the Hub lens." },
-  { "id": "p5", "label": "Retire the source artifact", "status": "planned", "detail": "Cross-link from Soul-Steel and deprecate the standalone asset-explorer.html once parity is verified." }
+  { "id": "p4", "label": "Wire it Live", "status": "done", "detail": "The Command Center now builds as a self-contained SPA into previews/app/ (relative base; all contracts inlined); previews/index.html reworked to five Live lens cards incl. a deep-linked Asset Explorer (app/#explorer); the orphaned static command-center.html retired. Verified served from the :4317 static site." },
+  { "id": "p5", "label": "Retire the source artifact", "status": "parked", "detail": "Parked on CF-1 preview parity: the Soul-Steel asset-explorer.html keeps working baked thumbnails + full-size image/audio previews that the migrated Explorer still renders as placeholders until asset URLs/posters are served. Deprecate + cross-link once parity lands — no cross-repo change made this session (the source file is generated; a banner must go in its generator)." }
 ]
 ```
 

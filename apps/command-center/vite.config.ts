@@ -85,6 +85,9 @@ function liveContract(): Plugin {
 // installed from the npm registry — no aliases needed. `dedupe` still pins a single React
 // instance so a dependency can't pull a second copy (the null-dispatcher useState crash).
 export default defineConfig({
+  // Relative base so the built bundle serves from a subfolder (previews/app/) under the static
+  // previews site — every asset/chunk URL resolves relative to index.html, mount-point-agnostic.
+  base: './',
   plugins: [react(), liveContract()],
   resolve: {
     dedupe: ['react', 'react-dom'],
@@ -95,5 +98,8 @@ export default defineConfig({
     fs: { allow: [REPO_ROOT] },
   },
   preview: { port: PORT },
-  build: { target: 'es2022', outDir: 'dist' },
+  // Build the self-contained SPA straight into the previews site (previews/app/) so a plain
+  // `pnpm build` refreshes the launchable static bundle the :4317 server serves. outDir is
+  // outside the app root, so emptyOutDir must be explicit.
+  build: { target: 'es2022', outDir: resolve(REPO_ROOT, 'previews/app'), emptyOutDir: true },
 });
