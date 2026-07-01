@@ -1020,3 +1020,205 @@ body,
     overflow: visible;
   }
 }
+
+/* ════════════════════════════════════════════════════════════════════════════════════════
+   Asset Explorer — the bespoke panel over the asset library registry. A summary header (Stat
+   tiles + stacked Meter + DonutChart), a filter bar, a responsive card grid (optionally grouped
+   by mediumType), and a Dialog inspector. Explorer accent is teal (#2dd4bf); per-medium tile
+   tints (image=blue, 3d=gold, audio=green, source=muted) layer on top via --cc-medium. Every
+   class is scoped under .cc-explorer so it can't leak into other panels. ── */
+.cc-explorer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  width: 100%;
+  max-width: 76rem;
+  margin: 0 auto;
+  --cc-explorer-accent: #2dd4bf;
+}
+.cc-explorer .cc-section {
+  margin-top: 0;
+}
+
+/* Summary header — the Stat row wraps, then the Meter/Donut split sit beside each other. */
+.cc-explorer__stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+@media (max-width: 60rem) {
+  .cc-explorer__stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.cc-explorer__split {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.cc-explorer__split > :first-child {
+  flex: 1 1 20rem;
+  min-width: 0;
+}
+
+/* Filter bar — a bordered toolbar Box; the search input takes the lead width, Selects size to
+   content. */
+.cc-explorer__toolbar {
+  background: var(--tcl-surface-raised, rgba(255, 255, 255, 0.03));
+}
+.cc-explorer__search {
+  flex: 1 1 16rem;
+  min-width: 12rem;
+}
+.cc-explorer__activechips {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+/* Results grid — the count line, then an auto-fill card grid. */
+.cc-explorer__count {
+  margin: 0 0 0.75rem;
+  font-size: 0.85rem;
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.6));
+}
+.cc-explorer__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 0.9rem;
+}
+.cc-explorer__group {
+  margin-bottom: 1.4rem;
+}
+.cc-explorer__grouphead {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin: 0 0 0.6rem;
+}
+.cc-explorer__groupcount {
+  opacity: 0.55;
+  font-variant-numeric: tabular-nums;
+}
+.cc-explorer__more {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+/* The asset card. Per-medium tint via --cc-medium (set inline per tile). */
+.cc-explorer__card {
+  cursor: pointer;
+  transition: box-shadow 0.12s ease, border-color 0.12s ease, transform 0.12s ease;
+}
+.cc-explorer__card:hover {
+  border-color: var(--tcl-border-strong, rgba(255, 255, 255, 0.25));
+  transform: translateY(-1px);
+}
+.cc-explorer__card:focus-visible {
+  outline: 2px solid var(--cc-explorer-accent);
+  outline-offset: 2px;
+}
+.cc-explorer__card[data-selected] {
+  box-shadow: inset 0 0 0 1px var(--cc-explorer-accent);
+}
+
+/* The placeholder frame — a medium-tinted band with a big centered glyph, standing in for the
+   deferred thumbnail. The mediumType badge floats top-right over it. */
+.cc-explorer__thumb {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4rem;
+  border-radius: var(--tcl-radius-md, 8px);
+  border: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.08));
+  background: color-mix(in srgb, var(--cc-medium, #6b7280) 16%, transparent);
+}
+.cc-explorer__thumb--lg {
+  height: 7rem;
+  margin-bottom: 0.9rem;
+}
+.cc-explorer__glyph {
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--cc-medium, #6b7280);
+  opacity: 0.85;
+}
+.cc-explorer__thumb--lg .cc-explorer__glyph {
+  font-size: 2.6rem;
+}
+.cc-explorer__typebadge {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+}
+
+.cc-explorer__name {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85rem;
+  color: var(--tcl-text, rgba(255, 255, 255, 0.92));
+}
+
+/* The card footer meta line — dim, small, spread across. */
+.cc-explorer__meta {
+  width: 100%;
+  font-size: 0.72rem;
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.6));
+}
+.cc-explorer__ext {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.cc-explorer__domaintag {
+  margin-left: auto;
+  padding: 0.05rem 0.4rem;
+  border-radius: var(--tcl-radius-full, 9999px);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.6;
+  background: color-mix(in srgb, var(--tcl-accent, #d4af37) 16%, transparent);
+}
+
+/* The Dialog inspector body. */
+.cc-explorer__inspector {
+  display: flex;
+  flex-direction: column;
+}
+.cc-explorer__inspectorbadges {
+  margin-bottom: 0.9rem;
+}
+.cc-explorer__inspectortable {
+  width: 100%;
+}
+.cc-explorer__mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  word-break: break-all;
+}
+/* An anchor so a disabled IconButton still surfaces its Tooltip (disabled controls swallow
+   pointer events on their own). */
+.cc-explorer__disabledwrap {
+  display: inline-flex;
+}
+
+/* Narrow viewports — collapse the Stat row + toolbar to a column and shrink the grid min. */
+@media (max-width: 60rem) {
+  .cc-explorer__split {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cc-explorer__grid {
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  }
+}

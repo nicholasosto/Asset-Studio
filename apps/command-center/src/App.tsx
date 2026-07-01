@@ -27,6 +27,7 @@ import type { EntityRecord, GuideNode, Phase } from './contract';
 import { WorkflowConsole } from './WorkflowConsole';
 import { WORKFLOWS } from './workflows';
 import { DecisionSurface } from './DecisionSurface';
+import { AssetExplorer } from './AssetExplorer';
 import { groupByStatus, statusTone } from './status';
 
 // statusTone + groupByStatus now live in ./status — one source, shared with the DecisionSurface panel.
@@ -76,7 +77,7 @@ function phaseTimeline(title: string, phases: Phase[]): TimelineContract {
   };
 }
 
-type NavEntry = { value: string; label: string; panel?: 'overview' | 'roadmap' | 'decisions' | 'workflows' | 'guide'; kinds?: string[] };
+type NavEntry = { value: string; label: string; panel?: 'overview' | 'roadmap' | 'decisions' | 'workflows' | 'guide' | 'explorer'; kinds?: string[] };
 
 // The editorial seams: which kinds the bespoke panels already surface, so they don't ALSO get an
 // auto-tab. Adding a new kind never edits these — it just gets its own tab (or a config
@@ -94,6 +95,7 @@ function deriveNav(): NavEntry[] {
   const nav: NavEntry[] = [
     { value: 'overview', label: 'Overview', panel: 'overview' },
     { value: 'roadmap', label: 'Roadmap', panel: 'roadmap' },
+    { value: 'explorer', label: 'Explorer', panel: 'explorer' },
   ];
   const decisionKinds = DECISION_KINDS.filter((k) => kinds.includes(k));
   if (decisionKinds.length) {
@@ -657,6 +659,7 @@ export function App() {
   const renderPanel = (area: NavEntry) => {
     if (area.panel === 'overview') return overviewBody;
     if (area.panel === 'roadmap') return <RoadmapBoard />;
+    if (area.panel === 'explorer') return <AssetExplorer />;
     if (area.panel === 'decisions') return <DecisionSurface kind={area.kinds?.[0] ?? 'decision'} onNavigate={navigateToEntity} />;
     if (area.panel === 'workflows') return workflowsBody;
     if (area.panel === 'guide') return guideBody;
