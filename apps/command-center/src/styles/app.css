@@ -1054,13 +1054,8 @@ body,
 }
 .cc-explorer__split {
   display: flex;
-  gap: 1.5rem;
-  align-items: center;
-  flex-wrap: wrap;
-}
-.cc-explorer__split > :first-child {
-  flex: 1 1 20rem;
-  min-width: 0;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
 /* Filter bar — a bordered toolbar Box; the search input takes the lead width, Selects size to
@@ -1125,37 +1120,6 @@ body,
 }
 .cc-explorer__card[data-selected] {
   box-shadow: inset 0 0 0 1px var(--cc-explorer-accent);
-}
-
-/* The placeholder frame — a medium-tinted band with a big centered glyph, standing in for the
-   deferred thumbnail. The mediumType badge floats top-right over it. */
-.cc-explorer__thumb {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 4rem;
-  border-radius: var(--tcl-radius-md, 8px);
-  border: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.08));
-  background: color-mix(in srgb, var(--cc-medium, #6b7280) 16%, transparent);
-}
-.cc-explorer__thumb--lg {
-  height: 7rem;
-  margin-bottom: 0.9rem;
-}
-.cc-explorer__glyph {
-  font-size: 1.6rem;
-  line-height: 1;
-  color: var(--cc-medium, #6b7280);
-  opacity: 0.85;
-}
-.cc-explorer__thumb--lg .cc-explorer__glyph {
-  font-size: 2.6rem;
-}
-.cc-explorer__typebadge {
-  position: absolute;
-  top: 0.4rem;
-  right: 0.4rem;
 }
 
 .cc-explorer__name {

@@ -10,8 +10,8 @@
     "workflow": "workflows",
     "medium": "mediums"
   },
-  "entities": 14,
-  "migrated": 14,
+  "entities": 15,
+  "migrated": 15,
   "counts": {
     "error": 0,
     "warning": 0,
@@ -71,6 +71,15 @@
       "updated": "2026-06-30",
       "file": "_project/sessions/2026-06-30-stand-up-the-launchable-previews-site.md",
       "excerpt": "Make the command center launchable from inside the project space, and give it a project-owned entry shell that can grow to hold all three render-status-board lenses — without touching the generated phenotypes or the ven…"
+    },
+    {
+      "id": "2026-07-01-adopt-the-tcl-mediaframe-in-the-explorer",
+      "kind": "session",
+      "title": "Adopt the TCL MediaFrame in the Explorer",
+      "status": "completed",
+      "updated": "2026-07-01",
+      "file": "_project/sessions/2026-07-01-adopt-the-tcl-mediaframe-in-the-explorer.md",
+      "excerpt": "Phase 3.1 of [[migrate-asset-explorer-into-the-command-center]] — consume the freshly-published @trembus/ui 0.4.0 + @trembus/game-viz 0.2.0 and replace the Explorer's hand-rolled thumbnail frame with the new MediaFrame…"
     },
     {
       "id": "2026-07-01-audit-asset-explorer-and-design-the-asset-registry-contract",
@@ -224,12 +233,13 @@
       ]
     },
     "session": {
-      "total": 3,
+      "total": 4,
       "byStatus": {
-        "completed": 3
+        "completed": 4
       },
       "ids": [
         "2026-06-30-stand-up-the-launchable-previews-site",
+        "2026-07-01-adopt-the-tcl-mediaframe-in-the-explorer",
         "2026-07-01-audit-asset-explorer-and-design-the-asset-registry-contract",
         "2026-07-01-build-the-asset-explorer-view"
       ],
@@ -297,6 +307,12 @@
       "target": "workflows/3d-asset"
     },
     {
+      "from": "2026-07-01-adopt-the-tcl-mediaframe-in-the-explorer",
+      "fromKind": "session",
+      "rel": "references",
+      "target": "roadmap/migrate-asset-explorer-into-the-command-center"
+    },
+    {
       "from": "2026-07-01-audit-asset-explorer-and-design-the-asset-registry-contract",
       "fromKind": "session",
       "rel": "references",
@@ -334,7 +350,7 @@
     }
   ],
   "edgesByRel": {
-    "references": 8,
+    "references": 9,
     "decided-in": 1
   },
   "workflows": {

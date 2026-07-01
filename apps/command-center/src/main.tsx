@@ -5,6 +5,7 @@ import { createRoot } from 'react-dom/client';
 // rides on <html data-theme="dark"> (see index.html) — both dist styles bundle the tokens.
 import '@trembus/ui/styles.css';
 import '@trembus/viz/styles.css';
+import '@trembus/game-viz/styles.css';
 import './styles/app.css';
 import { App } from './App';
 

@@ -46,7 +46,9 @@ import {
   statusVocab,
   summary,
 } from './registry';
-import type { AssetRecord, Medium, MediumType } from './registry';
+import type { AssetRecord, Medium, MediumKey, MediumType } from './registry';
+import { MediaFrame } from '@trembus/game-viz';
+import type { MediaFrameData } from '@trembus/game-viz';
 
 // The initial cap for the unfiltered set (the 769-row worst case): render a slice, offer "show all".
 // Any active filter shrinks the set below this, so the cap only bites on the wide-open view.
@@ -57,6 +59,23 @@ const MEDIUM_ORDER: Medium[] = ['image', '3d', 'audio'];
 
 // A record is source (non-asset) when it has no medium — the null bucket, hidden by default.
 const isSource = (r: AssetRecord): boolean => r.medium === null;
+
+// Registry medium → MediaFrame format category (3d→model, source→doc). MediaFrame owns the framed
+// placeholder plate + ext-aware glyph; with no src/poster yet (asset URLs aren't served) it renders the
+// placeholder, and real image/3D previews light up automatically once those URLs land.
+const MEDIUM_TO_FRAME: Record<MediumKey, MediaFrameData['medium']> = {
+  image: 'image',
+  '3d': 'model',
+  audio: 'audio',
+  source: 'doc',
+};
+const toFrameData = (r: AssetRecord): MediaFrameData => ({
+  medium: MEDIUM_TO_FRAME[mediumKey(r)],
+  mediumType: r.mediumType ?? undefined,
+  ext: r.ext,
+  alt: r.base,
+  tone: MEDIUM_STYLE[mediumKey(r)].tone,
+});
 
 interface Filters {
   showSource: boolean;
@@ -440,16 +459,7 @@ function AssetTile({
       }}
     >
       <Card.Header>
-        <div
-          className="cc-explorer__thumb"
-          style={{ ['--cc-medium' as string]: style.hex }}
-          aria-hidden
-        >
-          <span className="cc-explorer__glyph">{style.glyph}</span>
-          <Badge className="cc-explorer__typebadge" tone={style.tone} variant="soft" size="sm">
-            {typeLabel}
-          </Badge>
-        </div>
+        <MediaFrame data={toFrameData(record)} ratio="16 / 9" />
       </Card.Header>
       <Card.Body>
         <Stack gap={2}>
@@ -540,13 +550,7 @@ function Inspector({
       }
     >
       <div className="cc-explorer__inspector">
-        <div
-          className="cc-explorer__thumb cc-explorer__thumb--lg"
-          style={{ ['--cc-medium' as string]: style.hex }}
-          aria-hidden
-        >
-          <span className="cc-explorer__glyph">{style.glyph}</span>
-        </div>
+        <MediaFrame data={toFrameData(record)} ratio="16 / 9" />
         <Inline wrap gap={1} className="cc-explorer__inspectorbadges">
           <Badge tone={style.tone} variant="soft" size="sm">
             {record.medium ?? 'source'}
