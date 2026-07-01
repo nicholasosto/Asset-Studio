@@ -35,22 +35,20 @@ Owner constraint: **keep the existing per-file metadata we set** — re-categori
 through `external-locations/`; it never duplicates it. Current-state established in
 [[2026-07-01-audit-asset-explorer-and-design-the-asset-registry-contract]].
 
-## Plan
+## Phases
 
-- **Phase 1 — Asset-registry contract.** Stand up a scanner that walks the shared library via
-  `external-locations/assets` and emits `previews/dashboards/asset-registry.json` — the Explorer's data
-  contract, the same "emit a contract, render it" pattern as `render-hub.mjs`. Preserve every existing
-  metadata field verbatim.
-- **Phase 2 — Taxonomy refactor.** Derive a game-agnostic `medium` / `mediumType` classification from the
-  existing `kind` + `ext` + `area` + filename signals. Drop `domain` as a structural axis; keep the raw
-  file metadata untouched. (Decision-worthy — will spawn an ADR.)
-- **Phase 3 — Explorer view in the app.** Build the gallery as a React view in `apps/command-center`,
-  rendered with `@trembus/ui` + `@trembus/viz` + `@trembus/tokens`: thumbnail grid, medium/mediumType
-  facets, status + ext + recency filters, detail inspector.
-- **Phase 4 — Wire it Live.** Add the Explorer to `previews/index.html` and flip its card from
-  **Soon → Live**, alongside the Hub lens.
-- **Phase 5 — Retire the source artifact.** Cross-link from Soul-Steel and deprecate the standalone
-  `asset-explorer.html` once parity is verified.
+The structured plan the Command Center renders as a Timeline. Phase 0 is complete; Phase 1 is next.
+
+```json
+[
+  { "id": "p0", "label": "Audit & taxonomy decision", "status": "done", "detail": "Explorer audited and the target taxonomy chosen — Medium ▸ MediumType adopted, the Soul-Steel domain axis dropped (ADR 0002)." },
+  { "id": "p1", "label": "Asset-registry contract", "status": "planned", "detail": "Next: a scanner over external-locations/assets emits asset-registry.json, preserving every existing metadata field — same emit-a-contract pattern as render-hub.mjs." },
+  { "id": "p2", "label": "Taxonomy refactor", "status": "planned", "detail": "Derive medium/mediumType from kind + ext + area + filename per ADR 0002; domain retained only as an optional hidden tag." },
+  { "id": "p3", "label": "Explorer view in the app", "status": "planned", "detail": "React gallery in apps/command-center via @trembus/ui + viz + tokens: thumbnail grid, medium/mediumType facets, status/ext/recency filters, detail inspector." },
+  { "id": "p4", "label": "Wire it Live", "status": "planned", "detail": "Add the Explorer to previews/index.html and flip its card Soon → Live, alongside the Hub lens." },
+  { "id": "p5", "label": "Retire the source artifact", "status": "planned", "detail": "Cross-link from Soul-Steel and deprecate the standalone asset-explorer.html once parity is verified." }
+]
+```
 
 ## Open questions
 
