@@ -10,8 +10,8 @@
     "workflow": "workflows",
     "medium": "mediums"
   },
-  "entities": 17,
-  "migrated": 17,
+  "entities": 22,
+  "migrated": 22,
   "counts": {
     "error": 0,
     "warning": 0,
@@ -44,6 +44,33 @@
       "updated": "2026-07-01",
       "file": "_project/decisions/0003-roadmap-equals-one-initiative-the-ribbon-is-the-project-mile.md",
       "excerpt": "The word \"roadmap\" was carrying three meanings at once and getting muddy: the Roadmap panel (a view in the Command Center), the roadmap kind (a _project/roadmap/*.md entity), and \"the Roadmap\" (the project's forward pla…"
+    },
+    {
+      "id": "0004-serve-the-shared-asset-library-to-the-command-center-spa",
+      "kind": "decision",
+      "title": "Serve the shared asset library to the Command Center SPA",
+      "status": "accepted",
+      "updated": "2026-07-01",
+      "file": "_project/decisions/0004-serve-the-shared-asset-library-to-the-command-center-spa.md",
+      "excerpt": "The migrated Asset Explorer rendered every asset as a placeholder plate — parity gap CF-1, the blocker for Phase 5 of [[migrate-asset-explorer-into-the-command-center]]. To show real image/audio/3D previews it needs the…"
+    },
+    {
+      "id": "0005-bake-asset-studio-owned-image-thumbnails-in-the-registry-bui",
+      "kind": "decision",
+      "title": "Bake Asset-Studio-owned image thumbnails in the registry builder",
+      "status": "accepted",
+      "updated": "2026-07-01",
+      "file": "_project/decisions/0005-bake-asset-studio-owned-image-thumbnails-in-the-registry-bui.md",
+      "excerpt": "The migrated Asset Explorer rendered image tiles as ext-glyph placeholders because asset-registry.json carried no thumb — the v1 builder deferred thumbnail generation (part of CF-1, the Phase-5 blocker on [[migrate-asse…"
+    },
+    {
+      "id": "0006-reveal-in-finder-and-copy-asset-id-from-the-explorer",
+      "kind": "decision",
+      "title": "Reveal in Finder and copy asset id from the Explorer",
+      "status": "accepted",
+      "updated": "2026-07-01",
+      "file": "_project/decisions/0006-reveal-in-finder-and-copy-asset-id-from-the-explorer.md",
+      "excerpt": "The migrated Explorer's inspector ended in a disabled ghost IconButton (\"Open in library\") tooltipped \"isn't wired in yet\" — a visible parity gap against the to-be-retired Soul-Steel asset-explorer.html (roadmap p5), wh…"
     },
     {
       "id": "2026-07-01-session-review-explorer-migration-and-tcl-round-trip",
@@ -100,6 +127,15 @@
       "excerpt": "Establish the real current-state of the Soul-Steel Asset Explorer and agree the target category system, so [[migrate-asset-explorer-into-the-command-center]] can plan on evidence rather than guesses."
     },
     {
+      "id": "2026-07-01-bring-the-asset-explorer-to-preview-parity-cf-1",
+      "kind": "session",
+      "title": "Bring the Asset Explorer to preview parity (CF-1)",
+      "status": "completed",
+      "updated": "2026-07-01",
+      "file": "_project/sessions/2026-07-01-bring-the-asset-explorer-to-preview-parity-cf-1.md",
+      "excerpt": "Close carry-forward CF-1 — the Phase-5 blocker on [[migrate-asset-explorer-into-the-command-center]]: make the migrated Explorer render the real previews + affordances the to-be-retired Soul-Steel asset-explorer.html (r…"
+    },
+    {
       "id": "2026-07-01-build-the-asset-explorer-view",
       "kind": "session",
       "title": "Build the Asset Explorer view",
@@ -107,6 +143,15 @@
       "updated": "2026-07-01",
       "file": "_project/sessions/2026-07-01-build-the-asset-explorer-view.md",
       "excerpt": "Phase 3 of [[migrate-asset-explorer-into-the-command-center]] — turn asset-registry.json into a browsable Explorer view inside the Command Center, on the Trembus component library."
+    },
+    {
+      "id": "2026-07-01-deep-review-of-the-project-space-and-remediation",
+      "kind": "session",
+      "title": "Deep review of the project space and remediation",
+      "status": "completed",
+      "updated": "2026-07-01",
+      "file": "_project/sessions/2026-07-01-deep-review-of-the-project-space-and-remediation.md",
+      "excerpt": "An independent deep assessment of the whole space — architecture, data flow, and cross-document consistency (CLAUDE.md · memories · ADRs · corpus · code) — explicitly NOT taking the ADRs as gospel, then remediation of e…"
     },
     {
       "id": "2026-07-01-surface-the-asset-explorer-live-and-hold-the-soul-steel-reti",
@@ -166,7 +211,7 @@
       "updated": "2026-06-30",
       "file": "_project/mediums/audio.md",
       "tags": {
-        "mediumType": "audio",
+        "mediumType": "audio-sfx",
         "tool": "elevenlabs",
         "pattern": "symlink"
       },
@@ -189,14 +234,17 @@
   ],
   "byKind": {
     "decision": {
-      "total": 3,
+      "total": 6,
       "byStatus": {
-        "accepted": 3
+        "accepted": 6
       },
       "ids": [
         "0001-reference-the-shared-asset-library-via-external-locations",
         "0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy",
-        "0003-roadmap-equals-one-initiative-the-ribbon-is-the-project-mile"
+        "0003-roadmap-equals-one-initiative-the-ribbon-is-the-project-mile",
+        "0004-serve-the-shared-asset-library-to-the-command-center-spa",
+        "0005-bake-asset-studio-owned-image-thumbnails-in-the-registry-bui",
+        "0006-reveal-in-finder-and-copy-asset-id-from-the-explorer"
       ],
       "tone": "info",
       "statusOrder": [
@@ -255,15 +303,17 @@
       ]
     },
     "session": {
-      "total": 5,
+      "total": 7,
       "byStatus": {
-        "completed": 5
+        "completed": 7
       },
       "ids": [
         "2026-06-30-stand-up-the-launchable-previews-site",
         "2026-07-01-adopt-the-tcl-mediaframe-in-the-explorer",
         "2026-07-01-audit-asset-explorer-and-design-the-asset-registry-contract",
+        "2026-07-01-bring-the-asset-explorer-to-preview-parity-cf-1",
         "2026-07-01-build-the-asset-explorer-view",
+        "2026-07-01-deep-review-of-the-project-space-and-remediation",
         "2026-07-01-surface-the-asset-explorer-live-and-hold-the-soul-steel-reti"
       ],
       "tone": "warning",
@@ -324,6 +374,24 @@
       "target": "roadmap/migrate-asset-explorer-into-the-command-center"
     },
     {
+      "from": "0004-serve-the-shared-asset-library-to-the-command-center-spa",
+      "fromKind": "decision",
+      "rel": "references",
+      "target": "roadmap/migrate-asset-explorer-into-the-command-center"
+    },
+    {
+      "from": "0005-bake-asset-studio-owned-image-thumbnails-in-the-registry-bui",
+      "fromKind": "decision",
+      "rel": "references",
+      "target": "roadmap/migrate-asset-explorer-into-the-command-center"
+    },
+    {
+      "from": "0006-reveal-in-finder-and-copy-asset-id-from-the-explorer",
+      "fromKind": "decision",
+      "rel": "references",
+      "target": "roadmap/migrate-asset-explorer-into-the-command-center"
+    },
+    {
       "from": "2026-07-01-session-review-explorer-migration-and-tcl-round-trip",
       "fromKind": "report",
       "rel": "references",
@@ -354,10 +422,40 @@
       "target": "decisions/0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy"
     },
     {
+      "from": "2026-07-01-bring-the-asset-explorer-to-preview-parity-cf-1",
+      "fromKind": "session",
+      "rel": "references",
+      "target": "roadmap/migrate-asset-explorer-into-the-command-center"
+    },
+    {
       "from": "2026-07-01-build-the-asset-explorer-view",
       "fromKind": "session",
       "rel": "references",
       "target": "roadmap/migrate-asset-explorer-into-the-command-center"
+    },
+    {
+      "from": "2026-07-01-deep-review-of-the-project-space-and-remediation",
+      "fromKind": "session",
+      "rel": "references",
+      "target": "roadmap/migrate-asset-explorer-into-the-command-center"
+    },
+    {
+      "from": "2026-07-01-deep-review-of-the-project-space-and-remediation",
+      "fromKind": "session",
+      "rel": "references",
+      "target": "decisions/0004-serve-the-shared-asset-library-to-the-command-center-spa"
+    },
+    {
+      "from": "2026-07-01-deep-review-of-the-project-space-and-remediation",
+      "fromKind": "session",
+      "rel": "references",
+      "target": "decisions/0005-bake-asset-studio-owned-image-thumbnails-in-the-registry-bui"
+    },
+    {
+      "from": "2026-07-01-deep-review-of-the-project-space-and-remediation",
+      "fromKind": "session",
+      "rel": "references",
+      "target": "decisions/0006-reveal-in-finder-and-copy-asset-id-from-the-explorer"
     },
     {
       "from": "2026-07-01-surface-the-asset-explorer-live-and-hold-the-soul-steel-reti",
@@ -385,7 +483,7 @@
     }
   ],
   "edgesByRel": {
-    "references": 11,
+    "references": 19,
     "decided-in": 1
   },
   "workflows": {
@@ -813,10 +911,16 @@
         "detail": "The Command Center now builds as a self-contained SPA into previews/app/ (relative base; all contracts inlined); previews/index.html reworked to five Live lens cards incl. a deep-linked Asset Explorer (app/#explorer); the orphaned static command-center.html retired. Verified served from the :4317 static site."
       },
       {
+        "id": "cf1",
+        "label": "Preview parity (CF-1)",
+        "status": "done",
+        "detail": "Real previews landed: builder bakes 144px thumbs (sips → previews/thumbs) + a served /_assets src; a Vite dev middleware + committed previews/_assets symlink serve /_assets & /thumbs identically on :5175 dev and :4317 static; MediaFrame shows image thumbs (tile) + full image + glb/gltf turntable, AudioWaveform plays audio in the inspector; reveal-in-Finder (POST /api/reveal, Assets-root guarded) with copy-abs fallback + copy-path/copy-id. ADRs 0004–0006. Verified live on dev + static, 0 console errors."
+      },
+      {
         "id": "p5",
         "label": "Retire the source artifact",
-        "status": "parked",
-        "detail": "Parked on CF-1 preview parity: the Soul-Steel asset-explorer.html keeps working baked thumbnails + full-size image/audio previews that the migrated Explorer still renders as placeholders until asset URLs/posters are served. Deprecate + cross-link once parity lands — no cross-repo change made this session (the source file is generated; a banner must go in its generator)."
+        "status": "active",
+        "detail": "UNBLOCKED — CF-1 parity resolved (the migrated Explorer now renders the previews the Soul-Steel asset-explorer.html had). Remaining: deprecate + cross-link the Soul-Steel source. It is GENERATED, so the banner must go in its generator (tools/build-asset-explorer.mjs) — a cross-repo write held for explicit owner confirmation; no Soul-Steel change made this session."
       }
     ]
   },

@@ -18,40 +18,54 @@
 //   walk · parseTgl · statusSuffix · inferDomain · KIND_BY_EXT · the scan()
 //   field set (p/area/dir/base/stem/ext/kind/size/mtime/mtimeMs/domain/tgl/
 //   status/conformance/issue) · inferInstance · classifySpec/resBucket ·
-//   the CSV registry parse + join (parseCsvLine/loadRegistry/joinRegistry) ·
-//   the content-hash thumb NAMING (thumbName).
+//   the CSV registry parse + join (parseCsvLine/loadRegistry/joinRegistry;
+//   the join key now also strips a "Collection: " display prefix — see there) ·
+//   the thumb NAMING (thumbName — sha1 of the library-relative PATH, not content).
 //
 // What is NEW here:
 //   deriveMedium(rec)      -> 'image' | 'audio' | '3d' | null
 //   deriveMediumType(rec)  -> mediumType string | null   (see rules below)
 //   KIND_BY_EXT extended:  .ma -> model, .flac -> audio  (census: 1 each)
 //
-// What is DEFERRED to a later pass (kept as pure helpers / absent fields):
-//   image thumbnail generation (no sips/sharp) — thumb field stays ABSENT
+// What is NOW DONE (was deferred in v1) — the served-media layer for the app:
+//   image thumbnail generation via macOS sips → previews/thumbs/ (rec.thumb, bare name)
+//   a served /_assets/<p> `src` baked onto every real record (image/audio/3d)
+//   an `assetsRootAbs` payload field + the self-healed previews/_assets symlink
+//
+// Still DEFERRED (kept as pure helpers / absent fields):
 //   image dimension measurement (w/h/dims/res stay ABSENT; spec => 'n/a')
-//   the previews/_assets symlink + static HTML render.
+//   a portable (non-sips) thumbnail baker for non-macOS contributors
 //
 // FIELD-PRESENCE CONTRACT (preserved from reference): w, h, dims, res,
-// specIssue, reg, thumb are OPTIONAL — they are absent (not null) when N/A.
+// specIssue, reg, thumb, src are OPTIONAL — they are absent (not null) when N/A.
 // medium is null (explicit) for non-asset kinds; mediumType is null iff
 // medium is null; mediumType 'unknown' is only a defensive terminal.
 //
-// Fully deterministic + idempotent: no randomness, no wall-clock in any
-// derivation — the only clock read is the built/builtMs summary stamp.
+// Deterministic + idempotent in every DERIVED field: no randomness, no wall-clock.
+// The built/builtMs summary stamp is the one exception — every rebuild diffs the
+// JSON by those two lines. Thumbs are ALWAYS rebaked (no skip/kept path — ADR 0005);
+// sips output is byte-stable on a given macOS, so unchanged sources produce no
+// thumb churn, and orphaned thumbs (renamed/deleted sources) are pruned each bake.
 //
 // Usage:
-//   node tools/build-asset-registry.mjs               # write asset-registry.json
-//   node tools/build-asset-registry.mjs --print-json  # dump payload to stdout
+//   node tools/build-asset-registry.mjs               # write asset-registry.json (+ bake thumbs)
+//   node tools/build-asset-registry.mjs --no-thumbs   # skip sips; REUSES already-baked thumbs (non-macOS safe)
+//   node tools/build-asset-registry.mjs --print-json  # dump metadata payload to stdout (no disk writes)
 // ============================================================================
 
 import {
   existsSync,
+  lstatSync,
   mkdirSync,
   readdirSync,
   readFileSync,
+  realpathSync,
+  rmSync,
   statSync,
+  symlinkSync,
   writeFileSync,
 } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -64,6 +78,8 @@ const ASSETS_ROOT = join(PROJECT_ROOT, "external-locations", "assets");
 const DASHBOARD_DIR = join(PROJECT_ROOT, "previews", "dashboards");
 const OUT = join(DASHBOARD_DIR, "asset-registry.json");
 const REGISTRY_CSV = join(ASSETS_ROOT, "__master-asset-ids-validated.csv");
+const THUMBS_DIR = join(PROJECT_ROOT, "previews", "thumbs");   // Asset-Studio-OWNED thumb cache (not Soul-Steel's asset-explorer-thumbs)
+const ASSETS_LINK = join(PROJECT_ROOT, "previews", "_assets"); // committed symlink → shared library realpath (served as /_assets)
 
 // ── constants ─────────────────────────────────────────────────────────────
 const SKIP_DIRS = new Set(["_archive", "__pycache__", ".git", "node_modules"]);
@@ -99,6 +115,17 @@ const RE_MUSIC_TOKEN = /\b(theme|lobby|jingle|stinger|soundtrack|score)\b|^td-|b
 
 const args = new Set(process.argv.slice(2));
 const PRINT_JSON = args.has("--print-json");
+const WANT_THUMBS = !args.has("--no-thumbs");
+
+// readdir/stat failures during the scan — surfaced at the end, so a permission-broken
+// or half-mounted subtree can't silently vanish from the committed registry.
+let scanErrors = 0;
+
+// Per-segment percent-encoding for the served /_assets/<p> URL baked into each record
+// (spaces/parens are common in real asset paths). Mirrors the app's registry.ts encoder so
+// both ends agree on the scheme. See decision serve-the-shared-asset-library-to-the-spa.
+const encPath = (p) => p.split("/").map(encodeURIComponent).join("/");
+const assetUrl = (p) => `/_assets/${encPath(p)}`;
 
 // ── scan: walk ──────────────────────────────────────────────────────────
 // Recursive readdir; prune SKIP_DIRS whole-subtree; drop .DS_Store / .tmp* /
@@ -109,6 +136,7 @@ function walk(dir, relBase = "") {
   try {
     entries = readdirSync(dir, { withFileTypes: true });
   } catch {
+    scanErrors++;
     return out;
   }
   for (const entry of entries) {
@@ -303,6 +331,7 @@ function scan() {
     try {
       st = statSync(abs);
     } catch {
+      scanErrors++;
       continue;
     }
     const extDotted = extname(relPath).toLowerCase(); // ".png" — dotted, for KIND_BY_EXT
@@ -391,7 +420,9 @@ function parseCsvLine(line) {
 
 function loadRegistry() {
   if (!existsSync(REGISTRY_CSV)) return { rows: [], counts: {} };
-  const lines = readFileSync(REGISTRY_CSV, "utf8").trim().split("\n");
+  // The master CSV is CRLF-terminated — split on \r?\n so the last column of every
+  // row (and the last header key) doesn't keep a glued trailing "\r".
+  const lines = readFileSync(REGISTRY_CSV, "utf8").trim().split(/\r?\n/);
   const header = parseCsvLine(lines[0]);
   const rows = lines.slice(1).map((line) => {
     const cells = parseCsvLine(line);
@@ -406,7 +437,10 @@ function joinRegistry(records, registry) {
   const byName = new Map();
   for (const row of registry.rows) {
     if (!row.name) continue;
-    const key = row.name.split("/").pop().toLowerCase().replace(/[\s_-]/g, "");
+    // CSV names may carry a "Collection: name" display prefix (e.g. "Steel City UI:
+    // panel-ornate-gold") — strip it (and any path prefix) before keying, so display
+    // names can join against bare local stems.
+    const key = row.name.split("/").pop().split(":").pop().toLowerCase().replace(/[\s_-]/g, "");
     if (!byName.has(key)) byName.set(key, row); // first-writer-wins
   }
   let matched = 0;
@@ -422,13 +456,83 @@ function joinRegistry(records, registry) {
   return matched;
 }
 
-// ── thumbnails (naming helper only — GENERATION DEFERRED in v1) ────────────
-// Reserved content-hash naming contract: 'asset-explorer-thumbs/<sha1(p)[:12]>.png'.
-// Kept as a pure helper; NOT invoked in v1 (no sips/sharp, rec.thumb absent).
-// A later enrichment pass will generate PNGs and, only on success, set rec.thumb.
-// eslint-disable-next-line no-unused-vars
+// ── thumbnails (Asset-Studio-owned bake — sips → previews/thumbs/) ─────────
+// PATH-hash naming: '<sha1(p)[:12]>.png' (BARE — the app resolves it to the
+// /thumbs/<name> URL at render time). FAIL-SOFT: on any sips error we delete
+// rec.thumb so the field stays ABSENT (the field-presence contract) and the tile
+// placeholders. The framework-core zero-dep rule binds .project-system/, not this
+// project-owned tool, so shelling out to sips is allowed. macOS-only; non-mac
+// contributors run --no-thumbs. See decision
+// bake-owned-image-thumbnails-in-the-registry-builder.
 function thumbName(relPath) {
   return createHash("sha1").update(relPath).digest("hex").slice(0, 12) + ".png";
+}
+
+function buildThumbs(records) {
+  mkdirSync(THUMBS_DIR, { recursive: true });
+  let made = 0, failed = 0;
+  for (const rec of records) {
+    if (rec.medium !== "image") continue; // derive() has already set rec.medium
+    const name = thumbName(rec.p);
+    const out = join(THUMBS_DIR, name);
+    rec.thumb = name; // BARE filename; app resolves → /thumbs/<name>
+    // ALWAYS rebake — no mtime skip. The thumb name hashes the PATH (not content), so an mtime-based
+    // skip would keep a STALE thumbnail after a same-path content swap that preserved mtime (cp -p,
+    // rsync -a, restore, git checkout of an older-authored asset) while rec.src streams the new bytes.
+    // `sips -Z 144 -s format png` is byte-deterministic (verified: repeat bakes are sha-identical), so
+    // re-baking unchanged images produces ZERO git churn — correctness with no cost but ~seconds of CPU
+    // (use --no-thumbs to skip entirely).
+    try {
+      execFileSync("sips", ["-Z", "144", "-s", "format", "png", join(ASSETS_ROOT, rec.p), "--out", out], { stdio: "ignore" });
+      made++;
+    } catch {
+      failed++;
+      delete rec.thumb; // absent → placeholder plate
+    }
+  }
+  // Prune orphans: the name hashes the PATH, so a rename/delete in the library strands
+  // its old PNG forever — nothing else ever reclaims it. Expected = every image record's
+  // name (bake-failed ones INCLUDED, so a transient sips error never deletes a prior
+  // good thumb; the record just doesn't reference it this round).
+  const expected = new Set(records.filter((r) => r.medium === "image").map((r) => thumbName(r.p)));
+  let pruned = 0;
+  for (const name of readdirSync(THUMBS_DIR)) {
+    if (name.endsWith(".png") && !expected.has(name)) {
+      rmSync(join(THUMBS_DIR, name), { force: true });
+      pruned++;
+    }
+  }
+  return { made, failed, pruned };
+}
+
+// Idempotent self-heal of the previews/_assets symlink → the shared library realpath.
+// The link is also committed (per the .project-system convention of tracking the link, not
+// the payload); this repairs a missing/dangling/wrong one so a fresh scan (and the static
+// :4317 site, which serves /_assets THROUGH this link) works with no manual setup. Detect via
+// lstat (NOT existsSync, which follows the link and reports a DANGLING link as absent → the
+// naive create then throws EEXIST and silently leaves the bad link). Returns true if it wrote.
+function ensureAssetsLink() {
+  const want = realpathSync(ASSETS_ROOT); // the target the link must resolve to
+  let link;
+  try {
+    link = lstatSync(ASSETS_LINK); // stat the link itself, don't follow it
+  } catch {
+    try { symlinkSync(want, ASSETS_LINK); return true; } // absent → create
+    catch (e) { console.warn(`  warn: previews/_assets not created — ${e.message}`); return false; }
+  }
+  let target = null;
+  if (link.isSymbolicLink()) { try { target = realpathSync(ASSETS_LINK); } catch { /* dangling */ } }
+  if (target === want) return false; // already correct — nothing to do
+  // Dangling, wrong target, or a non-symlink file: replace it (rmSync without recursive won't
+  // clobber a real directory — it throws, we warn, we never delete a populated dir).
+  try {
+    rmSync(ASSETS_LINK, { force: true });
+    symlinkSync(want, ASSETS_LINK);
+    return true;
+  } catch (e) {
+    console.warn(`  warn: previews/_assets not repaired (was ${target ?? "dangling/non-link"}) — ${e.message}`);
+    return false;
+  }
 }
 
 // ── small helper ──────────────────────────────────────────────────────────
@@ -453,13 +557,47 @@ function main() {
   const regMatched = joinRegistry(records, registry);
   const { unknown } = derive(records);
 
+  // Bake the served-media side effects BEFORE building the payload so `thumb`/`src`
+  // flow into the JSON — but SKIP them under --print-json so that stays a pure,
+  // side-effect-free metadata dump (no symlink, no PNGs, no src/thumb fields).
+  let thumbStats = { made: 0, failed: 0, pruned: 0, reused: 0 };
+  if (!PRINT_JSON) {
+    ensureAssetsLink();
+    if (WANT_THUMBS) {
+      thumbStats = { ...thumbStats, ...buildThumbs(records) }; // sets rec.thumb on image records
+      // A 100% bake failure means sips is missing/broken (non-macOS) — writing this
+      // registry would silently strip every thumb reference from the committed JSON.
+      // Abort loudly instead of shipping a placeholder regression with exit 0.
+      if (thumbStats.failed > 0 && thumbStats.made === 0) {
+        console.error(`asset-registry: ALL ${thumbStats.failed} thumbnail bakes failed — is \`sips\` available on this machine?`);
+        console.error("  nothing written. Re-run with --no-thumbs to reuse the already-baked previews/thumbs/.");
+        process.exit(1);
+      }
+    } else {
+      // --no-thumbs: skip the bake, but REUSE any thumb already baked for the same path,
+      // so a non-macOS (or fast) run never strips the committed bake out of the registry.
+      for (const rec of records) {
+        if (rec.medium !== "image") continue;
+        const name = thumbName(rec.p);
+        if (existsSync(join(THUMBS_DIR, name))) {
+          rec.thumb = name;
+          thumbStats.reused++;
+        }
+      }
+    }
+    for (const rec of records) if (rec.medium) rec.src = assetUrl(rec.p); // served full-asset URL (real mediums only)
+  }
+
   const now = new Date();
   const payload = {
     built: now.toISOString().slice(0, 16).replace("T", " "),
     builtMs: now.getTime(),
     assetsRootHint: "external-locations/assets",
+    assetsRootAbs: realpathSync(ASSETS_ROOT), // absolute library root — the copy-abs / reveal-fallback path
     taxonomy: { version: 1, axis: "medium/mediumType", statusVocab: ["BLK", "ALPHA", "BETA", "FNL"] },
-    registry: { total: registry.rows.length, ...registry.counts },
+    // counts keys come verbatim from the CSV status column — spread FIRST so a status
+    // value literally named "total" can never clobber the row count.
+    registry: { ...registry.counts, total: registry.rows.length },
     counts: {
       total: records.length,
       byMedium: tally(records, (r) => r.medium ?? "(source)"),
@@ -480,11 +618,12 @@ function main() {
   mkdirSync(DASHBOARD_DIR, { recursive: true });
   writeFileSync(OUT, JSON.stringify(payload, null, 2));
 
-  // TODO(v2, own PR): generate thumbnails via a portable tool (sharp/ImageMagick,
-  //   not macOS sips) keyed by thumbName(rec.p); stamp rec.thumb only on success.
-  // TODO(v2): measure image dims (w/h/dims/res) so classifySpec yields real verdicts.
-  // TODO(v2): ensure the previews/_assets symlink + render the static HTML explorer.
-  //   See the reference tool build-asset-explorer.mjs for the deferred pieces.
+  // DONE: image thumbnails baked via macOS sips → previews/thumbs/ (rec.thumb), each real
+  //   record given a served /_assets/<p> `src`, and the previews/_assets symlink self-healed.
+  //   See the ADRs serve-the-shared-asset-library-to-the-spa +
+  //   bake-owned-image-thumbnails-in-the-registry-builder.
+  // TODO: measure image dims (w/h/dims/res) so classifySpec yields real verdicts (portable, no sips).
+  // TODO: a portable thumbnail baker (sharp/ImageMagick) for non-macOS contributors (today: --no-thumbs).
 
   const strays = records.filter((r) => r.conformance === "stray").length;
   console.log(`asset-registry: ${records.length} files scanned`);
@@ -493,6 +632,9 @@ function main() {
   console.log(`  unknown mediumType: ${unknown}`);
   console.log(`  tgl strays (library payloads): ${strays}`);
   console.log(`  registry: ${registry.rows.length} rows, ${regMatched} matched to local files`);
+  if (WANT_THUMBS) console.log(`  thumbs: ${thumbStats.made} baked, ${thumbStats.failed} failed, ${thumbStats.pruned} orphans pruned`);
+  else console.log(`  thumbs: bake skipped (--no-thumbs); ${thumbStats.reused} already-baked thumbs reused`);
+  if (scanErrors) console.warn(`  WARN: ${scanErrors} unreadable entries skipped during the scan — the registry may be missing records`);
   console.log(`  wrote ${OUT}`);
 }
 

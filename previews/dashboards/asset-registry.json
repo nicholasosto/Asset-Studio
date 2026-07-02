@@ -1,7 +1,8 @@
 {
-  "built": "2026-07-01 13:12",
-  "builtMs": 1782911559980,
+  "built": "2026-07-01 21:32",
+  "builtMs": 1782941524280,
   "assetsRootHint": "external-locations/assets",
+  "assetsRootAbs": "/Users/nicholasosto/Master-Managed/Assets",
   "taxonomy": {
     "version": 1,
     "axis": "medium/mediumType",
@@ -13,10 +14,10 @@
     ]
   },
   "registry": {
-    "total": 193,
     "error": 178,
     "placeholder": 7,
-    "ok": 8
+    "ok": 8,
+    "total": 193
   },
   "counts": {
     "total": 769,
@@ -81,6 +82,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/layouts/robotic/LAY_ROM_SluiceRun_BLK.rbxm",
       "mtimeMs": 1782124860467
     },
     {
@@ -186,6 +188,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "8ce303db2623.png",
+      "src": "/_assets/3D-asset-art/futuristic-business-fill-bars-concept-03-premium-ops.png",
       "mtimeMs": 1781290306906
     },
     {
@@ -207,6 +211,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "817e3ea17fa7.png",
+      "src": "/_assets/3D-asset-art/futuristic-business-fill-bars-concept-02-light-saas.png",
       "mtimeMs": 1781290306902
     },
     {
@@ -228,6 +234,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "c40de1f283ab.png",
+      "src": "/_assets/3D-asset-art/futuristic-business-fill-bars-concept-01-dark-enterprise.png",
       "mtimeMs": 1781290306897
     },
     {
@@ -249,6 +257,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "2149ce469d99.png",
+      "src": "/_assets/3D-asset-art/mechanical-iris-modular-spec.png",
       "mtimeMs": 1781260831560
     },
     {
@@ -270,6 +280,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "eb42a9f578e0.png",
+      "src": "/_assets/textures/tileable/shared/interior-painted-service-wall-01_BLK.png",
       "mtimeMs": 1781184067068
     },
     {
@@ -291,6 +303,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "b072e21dfd66.png",
+      "src": "/_assets/textures/tileable/robotic/interior-service-panel-wall-01_BLK.png",
       "mtimeMs": 1781184066760
     },
     {
@@ -564,6 +578,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "9521c2b38c05.png",
+      "src": "/_assets/textures/tileable/shared/exterior-utility-brick-wall-01_BLK.png",
       "mtimeMs": 1781183900559
     },
     {
@@ -585,6 +601,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "af7e4b31dd84.png",
+      "src": "/_assets/textures/tileable/fateless/interior-void-inlay-wall-01_BLK.png",
       "mtimeMs": 1781183900292
     },
     {
@@ -606,6 +624,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "3dd672f1a695.png",
+      "src": "/_assets/textures/tileable/fateless/exterior-null-stone-wall-01_BLK.png",
       "mtimeMs": 1781183900093
     },
     {
@@ -627,6 +647,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "87df74ab8826.png",
+      "src": "/_assets/textures/tileable/robotic/exterior-industrial-armor-wall-01_BLK.png",
       "mtimeMs": 1781183899449
     },
     {
@@ -648,6 +670,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "0e997d31d95b.png",
+      "src": "/_assets/textures/tileable/spirit/interior-lumen-panel-wall-01_BLK.png",
       "mtimeMs": 1781183899146
     },
     {
@@ -669,6 +693,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "42a571e95830.png",
+      "src": "/_assets/textures/tileable/spirit/exterior-moonlit-sanctum-wall-01_BLK.png",
       "mtimeMs": 1781183899009
     },
     {
@@ -690,6 +716,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "84ed03789c03.png",
+      "src": "/_assets/textures/tileable/decay/interior-mold-plaster-wall-01_BLK.png",
       "mtimeMs": 1781183898820
     },
     {
@@ -711,6 +739,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "fd6a899054ca.png",
+      "src": "/_assets/textures/tileable/decay/exterior-lichen-ruin-wall-01_BLK.png",
       "mtimeMs": 1781183898557
     },
     {
@@ -732,6 +762,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "49565d942d3f.png",
+      "src": "/_assets/textures/tileable/blood/interior-crimson-rite-wall-01_BLK.png",
       "mtimeMs": 1781183898332
     },
     {
@@ -753,6 +785,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "5246591a8107.png",
+      "src": "/_assets/textures/tileable/blood/exterior-sanguine-block-wall-01_BLK.png",
       "mtimeMs": 1781183898167
     },
     {
@@ -900,6 +934,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "70acdc85a039.png",
+      "src": "/_assets/textures/tileable/shared/utility-concrete-floor-01_BLK.png",
       "mtimeMs": 1781182864136
     },
     {
@@ -921,6 +957,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "766e113d11e7.png",
+      "src": "/_assets/textures/tileable/fateless/null-slate-floor-01_BLK.png",
       "mtimeMs": 1781182863920
     },
     {
@@ -942,6 +980,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "5fad9aa22542.png",
+      "src": "/_assets/textures/tileable/robotic/depot-grate-floor-02_BLK.png",
       "mtimeMs": 1781182863678
     },
     {
@@ -963,6 +1003,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "a8a7b87a24fb.png",
+      "src": "/_assets/textures/tileable/spirit/lumen-rune-floor-01_BLK.png",
       "mtimeMs": 1781182863446
     },
     {
@@ -984,6 +1026,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "10681487f888.png",
+      "src": "/_assets/textures/tileable/decay/moss-cracked-stone-floor-01_BLK.png",
       "mtimeMs": 1781182863313
     },
     {
@@ -1005,6 +1049,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "a4c95d447186.png",
+      "src": "/_assets/textures/tileable/blood/sacrificial-vein-floor-01_BLK.png",
       "mtimeMs": 1781182863124
     },
     {
@@ -1047,6 +1093,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "89fed396e6fd.png",
+      "src": "/_assets/textures/tileable/robotic/generic-panel-01-normal_BLK.png",
       "mtimeMs": 1781181614969
     },
     {
@@ -1068,6 +1116,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "3399b4c60a04.png",
+      "src": "/_assets/pre-stamp/simple_square_212179542.png",
       "mtimeMs": 1781144046587
     },
     {
@@ -1089,6 +1139,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "8d84fce86ec0.png",
+      "src": "/_assets/pre-stamp/goku_fighting_a_new_alien_3784504211.png",
       "mtimeMs": 1781143804111
     },
     {
@@ -1131,6 +1183,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/exports/StylizedHuman_scale_test.fbx",
       "mtimeMs": 1781128054113
     },
     {
@@ -1152,6 +1205,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/exports/GothicChainTower_BLK_0p01_scale2.fbx",
       "mtimeMs": 1781127800120
     },
     {
@@ -1173,6 +1227,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/exports/GothicChainTower_BLK_0p01_scale.fbx",
       "mtimeMs": 1781127679176
     },
     {
@@ -1215,6 +1270,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/Good-Tower.blend",
       "mtimeMs": 1780240144205
     },
     {
@@ -1242,6 +1298,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/props/robotic/PRP_FNC_CorrosionSprayer_BLK.rbxm",
       "mtimeMs": 1780232440802
     },
     {
@@ -1269,6 +1326,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/props/robotic/PRP_FNC_MissileRig_BLK.rbxm",
       "mtimeMs": 1780231582381
     },
     {
@@ -1296,6 +1354,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/props/robotic/PRP_FNC_SentryTurret_BLK.rbxm",
       "mtimeMs": 1780231563097
     },
     {
@@ -1323,6 +1382,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/props/robotic/PRP_FNC_BeamCoil_BLK.rbxm",
       "mtimeMs": 1780231542212
     },
     {
@@ -1350,6 +1410,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/props/robotic/PRP_FNC_DisruptorCoil_BLK.rbxm",
       "mtimeMs": 1780231486474
     },
     {
@@ -1371,6 +1432,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/soul-steel/robotic-head-01.blend",
       "mtimeMs": 1780149311977
     },
     {
@@ -1399,6 +1461,7 @@
       "medium": "3d",
       "mediumType": "3d-rig",
       "spec": "n/a",
+      "src": "/_assets/library/rigs/robotic/RIG_ROGUEX-33_BLK.rbxm",
       "mtimeMs": 1780147638758
     },
     {
@@ -1420,6 +1483,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "0b4fb35f6078.png",
+      "src": "/_assets/source/meshy-exports/Meshy_AI_Roguex_33_Roblox_Read_0530125622_texture_fbx/Meshy_AI_Roguex_33_Roblox_Read_0530125622_texture.fbm/texture_0.png",
       "mtimeMs": 1780146910024
     },
     {
@@ -1462,6 +1527,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/meshy-exports/Meshy_AI_Roguex_33_Roblox_Read_0530125622_texture_fbx/Meshy_AI_Roguex_33_Roblox_Read_0530125622_texture.fbx",
       "mtimeMs": 1780145783000
     },
     {
@@ -1483,6 +1549,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "a7635f7a13cc.png",
+      "src": "/_assets/source/meshy-exports/Meshy_AI_Roguex_33_Roblox_Read_0530125622_texture_fbx/Meshy_AI_Roguex_33_Roblox_Read_0530125622_texture.png",
       "mtimeMs": 1780145782000
     },
     {
@@ -1504,6 +1572,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "9d161ffa8eb9.png",
+      "src": "/_assets/concept-art/soul-steel/characters/Raspmutant/Raspmutant-3D-Pose-Side.png",
       "mtimeMs": 1780139178027
     },
     {
@@ -1525,6 +1595,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "e5b2389c60ff.png",
+      "src": "/_assets/concept-art/soul-steel/characters/Raspmutant/Raspmutant-3D-Pose-Front%20copy.png",
       "mtimeMs": 1780139114448
     },
     {
@@ -1546,6 +1618,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "1d28565e5ba6.png",
+      "src": "/_assets/concept-art/soul-steel/characters/Raspmutant/Raspmutant-3D-Pose-Front.png",
       "mtimeMs": 1780139107197
     },
     {
@@ -1588,6 +1662,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "0d7c294a5081.png",
+      "src": "/_assets/concept-art/soul-steel/characters/Roguex-33/Roguex33-3DAssetBase-NoAccessories-v01.png",
       "mtimeMs": 1780138747807
     },
     {
@@ -1609,6 +1685,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "baf65a40d46c.png",
+      "src": "/_assets/concept-art/soul-steel/characters/Roguex-33/Roguex33-CombatReveal-v01.png",
       "mtimeMs": 1780137024060
     },
     {
@@ -1630,6 +1708,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "8df8e04e4f1b.png",
+      "src": "/_assets/concept-art/soul-steel/characters/Roguex-33/Roguex33-GridDistrictStall-v01.png",
       "mtimeMs": 1780136957742
     },
     {
@@ -1651,6 +1731,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/meshy-exports/dragonling-pet-01.blend",
       "mtimeMs": 1780136877552
     },
     {
@@ -1672,6 +1753,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "db83e29f1143.png",
+      "src": "/_assets/concept-art/soul-steel/characters/Roguex-33/Roguex33-ConceptSheet-v01.png",
       "mtimeMs": 1780136797941
     },
     {
@@ -1693,6 +1776,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/meshy-exports/cyber-skill-uv-unwrapped.blend",
       "mtimeMs": 1780135259344
     },
     {
@@ -1714,6 +1798,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "6885d940c94d.png",
+      "src": "/_assets/3D-asset-art/pets-mounts/dragonling/dragonling-pet-side-quarter.jpg",
       "mtimeMs": 1780134557659
     },
     {
@@ -1735,6 +1821,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "8ec6fa41b047.png",
+      "src": "/_assets/3D-asset-art/pets-mounts/dragonling/dragonling-pet-back.jpg",
       "mtimeMs": 1780134541754
     },
     {
@@ -1756,6 +1844,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "d2b1a3901e75.png",
+      "src": "/_assets/3D-asset-art/pets-mounts/dragonling/dragonling-pet-front.jpg",
       "mtimeMs": 1780134499272
     },
     {
@@ -1777,6 +1867,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "7c177323f018.png",
+      "src": "/_assets/3D-asset-art/pets-mounts/dragonling/dragonling-pet-side.jpg",
       "mtimeMs": 1780134467057
     },
     {
@@ -1804,6 +1896,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/layouts/robotic/LAY_ZON_RoguexDepot_ALPHA.rbxm",
       "mtimeMs": 1780076611829
     },
     {
@@ -1825,6 +1918,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "87a18c1cc42a.png",
+      "src": "/_assets/textures/skybox/soul-steel-01/dn_BLK.png",
       "mtimeMs": 1780071739736
     },
     {
@@ -2035,6 +2130,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "2374737f921c.png",
+      "src": "/_assets/ui/slice-frames/frame-decay-title-bar-2_BLK.png",
       "mtimeMs": 1780057313439
     },
     {
@@ -2077,6 +2174,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "4659d9ff86fc.png",
+      "src": "/_assets/ui/slice-frames/frame-robot-title-bar-2_BLK.png",
       "mtimeMs": 1780055979713
     },
     {
@@ -2098,6 +2197,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "31d22f53d4b6.png",
+      "src": "/_assets/ui/slice-frames/frame-blood-title-bar-2_BLK.png",
       "mtimeMs": 1780054470383
     },
     {
@@ -2119,6 +2220,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "e6b87108f435.png",
+      "src": "/_assets/ui/slice-frames/titlebar-blood-domain-wide_BLK.png",
       "mtimeMs": 1780053740562
     },
     {
@@ -2140,6 +2243,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "9c99fc6f8560.png",
+      "src": "/_assets/ui/slice-frames/button-compact-original-style_BLK.png",
       "mtimeMs": 1779990316404
     },
     {
@@ -2182,6 +2287,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "f7e5d445a170.png",
+      "src": "/_assets/ui/slice-frames/titlebar-compact-original-style_BLK.png",
       "mtimeMs": 1779990316248
     },
     {
@@ -2203,6 +2310,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "6e33bc9b8231.png",
+      "src": "/_assets/ui/slice-frames/panel-micro-original-style_BLK.png",
       "mtimeMs": 1779990316046
     },
     {
@@ -2224,6 +2333,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "afaca81b5ae5.png",
+      "src": "/_assets/ui/slice-frames/panel-compact-original-style_BLK.png",
       "mtimeMs": 1779990315926
     },
     {
@@ -2266,6 +2377,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "7ad02b832cc0.png",
+      "src": "/_assets/ui/slice-frames/titlebar-compact-cyber-cyan_BLK.png",
       "mtimeMs": 1779989366705
     },
     {
@@ -2287,6 +2400,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "b3c5e5cc8b96.png",
+      "src": "/_assets/ui/slice-frames/panel-micro-cyber-cyan_BLK.png",
       "mtimeMs": 1779989366516
     },
     {
@@ -2308,6 +2423,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "a6b8536a425c.png",
+      "src": "/_assets/ui/slice-frames/panel-compact-arcane-gold_BLK.png",
       "mtimeMs": 1779989366374
     },
     {
@@ -2329,6 +2446,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "f88c859bece8.png",
+      "src": "/_assets/ui/slice-frames/panel-compact-cyber-cyan_BLK.png",
       "mtimeMs": 1779989366006
     },
     {
@@ -2356,6 +2475,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/props/robotic/PRP_INT_SignalConsole_BLK.rbxm",
       "mtimeMs": 1779816059918
     },
     {
@@ -2377,6 +2497,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "02292e8ec327.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/blood-decay-evolution/decay-blood-evolution-example.png",
       "mtimeMs": 1779704492202
     },
     {
@@ -2398,6 +2520,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "41b1bbcbbdac.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/blood-decay-evolution/decay-blood-evolution-battle-scene.png",
       "mtimeMs": 1779704457712
     },
     {
@@ -2419,6 +2543,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "6d99815a8445.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/blood-decay-evolution/blood-decay-starter-creatures.png",
       "mtimeMs": 1779703763723
     },
     {
@@ -2440,6 +2566,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "578634ac78d0.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/blood-decay-evolution/decay-blood-evolution-arena.png",
       "mtimeMs": 1779703718740
     },
     {
@@ -2461,6 +2589,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/saves/Codex_May24_Test_1.blend",
       "mtimeMs": 1779620334368
     },
     {
@@ -2482,6 +2611,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/soul-steel/autorig-fix-20260517/arc_turret_rbx_ai.blend",
       "mtimeMs": 1779542229728
     },
     {
@@ -2503,6 +2633,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/meshy-exports/Futuristic_Robot_Head_Meshy.blend",
       "mtimeMs": 1779542090923
     },
     {
@@ -2545,6 +2676,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "9af84f7b0dd1.png",
+      "src": "/_assets/3D-asset-art/tower-defense-towers/beam-coil/beam-coil-production-board.png",
       "mtimeMs": 1779536508471
     },
     {
@@ -3322,6 +3455,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/gitf-exports/Arc_Turret_V1.gltf",
       "mtimeMs": 1779534944228
     },
     {
@@ -3343,6 +3477,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "1b1401f4137f.png",
+      "src": "/_assets/pre-stamp/temp-for-3D-gen/Arc-Tower.png",
       "mtimeMs": 1779533307488
     },
     {
@@ -3364,6 +3500,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "5d439354bc73.png",
+      "src": "/_assets/concept-art/soul-steel/Soul-Steel-Reality-Board.png",
       "mtimeMs": 1779527930601
     },
     {
@@ -3385,6 +3523,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "62cb4ad26d78.png",
+      "src": "/_assets/concept-art/general/AI_Darkside.png",
       "mtimeMs": 1779448651709
     },
     {
@@ -3427,6 +3567,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "0406f47e3157.png",
+      "src": "/_assets/source/terrain/angelic-floating-island/angelic-floating-island-colormap_BLK.png",
       "mtimeMs": 1779296990557
     },
     {
@@ -3448,6 +3590,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "c245d1245313.png",
+      "src": "/_assets/source/terrain/angelic-floating-island/angelic-floating-island-heightmap_BLK.png",
       "mtimeMs": 1779296990536
     },
     {
@@ -3490,6 +3634,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "37db049cc72f.png",
+      "src": "/_assets/source/terrain/machu-picchu-lobby-plateau/machu-picchu-lobby-plateau-annotated-preview_BLK.png",
       "mtimeMs": 1779296153614
     },
     {
@@ -3532,6 +3678,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "70332023ded4.png",
+      "src": "/_assets/source/terrain/machu-picchu-lobby-plateau/machu-picchu-lobby-plateau-preview_BLK.png",
       "mtimeMs": 1779296153511
     },
     {
@@ -3553,6 +3701,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "f2a0f3dff5f0.png",
+      "src": "/_assets/source/terrain/machu-picchu-lobby-plateau/machu-picchu-lobby-plateau-colormap_BLK.png",
       "mtimeMs": 1779296153408
     },
     {
@@ -3574,6 +3724,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "886b7e77c87e.png",
+      "src": "/_assets/source/terrain/machu-picchu-lobby-plateau/machu-picchu-lobby-plateau-heightmap_BLK.png",
       "mtimeMs": 1779296150890
     },
     {
@@ -3601,6 +3753,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/props/robotic/PRP_DEC_SoulForgeTierSet_BLK.rbxm",
       "mtimeMs": 1779285222720
     },
     {
@@ -3643,6 +3796,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "d1cf8691d4ad.png",
+      "src": "/_assets/ui/backgrounds/marketplace/steel-city-splash-key-art_BLK.png",
       "mtimeMs": 1779100510040
     },
     {
@@ -3664,6 +3819,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "b2aa118e1fdd.png",
+      "src": "/_assets/ui/backgrounds/marketplace/steel-city-boss-thumbnail_BLK.png",
       "mtimeMs": 1779100509835
     },
     {
@@ -3685,6 +3842,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "16e20cd6054f.png",
+      "src": "/_assets/ui/backgrounds/marketplace/steel-city-hub-thumbnail_BLK.png",
       "mtimeMs": 1779100509630
     },
     {
@@ -3706,6 +3865,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "7f11d4dd5109.png",
+      "src": "/_assets/ui/backgrounds/marketplace/steel-city-primary-thumbnail_BLK.png",
       "mtimeMs": 1779100509425
     },
     {
@@ -3727,6 +3888,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "d9bab4b00c51.png",
+      "src": "/_assets/ui/backgrounds/marketplace/steel-city-place-icon_BLK.png",
       "mtimeMs": 1779100388203
     },
     {
@@ -3748,6 +3911,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/props/other/Monkey_Head_BLK.rbxm",
       "mtimeMs": 1779027134024
     },
     {
@@ -3769,6 +3933,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/soul-steel/autorig-fix-20260517/roblox_avatar_export_config_scene.blend",
       "mtimeMs": 1779026829992
     },
     {
@@ -3790,6 +3955,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/soul-steel/autorig-fix-20260517/roblox_avatar_hierarchy_avatar_setup.fbx",
       "mtimeMs": 1779026829967
     },
     {
@@ -3853,6 +4019,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "18467bca2c46.png",
+      "src": "/_assets/concept-art/soul-steel/characters/Stick-Shadow/StickShadow-Turnaround_BLK.png",
       "mtimeMs": 1779026527738
     },
     {
@@ -3874,6 +4042,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/saves/Rasp-Codex.blend",
       "mtimeMs": 1779026515188
     },
     {
@@ -3895,6 +4064,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/soul-steel/autorig-fix-20260517/body_geom_autorig_smooth_apose.fbx",
       "mtimeMs": 1779026142675
     },
     {
@@ -3916,6 +4086,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/soul-steel/autorig-fix-20260517/body_geom_autorig_smooth_apose.blend",
       "mtimeMs": 1779026142648
     },
     {
@@ -3937,6 +4108,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/soul-steel/autorig-fix-20260517/_discarded_component_island_apose.fbx",
       "mtimeMs": 1779025997214
     },
     {
@@ -3958,6 +4130,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/soul-steel/autorig-fix-20260517/_discarded_component_island_apose.blend",
       "mtimeMs": 1779025997191
     },
     {
@@ -3979,6 +4152,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/soul-steel/autorig-fix-20260517/body_geom_autorig_before.obj",
       "mtimeMs": 1779025721478
     },
     {
@@ -4000,6 +4174,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/soul-steel/autorig-fix-20260517/body_geom_autorig_before.blend",
       "mtimeMs": 1779025721441
     },
     {
@@ -4021,6 +4196,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/exports/StrongMan.gltf",
       "mtimeMs": 1779025327917
     },
     {
@@ -4084,6 +4260,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "d03c26bdcbb9.png",
+      "src": "/_assets/concept-art/templates/character-promo-boxing-theme.png",
       "mtimeMs": 1779020032738
     },
     {
@@ -4105,6 +4283,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "ecb2079affce.png",
+      "src": "/_assets/concept-art/templates/turnaround-fateless-theme.png",
       "mtimeMs": 1778947732228
     },
     {
@@ -4126,6 +4306,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "7bff5643f31f.png",
+      "src": "/_assets/concept-art/templates/turnaround-robot-theme.png",
       "mtimeMs": 1778947538437
     },
     {
@@ -4147,6 +4329,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "7be9aa336a2d.png",
+      "src": "/_assets/concept-art/templates/turnaround-spirit-theme.png",
       "mtimeMs": 1778947510043
     },
     {
@@ -4168,6 +4352,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "34808b9dbabb.png",
+      "src": "/_assets/concept-art/templates/turnaround-blood-theme.png",
       "mtimeMs": 1778947128062
     },
     {
@@ -4189,6 +4375,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "13e0d937446b.png",
+      "src": "/_assets/concept-art/templates/turnaround-decay-theme.png",
       "mtimeMs": 1778946588730
     },
     {
@@ -4210,6 +4398,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "0c70248f141a.png",
+      "src": "/_assets/concept-art/soul-steel/mobs/ashen-zombie-turnaround.png",
       "mtimeMs": 1778946564288
     },
     {
@@ -4231,6 +4421,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "dc459b717d01.png",
+      "src": "/_assets/concept-art/soul-steel/mobs/tank-bot-turnaround.png",
       "mtimeMs": 1778945446182
     },
     {
@@ -4252,6 +4444,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "bec7913da9bd.png",
+      "src": "/_assets/concept-art/soul-steel/mobs/drone-bot-turnaround.png",
       "mtimeMs": 1778945070821
     },
     {
@@ -4273,6 +4467,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "1eb9c8c68337.png",
+      "src": "/_assets/concept-art/soul-steel/mobs/swarmer-bot-turnaround.png",
       "mtimeMs": 1778944889910
     },
     {
@@ -4294,6 +4490,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "522b065ca54b.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/Robotic-Domain-Vision-Board.png",
       "mtimeMs": 1778944597217
     },
     {
@@ -4336,6 +4534,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "6230c0c855e0.png",
+      "src": "/_assets/concept-art/soul-steel/Soul-Steel-Lore-Overview.png",
       "mtimeMs": 1778939605327
     },
     {
@@ -4399,6 +4599,7 @@
       "medium": "audio",
       "mediumType": "audio-music",
       "spec": "n/a",
+      "src": "/_assets/audio/bg-music/boss-battle-penitent-knight_BLK.mp3",
       "mtimeMs": 1778929951329
     },
     {
@@ -4426,6 +4627,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/environment/hub/ENV_INT_SteelCityHub_BLK.rbxm",
       "mtimeMs": 1778868466675
     },
     {
@@ -4447,6 +4649,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "af0a8afc9727.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/soul-steel-metropolis-topdown.png",
       "mtimeMs": 1778848949032
     },
     {
@@ -4468,6 +4672,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "84f150bd4862.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/soul-steel-metropolis.png",
       "mtimeMs": 1778848783376
     },
     {
@@ -4489,6 +4695,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/saves/Untitled.blend",
       "mtimeMs": 1778798286114
     },
     {
@@ -4510,6 +4717,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "e2727979649b.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/soul-steel-vision-boards-4200.png",
       "mtimeMs": 1778762257957
     },
     {
@@ -4531,6 +4740,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "9d5596e5fd29.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/soul-steel-vision-boards-cropped.png",
       "mtimeMs": 1778762214356
     },
     {
@@ -4552,6 +4763,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "674c3d712c83.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/soul-steel-vision-boards.png",
       "mtimeMs": 1778762135989
     },
     {
@@ -4573,6 +4786,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "e7977bc45153.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/index.html.png",
       "mtimeMs": 1778762094052
     },
     {
@@ -4636,6 +4851,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "c00ef3a64be4.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/2026-05-14-vision/assets/domain-spirit-order.png",
       "mtimeMs": 1778761912566
     },
     {
@@ -4657,6 +4874,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "46cb0014720a.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/2026-05-14-vision/assets/icon-core-health.png",
       "mtimeMs": 1778761887889
     },
     {
@@ -4678,6 +4897,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "80e8d8c7f5ea.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/2026-05-14-vision/assets/icon-currency-scrip.png",
       "mtimeMs": 1778761887887
     },
     {
@@ -4699,6 +4920,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "ba943006de5d.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/2026-05-14-vision/assets/icon-beam-coil.png",
       "mtimeMs": 1778761887885
     },
     {
@@ -4720,6 +4943,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "446bc05aaa0e.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/2026-05-14-vision/assets/icon-missile-rig.png",
       "mtimeMs": 1778761887883
     },
     {
@@ -4741,6 +4966,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "4d3592154bab.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/2026-05-14-vision/assets/icon-sentry-turret.png",
       "mtimeMs": 1778761887881
     },
     {
@@ -4762,6 +4989,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "a95ecba501fc.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/2026-05-14-vision/assets/monkey-bot.png",
       "mtimeMs": 1778761887879
     },
     {
@@ -4783,6 +5012,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "ff7392eeecc9.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/2026-05-14-vision/assets/hollow-tithe-fateless.png",
       "mtimeMs": 1778761887874
     },
     {
@@ -4804,6 +5035,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "2b416682cbde.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/2026-05-14-vision/assets/domain-fateless.png",
       "mtimeMs": 1778761887869
     },
     {
@@ -4825,6 +5058,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "ff30eff61874.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/2026-05-14-vision/assets/domain-decay.png",
       "mtimeMs": 1778761887866
     },
     {
@@ -4846,6 +5081,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "788bf4386d05.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/2026-05-14-vision/assets/domain-robot.png",
       "mtimeMs": 1778761887862
     },
     {
@@ -4867,6 +5104,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "89bef0d89652.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/2026-05-14-vision/assets/domain-blood.png",
       "mtimeMs": 1778761887859
     },
     {
@@ -4888,6 +5127,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "99366d6c8b59.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/2026-05-14-vision/assets/roguex-depot-silhouette.png",
       "mtimeMs": 1778761887856
     },
     {
@@ -4909,6 +5150,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "b2921aef7d43.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/2026-05-14-vision/assets/combat-design-concept.png",
       "mtimeMs": 1778761887852
     },
     {
@@ -4930,6 +5173,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "0bff506a22bb.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/2026-05-14-vision/assets/domain-system-concept.png",
       "mtimeMs": 1778761887849
     },
     {
@@ -4951,6 +5196,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "d93631f44abf.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/2026-05-14-vision/assets/soul-steel-concept.png",
       "mtimeMs": 1778761887845
     },
     {
@@ -4972,6 +5219,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "0ac0ae68ba73.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/2026-05-14-vision/assets/steel-city-ui-contact-sheet.png",
       "mtimeMs": 1778761887842
     },
     {
@@ -4993,6 +5242,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "56723b0fe87a.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/2026-05-14-vision/assets/steel-city-loading.png",
       "mtimeMs": 1778761887839
     },
     {
@@ -5014,6 +5265,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "244c229a4240.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/2026-05-14-vision/assets/steel-city-hud.png",
       "mtimeMs": 1778761887834
     },
     {
@@ -5035,6 +5288,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "2aa26738b60e.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/2026-05-14-vision/assets/steel-city-concept-sheet.png",
       "mtimeMs": 1778761887828
     },
     {
@@ -5056,6 +5311,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "5d7e92136515.png",
+      "src": "/_assets/concept-art/soul-steel/artboards/Soul-Steel-Vision-Group.png",
       "mtimeMs": 1778761780258
     },
     {
@@ -5077,6 +5334,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "4e6a0781949d.png",
+      "src": "/_assets/concept-art/soul-steel/characters/Stick-Shadow/StickShadow-Concept.png",
       "mtimeMs": 1778710402482
     },
     {
@@ -5098,6 +5357,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "afbf04df4577.png",
+      "src": "/_assets/concept-art/soul-steel/characters/Tiny-Timmay/TinyTimmay-Concept.png",
       "mtimeMs": 1778707800658
     },
     {
@@ -5119,6 +5380,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "ffd86ea3b01e.png",
+      "src": "/_assets/concept-art/soul-steel/characters/Gary-Gears/GaryGears-Concept.png",
       "mtimeMs": 1778707121464
     },
     {
@@ -5140,6 +5403,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "d54d6ba37d12.png",
+      "src": "/_assets/concept-art/soul-steel/characters/Gravekite/Gravekite-Concept.png",
       "mtimeMs": 1778706983568
     },
     {
@@ -5392,6 +5657,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "b4ca815f3250.png",
+      "src": "/_assets/ui/slice-frames/loading-rail-frame_BLK.png",
       "mtimeMs": 1778693243791
     },
     {
@@ -5413,6 +5680,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "36ec71364872.png",
+      "src": "/_assets/ui/backgrounds/bg-roguex-depot-silhouette_BLK.png",
       "mtimeMs": 1778693243786
     },
     {
@@ -5434,6 +5703,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "f67f4c8f6f62.png",
+      "src": "/_assets/ui/icons/icon-souls-meter_BLK.png",
       "mtimeMs": 1778693243764
     },
     {
@@ -5455,6 +5726,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "a64a89203d0b.png",
+      "src": "/_assets/ui/icons/icon-standby-rest_BLK.png",
       "mtimeMs": 1778693243763
     },
     {
@@ -5476,6 +5749,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "1e58c4eb6d4c.png",
+      "src": "/_assets/ui/icons/icon-ready-check_BLK.png",
       "mtimeMs": 1778693243761
     },
     {
@@ -5497,6 +5772,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "cb946ee784f1.png",
+      "src": "/_assets/ui/icons/icon-host-crown_BLK.png",
       "mtimeMs": 1778693243759
     },
     {
@@ -5518,6 +5795,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "c5ddddd5b2fe.png",
+      "src": "/_assets/ui/slice-frames/divider-circuit-horizontal_BLK.png",
       "mtimeMs": 1778693243758
     },
     {
@@ -5539,6 +5818,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "4b2cf9e34982.png",
+      "src": "/_assets/ui/icons/bracket-ornate-l_BLK.png",
       "mtimeMs": 1778693243756
     },
     {
@@ -5560,6 +5841,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "d708ece9c4b9.png",
+      "src": "/_assets/ui/icons/corner-gear-cluster_BLK.png",
       "mtimeMs": 1778693243754
     },
     {
@@ -5577,10 +5860,17 @@
       "status": "BLK",
       "conformance": "n/a",
       "issue": null,
+      "reg": {
+        "id": "115111261123945",
+        "status": "ok",
+        "kind": "Image"
+      },
       "instance": "ImageLabel/Button",
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "8f6c733c1324.png",
+      "src": "/_assets/ui/slice-frames/panel-ornate-gold_BLK.png",
       "mtimeMs": 1778693243753
     },
     {
@@ -5602,6 +5892,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "2ba4e6639f4e.png",
+      "src": "/_assets/ui/slice-frames/panel-ornate-crimson_BLK.png",
       "mtimeMs": 1778693243739
     },
     {
@@ -5623,6 +5915,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "42ef420dbf8b.png",
+      "src": "/_assets/ui/slice-frames/panel-ornate-cyan_BLK.png",
       "mtimeMs": 1778693243725
     },
     {
@@ -5650,6 +5944,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/props/robotic/PRP_STR_PathTile_BLK.rbxm",
       "mtimeMs": 1778689352742
     },
     {
@@ -5678,6 +5973,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/props/robotic/PRP_SmalDarkAlter_BLK.rbxm",
       "mtimeMs": 1778689329014
     },
     {
@@ -5705,6 +6001,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/props/robotic/PRP_DEC_SpawnBeacon_BLK.rbxm",
       "mtimeMs": 1778689290433
     },
     {
@@ -5732,6 +6029,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/props/robotic/PRP_DEC_GoalPillar_BLK.rbxm",
       "mtimeMs": 1778689280833
     },
     {
@@ -5760,6 +6058,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/props/fateless/PRP_ObeliskBeacon_BLK.rbxm",
       "mtimeMs": 1778685237882
     },
     {
@@ -5781,6 +6080,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/ui/screens/WaveCard_BLK.rbxm",
       "mtimeMs": 1778685014671
     },
     {
@@ -5802,6 +6102,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/ui/screens/Settings_BLK.rbxm",
       "mtimeMs": 1778684987764
     },
     {
@@ -5823,6 +6124,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/ui/screens/PauseMenu_BLK.rbxm",
       "mtimeMs": 1778684971621
     },
     {
@@ -5844,6 +6146,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/ui/screens/MatchSummary_BLK.rbxm",
       "mtimeMs": 1778684947892
     },
     {
@@ -5865,6 +6168,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/ui/screens/LocalAssetTest_BLK.rbxm",
       "mtimeMs": 1778684922808
     },
     {
@@ -5886,6 +6190,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/ui/screens/LobbyHUD_BLK.rbxm",
       "mtimeMs": 1778684898122
     },
     {
@@ -5907,6 +6212,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/ui/screens/LoadingScreen_BLK.rbxm",
       "mtimeMs": 1778684834619
     },
     {
@@ -5928,6 +6234,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "0f3b6287d65c.png",
+      "src": "/_assets/concept-art/soul-steel/mechanisms/scytale-tower/Scytale_Tower_Twister_digital.png",
       "mtimeMs": 1778597478073
     },
     {
@@ -5949,6 +6257,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "4767c4166856.png",
+      "src": "/_assets/concept-art/soul-steel/mechanisms/scytale-tower/Scytale_Tower_Concept.png",
       "mtimeMs": 1778597233682
     },
     {
@@ -5970,6 +6280,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "7ed0b065c5c0.png",
+      "src": "/_assets/concept-art/soul-steel/mechanisms/scytale-tower/Scytale_Tower_Base.png",
       "mtimeMs": 1778597217290
     },
     {
@@ -5991,6 +6303,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "8c8b8e01e0da.png",
+      "src": "/_assets/concept-art/soul-steel/mechanisms/scytale-tower/Scytale_Tower_Twister.png",
       "mtimeMs": 1778597182942
     },
     {
@@ -6012,6 +6326,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "de19f7de4fd9.png",
+      "src": "/_assets/concept-art/soul-steel/characters/Raspmutant/Raspmutant-Belt-3D-Single-View.png",
       "mtimeMs": 1778073002218
     },
     {
@@ -6033,6 +6349,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "1991727f23db.png",
+      "src": "/_assets/concept-art/soul-steel/characters/Raspmutant/Raspmutant-Belt-3D-Views.png",
       "mtimeMs": 1778072778605
     },
     {
@@ -6054,6 +6372,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "0113fb80b322.png",
+      "src": "/_assets/concept-art/soul-steel/characters/Raspmutant/Raspmutant-3D-Poses.png",
       "mtimeMs": 1778071892875
     },
     {
@@ -6075,6 +6395,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "57cfb5b7f15d.png",
+      "src": "/_assets/concept-art/soul-steel/characters/Raspmutant/Raspmutant-Concept.png",
       "mtimeMs": 1778071554235
     },
     {
@@ -6306,6 +6628,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "4f1c9bb78d14.png",
+      "src": "/_assets/ui/abilities/beam-coil/icon_BLK.png",
       "mtimeMs": 1777825480048
     },
     {
@@ -6327,6 +6651,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "c6433c520f5e.png",
+      "src": "/_assets/ui/abilities/missile-rig/icon_BLK.png",
       "mtimeMs": 1777825480042
     },
     {
@@ -6348,6 +6674,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "3e34a4ba8ab1.png",
+      "src": "/_assets/ui/abilities/sentry-turret/icon_BLK.png",
       "mtimeMs": 1777825480037
     },
     {
@@ -6369,6 +6697,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "2e15cd239986.png",
+      "src": "/_assets/ui/icons/core-health_BLK.png",
       "mtimeMs": 1777825480032
     },
     {
@@ -6390,6 +6720,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "522d0a4829d3.png",
+      "src": "/_assets/ui/icons/currency-scrip_BLK.png",
       "mtimeMs": 1777825480027
     },
     {
@@ -6407,10 +6739,17 @@
       "status": "BLK",
       "conformance": "n/a",
       "issue": null,
+      "reg": {
+        "id": "117800934411188",
+        "status": "ok",
+        "kind": "Image"
+      },
       "instance": "ImageLabel/Button",
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "759347f7a204.png",
+      "src": "/_assets/ui/slice-frames/tower-card-selected-cyan_BLK.png",
       "mtimeMs": 1777825480023
     },
     {
@@ -6432,6 +6771,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "b6c0ca7ae48a.png",
+      "src": "/_assets/ui/slice-frames/tower-card-frame_BLK.png",
       "mtimeMs": 1777825480021
     },
     {
@@ -6453,6 +6794,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "5c961087f0c2.png",
+      "src": "/_assets/ui/slice-frames/wave-banner-frame_BLK.png",
       "mtimeMs": 1777825480019
     },
     {
@@ -6474,6 +6817,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "f978b6ec470d.png",
+      "src": "/_assets/ui/slice-frames/button-command-hover_BLK.png",
       "mtimeMs": 1777825480016
     },
     {
@@ -6495,6 +6840,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "4a099d2ad291.png",
+      "src": "/_assets/ui/slice-frames/button-command-default_BLK.png",
       "mtimeMs": 1777825480013
     },
     {
@@ -6516,6 +6863,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "907298a6c3c1.png",
+      "src": "/_assets/ui/slice-frames/panel-obsidian-thin_BLK.png",
       "mtimeMs": 1777825480010
     },
     {
@@ -6537,6 +6886,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "58eea94011a8.png",
+      "src": "/_assets/ui/slice-frames/panel-obsidian-heavy_BLK.png",
       "mtimeMs": 1777825480008
     },
     {
@@ -6564,6 +6915,7 @@
       "medium": "3d",
       "mediumType": "3d-rig",
       "spec": "n/a",
+      "src": "/_assets/library/rigs/shared/RIG_CRE_BAD_EVOLUTION_BLK.rbxm",
       "mtimeMs": 1777736816878
     },
     {
@@ -6585,6 +6937,8 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "thumb": "729ff8528582.png",
+      "src": "/_assets/concept-art/soul-steel/characters/Penitent-Knight/PenitentKnight_Human_NoHelm.png",
       "mtimeMs": 1777728217622
     },
     {
@@ -6606,6 +6960,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/pre-stamp/tiny-parts-with-beams-and-attachments.rbxm",
       "mtimeMs": 1777725634453
     },
     {
@@ -6633,6 +6988,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/layouts/robotic/LAY_ROM_PowersShop_BLK.rbxm",
       "mtimeMs": 1777721594994
     },
     {
@@ -6654,6 +7010,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/layouts/robotic/Stampys.rbxm",
       "mtimeMs": 1777721501240
     },
     {
@@ -6681,6 +7038,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/layouts/robotic/LAY_ROM_FOODSHOP_BLK.rbxm",
       "mtimeMs": 1777721479686
     },
     {
@@ -6729,6 +7087,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/props/decay/PRP_TALL_CANNON_TOWER_BLK.rbxm",
       "mtimeMs": 1777541094268
     },
     {
@@ -6756,6 +7115,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/accessories/fateless/ACC_HED_ShadowHelm_BLK.rbxm",
       "mtimeMs": 1777539693169
     },
     {
@@ -6783,6 +7143,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/accessories/blood/ACC_HED_BloodHelm_BLK.rbxm",
       "mtimeMs": 1777539657760
     },
     {
@@ -6810,6 +7171,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/accessories/blood/ACC_HED_DemonicHalo_BLK.rbxm",
       "mtimeMs": 1777539608113
     },
     {
@@ -6837,6 +7199,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/accessories/decay/ACC_TRS_BlackRobes_BLK.rbxm",
       "mtimeMs": 1777539575563
     },
     {
@@ -6864,6 +7227,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/accessories/blood/ACC_TRS_RedPlate_BLK.rbxm",
       "mtimeMs": 1777539538809
     },
     {
@@ -6891,6 +7255,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/accessories/fateless/ACC_TRS_BlackPlate_BLK.rbxm",
       "mtimeMs": 1777539490817
     },
     {
@@ -6918,6 +7283,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/accessories/fateless/ACC_BCK_Ravenwings_BLK.rbxm",
       "mtimeMs": 1777539244462
     },
     {
@@ -10152,6 +10518,7 @@
       "medium": "audio",
       "mediumType": "audio-music",
       "spec": "n/a",
+      "src": "/_assets/audio/bg-music/td-lobby_BLK.mp3",
       "mtimeMs": 1777200789664
     },
     {
@@ -10173,6 +10540,7 @@
       "medium": "audio",
       "mediumType": "audio-music",
       "spec": "n/a",
+      "src": "/_assets/audio/bg-music/td-battle_BLK.mp3",
       "mtimeMs": 1777200269139
     },
     {
@@ -10194,6 +10562,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/library/ui/screens/MainMenu_BLK.rbxm",
       "mtimeMs": 1777197927477
     },
     {
@@ -10215,6 +10584,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "1e83b6373589.png",
+      "src": "/_assets/ui/icons/glyph-void-star_BLK.png",
       "mtimeMs": 1777143561452
     },
     {
@@ -10236,6 +10607,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "bf8411c0a6cb.png",
+      "src": "/_assets/ui/icons/glyph-soul-flame_BLK.png",
       "mtimeMs": 1777143559855
     },
     {
@@ -10257,6 +10630,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "d8ded893858a.png",
+      "src": "/_assets/ui/icons/glyph-crystal-eye_BLK.png",
       "mtimeMs": 1777143558354
     },
     {
@@ -10278,6 +10653,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "a73a1c2733a7.png",
+      "src": "/_assets/ui/icons/glyph-warded-shield_BLK.png",
       "mtimeMs": 1777143556709
     },
     {
@@ -10299,6 +10676,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "6e2da3b16e15.png",
+      "src": "/_assets/ui/icons/glyph-swift-boot_BLK.png",
       "mtimeMs": 1777143555183
     },
     {
@@ -10320,6 +10699,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "696fc5bacbf8.png",
+      "src": "/_assets/ui/icons/glyph-forged-fist_BLK.png",
       "mtimeMs": 1777143552515
     },
     {
@@ -10341,6 +10722,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "75ac0cc0e963.png",
+      "src": "/_assets/textures/tileable/fateless/abyssal-temple-cobble_BLK.png",
       "mtimeMs": 1777140182177
     },
     {
@@ -10362,6 +10745,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "0f64965cb97d.png",
+      "src": "/_assets/textures/tileable/fateless/void-ash-soil_BLK.png",
       "mtimeMs": 1777140182101
     },
     {
@@ -10383,6 +10768,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "96f514900745.png",
+      "src": "/_assets/textures/tileable/fateless/cursed-slate-ground_BLK.png",
       "mtimeMs": 1777140182020
     },
     {
@@ -10404,6 +10791,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "bfe3dca6f81d.png",
+      "src": "/_assets/textures/tileable/fateless/void-asteroid-basalt_BLK.png",
       "mtimeMs": 1777140181935
     },
     {
@@ -10452,6 +10841,7 @@
       "medium": "3d",
       "mediumType": "3d-rig",
       "spec": "n/a",
+      "src": "/_assets/library/rigs/robotic/RIG_MCH_TankBot_BLK.rbxm",
       "mtimeMs": 1776943013609
     },
     {
@@ -10473,6 +10863,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "d75098244cc6.png",
+      "src": "/_assets/textures/tileable/robotic/floor-panel-01_BLK.png",
       "mtimeMs": 1776942700600
     },
     {
@@ -10494,6 +10886,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "b33b381d720c.png",
+      "src": "/_assets/textures/tileable/robotic/wall-panel-01_BLK.png",
       "mtimeMs": 1776942625509
     },
     {
@@ -10521,6 +10915,7 @@
       "medium": "3d",
       "mediumType": "3d-rig",
       "spec": "n/a",
+      "src": "/_assets/library/rigs/robotic/RIG_MCH_Swarmer_BLK.rbxm",
       "mtimeMs": 1776941975779
     },
     {
@@ -10548,6 +10943,7 @@
       "medium": "3d",
       "mediumType": "3d-rig",
       "spec": "n/a",
+      "src": "/_assets/library/rigs/robotic/RIG_MCH_DroneBot_BLK.rbxm",
       "mtimeMs": 1776941845384
     },
     {
@@ -10569,6 +10965,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "da08bbd78e5a.png",
+      "src": "/_assets/textures/tileable/robotic/generic-panel-01_BLK.png",
       "mtimeMs": 1776899590948
     },
     {
@@ -10596,6 +10994,7 @@
       "medium": "3d",
       "mediumType": "3d-rig",
       "spec": "n/a",
+      "src": "/_assets/library/rigs/shared/RIG_CRE_Skeleton_BLK.rbxm",
       "mtimeMs": 1776436927370
     },
     {
@@ -10617,6 +11016,7 @@
       "medium": "audio",
       "mediumType": "audio-voice",
       "spec": "n/a",
+      "src": "/_assets/ai-output/audio/tts/el-tts-20260404-121305..mp3",
       "mtimeMs": 1775304785560
     },
     {
@@ -10638,6 +11038,7 @@
       "medium": "audio",
       "mediumType": "audio-voice",
       "spec": "n/a",
+      "src": "/_assets/ai-output/audio/tts/el-tts-20260401-094620..mp3",
       "mtimeMs": 1775036780981
     },
     {
@@ -10659,6 +11060,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "696409f0a104.png",
+      "src": "/_assets/ui/portraits/dr-claude-speaking-2_BLK.png",
       "mtimeMs": 1774946881749
     },
     {
@@ -10680,6 +11083,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "ec791445aa9d.png",
+      "src": "/_assets/ui/portraits/dr-claude-speaking-1_BLK.png",
       "mtimeMs": 1774946837564
     },
     {
@@ -10701,6 +11106,7 @@
       "medium": "audio",
       "mediumType": "audio-voice",
       "spec": "n/a",
+      "src": "/_assets/ai-output/audio/tts/el-tts-20260331-083849..mp3",
       "mtimeMs": 1774946329366
     },
     {
@@ -10722,6 +11128,7 @@
       "medium": "audio",
       "mediumType": "audio-voice",
       "spec": "n/a",
+      "src": "/_assets/ai-output/audio/tts/el-tts-20260331-083345..mp3",
       "mtimeMs": 1774946025541
     },
     {
@@ -10743,6 +11150,7 @@
       "medium": "audio",
       "mediumType": "audio-voice",
       "spec": "n/a",
+      "src": "/_assets/ai-output/audio/voice-previews/voice-preview-1-20260331-083327..mp3",
       "mtimeMs": 1774946007860
     },
     {
@@ -10764,6 +11172,7 @@
       "medium": "audio",
       "mediumType": "audio-voice",
       "spec": "n/a",
+      "src": "/_assets/ai-output/audio/voice-previews/voice-preview-2-20260331-083327..mp3",
       "mtimeMs": 1774946007860
     },
     {
@@ -10785,6 +11194,7 @@
       "medium": "audio",
       "mediumType": "audio-voice",
       "spec": "n/a",
+      "src": "/_assets/ai-output/audio/voice-previews/voice-preview-0-20260331-083327..mp3",
       "mtimeMs": 1774946007859
     },
     {
@@ -10806,6 +11216,7 @@
       "medium": "audio",
       "mediumType": "audio-voice",
       "spec": "n/a",
+      "src": "/_assets/ai-output/audio/voice-previews/voice-preview-1-20260331-083025..mp3",
       "mtimeMs": 1774945825725
     },
     {
@@ -10827,6 +11238,7 @@
       "medium": "audio",
       "mediumType": "audio-voice",
       "spec": "n/a",
+      "src": "/_assets/ai-output/audio/voice-previews/voice-preview-2-20260331-083025..mp3",
       "mtimeMs": 1774945825725
     },
     {
@@ -10848,6 +11260,7 @@
       "medium": "audio",
       "mediumType": "audio-voice",
       "spec": "n/a",
+      "src": "/_assets/ai-output/audio/voice-previews/voice-preview-0-20260331-083025..mp3",
       "mtimeMs": 1774945825724
     },
     {
@@ -10869,6 +11282,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "666556d7853a.png",
+      "src": "/_assets/ui/portraits/krazy-klause-v2_BLK.png",
       "mtimeMs": 1774865088383
     },
     {
@@ -10890,6 +11305,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "86b450eab3e9.png",
+      "src": "/_assets/ui/portraits/hypothesis-agent_BLK.png",
       "mtimeMs": 1774865033066
     },
     {
@@ -10911,6 +11328,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "78281de8bdb5.png",
+      "src": "/_assets/ui/portraits/probe-bot_BLK.png",
       "mtimeMs": 1774864991412
     },
     {
@@ -10932,6 +11351,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "80cb508416b9.png",
+      "src": "/_assets/ui/portraits/assistant_BLK.png",
       "mtimeMs": 1774864949826
     },
     {
@@ -10953,6 +11374,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "9af5b9c76f72.png",
+      "src": "/_assets/ui/portraits/dr-claude_BLK.png",
       "mtimeMs": 1774864908297
     },
     {
@@ -10974,6 +11397,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "e22ac0a5f11b.png",
+      "src": "/_assets/ui/portraits/krazy-klause_BLK.png",
       "mtimeMs": 1774787725432
     },
     {
@@ -10995,6 +11420,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "bd9fb700e2cf.png",
+      "src": "/_assets/ui/sprites/frames/monkey-bot-run/monkey-bot-run-004_BLK.png",
       "mtimeMs": 1774778987767
     },
     {
@@ -11016,6 +11443,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "8d7e8ea26c8d.png",
+      "src": "/_assets/ui/sprites/frames/monkey-bot-run/monkey-bot-run-003_BLK.png",
       "mtimeMs": 1774778987733
     },
     {
@@ -11037,6 +11466,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "fa09aa7d0af2.png",
+      "src": "/_assets/ui/sprites/frames/monkey-bot-run/monkey-bot-run-002_BLK.png",
       "mtimeMs": 1774778987703
     },
     {
@@ -11058,6 +11489,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "677a6162cd30.png",
+      "src": "/_assets/ui/sprites/frames/monkey-bot-run/monkey-bot-run-001_BLK.png",
       "mtimeMs": 1774778987671
     },
     {
@@ -11079,6 +11512,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "51f4985174d9.png",
+      "src": "/_assets/ui/sprites/sheets/monkey-bot-run_BLK.png",
       "mtimeMs": 1774778987627
     },
     {
@@ -11100,6 +11535,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "1044cb695c48.png",
+      "src": "/_assets/ui/sprites/frames/lab-furniture-sprites_BLK.png",
       "mtimeMs": 1774714890756
     },
     {
@@ -11121,6 +11558,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "47e0fecc162f.png",
+      "src": "/_assets/ui/sprites/frames/lab-decor-sprites_BLK.png",
       "mtimeMs": 1774714832379
     },
     {
@@ -11142,6 +11581,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "855bdf1eff02.png",
+      "src": "/_assets/textures/tileable/shared/lab-wall-tiles_BLK.png",
       "mtimeMs": 1774714786023
     },
     {
@@ -11163,6 +11604,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "379ca1c04729.png",
+      "src": "/_assets/textures/tileable/shared/lab-floor-tiles_BLK.png",
       "mtimeMs": 1774714745038
     },
     {
@@ -11184,6 +11627,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "2f0f34de5c11.png",
+      "src": "/_assets/ui/sprites/frames/hypothesis-agent_BLK.png",
       "mtimeMs": 1774714232172
     },
     {
@@ -11205,6 +11650,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "314cdee49596.png",
+      "src": "/_assets/ui/sprites/frames/probe-bot_BLK.png",
       "mtimeMs": 1774714199077
     },
     {
@@ -11226,6 +11673,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "e1893d404e42.png",
+      "src": "/_assets/ui/sprites/frames/assistant_BLK.png",
       "mtimeMs": 1774714168760
     },
     {
@@ -11247,6 +11696,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "442da0a641f9.png",
+      "src": "/_assets/ui/sprites/frames/dr-claude_BLK.png",
       "mtimeMs": 1774714134006
     },
     {
@@ -11268,6 +11719,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "b21cbc0bfe3f.png",
+      "src": "/_assets/ui/portraits/vesper-meets-rotgut-at-the-merry-rot_BLK.png",
       "mtimeMs": 1774136164870
     },
     {
@@ -11289,6 +11742,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "84a91b0c6110.png",
+      "src": "/_assets/ui/portraits/vesper-erasing-ashael-inscriptions_BLK.png",
       "mtimeMs": 1774136095357
     },
     {
@@ -11310,6 +11765,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "7ef68280a8fb.png",
+      "src": "/_assets/ui/portraits/vesper-the-unwritten-portrait_BLK.png",
       "mtimeMs": 1774136046530
     },
     {
@@ -11331,6 +11788,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "35c6076a4c54.png",
+      "src": "/_assets/ui/design/concepts/domain-system_BLK.png",
       "mtimeMs": 1774106493648
     },
     {
@@ -11352,6 +11811,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "57c7fed7bcff.png",
+      "src": "/_assets/ui/design/concepts/combat-design_BLK.png",
       "mtimeMs": 1774106453166
     },
     {
@@ -11373,6 +11834,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "0217247b1e9b.png",
+      "src": "/_assets/ui/design/concepts/soul-steel_BLK.png",
       "mtimeMs": 1774106414035
     },
     {
@@ -11394,6 +11857,7 @@
       "medium": "audio",
       "mediumType": "audio-music",
       "spec": "n/a",
+      "src": "/_assets/audio/bg-music/crimson-order-theme_BLK.mp3",
       "mtimeMs": 1773741527677
     },
     {
@@ -11415,6 +11879,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/generic/drum-beat-sfx.mp3",
       "mtimeMs": 1773741527677
     },
     {
@@ -11436,6 +11901,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "be2e20b54334.png",
+      "src": "/_assets/ui/factions/crimson-order/banner_BLK.png",
       "mtimeMs": 1773741428658
     },
     {
@@ -11457,6 +11924,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "74a45a8daa51.png",
+      "src": "/_assets/ui/factions/crimson-order/banner-v2_BLK.png",
       "mtimeMs": 1773741428657
     },
     {
@@ -11478,6 +11947,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "c222e6ae6bc8.png",
+      "src": "/_assets/ui/abilities/blood-pact/icon_FNL.png",
       "mtimeMs": 1773741367995
     },
     {
@@ -11499,6 +11970,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "5fdf63d9f7f8.png",
+      "src": "/_assets/ui/factions/crimson-order/icon-v2_BLK.png",
       "mtimeMs": 1773741367994
     },
     {
@@ -11520,6 +11993,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "06d9fb9b8e62.png",
+      "src": "/_assets/ui/abilities/void-spiral/icon_BLK.png",
       "mtimeMs": 1773696134913
     },
     {
@@ -11541,6 +12016,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "622ad9fbda20.png",
+      "src": "/_assets/ui/abilities/speed-mode/icon_BLK.png",
       "mtimeMs": 1773696134911
     },
     {
@@ -11562,6 +12039,7 @@
       "medium": "audio",
       "mediumType": "audio-voice",
       "spec": "n/a",
+      "src": "/_assets/ai-output/audio/tts/el-tts-20260315-165358..mp3",
       "mtimeMs": 1773593638874
     },
     {
@@ -11583,6 +12061,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "84415f5d8de6.png",
+      "src": "/_assets/ui/bestiary/phantom-warden/icon_BLK.png",
       "mtimeMs": 1773572737145
     },
     {
@@ -11604,6 +12084,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/world-fx/rummage-through_BLK.mp3",
       "mtimeMs": 1773572642743
     },
     {
@@ -11625,6 +12106,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/environment/skeleton-warrior-ambient_BLK.mp3",
       "mtimeMs": 1773572642742
     },
     {
@@ -11646,6 +12128,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/environment/blood-fiend-ambient_BLK.mp3",
       "mtimeMs": 1773572331947
     },
     {
@@ -11667,6 +12150,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/environment/ghoul-gasp_BLK.mp3",
       "mtimeMs": 1773572331947
     },
     {
@@ -11688,6 +12172,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/world-fx/ball-bounce-heavy-sfx.mp3",
       "mtimeMs": 1773572235673
     },
     {
@@ -11709,6 +12194,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "83e8873f5a60.png",
+      "src": "/_assets/ui/bestiary/blood-knight/portrait_BLK.png",
       "mtimeMs": 1773570740138
     },
     {
@@ -11730,6 +12217,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "d3bc2d6060e8.png",
+      "src": "/_assets/ui/bestiary/skeleton-warrior/portrait_BLK.png",
       "mtimeMs": 1773570740136
     },
     {
@@ -11751,6 +12240,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/environment/ambient-cracking-leaves.mp3",
       "mtimeMs": 1773570662469
     },
     {
@@ -11772,6 +12262,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "9b03f60b860f.png",
+      "src": "/_assets/ui/icons/emblem-demon-skull-spiked_BLK.png",
       "mtimeMs": 1773510388299
     },
     {
@@ -11793,6 +12285,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "616a4a34a55a.png",
+      "src": "/_assets/ui/bestiary/scrap-drone/icon_BLK.png",
       "mtimeMs": 1773510388290
     },
     {
@@ -11814,6 +12308,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "97639b793228.png",
+      "src": "/_assets/ui/abilities/slash/fx_BLK.png",
       "mtimeMs": 1772876944263
     },
     {
@@ -11835,6 +12331,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "90b77eaecfe8.png",
+      "src": "/_assets/ui/abilities/crimson-slash/icon_BLK.png",
       "mtimeMs": 1772876944260
     },
     {
@@ -11856,6 +12354,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "cc30c05d61b1.png",
+      "src": "/_assets/ui/abilities/blood-drain/icon_BLK.png",
       "mtimeMs": 1772876860089
     },
     {
@@ -11877,6 +12377,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "c2523174a723.png",
+      "src": "/_assets/ui/abilities/bone-strike/icon_BLK.png",
       "mtimeMs": 1772876796738
     },
     {
@@ -11898,6 +12400,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "d5bd41b2e269.png",
+      "src": "/_assets/ui/bestiary/sporeling-matriarch/icon_BLK.png",
       "mtimeMs": 1772806111998
     },
     {
@@ -11919,6 +12423,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "511cce9c9f88.png",
+      "src": "/_assets/ui/bestiary/demon-skull/icon_BLK.png",
       "mtimeMs": 1772806018084
     },
     {
@@ -11940,6 +12446,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "0662f6ebf940.png",
+      "src": "/_assets/ui/bestiary/blighted-shambler/icon_BLK.png",
       "mtimeMs": 1772806018082
     },
     {
@@ -11961,6 +12469,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "f3dcdec86ce4.png",
+      "src": "/_assets/ui/bestiary/blood-fiend/icon_BLK.png",
       "mtimeMs": 1772805528686
     },
     {
@@ -11982,6 +12492,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "73d3e5181b72.png",
+      "src": "/_assets/ui/bestiary/skeleton-knight/portrait_BLK.png",
       "mtimeMs": 1772805382572
     },
     {
@@ -12003,6 +12515,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "0e2010644023.png",
+      "src": "/_assets/ui/bestiary/skeleton-warrior/icon_BLK.png",
       "mtimeMs": 1772805382570
     },
     {
@@ -12024,6 +12538,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "937bbb4c72ad.png",
+      "src": "/_assets/ui/design/scenes/fateless-master-dragon-battle_BLK.png",
       "mtimeMs": 1772623187752
     },
     {
@@ -12066,6 +12582,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "2418a90f6da7.png",
+      "src": "/_assets/ui/slice-frames/rune-frame-cyan_BLK.png",
       "mtimeMs": 1772392104961
     },
     {
@@ -12087,6 +12605,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "6024cd27eb93.png",
+      "src": "/_assets/ui/sprites/divider-gem-blue_BLK.png",
       "mtimeMs": 1772392079581
     },
     {
@@ -12108,6 +12628,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "e74318b5e867.png",
+      "src": "/_assets/ui/slice-frames/dragon-corners_BLK.png",
       "mtimeMs": 1772392075550
     },
     {
@@ -12129,6 +12651,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "9801bd82ae94.png",
+      "src": "/_assets/ui/slice-frames/soul-steel-parchment_BLK.png",
       "mtimeMs": 1772392069713
     },
     {
@@ -12150,6 +12674,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "4a9b4f0c2af4.png",
+      "src": "/_assets/ui/sprites/soul-steel-panel-prototype_FNL.png",
       "mtimeMs": 1772392045531
     },
     {
@@ -12171,6 +12697,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "51511af28c00.png",
+      "src": "/_assets/ui/sprites/header-crown_BLK.png",
       "mtimeMs": 1772392041275
     },
     {
@@ -12192,6 +12720,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "a30dac381fe6.png",
+      "src": "/_assets/ui/sprites/ability-button-prototype_FNL.png",
       "mtimeMs": 1772391661590
     },
     {
@@ -12213,6 +12743,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "cc3554daa7af.png",
+      "src": "/_assets/ui/slice-frames/ability-button-ring_BLK.png",
       "mtimeMs": 1772391659440
     },
     {
@@ -12234,6 +12766,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "19f9e9f54387.png",
+      "src": "/_assets/ui/abilities/shock/icon_BLK.png",
       "mtimeMs": 1772391652464
     },
     {
@@ -12276,6 +12810,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "903f2c33354c.png",
+      "src": "/_assets/ui/slice-frames/gem-border-square_BLK.png",
       "mtimeMs": 1772364895459
     },
     {
@@ -12297,6 +12833,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/environment/machine-press-loop_BLK.mp3",
       "mtimeMs": 1772281864656
     },
     {
@@ -12318,6 +12855,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "86f3b520574a.png",
+      "src": "/_assets/ui/design/prototypes/rogue-deckbuilder-card-back_BLK.png",
       "mtimeMs": 1772190938642
     },
     {
@@ -12339,6 +12878,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "81bd272e5dd5.png",
+      "src": "/_assets/ui/portraits/trembus-fateless-child_BLK.png",
       "mtimeMs": 1772149960567
     },
     {
@@ -12360,6 +12901,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "e5d5f42cca16.png",
+      "src": "/_assets/ui/portraits/fateless-master-rage_BLK.png",
       "mtimeMs": 1772106779791
     },
     {
@@ -12381,6 +12924,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "f3fe987ad618.png",
+      "src": "/_assets/ui/portraits/monkey-bot_BLK.png",
       "mtimeMs": 1772063893005
     },
     {
@@ -12402,6 +12947,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "f632af6414ff.png",
+      "src": "/_assets/ui/portraits/fateless-master_BLK.png",
       "mtimeMs": 1772063762416
     },
     {
@@ -12423,6 +12970,7 @@
       "medium": "audio",
       "mediumType": "audio-voice",
       "spec": "n/a",
+      "src": "/_assets/audio/voice-dialog/penitent-knight/catchphrase-3_BLK.mp3",
       "mtimeMs": 1771986047779
     },
     {
@@ -12444,6 +12992,7 @@
       "medium": "audio",
       "mediumType": "audio-voice",
       "spec": "n/a",
+      "src": "/_assets/audio/voice-dialog/penitent-knight/catchphrase-2_BLK.mp3",
       "mtimeMs": 1771986047777
     },
     {
@@ -12465,6 +13014,7 @@
       "medium": "audio",
       "mediumType": "audio-voice",
       "spec": "n/a",
+      "src": "/_assets/audio/voice-dialog/penitent-knight/catchphrase-1_BLK.mp3",
       "mtimeMs": 1771986047776
     },
     {
@@ -12486,6 +13036,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "088ca5c5c7f2.png",
+      "src": "/_assets/ui/slice-frames/frame-robot-title-bar-v2_BLK.png",
       "mtimeMs": 1771934721366
     },
     {
@@ -12507,6 +13059,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "572d3ecc7c91.png",
+      "src": "/_assets/ui/slice-frames/frame-fateless-title-bar_BLK.png",
       "mtimeMs": 1771932633335
     },
     {
@@ -12528,6 +13082,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "835faa9db208.png",
+      "src": "/_assets/ui/slice-frames/frame-fateless-panel_BLK.png",
       "mtimeMs": 1771932591752
     },
     {
@@ -12549,6 +13105,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "667f5794ddb7.png",
+      "src": "/_assets/ui/slice-frames/frame-robot-title-bar_BLK.png",
       "mtimeMs": 1771932542228
     },
     {
@@ -12570,6 +13128,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "101a9de4570b.png",
+      "src": "/_assets/ui/slice-frames/frame-robot-panel_BLK.png",
       "mtimeMs": 1771932503180
     },
     {
@@ -12591,6 +13151,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "92906464d05f.png",
+      "src": "/_assets/ui/slice-frames/frame-spirit-title-bar_BLK.png",
       "mtimeMs": 1771932456440
     },
     {
@@ -12612,6 +13174,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "e8e80ca95f4d.png",
+      "src": "/_assets/ui/slice-frames/frame-spirit-panel_BLK.png",
       "mtimeMs": 1771932419283
     },
     {
@@ -12633,6 +13197,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "c6ddaa410a51.png",
+      "src": "/_assets/ui/slice-frames/frame-decay-title-bar_BLK.png",
       "mtimeMs": 1771932370430
     },
     {
@@ -12654,6 +13220,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "8286f33ba118.png",
+      "src": "/_assets/ui/slice-frames/frame-decay-panel_BLK.png",
       "mtimeMs": 1771932332846
     },
     {
@@ -12675,6 +13243,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "3ca363ccebe4.png",
+      "src": "/_assets/ui/slice-frames/frame-blood-title-bar_BLK.png",
       "mtimeMs": 1771932276842
     },
     {
@@ -12696,6 +13266,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "a511b0834652.png",
+      "src": "/_assets/ui/slice-frames/frame-blood-panel_BLK.png",
       "mtimeMs": 1771932237082
     },
     {
@@ -12717,6 +13289,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/ability-combat-fx/blood-drain-impact_BLK.mp3",
       "mtimeMs": 1771875523680
     },
     {
@@ -12738,6 +13311,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/ability-combat-fx/bone-strike-impact_BLK.mp3",
       "mtimeMs": 1771875516896
     },
     {
@@ -12759,6 +13333,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/ability-combat-fx/crimson-slash-cast_BLK.mp3",
       "mtimeMs": 1771875353691
     },
     {
@@ -12780,6 +13355,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/ability-combat-fx/blood-drain-cast_BLK.mp3",
       "mtimeMs": 1771875340101
     },
     {
@@ -12801,6 +13377,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/ability-combat-fx/bone-strike-cast_BLK.mp3",
       "mtimeMs": 1771875325749
     },
     {
@@ -12822,6 +13399,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "abc7a6ee0f44.png",
+      "src": "/_assets/ui/factions/crimson-order/icon_BLK.png",
       "mtimeMs": 1771781499541
     },
     {
@@ -12843,6 +13422,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "99801f5140ee.png",
+      "src": "/_assets/ui/backgrounds/talent-tree-order-paladin_BLK.png",
       "mtimeMs": 1771767839852
     },
     {
@@ -12864,6 +13445,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "53437e33f415.png",
+      "src": "/_assets/ui/backgrounds/screen-character-select_BLK.png",
       "mtimeMs": 1771767774329
     },
     {
@@ -12885,6 +13468,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "f09a7c78fdd8.png",
+      "src": "/_assets/ui/backgrounds/panel-fateless_BLK.png",
       "mtimeMs": 1771767700578
     },
     {
@@ -12906,6 +13491,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "284ad68d3521.png",
+      "src": "/_assets/ui/backgrounds/panel-cyber-domain_BLK.png",
       "mtimeMs": 1771767646510
     },
     {
@@ -12927,6 +13514,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "2abb56f17e96.png",
+      "src": "/_assets/ui/icons/glyph-war-cry_BLK.png",
       "mtimeMs": 1771767594018
     },
     {
@@ -12948,6 +13537,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "6c7f5dc90656.png",
+      "src": "/_assets/ui/icons/item-poison-vial_BLK.png",
       "mtimeMs": 1771767543353
     },
     {
@@ -12969,6 +13560,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "597d97cdb6eb.png",
+      "src": "/_assets/ui/icons/glyph-holy-light_BLK.png",
       "mtimeMs": 1771767491061
     },
     {
@@ -12990,6 +13583,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "f0f2c079ffda.png",
+      "src": "/_assets/ui/icons/glyph-shadow-step_BLK.png",
       "mtimeMs": 1771767444552
     },
     {
@@ -13011,6 +13606,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "85fbe5959d36.png",
+      "src": "/_assets/ui/icons/armor-shield-wall_BLK.png",
       "mtimeMs": 1771767400485
     },
     {
@@ -13032,6 +13629,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "c0cea0b4e452.png",
+      "src": "/_assets/ui/portraits/fateless_BLK.png",
       "mtimeMs": 1771767349095
     },
     {
@@ -13053,6 +13652,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "560fb6d578bc.png",
+      "src": "/_assets/ui/portraits/decaying-one_BLK.png",
       "mtimeMs": 1771767286812
     },
     {
@@ -13074,6 +13675,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "727fc004f194.png",
+      "src": "/_assets/ui/portraits/cyber-angel_BLK.png",
       "mtimeMs": 1771766912247
     },
     {
@@ -13095,6 +13698,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "6adbe1a751a5.png",
+      "src": "/_assets/ui/portraits/blood-demon_BLK.png",
       "mtimeMs": 1771766785908
     },
     {
@@ -13116,6 +13721,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "db6b5c9347c7.png",
+      "src": "/_assets/ui/portraits/penitent-knight_BLK.png",
       "mtimeMs": 1771766722560
     },
     {
@@ -13137,6 +13744,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "1d3f76158c65.png",
+      "src": "/_assets/ui/icons/armor-helmet-bronze_BLK.png",
       "mtimeMs": 1767200810527
     },
     {
@@ -13158,6 +13767,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "b5899ec3f544.png",
+      "src": "/_assets/ui/icons/armor-helmet-crown_BLK.png",
       "mtimeMs": 1767200592822
     },
     {
@@ -13179,6 +13790,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "62f2e7742743.png",
+      "src": "/_assets/ui/icons/armor-chest-plate_BLK.png",
       "mtimeMs": 1767200468501
     },
     {
@@ -13200,6 +13813,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "7011b6e8d9b5.png",
+      "src": "/_assets/ui/icons/armor-chest-leather_BLK.png",
       "mtimeMs": 1767200140135
     },
     {
@@ -13221,6 +13836,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "df92ec3b89ea.png",
+      "src": "/_assets/ui/icons/weapon-basic-sword_BLK.png",
       "mtimeMs": 1767199842111
     },
     {
@@ -13242,6 +13859,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/saves/PK_Throne.blend",
       "mtimeMs": 1766927611834
     },
     {
@@ -13263,6 +13881,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "0768ea88f822.png",
+      "src": "/_assets/textures/surfaces/floor-sandy-brick_BLK.png",
       "mtimeMs": 1766843772678
     },
     {
@@ -13284,6 +13904,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "257133011d2f.png",
+      "src": "/_assets/textures/surfaces/wall-dark-castle_BLK.png",
       "mtimeMs": 1766842306332
     },
     {
@@ -13305,6 +13927,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/saves/PK_Shield.blend",
       "mtimeMs": 1766603909196
     },
     {
@@ -13326,6 +13949,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/exports/Example_Girl2.fbx",
       "mtimeMs": 1766595124359
     },
     {
@@ -13347,6 +13971,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/exports/Example_Girl.fbx",
       "mtimeMs": 1766595076560
     },
     {
@@ -13368,6 +13993,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/exports/Decimate_Shield_Success.fbx",
       "mtimeMs": 1766524923269
     },
     {
@@ -13389,6 +14015,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/exports/Untitled.fbx",
       "mtimeMs": 1766524588311
     },
     {
@@ -13410,6 +14037,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/exports/Untitled-Meshy_Mesh1.0.obj",
       "mtimeMs": 1766524328578
     },
     {
@@ -13431,6 +14059,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "87c76c31b4ea.png",
+      "src": "/_assets/ui/design/prototypes/image-to-3d-penitent-knight-shield_BLK.png",
       "mtimeMs": 1766523598383
     },
     {
@@ -13452,6 +14082,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "fe3aa0602155.png",
+      "src": "/_assets/ui/design/prototypes/image-to-3d-wooden-shield_BLK.png",
       "mtimeMs": 1766523554183
     },
     {
@@ -13473,6 +14105,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/stylized-human/SizeBarbarian.fbx",
       "mtimeMs": 1766522526974
     },
     {
@@ -13494,6 +14127,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/stylized-human/SizeBarbarian2.fbx",
       "mtimeMs": 1766522440366
     },
     {
@@ -13515,6 +14149,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/exports/Portal-Meshy_Mesh1.0.obj",
       "mtimeMs": 1766520037609
     },
     {
@@ -13536,6 +14171,7 @@
       "medium": "audio",
       "mediumType": "audio-voice",
       "spec": "n/a",
+      "src": "/_assets/audio/voice-dialog/penitent-knight/damage-reaction_BLK.mp3",
       "mtimeMs": 1766518739050
     },
     {
@@ -13557,6 +14193,7 @@
       "medium": "audio",
       "mediumType": "audio-voice",
       "spec": "n/a",
+      "src": "/_assets/audio/voice-dialog/penitent-knight/taunt-2_BLK.mp3",
       "mtimeMs": 1766247855036
     },
     {
@@ -13578,6 +14215,7 @@
       "medium": "audio",
       "mediumType": "audio-voice",
       "spec": "n/a",
+      "src": "/_assets/audio/voice-dialog/penitent-knight/taunt-1_BLK.mp3",
       "mtimeMs": 1766247785458
     },
     {
@@ -13599,6 +14237,7 @@
       "medium": "audio",
       "mediumType": "audio-voice",
       "spec": "n/a",
+      "src": "/_assets/audio/voice-dialog/penitent-knight/phase-2_BLK.mp3",
       "mtimeMs": 1766247698587
     },
     {
@@ -13620,6 +14259,7 @@
       "medium": "audio",
       "mediumType": "audio-voice",
       "spec": "n/a",
+      "src": "/_assets/audio/voice-dialog/penitent-knight/phase-1_BLK.mp3",
       "mtimeMs": 1766247528595
     },
     {
@@ -13641,6 +14281,7 @@
       "medium": "audio",
       "mediumType": "audio-voice",
       "spec": "n/a",
+      "src": "/_assets/audio/voice-dialog/penitent-knight/start_BLK.mp3",
       "mtimeMs": 1766247152697
     },
     {
@@ -13662,6 +14303,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/ui-fx/message-validation-fail_BLK.wav",
       "mtimeMs": 1764237998101
     },
     {
@@ -13683,6 +14325,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/environment/ambient-tribal_BLK.wav",
       "mtimeMs": 1764237911407
     },
     {
@@ -13704,6 +14347,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/environment/ambient-light-rain_BLK.wav",
       "mtimeMs": 1764237869685
     },
     {
@@ -13725,6 +14369,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/environment/ambient-campfire_BLK.wav",
       "mtimeMs": 1764237825073
     },
     {
@@ -13746,6 +14391,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/ability-combat-fx/combat-big-charge_BLK.wav",
       "mtimeMs": 1764237782079
     },
     {
@@ -13767,6 +14413,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/ability-combat-fx/combat-parry_BLK.wav",
       "mtimeMs": 1764237721146
     },
     {
@@ -13788,6 +14435,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/ability-combat-fx/combat-sword-swipe_BLK.wav",
       "mtimeMs": 1764237677140
     },
     {
@@ -13809,6 +14457,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/ability-combat-fx/combat-big-thud_BLK.wav",
       "mtimeMs": 1764237648174
     },
     {
@@ -13830,6 +14479,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/ability-combat-fx/combat-thud_BLK.wav",
       "mtimeMs": 1764237483571
     },
     {
@@ -13851,6 +14501,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/ui-fx/button-open-panel_BLK.wav",
       "mtimeMs": 1764237346712
     },
     {
@@ -13872,6 +14523,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/generic/reward-jingle_BLK.wav",
       "mtimeMs": 1764237204441
     },
     {
@@ -13893,6 +14545,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/ui-fx/timer-countdown_BLK.wav",
       "mtimeMs": 1764237070139
     },
     {
@@ -13914,6 +14567,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/ability-combat-fx/combat-stomp_BLK.wav",
       "mtimeMs": 1764236986445
     },
     {
@@ -13935,6 +14589,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/world-fx/device-electronic-malfunction_BLK.wav",
       "mtimeMs": 1764236857661
     },
     {
@@ -13956,6 +14611,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/ability-combat-fx/combat-quick-charge_BLK.mp3",
       "mtimeMs": 1764236767196
     },
     {
@@ -13977,6 +14633,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/ui-fx/panel-change-swoosh_BLK.wav",
       "mtimeMs": 1764236707932
     },
     {
@@ -13998,6 +14655,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/world-fx/character-level-up_BLK.wav",
       "mtimeMs": 1764236641425
     },
     {
@@ -14019,6 +14677,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/generic/swoosh_BLK.wav",
       "mtimeMs": 1764236528198
     },
     {
@@ -14040,6 +14699,7 @@
       "medium": "audio",
       "mediumType": "audio-music",
       "spec": "n/a",
+      "src": "/_assets/audio/bg-music/boss-battle-penitent-knight_BLK.flac",
       "mtimeMs": 1764236056089
     },
     {
@@ -14061,6 +14721,7 @@
       "medium": "audio",
       "mediumType": "audio-music",
       "spec": "n/a",
+      "src": "/_assets/audio/bg-music/boss-battle-penitent-knight_BLK.wav",
       "mtimeMs": 1764235986162
     },
     {
@@ -14082,6 +14743,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "93dfaf214419.png",
+      "src": "/_assets/ui/icons/glyph-red-cyber-claw_BLK.jpeg",
       "mtimeMs": 1762524961614
     },
     {
@@ -14103,6 +14766,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/stylized-human/StylizedHuman.fbx",
       "mtimeMs": 1760999401000
     },
     {
@@ -14124,6 +14788,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/stylized-human/StylizedHuman.blend",
       "mtimeMs": 1760999375000
     },
     {
@@ -14166,6 +14831,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "e04886cba912.png",
+      "src": "/_assets/ui/icons/weapon-flaming-axe-whirlwind_BLK.png",
       "mtimeMs": 1759867823740
     },
     {
@@ -14187,6 +14854,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "7e86ccc00946.png",
+      "src": "/_assets/ui/icons/item-mystery-potion_BLK.png",
       "mtimeMs": 1759264313774
     },
     {
@@ -14208,6 +14877,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "9bd38c7ad957.png",
+      "src": "/_assets/ui/icons/glyph-balance-the-scale_BLK.png",
       "mtimeMs": 1759262408820
     },
     {
@@ -14229,6 +14900,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "98fbcb67ab62.png",
+      "src": "/_assets/ui/icons/glyph-gear-in-gear_BLK.png",
       "mtimeMs": 1759236795728
     },
     {
@@ -14250,6 +14923,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "1f0b7bdef99e.png",
+      "src": "/_assets/ui/icons/emblem-mentalist-eye_BLK.png",
       "mtimeMs": 1759236397283
     },
     {
@@ -14292,6 +14967,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "08c2849a3d01.png",
+      "src": "/_assets/ui/backgrounds/panel-void-domain_BLK.png",
       "mtimeMs": 1758288212187
     },
     {
@@ -14313,6 +14990,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "663f79d475c0.png",
+      "src": "/_assets/ui/backgrounds/panel-order-domain_BLK.png",
       "mtimeMs": 1757070294541
     },
     {
@@ -14334,6 +15013,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "3ea616ff38e2.png",
+      "src": "/_assets/ui/backgrounds/panel-blood-domain_BLK.png",
       "mtimeMs": 1757070209748
     },
     {
@@ -14355,6 +15036,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "f24bb1bd96cd.png",
+      "src": "/_assets/ui/icons/glyph-blood-chaos_BLK.png",
       "mtimeMs": 1756552291028
     },
     {
@@ -14376,6 +15059,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "4013866b4391.png",
+      "src": "/_assets/ui/icons/status-frozen_BLK.png",
       "mtimeMs": 1756552291015
     },
     {
@@ -14397,6 +15082,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "fbbcefc51cb0.png",
+      "src": "/_assets/ui/icons/emblem-void-shell_BLK.png",
       "mtimeMs": 1756552151057
     },
     {
@@ -14418,6 +15105,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "adc490512f8f.png",
+      "src": "/_assets/ui/icons/control-close-circle_BLK.png",
       "mtimeMs": 1756117928666
     },
     {
@@ -14439,6 +15128,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "3f41c284b777.png",
+      "src": "/_assets/ui/icons/emblem-red-fist_BLK.png",
       "mtimeMs": 1756117907110
     },
     {
@@ -14460,6 +15151,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "ec9c515177c4.png",
+      "src": "/_assets/ui/icons/control-next_BLK.png",
       "mtimeMs": 1756117890223
     },
     {
@@ -14481,6 +15174,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "a12051616725.png",
+      "src": "/_assets/ui/slice-frames/frame-purple_BLK.png",
       "mtimeMs": 1756117532105
     },
     {
@@ -14502,6 +15197,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "5924d43f3204.png",
+      "src": "/_assets/ui/slice-frames/frame-aqua_BLK.png",
       "mtimeMs": 1756117423084
     },
     {
@@ -14523,6 +15220,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/ui-fx/button-hover_BLK.wav",
       "mtimeMs": 1756064816357
     },
     {
@@ -14544,6 +15242,7 @@
       "medium": "audio",
       "mediumType": "audio-sfx",
       "spec": "n/a",
+      "src": "/_assets/audio/ui-fx/button-click_BLK.wav",
       "mtimeMs": 1756064816347
     },
     {
@@ -14565,6 +15264,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "8d2321ce4200.png",
+      "src": "/_assets/textures/particles/beam-curvy-chain_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -14586,6 +15287,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "18d3f2f448f5.png",
+      "src": "/_assets/textures/particles/beam-red-thick-squiggly_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -14607,6 +15310,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "b4e2306e7810.png",
+      "src": "/_assets/textures/particles/beam-straight-chain_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -14628,6 +15333,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "fae9c81a4b55.png",
+      "src": "/_assets/textures/particles/beam-void-squiggly-01_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -14649,6 +15356,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "d07bb7eb5735.png",
+      "src": "/_assets/textures/particles/beam-void-squiggly-02_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -14670,6 +15379,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "cac2423819b7.png",
+      "src": "/_assets/textures/particles/particle-blood-droplet_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -14691,6 +15402,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "aaa9042e073c.png",
+      "src": "/_assets/textures/particles/particle-cyber-sheet_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -14712,6 +15425,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "c1ed81ce1298.png",
+      "src": "/_assets/textures/particles/particle-fog-effect_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -14733,6 +15448,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "9b42abf220b9.png",
+      "src": "/_assets/textures/particles/particle-spell-circle_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -14754,6 +15471,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "bbc0e496caa0.png",
+      "src": "/_assets/textures/particles/particle-toxic-fog_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -14775,6 +15494,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "baeb70d57796.png",
+      "src": "/_assets/textures/particles/thumbnail-soul-steel-game_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -14796,6 +15517,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "c0e9303fe2f8.png",
+      "src": "/_assets/textures/skybox/soul-steel-01/bk_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -14817,6 +15540,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "aca7b28c47f7.png",
+      "src": "/_assets/textures/skybox/soul-steel-01/ft_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -14838,6 +15563,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "842498ada5cd.png",
+      "src": "/_assets/textures/skybox/soul-steel-01/lf_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -14859,6 +15586,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "451d48dfe53a.png",
+      "src": "/_assets/textures/skybox/soul-steel-01/rt_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -14880,6 +15609,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "de4ad9dab944.png",
+      "src": "/_assets/textures/skybox/soul-steel-01/up_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -14901,6 +15632,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "cd2c936cb2ac.png",
+      "src": "/_assets/textures/surfaces/floor-bloody-tiles_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -14922,6 +15655,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "07b821b719f6.png",
+      "src": "/_assets/textures/surfaces/floor-cyber-octagon_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -14943,6 +15678,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "00c3953c5ae7.png",
+      "src": "/_assets/textures/surfaces/floor-soul-lava_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -14964,6 +15701,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "2032a25467f8.png",
+      "src": "/_assets/textures/surfaces/texture-sheet-cyber-dark_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -14985,6 +15724,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "e0e525030358.png",
+      "src": "/_assets/textures/surfaces/texture-sheet-cyber-white_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15006,6 +15747,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "ab044eebf79a.png",
+      "src": "/_assets/textures/surfaces/texture-sheet-cyber-yellow_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15027,6 +15770,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "18c36a3306bf.png",
+      "src": "/_assets/textures/surfaces/wall-bottom-dark-castle_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15048,6 +15793,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "5686b43bb742.png",
+      "src": "/_assets/textures/surfaces/wall-cyber-01_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15069,6 +15816,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "34814f9f7b33.png",
+      "src": "/_assets/textures/surfaces/wall-cyber-02_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15090,6 +15839,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "d55b30b7b5cc.png",
+      "src": "/_assets/textures/surfaces/wall-order-01_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15111,6 +15862,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "2725f59bb245.png",
+      "src": "/_assets/ui/backgrounds/button-toggle-main_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15132,6 +15885,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "b515c5c282a0.png",
+      "src": "/_assets/ui/backgrounds/panel-blood_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15153,6 +15908,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "89ab17d119dd.png",
+      "src": "/_assets/ui/backgrounds/panel-cyber-gold_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15174,6 +15931,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "539cd5634559.png",
+      "src": "/_assets/ui/backgrounds/panel-decay_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15195,6 +15954,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "5cf2e0dba3cd.png",
+      "src": "/_assets/ui/backgrounds/panel-order-lore_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15216,6 +15977,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "b453577ac25b.png",
+      "src": "/_assets/ui/backgrounds/screen-loading-blood-red-castle_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15237,6 +16000,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "7456895a2d91.png",
+      "src": "/_assets/ui/backgrounds/screen-soul-steel-splash_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15258,6 +16023,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "6c41fe665cda.png",
+      "src": "/_assets/ui/backgrounds/talent-tree-blood-demon_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15279,6 +16046,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "9e8894369776.png",
+      "src": "/_assets/ui/backgrounds/talent-tree-blood-tree_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15300,6 +16069,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "6d261cc74d69.png",
+      "src": "/_assets/ui/backgrounds/talent-tree-cyber-angel_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15321,6 +16092,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "86e8fd91fdfa.png",
+      "src": "/_assets/ui/backgrounds/talent-tree-decaying-one_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15342,6 +16115,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "605653aecf5b.png",
+      "src": "/_assets/ui/backgrounds/talent-tree-fateless_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15363,6 +16138,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "c014f2532755.png",
+      "src": "/_assets/ui/backgrounds/title-card_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15384,6 +16161,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "c712cda34743.png",
+      "src": "/_assets/ui/icons/armor-plate-chest_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15405,6 +16184,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "ea2ad48e6f60.png",
+      "src": "/_assets/ui/icons/armor-plate-helm_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15426,6 +16207,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "a0b861d9990c.png",
+      "src": "/_assets/ui/icons/control-decrease_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15447,6 +16230,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "d137ec57d6d6.png",
+      "src": "/_assets/ui/icons/control-increase_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15468,6 +16253,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "20c109dd61a6.png",
+      "src": "/_assets/ui/icons/control-play_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15489,6 +16276,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "be52fd4339c8.png",
+      "src": "/_assets/ui/icons/currency-soul-coin_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15510,6 +16299,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "f22a31ea2d99.png",
+      "src": "/_assets/ui/icons/currency-soul-shard_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15531,6 +16322,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "3c8bf71a4b28.png",
+      "src": "/_assets/ui/icons/emblem-cyber-friends_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15552,6 +16345,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "514216b21f37.png",
+      "src": "/_assets/ui/icons/emblem-ice-gem_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15573,6 +16368,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "387429348089.png",
+      "src": "/_assets/ui/icons/emblem-light-gem_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15594,6 +16391,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "8cf576170cbc.png",
+      "src": "/_assets/ui/icons/emblem-penitent-knight_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15615,6 +16414,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "1bf5a7612de6.png",
+      "src": "/_assets/ui/icons/emblem-red-crystal-thick_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15636,6 +16437,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "f9b5ff9aec0e.png",
+      "src": "/_assets/ui/icons/emblem-shadow-void_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15657,6 +16460,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "9332af154194.png",
+      "src": "/_assets/ui/icons/glyph-cyber-brain_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15678,6 +16483,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "55ae90dd52bb.png",
+      "src": "/_assets/ui/icons/glyph-encrusted-heart_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15699,6 +16506,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "44b487ead162.png",
+      "src": "/_assets/ui/icons/glyph-frozen-flight_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15720,6 +16529,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "0885898a5304.png",
+      "src": "/_assets/ui/icons/glyph-hammer-and-anvil-texture_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15741,6 +16552,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "b05e926f8cfb.png",
+      "src": "/_assets/ui/icons/glyph-hammer-and-anvil-white_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15762,6 +16575,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "b57eebe4e2e4.png",
+      "src": "/_assets/ui/icons/item-backpack_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15783,6 +16598,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "97f040b6fbf8.png",
+      "src": "/_assets/ui/icons/item-forge_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15804,6 +16621,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "a247a830e986.png",
+      "src": "/_assets/ui/icons/item-lucky-clover_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15825,6 +16644,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "fc693042728f.png",
+      "src": "/_assets/ui/icons/item-portal_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15846,6 +16667,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "760b3a84be54.png",
+      "src": "/_assets/ui/icons/item-quests_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15867,6 +16690,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "90e92b776037.png",
+      "src": "/_assets/ui/icons/item-soul-pendant_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15888,6 +16713,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "61c642fbc60b.png",
+      "src": "/_assets/ui/icons/status-cracked-defense_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15909,6 +16736,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "fd9fa7ccc804.png",
+      "src": "/_assets/ui/icons/weapon-short-sword_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15930,6 +16759,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "49416340dfdf.png",
+      "src": "/_assets/ui/icons/weapon-smiths-hammer_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15951,6 +16782,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "ee64ec5d1477.png",
+      "src": "/_assets/ui/slice-frames/frame-generic-picture_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15972,6 +16805,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "c8a005c4c01f.png",
+      "src": "/_assets/ui/slice-frames/frame-red-thick_BLK.png",
       "mtimeMs": 1756063691000
     },
     {
@@ -15993,6 +16828,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "f2f4e0795ab3.png",
+      "src": "/_assets/textures/particles/logo-trembus-tech_BLK.png",
       "mtimeMs": 1756063690000
     },
     {
@@ -16014,6 +16851,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "a714c3c5f106.png",
+      "src": "/_assets/ui/backgrounds/infinity_BLK.webp",
       "mtimeMs": 1756063690000
     },
     {
@@ -16035,6 +16874,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "97ddb79ba91d.png",
+      "src": "/_assets/ui/design/prototypes/examples-ability-button-concepts_BLK.png",
       "mtimeMs": 1756063690000
     },
     {
@@ -16056,6 +16897,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "5c1408a60101.png",
+      "src": "/_assets/ui/icons/control-unassigned_BLK.png",
       "mtimeMs": 1756063690000
     },
     {
@@ -16077,6 +16920,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "a35d3f55ea0f.png",
+      "src": "/_assets/ui/icons/emblem-blood-puppet_BLK.png",
       "mtimeMs": 1756063690000
     },
     {
@@ -16098,6 +16943,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "41b2e4f5f23f.png",
+      "src": "/_assets/ui/icons/glyph-blood-siphon_BLK.png",
       "mtimeMs": 1756063690000
     },
     {
@@ -16119,6 +16966,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "ab3be4b7b69b.png",
+      "src": "/_assets/ui/icons/glyph-cracked-light-beam_BLK.png",
       "mtimeMs": 1756063690000
     },
     {
@@ -16140,6 +16989,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "8d37ef923d89.png",
+      "src": "/_assets/ui/icons/glyph-eruption-earthquake_BLK.png",
       "mtimeMs": 1756063690000
     },
     {
@@ -16161,6 +17012,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "559ef14e2762.png",
+      "src": "/_assets/ui/icons/glyph-fire-portal_BLK.png",
       "mtimeMs": 1756063690000
     },
     {
@@ -16182,6 +17035,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "23600ce61d39.png",
+      "src": "/_assets/ui/icons/glyph-hallow-hold_BLK.png",
       "mtimeMs": 1756063690000
     },
     {
@@ -16203,6 +17058,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "990fcd9527da.png",
+      "src": "/_assets/ui/icons/glyph-ice-shard-simple_BLK.png",
       "mtimeMs": 1756063690000
     },
     {
@@ -16224,6 +17081,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "bbadde64dc48.png",
+      "src": "/_assets/ui/icons/glyph-lightning-bolt_BLK.png",
       "mtimeMs": 1756063690000
     },
     {
@@ -16245,6 +17104,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "f390499ebfd8.png",
+      "src": "/_assets/ui/icons/glyph-soul-circle_BLK.png",
       "mtimeMs": 1756063690000
     },
     {
@@ -16266,6 +17127,8 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "thumb": "4dedc4d30da5.png",
+      "src": "/_assets/ui/icons/weapon-melee-fist_BLK.png",
       "mtimeMs": 1756063690000
     },
     {
@@ -16287,6 +17150,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/stylized-human/StylizedHuman.ma",
       "mtimeMs": 1697566106000
     },
     {
@@ -16308,6 +17172,7 @@
       "medium": "3d",
       "mediumType": "3d-model",
       "spec": "n/a",
+      "src": "/_assets/source/blender/stylized-human/StylizedHuman_Eyebrows.fbx",
       "mtimeMs": 1697566106000
     },
     {
@@ -16329,6 +17194,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "661ecbc6b1ee.png",
+      "src": "/_assets/source/blender/stylized-human/TXT_StylizedHuman_ALB.png",
       "mtimeMs": 1697566106000
     },
     {
@@ -16350,6 +17217,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "072044fb9ff6.png",
+      "src": "/_assets/source/blender/stylized-human/TXT_StylizedHuman_MET.png",
       "mtimeMs": 1697566106000
     },
     {
@@ -16371,6 +17240,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "0502d32b9e5d.png",
+      "src": "/_assets/source/blender/stylized-human/TXT_StylizedHuman_NOR.png",
       "mtimeMs": 1697566106000
     },
     {
@@ -16392,6 +17263,8 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "thumb": "e12ba1f34b75.png",
+      "src": "/_assets/source/blender/stylized-human/TXT_StylizedHuman_RGH.png",
       "mtimeMs": 1697566106000
     }
   ]

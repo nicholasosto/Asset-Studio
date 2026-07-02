@@ -4,7 +4,7 @@ status: experimental
 updated: 2026-06-30
 links:
   - { rel: references, target: workflows/audio-production }
-tags: { mediumType: audio, tool: elevenlabs, pattern: symlink }
+tags: { mediumType: audio-sfx, tool: elevenlabs, pattern: symlink }
 ---
 
 # Audio

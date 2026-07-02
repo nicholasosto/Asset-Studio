@@ -24,7 +24,7 @@ Asset-Studio never duplicates that library or its id registry.
 | `_project/mediums/` | The `medium` capability catalog (image · audio · 3d) — what the studio can produce, and how. |
 | `_project/pipeline/` | Production *instances* (batches/commissions) that follow a workflow. |
 | `external-locations/` | Symlinks to the shared `Assets/` library + the `canonical/` kit & skills. Tracked links, untracked payload. |
-| `previews/dashboards/` | The emitted contracts — the planning graph (`asset-studio-graph.json` + `asset-studio-hub.json`) and the Asset Explorer's `asset-registry.json` — plus the rendered hub HTML. |
+| `previews/dashboards/` | The emitted contracts — the planning graph (`asset-studio-graph.json` + `asset-studio-hub.json`) and the Asset Explorer's `asset-registry.json`. JSON only — the rendered surface is the Command Center app. |
 | `apps/command-center/` | The live Vite/React Command Center — renders the contracts + the **Asset Explorer**, on the Trembus Component Library (`@trembus/ui · viz · game-viz`). A separate dependency island consuming published npm packages; the vendored framework stays zero-dep. |
 | `tools/` | Project-owned build tools (distinct from the vendored `.project-system/tools/`). `build-asset-registry.mjs` scans the shared library → emits the Explorer's `asset-registry.json`. |
 
@@ -33,12 +33,13 @@ Asset-Studio never duplicates that library or its id registry.
 - **Kinds:** the canonical six (decision · report · pipeline · roadmap · session · workflow) **plus**
   `medium` (the per-asset-type capability catalog; status `experimental → supported → deprecated`).
 - **Scaffold, don't hand-write.** Create entities with `node .project-system/tools/new-entity.mjs <kind>
-  "<title>"` (or `/new <kind>`); a PreToolUse guard blocks invalid `_project/` writes.
+  "<title>"` (or `/new <kind>`); a PreToolUse guard blocks invalid `_project/` writes made via the
+  Write/Edit tools (Bash-mediated writes bypass it — run `validate.mjs` after any).
 - **Workflow vs pipeline:** a `workflow` is a reusable template (swimlane); a `pipeline` is one stateful
   production batch that follows it. Enforced strictly — `swimlaneEnforcement: error`.
 - **Tags:** `mediumType` · `tool` · `pattern` (symlink = Pattern A; upload = Pattern B).
 - **Tooling:** Blender MCP (`blender-mcp-craft`), ElevenLabs (audio), Figma/OpenAI (image), Roblox
-  Studio MCP (3D import). Dashboards render via `render-hub.mjs` → the Command Center / visual-grammar kit.
+  Studio MCP (3D import). Dashboards: `render-hub.mjs` emits the JSON contract → the Command Center renders it.
 - **Render the dashboard:** `node .project-system/tools/render-hub.mjs` after `_project/` edits (emits
   JSON only). The **dev** server hot-reloads it automatically; to refresh the **committed static site**
   also run `pnpm --dir apps/command-center build` → `previews/app/`. See [[dashboard-regen-is-two-steps]].
@@ -62,15 +63,26 @@ Asset-Studio never duplicates that library or its id registry.
 ## Status
 
 Migrating the Asset Explorer into the Command Center
-([[migrate-asset-explorer-into-the-command-center]]) — **5/6 phases done** (2026-07-01): the
-`asset-registry.json` scanner, the `medium`/`mediumType` taxonomy, the React Explorer view, its
-adoption of the Trembus `MediaFrame`, and now **surfaced live** — the Command Center builds as a
-self-contained SPA into `previews/app/` (`vite build`, `base: './'`, contracts inlined) and
-`previews/index.html` is a five-card Live launcher with a deep-linked Asset Explorer (`app/#explorer`).
-The orphaned static `asset-studio-command-center.html` is retired. **P5 (retire the Soul-Steel
-`asset-explorer.html`) is parked on preview parity (CF-1):** that source is generated and still has
-working thumbnails the migrated Explorer renders as placeholders. Corpus: 17 entities (3 decision ·
-1 roadmap · 1 report · 5 session · 3 workflow · 3 medium · 1 pipeline), validates 0/0/0. Command
-Center on `@trembus/ui 0.4.0` + `game-viz 0.2.0`.
-**Deferred:** real image/audio/3D previews wait on served asset URLs — `MediaFrame`/`AudioWaveform` render
-placeholders until then (CF-1, the Phase 5 blocker). `proseStatusEnforcement` still `warn` — ratchet to `error` once the corpus settles.
+([[migrate-asset-explorer-into-the-command-center]]) — Phases 0–4 done + **CF-1 preview parity landed**
+(2026-07-01): the `asset-registry.json` scanner, the `medium`/`mediumType` taxonomy, the React Explorer
+view, its adoption of the Trembus `MediaFrame`, surfaced live as a self-contained SPA (`previews/app/`,
+`vite build`, `base: './'`), and now **real previews** — the builder bakes 144px thumbnails (`sips` →
+committed `previews/thumbs/`) + a served `/_assets` `src`; a Vite dev middleware and a committed
+`previews/_assets` symlink serve `/_assets` + `/thumbs` identically on `:5175` dev and `:4317` static, so
+`MediaFrame` shows image thumbs (tile) + full image + a glb/gltf turntable and `AudioWaveform` plays audio
+in the inspector; the inspector also does reveal-in-Finder (dev `POST /api/reveal`, Assets-root guarded,
+copy-abs fallback on static) + copy-path, and copy-id on the CSV-joined records (2/769 since the join-key
+fix — ADRs 0004–0006). **P5 (retire the Soul-Steel `asset-explorer.html`) is now unblocked** — awaiting owner
+confirmation for the cross-repo deprecation (the banner goes in its *generator*).
+**2026-07-01 deep review + remediation landed** ([[2026-07-01-deep-review-of-the-project-space-and-remediation]]):
+static `:4317` server loopback-bound; builder hardened (100%-bake-failure aborts, `--no-thumbs` reuses the
+committed bake, orphan thumbs pruned, CSV-join `"Collection: "` prefix fixed, CRLF-safe CSV, scan-error
+warnings); reveal endpoint hardened (Origin check, chunk-safe UTF-8, per-request root); `registry.ts`
+degrades instead of crashing on registry shape drift; docs/corpus/memories de-drifted. **Open (owner
+calls):** fetch-vs-inline for the contracts (would dissolve the stale-bundle class — wants an ADR); the
+CF-1 + review artifacts are still uncommitted — commit atomically (registry + thumbs + `_assets` symlink +
+bundle together). Corpus: 22 entities (6 decision · 1 roadmap · 1 report · 7 session · 3 workflow ·
+3 medium · 1 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.4.0` + `game-viz 0.2.0`.
+**Deferred:** a portable (non-`sips`) thumbnail baker for non-macOS + baked 3D/audio posters (the 77
+non-glb/gltf 3D exts glyph). `proseStatusEnforcement` still `warn`
+— ratchet to `error` once the corpus settles.

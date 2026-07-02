@@ -38,7 +38,9 @@ through `external-locations/`; it never duplicates it. Current-state established
 ## Phases
 
 The structured plan the Command Center renders as a Timeline. Phases 0–4 are complete (data + view +
-surfaced live); Phase 5 — retiring the Soul-Steel source — is parked on preview parity (CF-1).
+surfaced live); **CF-1 preview parity — the Phase-5 blocker — is now resolved** (2026-07-01: real
+image/audio/3D previews + reveal + copy landed and verified live on dev + static). Phase 5 — retiring the
+Soul-Steel source — is **unblocked**, awaiting owner confirmation for the cross-repo deprecation.
 
 ```json
 [
@@ -47,22 +49,27 @@ surfaced live); Phase 5 — retiring the Soul-Steel source — is parked on prev
   { "id": "p2", "label": "Taxonomy refactor", "status": "done", "detail": "Deterministic medium/mediumType derivation in the scanner (leans on the TGL filename grammar); domain kept as a tag only; 0 unknown. Confirmed by a 3-way adversarial verify." },
   { "id": "p3", "label": "Explorer view in the app", "status": "done", "detail": "AssetExplorer.tsx + registry.ts in apps/command-center: summary stats + donut, medium/mediumType/status/ext/search filters, grouped card grid, detail inspector. Built on @trembus/ui; typecheck + build clean; adversarially verified." },
   { "id": "p4", "label": "Wire it Live", "status": "done", "detail": "The Command Center now builds as a self-contained SPA into previews/app/ (relative base; all contracts inlined); previews/index.html reworked to five Live lens cards incl. a deep-linked Asset Explorer (app/#explorer); the orphaned static command-center.html retired. Verified served from the :4317 static site." },
-  { "id": "p5", "label": "Retire the source artifact", "status": "parked", "detail": "Parked on CF-1 preview parity: the Soul-Steel asset-explorer.html keeps working baked thumbnails + full-size image/audio previews that the migrated Explorer still renders as placeholders until asset URLs/posters are served. Deprecate + cross-link once parity lands — no cross-repo change made this session (the source file is generated; a banner must go in its generator)." }
+  { "id": "cf1", "label": "Preview parity (CF-1)", "status": "done", "detail": "Real previews landed: builder bakes 144px thumbs (sips → previews/thumbs) + a served /_assets src; a Vite dev middleware + committed previews/_assets symlink serve /_assets & /thumbs identically on :5175 dev and :4317 static; MediaFrame shows image thumbs (tile) + full image + glb/gltf turntable, AudioWaveform plays audio in the inspector; reveal-in-Finder (POST /api/reveal, Assets-root guarded) with copy-abs fallback + copy-path/copy-id. ADRs 0004–0006. Verified live on dev + static, 0 console errors." },
+  { "id": "p5", "label": "Retire the source artifact", "status": "active", "detail": "UNBLOCKED — CF-1 parity resolved (the migrated Explorer now renders the previews the Soul-Steel asset-explorer.html had). Remaining: deprecate + cross-link the Soul-Steel source. It is GENERATED, so the banner must go in its generator (tools/build-asset-explorer.mjs) — a cross-repo write held for explicit owner confirmation; no Soul-Steel change made this session." }
 ]
 ```
 
 ## Open questions
 
-- **Taxonomy derivation.** The exact rule set mapping `kind` + `ext` + `area` + filename → `mediumType`
-  (e.g. an `image` under `area:textures` → `texture`; a `.mp3` tagged `-ambient`/`-impact` → `audio-sfx`
-  vs `-cast`/voice → `audio-voice`). Deterministic and reviewable — the heart of Phase 2.
-- **What happens to `domain`?** Drop entirely, or demote to an *optional freeform tag* (off by default, no
-  longer a folder) so nothing is lost.
-- **Scan scope.** The whole shared `Assets/` library, or a declared subtree? What's excluded (code, data,
-  docs)?
-- **Thumbnails.** Reuse the existing hashed `asset-explorer-thumbs/`, or regenerate into an
-  Asset-Studio-owned cache.
-- **Status vocab.** Current stamps are `BLK · FNL · ALPHA`. Map to an Asset-Studio asset-status
-  vocabulary, or keep as-is.
+All five original questions are settled — kept with their resolutions so the trail stays legible:
+
+- **Taxonomy derivation** — resolved (p2, ADR 0002): a deterministic first-match-wins cascade in
+  `tools/build-asset-registry.mjs` (`deriveMedium`/`deriveMediumType`) — TGL category first, then
+  folder area, then filename tokens; 0 `unknown` on the current corpus.
+- **What happens to `domain`?** — resolved (ADR 0002): demoted to a display-only tag, never a
+  grouping axis; still emitted per record.
+- **Scan scope** — resolved (p1 + ADR 0002): the whole shared library is scanned; non-asset kinds
+  (data · doc · script · source) emit `medium: null` and hide behind the Explorer's
+  "show source" toggle.
+- **Thumbnails** — resolved (ADR 0005, CF-1): regenerated into the Asset-Studio-owned
+  `previews/thumbs/` (`sips`, 144px, path-hash names, always-rebake); the Soul-Steel
+  `asset-explorer-thumbs/` cache is not reused.
+- **Status vocab** — resolved implicitly (ADR 0002 keeps it as a filter facet): `BLK · ALPHA ·
+  BETA · FNL` unchanged; no Asset-Studio re-mapping.
 </content>
 </invoke>

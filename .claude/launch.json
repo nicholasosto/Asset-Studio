@@ -11,7 +11,7 @@
     {
       "name": "previews-static",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4317", "--directory", "previews"],
+      "runtimeArgs": ["-m", "http.server", "4317", "--bind", "127.0.0.1", "--directory", "previews"],
       "port": 4317
     }
   ]

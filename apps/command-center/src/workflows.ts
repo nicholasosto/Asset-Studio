@@ -1,10 +1,10 @@
 // Workflows the Command Center can replay as Swimlanes — derived entirely from the contract.
 //
-// Every workflow is data now: a `workflow`-kind entity (e.g. the authoring loop) or any other
-// entity that declares a `## Workflow` block (decision 0004 — e.g. a pipeline's build flow).
+// Every workflow is data: a `workflow`-kind entity (image-generation · audio-production ·
+// 3d-asset) or any other entity that declares a `## Workflow` block (e.g. a pipeline's flow —
+// a convention inherited from the upstream Project-System framework; NOT this repo's ADR 0004).
 // render-hub.mjs extracts each into graph.json's `workflows` map; this module just adapts that
-// map into the picker's option shape. Nothing is hardcoded here anymore — the framework's own
-// authoring loop moved to _project/workflows/authoring-loop.md (decision 0004, fully realized).
+// map into the picker's option shape. Nothing is hardcoded here.
 import type { RunRecord } from '@trembus/ui';
 import { entities, runs as contractRuns, swimlaneKinds, workflows as contractWorkflows } from './contract';
 import type { WorkflowContract } from './contract';

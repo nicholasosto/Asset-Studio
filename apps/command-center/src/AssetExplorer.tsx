@@ -11,9 +11,10 @@
 //      removable-chip strip reflecting the active filters.
 //   3. RESULTS GRID — a count line + a CSS grid of asset cards (optionally grouped by mediumType).
 //   4. INSPECTOR — a Dialog modal holding the selected record's full metadata dump.
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import {
+  AudioWaveform,
   Badge,
   Box,
   Button,
@@ -38,6 +39,7 @@ import {
   MEDIUM_OF_TYPE,
   MEDIUM_STYLE,
   MEDIUM_TYPES,
+  absPathOf,
   counts,
   humanBytes,
   mediumKey,
@@ -45,8 +47,9 @@ import {
   statusTone,
   statusVocab,
   summary,
+  thumbUrl,
 } from './registry';
-import type { AssetRecord, Medium, MediumKey, MediumType } from './registry';
+import type { AssetRecord, Medium, MediumType } from './registry';
 import { MediaFrame } from '@trembus/game-viz';
 import type { MediaFrameData } from '@trembus/game-viz';
 
@@ -60,22 +63,85 @@ const MEDIUM_ORDER: Medium[] = ['image', '3d', 'audio'];
 // A record is source (non-asset) when it has no medium — the null bucket, hidden by default.
 const isSource = (r: AssetRecord): boolean => r.medium === null;
 
-// Registry medium → MediaFrame format category (3d→model, source→doc). MediaFrame owns the framed
-// placeholder plate + ext-aware glyph; with no src/poster yet (asset URLs aren't served) it renders the
-// placeholder, and real image/3D previews light up automatically once those URLs land.
-const MEDIUM_TO_FRAME: Record<MediumKey, MediaFrameData['medium']> = {
-  image: 'image',
-  '3d': 'model',
-  audio: 'audio',
-  source: 'doc',
+// Registry record → MediaFrame data. The frame-medium is chosen from MEDIA AVAILABILITY, not a
+// static map: a record with no usable URL maps to 'doc' (a static ext-aware glyph) rather than
+// image/audio/model with no src — which MediaFrame renders as a permanent Skeleton (implying
+// "loading"). Verified MediaFrame surface precedence (@trembus/game-viz): image uses src (else
+// poster); audio needs src (mounts a player, no fetch/decode until play); a glb/gltf src → the 3D
+// turntable. The `full` flag splits tile from inspector, matching the original's economy:
+//   TILE (full:false)      — images show the baked THUMBNAIL; audio/3D show a glyph.
+//   INSPECTOR (full:true)  — images show the FULL-SIZE asset; audio plays; glb/gltf turn the
+//                            turntable on; every other 3D ext shows a glyph.
+const toFrameData = (r: AssetRecord, { full }: { full: boolean }): MediaFrameData => {
+  const ext = r.ext.toLowerCase();
+  const base = {
+    ext: r.ext,
+    alt: r.base,
+    tone: MEDIUM_STYLE[mediumKey(r)].tone,
+    mediumType: r.mediumType ?? undefined,
+  };
+  const thumb = thumbUrl(r.thumb); // /thumbs/<name> | undefined
+
+  if (r.medium === 'image') {
+    const url = full ? r.src ?? thumb : thumb; // tile=thumb, inspector=full-size (src wins over poster)
+    return url ? { ...base, medium: 'image', src: url } : { ...base, medium: 'doc' };
+  }
+  if (r.medium === 'audio') {
+    // Playback lives in the inspector (as in the original drawer); tiles stay light.
+    return full && r.src ? { ...base, medium: 'audio', src: r.src } : { ...base, medium: 'doc' };
+  }
+  if (r.medium === '3d') {
+    // MediaFrame can only load glb/gltf, and only in the inspector; the other 77 3D exts glyph.
+    const turntable = full && !!r.src && (ext === 'glb' || ext === 'gltf');
+    return turntable ? { ...base, medium: 'model', src: r.src, poster: thumb } : { ...base, medium: 'doc' };
+  }
+  return { ...base, medium: 'doc' }; // source / null → ext glyph
 };
-const toFrameData = (r: AssetRecord): MediaFrameData => ({
-  medium: MEDIUM_TO_FRAME[mediumKey(r)],
-  mediumType: r.mediumType ?? undefined,
-  ext: r.ext,
-  alt: r.base,
-  tone: MEDIUM_STYLE[mediumKey(r)].tone,
-});
+
+// ── Clipboard + reveal (client) ───────────────────────────────────────────────────────
+// Clipboard write with a hidden-textarea + execCommand fallback so copy also works in a
+// non-secure-context webview (mirrors the reference tool's copyText).
+async function copyText(text: string): Promise<boolean> {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    /* fall through to the legacy path */
+  }
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand('copy');
+    ta.remove();
+    return ok;
+  } catch {
+    return false;
+  }
+}
+
+// Reveal a library-relative path in Finder via the dev-only POST /api/reveal, degrading to
+// copying the ABSOLUTE path when no helper answers (the static :4317 site, or any failure) — the
+// user pastes it into Finder's Go-to-Folder (⇧⌘G). Returns which branch actually ran.
+async function revealOrCopy(p: string, abs: string): Promise<'revealed' | 'copied'> {
+  try {
+    const res = await fetch('/api/reveal', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ path: p }),
+    });
+    if (res.ok) {
+      const j = (await res.json().catch(() => ({}))) as { ok?: boolean };
+      if (j.ok) return 'revealed';
+    }
+  } catch {
+    /* no helper — fall through to copy */
+  }
+  await copyText(abs);
+  return 'copied';
+}
 
 interface Filters {
   showSource: boolean;
@@ -135,12 +201,16 @@ export function AssetExplorer() {
     const visible = records.filter(matches);
 
     // Would turning on "show source" reveal matches? True when the current (non-source-gated)
-    // filters hit source records that are hidden only by the OFF toggle — powers the empty-state hint.
+    // filters hit source records that are hidden only by the OFF toggle — powers the empty-state
+    // hint. Must apply the SAME facets as matches(): a medium/mediumType filter can never match
+    // a source record (both are null on source), so the hint would otherwise promise a reveal
+    // the toggle can't deliver.
     let sourceOnlyHidden = false;
-    if (!showSource && visible.length === 0) {
+    if (!showSource && visible.length === 0 && !medium && !mediumType) {
       sourceOnlyHidden = records.some(
         (r) =>
           isSource(r) &&
+          (!status || r.status === (status === 'none' ? null : status)) &&
           (!ext || r.ext === ext) &&
           (!needle || `${r.stem} ${r.p}`.toLowerCase().includes(needle)),
       );
@@ -160,19 +230,33 @@ export function AssetExplorer() {
   const overflow = visible.length - capped.length;
   const grouped = !filters.mediumType;
 
+  // Buckets are built from the FULL visible set — never the capped slice — so every subhead
+  // count is the type's real total and no older mediumType vanishes from the default view.
+  // The render cap is applied per group below (an even share of INITIAL_CAP).
   const groups = useMemo(() => {
     if (!grouped) return null;
     const buckets = new Map<string, AssetRecord[]>();
-    for (const r of capped) {
+    for (const r of visible) {
       const key = r.mediumType ?? '(source)';
-      buckets.set(key, [...(buckets.get(key) ?? []), r]);
+      const arr = buckets.get(key);
+      if (arr) arr.push(r);
+      else buckets.set(key, [r]);
     }
     // Order buckets by the axis (image types, 3d types, audio types), source last.
     const order = [...MEDIUM_ORDER.flatMap((m) => MEDIUM_TYPES[m]), '(source)'];
     return [...buckets.entries()].sort(
       (a, b) => (order.indexOf(a[0]) + 1 || 99) - (order.indexOf(b[0]) + 1 || 99),
     );
-  }, [capped, grouped]);
+  }, [visible, grouped]);
+
+  // Per-group slice of the render budget on the wide-open view; filters/"show all" lift it.
+  const groupCapActive = grouped && !hasFilter && !showAll;
+  const perGroup = groupCapActive && groups ? Math.max(12, Math.ceil(INITIAL_CAP / groups.length)) : Infinity;
+  const groupsShown = groups?.map(
+    ([type, rows]) => [type, rows, groupCapActive ? rows.slice(0, perGroup) : rows] as const,
+  );
+  const groupedOverflow =
+    groupsShown ? visible.length - groupsShown.reduce((n, [, , shown]) => n + shown.length, 0) : 0;
 
   // The active-filter chips (DataStatusBar `filters` — removable via onRemoveFilter).
   const chips: DataFilter[] = [];
@@ -362,7 +446,9 @@ export function AssetExplorer() {
       {/* 3 — RESULTS GRID */}
       <section className="cc-section">
         <p className="cc-explorer__count">
-          {summary.total} assets · {visible.length} shown
+          {filters.showSource
+            ? `${summary.total} files (incl. ${summary.source} source) · ${visible.length} shown`
+            : `${summary.real} assets · ${visible.length} shown`}
         </p>
         {visible.length === 0 ? (
           <EmptyState
@@ -381,21 +467,24 @@ export function AssetExplorer() {
               ) : undefined
             }
           />
-        ) : grouped && groups ? (
+        ) : grouped && groupsShown ? (
           <>
-            {groups.map(([type, rows]) => (
+            {groupsShown.map(([type, rows, shown]) => (
               <div key={type} className="cc-explorer__group">
                 <h4 className="cc-section-title cc-explorer__grouphead">
-                  {type} <span className="cc-explorer__groupcount">{rows.length}</span>
+                  {type}{' '}
+                  <span className="cc-explorer__groupcount">
+                    {shown.length < rows.length ? `${shown.length} of ${rows.length}` : rows.length}
+                  </span>
                 </h4>
                 <div className="cc-explorer__grid">
-                  {rows.map((r) => (
+                  {shown.map((r) => (
                     <AssetTile key={r.p} record={r} selected={sel?.p === r.p} onOpen={setSel} />
                   ))}
                 </div>
               </div>
             ))}
-            {overflow > 0 && (
+            {groupedOverflow > 0 && (
               <div className="cc-explorer__more">
                 <Button variant="outline" onPress={() => setShowAll(true)}>
                   Show all {visible.length}
@@ -427,8 +516,8 @@ export function AssetExplorer() {
   );
 }
 
-// A single asset tile — a medium-tinted placeholder frame (no thumbnail; deferred), the stem name,
-// a badge row (mediumType colored by medium + status dot), and a dim meta line (ext · size · area).
+// A single asset tile — a MediaFrame (baked thumbnail for images; ext glyph otherwise), the stem
+// name, a badge row (mediumType colored by medium + status dot), and a dim meta line (ext · size · area).
 function AssetTile({
   record,
   selected,
@@ -459,7 +548,7 @@ function AssetTile({
       }}
     >
       <Card.Header>
-        <MediaFrame data={toFrameData(record)} ratio="16 / 9" />
+        <MediaFrame data={toFrameData(record, { full: false })} ratio="16 / 9" />
       </Card.Header>
       <Card.Body>
         <Stack gap={2}>
@@ -514,9 +603,19 @@ function Inspector({
   onClose: () => void;
   onFilterToType: (mt: '' | MediumType) => void;
 }) {
+  // Transient confirmation label for the reveal/copy actions (self-clears). Hooks stay above the
+  // early return — this component is always mounted (record may be undefined).
+  const [flash, setFlash] = useState<string | null>(null);
+  useEffect(() => {
+    if (!flash) return;
+    const t = window.setTimeout(() => setFlash(null), 1600);
+    return () => window.clearTimeout(t);
+  }, [flash]);
   if (!record) return null;
   const key = mediumKey(record);
   const style = MEDIUM_STYLE[key];
+  const abs = absPathOf(record);
+  const regId = record.reg?.id;
   return (
     <Dialog
       open={Boolean(record)}
@@ -525,14 +624,44 @@ function Inspector({
       title={record.stem}
       description={record.p}
       footer={
-        <Inline gap={2} justify="between">
-          <Tooltip content="The shared Assets/ library feed isn’t wired in yet.">
-            <span className="cc-explorer__disabledwrap">
-              <IconButton aria-label="Open in library" variant="ghost" disabled>
-                ↗
-              </IconButton>
-            </span>
-          </Tooltip>
+        <Inline gap={2} justify="between" wrap>
+          <Inline gap={2} align="center">
+            <Tooltip content={`Reveal in Finder — falls back to copying ${abs}`}>
+              <Button
+                size="sm"
+                variant="outline"
+                onPress={async () => {
+                  const how = await revealOrCopy(record.p, abs);
+                  setFlash(how === 'revealed' ? 'Shown in Finder ✓' : 'No helper — path copied');
+                }}
+              >
+                Reveal in Finder
+              </Button>
+            </Tooltip>
+            <Button
+              size="sm"
+              variant="ghost"
+              onPress={async () => setFlash((await copyText(record.p)) ? 'Path copied ✓' : 'Copy failed')}
+            >
+              Copy path
+            </Button>
+            {regId && (
+              <Button
+                size="sm"
+                variant="ghost"
+                onPress={async () =>
+                  setFlash((await copyText(`rbxassetid://${regId}`)) ? 'Id copied ✓' : 'Copy failed')
+                }
+              >
+                Copy id
+              </Button>
+            )}
+            {flash && (
+              <span className="cc-explorer__flash" role="status">
+                {flash}
+              </span>
+            )}
+          </Inline>
           {record.mediumType && (
             <Button
               variant="solid"
@@ -550,7 +679,20 @@ function Inspector({
       }
     >
       <div className="cc-explorer__inspector">
-        <MediaFrame data={toFrameData(record)} ratio="16 / 9" />
+        {record.medium === 'audio' && record.src ? (
+          // The full AudioWaveform player (play/pause + scrubber + real decoded waveform) — the
+          // MediaFrame audio surface is only a `compact` no-transport thumbnail. Peaks decode via
+          // the Web Audio API on open (one asset at a time; never autoplays). See registry `src`.
+          <AudioWaveform
+            src={record.src}
+            label={record.base}
+            tone={MEDIUM_STYLE.audio.tone}
+            autoLoadPeaks
+            className="cc-explorer__audio"
+          />
+        ) : (
+          <MediaFrame data={toFrameData(record, { full: true })} ratio="16 / 9" />
+        )}
         <Inline wrap gap={1} className="cc-explorer__inspectorbadges">
           <Badge tone={style.tone} variant="soft" size="sm">
             {record.medium ?? 'source'}

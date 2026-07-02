@@ -4,7 +4,10 @@
       "Bash(node .project-system/tools/init-config.mjs:*)",
       "Bash(node .project-system/tools/new-entity.mjs:*)",
       "Bash(node .project-system/tools/validate.mjs:*)",
-      "Bash(node .project-system/tools/render-hub.mjs:*)"
+      "Bash(node .project-system/tools/render-hub.mjs:*)",
+      "Bash(node tools/build-asset-registry.mjs:*)",
+      "Bash(pnpm --dir apps/command-center run:*)",
+      "Bash(pnpm --dir apps/command-center build:*)"
     ]
   },
   "hooks": {

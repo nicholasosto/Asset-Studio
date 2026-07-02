@@ -2,10 +2,10 @@
 // the entity contract in ./contract. This module is the ONLY reader of asset-registry.json; the
 // Asset Explorer panel derives its whole view from the typed exports here (never re-reads the JSON).
 //
-// The registry is a flat scan of the shared, game-independent Assets/ library: 769 file records,
-// pre-aggregated into `counts`. medium===null records (269) are non-asset "source" files — hidden
-// by default in the Explorer. Per-medium colors + placeholder glyphs are derived here so the panel
-// and its CSS share one vocabulary.
+// The registry is a flat scan of the shared, game-independent Assets/ library: file records
+// pre-aggregated into `counts`. medium===null records are non-asset "source" files — hidden
+// by default in the Explorer. Per-medium presentation styles are derived here so the panel
+// draws from one vocabulary.
 import assetRegistry from '../../../previews/dashboards/asset-registry.json';
 
 // ── The emitted record shape (mirror of build-registry's output) ──
@@ -14,10 +14,13 @@ import assetRegistry from '../../../previews/dashboards/asset-registry.json';
 // rows rather than showing empties.
 export interface RegTgl {
   cat: string;
-  sub: string;
+  /** null on grade "partial" parses (missing SUB segment). */
+  sub: string | null;
   name: string;
   status: string | null;
   grade: string;
+  /** Present on partial parses — what was malformed. */
+  issue?: string;
 }
 export interface RegRef {
   id: string;
@@ -51,16 +54,16 @@ export interface AssetRecord {
   size: number;
   mtime: string;
   mtimeMs: number;
-  /** Domain tag — only ~60 records carry it. */
+  /** Domain tag — only a minority of records carry it. */
   domain: string | null;
   tgl: RegTgl | null;
-  /** Roblox grade vocab; null for the 136 real assets without a graded status. */
+  /** Roblox grade vocab; null for real assets without a graded status. */
   status: RobloxStatus | null;
   conformance: string;
   issue: string | null;
   instance: string | null;
   spec: string;
-  /** Primary axis; null for the 269 "source" (non-asset) files, hidden by default. */
+  /** Primary axis; null for "source" (non-asset) files, hidden by default. */
   medium: Medium | null;
   mediumType: MediumType | null;
   // ── OPTIONAL — present only when the scan resolved them ──
@@ -70,7 +73,10 @@ export interface AssetRecord {
   res?: string;
   specIssue?: string | null;
   reg?: RegRef;
+  /** Bare baked-thumbnail filename (`<hash>.png`); resolve with thumbUrl(). Image records only. */
   thumb?: string;
+  /** Served full-asset URL (`/_assets/<encoded p>`); baked for every real medium (not source). */
+  src?: string;
 }
 
 interface RegistryCounts {
@@ -85,44 +91,70 @@ interface RegistryFile {
   built: string;
   builtMs: number;
   assetsRootHint: string;
+  assetsRootAbs?: string;
   taxonomy: { version: number; axis: string; statusVocab: RobloxStatus[] };
   registry: { total: number; [k: string]: number };
   counts: RegistryCounts;
   records: AssetRecord[];
 }
 
-const file = assetRegistry as unknown as RegistryFile;
+// Cast-only typing: nothing validates the emitted JSON against this mirror, so every
+// module-scope dereference below is ??-guarded — a parseable-but-drifted registry must
+// degrade to an empty Explorer, never crash the whole app before React mounts.
+const file = assetRegistry as unknown as Partial<RegistryFile>;
+
+const EMPTY_COUNTS: RegistryCounts = { total: 0, byMedium: {}, byMediumType: {}, byStatus: {}, byKind: {}, unknown: 0 };
 
 // ── Typed exports ──
-export const records: AssetRecord[] = file.records;
-export const counts: RegistryCounts = file.counts;
-export const taxonomy = file.taxonomy;
+export const records: AssetRecord[] = Array.isArray(file.records) ? file.records : [];
+export const counts: RegistryCounts = file.counts ?? EMPTY_COUNTS;
+export const taxonomy = file.taxonomy ?? { version: 0, axis: 'medium/mediumType', statusVocab: [] as RobloxStatus[] };
 /** The Roblox grade vocab, in order (BLK → FNL) — the status Select's real options. */
-export const statusVocab: RobloxStatus[] = file.taxonomy.statusVocab;
-export const built: string = file.built;
+export const statusVocab: RobloxStatus[] = taxonomy.statusVocab ?? [];
+export const built: string = file.built ?? '(unknown)';
 
-// The four summary tallies the header reads O(1) from `counts` (never iterating the 769 records).
+// ── Served-media URLs (dev + static parity) ──
+// Two ABSOLUTE prefixes that resolve identically whether the SPA mounts at '/' (dev, :5175)
+// or '/app/' (static, :4317): the static python server (rooted at previews/) maps /_assets →
+// previews/_assets (a symlink to the shared library) and /thumbs → previews/thumbs; the dev
+// server's live-assets middleware intercepts the same two prefixes. Per-SEGMENT encoding keeps
+// spaces/parens in real asset paths intact. See decision serve-the-shared-asset-library-to-the-spa.
+const encPath = (p: string): string => p.split('/').map(encodeURIComponent).join('/');
+/** Served URL for a full asset by its library-relative path. (Records also carry a baked `src`.) */
+export const assetUrl = (p: string): string => `/_assets/${encPath(p)}`;
+/** Served URL for a baked thumbnail, from the record's bare `thumb` filename. */
+export const thumbUrl = (thumb?: string): string | undefined =>
+  thumb ? `/thumbs/${encodeURIComponent(thumb)}` : undefined;
+
+// Absolute library root (baked by the builder) — the path copied for the copy-abs / reveal
+// fallback. Falls back to the ROOT-relative hint on a stale registry so the app never crashes.
+export const assetsRootAbs: string = file.assetsRootAbs ?? file.assetsRootHint ?? 'external-locations/assets';
+/** Absolute filesystem path of a record — used by the reveal-in-Finder fallback (copy path). */
+export const absPathOf = (r: AssetRecord): string => `${assetsRootAbs}/${r.p}`;
+
+// The four summary tallies the header reads O(1) from `counts` (never iterating records).
 // `real` excludes the medium===null source bucket — the default, non-empty view.
+const byMedium = counts.byMedium ?? {};
 export const summary = {
-  real: (counts.byMedium.image ?? 0) + (counts.byMedium['3d'] ?? 0) + (counts.byMedium.audio ?? 0),
-  image: counts.byMedium.image ?? 0,
-  threeD: counts.byMedium['3d'] ?? 0,
-  audio: counts.byMedium.audio ?? 0,
-  source: counts.byMedium['(source)'] ?? 0,
-  total: counts.total,
+  real: (byMedium.image ?? 0) + (byMedium['3d'] ?? 0) + (byMedium.audio ?? 0),
+  image: byMedium.image ?? 0,
+  threeD: byMedium['3d'] ?? 0,
+  audio: byMedium.audio ?? 0,
+  source: byMedium['(source)'] ?? 0,
+  total: counts.total ?? records.length,
 };
 
-// ── Presentation vocabulary (shared with the CSS) ──
-// Per-medium accent hex + Trembus tone + a unicode placeholder glyph (no icon dependency — the
-// thumbnails are deferred). `source` is the muted pseudo-medium for the null bucket.
+// ── Presentation vocabulary ──
+// Per-medium Trembus tone (the field the Explorer actually consumes) + an accent hex and a
+// unicode glyph kept as reference values. `source` is the muted pseudo-medium for the null bucket.
 export type MediumKey = Medium | 'source';
 export interface MediumStyle {
   label: string;
   /** Trembus Badge/Stat tone. */
   tone: 'info' | 'accent' | 'success' | 'neutral';
-  /** Accent hex — mirrored in app.css via the --cc-medium-* fallbacks. */
+  /** Accent hex — mirrored by the .cc-explorer__card[data-medium] --cc-medium rules in app.css. */
   hex: string;
-  /** Placeholder frame glyph, chosen by medium. */
+  /** Placeholder frame glyph, chosen by medium (MediaFrame draws its own ext glyphs). */
   glyph: string;
 }
 export const MEDIUM_STYLE: Record<MediumKey, MediumStyle> = {
