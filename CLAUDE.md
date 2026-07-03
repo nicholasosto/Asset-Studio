@@ -66,8 +66,8 @@ Migrating the Asset Explorer into the Command Center
 ([[migrate-asset-explorer-into-the-command-center]]) — Phases 0–4 done + **CF-1 preview parity landed**
 (2026-07-01): the `asset-registry.json` scanner, the `medium`/`mediumType` taxonomy, the React Explorer
 view, its adoption of the Trembus `MediaFrame`, surfaced live as a self-contained SPA (`previews/app/`,
-`vite build`, `base: './'`), and now **real previews** — the builder bakes 144px thumbnails (`sips` →
-committed `previews/thumbs/`) + a served `/_assets` `src`; a Vite dev middleware and a committed
+`vite build`, `base: './'`), and now **real previews** — the builder bakes 320px thumbnails (`sips` →
+**local, untracked** `previews/thumbs/`; ADR 0007) + a served `/_assets` `src`; a Vite dev middleware and a committed
 `previews/_assets` symlink serve `/_assets` + `/thumbs` identically on `:5175` dev and `:4317` static, so
 `MediaFrame` shows image thumbs (tile) + full image + a glb/gltf turntable and `AudioWaveform` plays audio
 in the inspector; the inspector also does reveal-in-Finder (dev `POST /api/reveal`, Assets-root guarded,
@@ -76,13 +76,19 @@ fix — ADRs 0004–0006). **P5 (retire the Soul-Steel `asset-explorer.html`) is
 confirmation for the cross-repo deprecation (the banner goes in its *generator*).
 **2026-07-01 deep review + remediation landed** ([[2026-07-01-deep-review-of-the-project-space-and-remediation]]):
 static `:4317` server loopback-bound; builder hardened (100%-bake-failure aborts, `--no-thumbs` reuses the
-committed bake, orphan thumbs pruned, CSV-join `"Collection: "` prefix fixed, CRLF-safe CSV, scan-error
+existing bake, orphan thumbs pruned, CSV-join `"Collection: "` prefix fixed, CRLF-safe CSV, scan-error
 warnings); reveal endpoint hardened (Origin check, chunk-safe UTF-8, per-request root); `registry.ts`
-degrades instead of crashing on registry shape drift; docs/corpus/memories de-drifted. **Open (owner
-calls):** fetch-vs-inline for the contracts (would dissolve the stale-bundle class — wants an ADR); the
-CF-1 + review artifacts are still uncommitted — commit atomically (registry + thumbs + `_assets` symlink +
-bundle together). Corpus: 22 entities (6 decision · 1 roadmap · 1 report · 7 session · 3 workflow ·
-3 medium · 1 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.4.0` + `game-viz 0.2.0`.
+degrades instead of crashing on registry shape drift; docs/corpus/memories de-drifted. (CF-1 + the review
+artifacts were committed in `2455abe`.)
+**2026-07-02 Explorer polish + thumbs de-publication:** the Explorer de-bloated — a two-column summary
+band (stats + meter beside the type donut), flush square `MediaFrame` tiles with `object-fit: contain`
+(whole asset, never cropped/upscaled), one compact body line (footer dropped), grid minmax `15rem → 10rem`
+(~5–6/row, page height halved); and, per owner call, **`previews/thumbs/` is untracked + gitignored**
+([[0007-keep-explorer-previews-dev-local-stop-committing-the-thumbna]] — no published Explorer view
+needed; the bake stays, now 320px; a fresh clone's static Explorer glyphs until the builder runs).
+**Open (owner calls):** fetch-vs-inline for the contracts (would dissolve the stale-bundle class — wants
+an ADR). Corpus: 23 entities (7 decision · 1 roadmap · 1 report · 7 session · 3 workflow · 3 medium ·
+1 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.4.0` + `game-viz 0.2.0`.
 **Deferred:** a portable (non-`sips`) thumbnail baker for non-macOS + baked 3D/audio posters (the 77
 non-glb/gltf 3D exts glyph). `proseStatusEnforcement` still `warn`
 — ratchet to `error` once the corpus settles.

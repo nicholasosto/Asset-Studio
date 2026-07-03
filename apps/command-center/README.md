@@ -54,12 +54,14 @@ pnpm --dir apps/command-center build   # tsc --noEmit && vite build → previews
 
 The Explorer shows real image/audio/3D previews from the shared library. Two absolute URL prefixes resolve
 identically on dev and the static site: **`/_assets/<encoded p>`** (full media) and **`/thumbs/<name>`**
-(baked 144px thumbnails). On dev, the `liveAssets()` Vite plugin (`vite.config.ts`) streams both from the
-library realpath + `previews/thumbs/` and also hosts `POST /api/reveal` (`open -R`, guarded to the Assets
-root). On the static `:4317` site, `python -m http.server` serves them straight off `previews/` via the
-committed `previews/_assets` symlink + `previews/thumbs/` (no server code); reveal degrades to copy-path.
+(baked 320px thumbnails — a **local, untracked** cache; decision 0007 dropped the published-Explorer
+requirement, so `previews/thumbs/` is gitignored and machines without a bake show ext glyphs). On dev, the
+`liveAssets()` Vite plugin (`vite.config.ts`) streams both from the library realpath + `previews/thumbs/`
+and also hosts `POST /api/reveal` (`open -R`, guarded to the Assets root). On the static `:4317` site,
+`python -m http.server` serves them straight off `previews/` via the committed `previews/_assets` symlink +
+whatever local `previews/thumbs/` bake exists (no server code); reveal degrades to copy-path.
 `node tools/build-asset-registry.mjs` bakes the thumbnails, the served `src`, and the symlink (`--no-thumbs`
-to skip the macOS-only `sips` bake). See decisions 0004–0006.
+to skip the macOS-only `sips` bake). See decisions 0004–0007.
 
 Serve the whole previews site (shell + `app/`) with `preview_start("previews-static")` → `http://localhost:4317/`.
 

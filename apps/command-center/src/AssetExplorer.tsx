@@ -283,65 +283,70 @@ export function AssetExplorer() {
       {/* 1 — SUMMARY HEADER */}
       <section className="cc-section">
         <h3 className="cc-section-title">Library</h3>
-        <div className="cc-explorer__stats">
-          <Stat
-            label="Total assets"
-            strap="real assets"
-            value={summary.real}
-            tone="neutral"
-            onSelect={() => setMedium('')}
-          />
-          <Stat
-            label="Images"
-            value={summary.image}
-            tone={MEDIUM_STYLE.image.tone}
-            onSelect={() => setMedium('image')}
-          />
-          <Stat
-            label="3D"
-            value={summary.threeD}
-            tone={MEDIUM_STYLE['3d'].tone}
-            onSelect={() => setMedium('3d')}
-          />
-          <Stat
-            label="Audio"
-            value={summary.audio}
-            tone={MEDIUM_STYLE.audio.tone}
-            onSelect={() => setMedium('audio')}
-          />
-        </div>
-        <div className="cc-explorer__split">
-          <Meter
-            variant="stacked"
-            max={summary.real}
-            segments={[
-              { value: summary.image, tone: 'info', label: 'image' },
-              { value: summary.threeD, tone: 'accent', label: '3d' },
-              { value: summary.audio, tone: 'success', label: 'audio' },
-            ]}
-            label="Assets by medium"
-          />
-          <DonutChart
-            size={160}
-            selectedId={filters.mediumType || undefined}
-            onSelect={(id) =>
-              setMediumType(id === filters.mediumType ? '' : (id as MediumType))
-            }
-            data={{
-              view: 'donut',
-              title: 'By type',
-              centerValue: String(summary.real),
-              centerLabel: 'assets',
-              segments: Object.entries(counts.byMediumType)
-                .filter(([k]) => k !== '(source)' && k in MEDIUM_OF_TYPE)
-                .map(([k, v]) => ({
-                  id: k,
-                  label: k,
-                  value: v,
-                  tone: MEDIUM_STYLE[MEDIUM_OF_TYPE[k]].tone,
-                })),
-            }}
-          />
+        {/* Two-column band: stats + medium meter on the left, the type donut on the right —
+            keeps the whole summary to one donut's height instead of stacking full-width rows. */}
+        <div className="cc-explorer__summary">
+          <div className="cc-explorer__summary-main">
+            <div className="cc-explorer__stats">
+              <Stat
+                label="Total assets"
+                value={summary.real}
+                tone="neutral"
+                onSelect={() => setMedium('')}
+              />
+              <Stat
+                label="Images"
+                value={summary.image}
+                tone={MEDIUM_STYLE.image.tone}
+                onSelect={() => setMedium('image')}
+              />
+              <Stat
+                label="3D"
+                value={summary.threeD}
+                tone={MEDIUM_STYLE['3d'].tone}
+                onSelect={() => setMedium('3d')}
+              />
+              <Stat
+                label="Audio"
+                value={summary.audio}
+                tone={MEDIUM_STYLE.audio.tone}
+                onSelect={() => setMedium('audio')}
+              />
+            </div>
+            <Meter
+              variant="stacked"
+              max={summary.real}
+              segments={[
+                { value: summary.image, tone: 'info', label: 'image' },
+                { value: summary.threeD, tone: 'accent', label: '3d' },
+                { value: summary.audio, tone: 'success', label: 'audio' },
+              ]}
+              label="Assets by medium"
+            />
+          </div>
+          <div className="cc-explorer__donut">
+            <DonutChart
+              size={150}
+              selectedId={filters.mediumType || undefined}
+              onSelect={(id) =>
+                setMediumType(id === filters.mediumType ? '' : (id as MediumType))
+              }
+              data={{
+                view: 'donut',
+                title: 'By type',
+                centerValue: String(summary.real),
+                centerLabel: 'assets',
+                segments: Object.entries(counts.byMediumType)
+                  .filter(([k]) => k !== '(source)' && k in MEDIUM_OF_TYPE)
+                  .map(([k, v]) => ({
+                    id: k,
+                    label: k,
+                    value: v,
+                    tone: MEDIUM_STYLE[MEDIUM_OF_TYPE[k]].tone,
+                  })),
+              }}
+            />
+          </div>
         </div>
       </section>
 
@@ -516,8 +521,9 @@ export function AssetExplorer() {
   );
 }
 
-// A single asset tile — a MediaFrame (baked thumbnail for images; ext glyph otherwise), the stem
-// name, a badge row (mediumType colored by medium + status dot), and a dim meta line (ext · size · area).
+// A single asset tile — a flush square MediaFrame (baked thumbnail for images; ext glyph
+// otherwise) over one compact body: the stem name, then a single wrap-line of type badge +
+// status badge + a dim "EXT · size" note. Area/domain live in the inspector, not the tile.
 function AssetTile({
   record,
   selected,
@@ -548,14 +554,14 @@ function AssetTile({
       }}
     >
       <Card.Header>
-        <MediaFrame data={toFrameData(record, { full: false })} ratio="16 / 9" />
+        <MediaFrame data={toFrameData(record, { full: false })} />
       </Card.Header>
       <Card.Body>
-        <Stack gap={2}>
+        <Stack gap={1}>
           <Tooltip content={record.stem}>
             <span className="cc-explorer__name">{record.stem}</span>
           </Tooltip>
-          <Inline wrap gap={1}>
+          <Inline wrap gap={1} align="baseline">
             <Badge tone={style.tone} variant="soft" size="sm">
               {typeLabel}
             </Badge>
@@ -564,17 +570,12 @@ function AssetTile({
                 {record.status}
               </Badge>
             )}
+            <span className="cc-explorer__tilemeta">
+              {record.ext.toUpperCase()} · {humanBytes(record.size)}
+            </span>
           </Inline>
         </Stack>
       </Card.Body>
-      <Card.Footer>
-        <Inline gap={2} justify="between" className="cc-explorer__meta">
-          <span className="cc-explorer__ext">{record.ext.toUpperCase()}</span>
-          <span className="cc-explorer__size">{humanBytes(record.size)}</span>
-          <span className="cc-explorer__area">{record.area}</span>
-          {record.domain && <span className="cc-explorer__domaintag">{record.domain}</span>}
-        </Inline>
-      </Card.Footer>
     </Card>
   );
 }
@@ -588,6 +589,18 @@ function Row({ label, value }: { label: string; value: ReactNode }) {
       <Table.HeaderCell>{label}</Table.HeaderCell>
       <Table.Cell>{value}</Table.Cell>
     </Table.Row>
+  );
+}
+
+// One essentials fact — a label-over-value cell in the inspector's at-a-glance grid. Like Row,
+// it skips absent values so a sparse record shows only the facts it actually carries.
+function Fact({ label, value }: { label: string; value: ReactNode }) {
+  if (value === null || value === undefined || value === '') return null;
+  return (
+    <div>
+      <dt>{label}</dt>
+      <dd>{value}</dd>
+    </div>
   );
 }
 
@@ -616,6 +629,7 @@ function Inspector({
   const style = MEDIUM_STYLE[key];
   const abs = absPathOf(record);
   const regId = record.reg?.id;
+  const dims = record.dims ?? (record.w && record.h ? `${record.w}×${record.h}` : null);
   return (
     <Dialog
       open={Boolean(record)}
@@ -697,7 +711,7 @@ function Inspector({
           <Badge tone={style.tone} variant="soft" size="sm">
             {record.medium ?? 'source'}
           </Badge>
-          {record.mediumType && (
+          {record.mediumType && record.mediumType !== record.medium && (
             <Badge tone={style.tone} variant="soft" size="sm">
               {record.mediumType}
             </Badge>
@@ -708,9 +722,21 @@ function Inspector({
             </Badge>
           )}
         </Inline>
-        <Table density="comfortable" className="cc-explorer__inspectortable">
-          <Table.Body>
-            <Row label="Path" value={<code className="cc-explorer__mono">{record.p}</code>} />
+        {/* Essentials — the at-a-glance facts lead; the exhaustive field dump is tucked into the
+            collapsed <details> below so the modal opens compact (progressive disclosure). */}
+        <dl className="cc-explorer__facts">
+          <Fact label="Ext" value={record.ext.toUpperCase()} />
+          <Fact label="Size" value={humanBytes(record.size)} />
+          <Fact label="Dimensions" value={dims} />
+          <Fact label="Modified" value={record.mtime} />
+          <Fact label="Area" value={record.area} />
+          <Fact label="Domain" value={record.domain} />
+        </dl>
+        <details className="cc-explorer__morefields">
+          <summary>All fields</summary>
+          <Table density="compact" className="cc-explorer__inspectortable">
+            <Table.Body>
+              <Row label="Path" value={<code className="cc-explorer__mono">{record.p}</code>} />
             <Row label="Area" value={record.area} />
             <Row label="Directory" value={<code className="cc-explorer__mono">{record.dir}</code>} />
             <Row label="File" value={record.base} />
@@ -746,9 +772,10 @@ function Inspector({
                 <Row label="TGL grade" value={record.tgl.grade} />
               </>
             )}
-            <Row label="Thumbnail" value={record.thumb} />
-          </Table.Body>
-        </Table>
+              <Row label="Thumbnail" value={record.thumb} />
+            </Table.Body>
+          </Table>
+        </details>
       </div>
     </Dialog>
   );

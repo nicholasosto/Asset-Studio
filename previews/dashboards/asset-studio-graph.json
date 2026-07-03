@@ -10,8 +10,8 @@
     "workflow": "workflows",
     "medium": "mediums"
   },
-  "entities": 22,
-  "migrated": 22,
+  "entities": 23,
+  "migrated": 23,
   "counts": {
     "error": 0,
     "warning": 0,
@@ -71,6 +71,15 @@
       "updated": "2026-07-01",
       "file": "_project/decisions/0006-reveal-in-finder-and-copy-asset-id-from-the-explorer.md",
       "excerpt": "The migrated Explorer's inspector ended in a disabled ghost IconButton (\"Open in library\") tooltipped \"isn't wired in yet\" — a visible parity gap against the to-be-retired Soul-Steel asset-explorer.html (roadmap p5), wh…"
+    },
+    {
+      "id": "0007-keep-explorer-previews-dev-local-stop-committing-the-thumbna",
+      "kind": "decision",
+      "title": "Keep Explorer previews dev-local — stop committing the thumbnail bake",
+      "status": "accepted",
+      "updated": "2026-07-02",
+      "file": "_project/decisions/0007-keep-explorer-previews-dev-local-stop-committing-the-thumbna.md",
+      "excerpt": "[[0005-bake-asset-studio-owned-image-thumbnails-in-the-registry-bui]] committed the baked previews/thumbs/ PNGs (362 files, ~9 MB) because the static :4317 site serves straight off disk and the Explorer was to work with…"
     },
     {
       "id": "2026-07-01-session-review-explorer-migration-and-tcl-round-trip",
@@ -234,9 +243,9 @@
   ],
   "byKind": {
     "decision": {
-      "total": 6,
+      "total": 7,
       "byStatus": {
-        "accepted": 6
+        "accepted": 7
       },
       "ids": [
         "0001-reference-the-shared-asset-library-via-external-locations",
@@ -244,7 +253,8 @@
         "0003-roadmap-equals-one-initiative-the-ribbon-is-the-project-mile",
         "0004-serve-the-shared-asset-library-to-the-command-center-spa",
         "0005-bake-asset-studio-owned-image-thumbnails-in-the-registry-bui",
-        "0006-reveal-in-finder-and-copy-asset-id-from-the-explorer"
+        "0006-reveal-in-finder-and-copy-asset-id-from-the-explorer",
+        "0007-keep-explorer-previews-dev-local-stop-committing-the-thumbna"
       ],
       "tone": "info",
       "statusOrder": [
@@ -392,6 +402,18 @@
       "target": "roadmap/migrate-asset-explorer-into-the-command-center"
     },
     {
+      "from": "0007-keep-explorer-previews-dev-local-stop-committing-the-thumbna",
+      "fromKind": "decision",
+      "rel": "references",
+      "target": "decision/0005-bake-asset-studio-owned-image-thumbnails-in-the-registry-bui"
+    },
+    {
+      "from": "0007-keep-explorer-previews-dev-local-stop-committing-the-thumbna",
+      "fromKind": "decision",
+      "rel": "references",
+      "target": "roadmap/migrate-asset-explorer-into-the-command-center"
+    },
+    {
       "from": "2026-07-01-session-review-explorer-migration-and-tcl-round-trip",
       "fromKind": "report",
       "rel": "references",
@@ -483,7 +505,7 @@
     }
   ],
   "edgesByRel": {
-    "references": 19,
+    "references": 21,
     "decided-in": 1
   },
   "workflows": {
@@ -1216,7 +1238,7 @@
               "children": [
                 {
                   "id": "project/report/example",
-                  "label": "2026-07-01-example-title.md",
+                  "label": "2026-07-02-example-title.md",
                   "path": null,
                   "nodeType": "kind-file",
                   "origin": "derived",
@@ -1402,7 +1424,7 @@
               "children": [
                 {
                   "id": "project/session/example",
-                  "label": "2026-07-01-example-title.md",
+                  "label": "2026-07-02-example-title.md",
                   "path": null,
                   "nodeType": "kind-file",
                   "origin": "derived",

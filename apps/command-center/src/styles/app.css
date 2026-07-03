@@ -1040,22 +1040,57 @@ body,
   margin-top: 0;
 }
 
-/* Summary header — the Stat row wraps, then the Meter/Donut split sit beside each other. */
+/* Summary header — ONE two-column band: the Stat row + medium Meter on the left, the type
+   DonutChart on the right. The whole header stays one donut tall, instead of stacking three
+   full-width rows and pushing the first tiles ~800px down. */
+.cc-explorer__summary {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.cc-explorer__summary-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
 .cc-explorer__stats {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.75rem;
-  margin-bottom: 1.25rem;
+}
+.cc-explorer__donut {
+  flex: 0 1 21rem;
+  width: 21rem;
+  min-width: 16rem;
 }
 @media (max-width: 60rem) {
   .cc-explorer__stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-.cc-explorer__split {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
+
+/* Tighten the Stat tiles — TCL's default 1rem padding + 28px value read as tall, airy cards;
+   on a summary strip they should be compact number chips. Dropping the "real assets" strap
+   (in the TSX) keeps all four tiles the same two-line height, so the row aligns cleanly. */
+.cc-explorer__stats .tcl-stat {
+  padding: 0.7rem 0.8rem;
+  gap: 0.2rem;
+}
+.cc-explorer__stats .tcl-stat__value {
+  font-size: 1.5rem;
+}
+
+/* The DonutChart ships a selection-readout box ("Select a segment…") under the ring; with the
+   Stat tiles already carrying the counts it's dead bulk, so hide it — the ring stays interactive.
+   Its 20px title is oversized for this strip; bring it down to a section-label weight. */
+.cc-explorer__donut .tcl-donut__inspector {
+  display: none;
+}
+.cc-explorer__donut .tcl-donut__title {
+  font-size: 0.92rem;
+  font-weight: 600;
 }
 
 /* Filter bar — a bordered toolbar Box; the search input takes the lead width, Selects size to
@@ -1083,8 +1118,8 @@ body,
 }
 .cc-explorer__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-  gap: 0.9rem;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  gap: 0.75rem;
 }
 .cc-explorer__group {
   margin-bottom: 1.4rem;
@@ -1105,13 +1140,36 @@ body,
   margin-top: 1rem;
 }
 
-/* The asset card. Per-medium tint via --cc-medium — set from the tile's data-medium
-   attribute below; the hexes mirror MEDIUM_STYLE in ../registry.ts. */
+/* The asset card — a MEDIA TILE, not a content card: the MediaFrame bleeds flush to the card
+   edges (no inset padding band) and one compact body row sits under it. Per-medium tint via
+   --cc-medium — set from the tile's data-medium attribute below; the hexes mirror
+   MEDIUM_STYLE in ../registry.ts. */
 .cc-explorer__card {
   --cc-medium: #6b7280; /* source (null-medium) fallback */
   cursor: pointer;
+  overflow: hidden; /* clip the flush media to the card radius */
   border-top: 2px solid color-mix(in srgb, var(--cc-medium) 55%, transparent);
   transition: box-shadow 0.12s ease, border-color 0.12s ease, transform 0.12s ease;
+}
+/* Flush media header + a tight body — TCL Card's default padding is sized for prose cards;
+   on a 10rem media tile it read as a thick mat around a postage stamp. */
+.cc-explorer__card .tcl-card__header {
+  padding: 0;
+}
+.cc-explorer__card .tcl-card__header .tcl-media-frame {
+  /* Zero the frame's default prose-flow margin (16px 40px 0). The 40px SIDE margins were the
+     bug: with the frame at 100% width they pushed it right so the card's overflow:hidden clipped
+     its right edge. margin:0 seats it flush and centered in the tile. */
+  margin: 0;
+}
+.cc-explorer__card .tcl-card__body {
+  padding: 0.55rem 0.65rem 0.65rem;
+}
+/* Show the WHOLE asset in its frame (icons, textures, UI art) — never crop it to fill.
+   Cover-fit is for photo grids; an asset browser previews the artwork as-authored. Applies
+   to the tile thumbs and the inspector's full-size frame alike. */
+.cc-explorer .tcl-media-frame__img {
+  object-fit: contain;
 }
 .cc-explorer__card[data-medium='image'] { --cc-medium: #4aa8ff; }
 .cc-explorer__card[data-medium='3d'] { --cc-medium: #d4af37; }
@@ -1134,42 +1192,95 @@ body,
   text-overflow: ellipsis;
   white-space: nowrap;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   color: var(--tcl-text, rgba(255, 255, 255, 0.92));
 }
 
-/* The card footer meta line — dim, small, spread across. */
-.cc-explorer__meta {
-  width: 100%;
-  font-size: 0.72rem;
-  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.6));
-}
-.cc-explorer__ext {
+/* The tile's single meta note — trails the badges on the same wrap-line. */
+.cc-explorer__tilemeta {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.cc-explorer__domaintag {
-  margin-left: auto;
-  padding: 0.05rem 0.4rem;
-  border-radius: var(--tcl-radius-full, 9999px);
-  font-size: 0.62rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  opacity: 0.6;
-  background: color-mix(in srgb, var(--tcl-accent, #d4af37) 16%, transparent);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.55));
+  white-space: nowrap;
 }
 
-/* The Dialog inspector body. */
+/* The Dialog inspector body — a calm vertical stack: preview · badges · essentials · (collapsed
+   all-fields). The `gap` owns the rhythm so the parts don't each carry their own margin. */
 .cc-explorer__inspector {
   display: flex;
   flex-direction: column;
+  gap: 0.85rem;
 }
 .cc-explorer__inspectorbadges {
-  margin-bottom: 0.9rem;
+  margin: 0;
 }
 .cc-explorer__inspectortable {
   width: 100%;
+}
+
+/* Essentials — a compact label-over-value grid, the inspector's at-a-glance read. Auto-fits
+   2–3 columns to the dialog width; each fact is a hairline-separated row. */
+.cc-explorer__facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  gap: 0 1.5rem;
+  margin: 0;
+}
+.cc-explorer__facts > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.07));
+}
+.cc-explorer__facts dt {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.5));
+}
+.cc-explorer__facts dd {
+  margin: 0;
+  font-size: 0.83rem;
+  color: var(--tcl-text, rgba(255, 255, 255, 0.9));
+}
+
+/* The exhaustive field table, collapsed by default — progressive disclosure. Closed, the modal
+   is just preview + badges + essentials; opening it reveals the full registry dump. The summary
+   is a quiet uppercase toggle with its own disclosure caret (the native marker is hidden). */
+.cc-explorer__morefields {
+  border-top: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.1));
+  padding-top: 0.35rem;
+}
+.cc-explorer__morefields > summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.55));
+  user-select: none;
+}
+.cc-explorer__morefields > summary::-webkit-details-marker {
+  display: none;
+}
+.cc-explorer__morefields > summary::before {
+  content: '▸';
+  transition: transform 0.15s ease;
+}
+.cc-explorer__morefields[open] > summary::before {
+  transform: rotate(90deg);
+}
+.cc-explorer__morefields > summary:hover {
+  color: var(--tcl-text, rgba(255, 255, 255, 0.85));
+}
+.cc-explorer__morefields[open] > summary {
+  margin-bottom: 0.35rem;
 }
 .cc-explorer__mono {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -1183,13 +1294,17 @@ body,
   white-space: nowrap;
 }
 
-/* Narrow viewports — collapse the Stat row + toolbar to a column and shrink the grid min. */
+/* Narrow viewports — stack the summary band (donut under the stats) and shrink the grid min. */
 @media (max-width: 60rem) {
-  .cc-explorer__split {
+  .cc-explorer__summary {
     flex-direction: column;
     align-items: stretch;
   }
+  .cc-explorer__donut {
+    flex-basis: auto;
+    width: auto;
+  }
   .cc-explorer__grid {
-    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
   }
 }

@@ -28,7 +28,9 @@
 //   KIND_BY_EXT extended:  .ma -> model, .flac -> audio  (census: 1 each)
 //
 // What is NOW DONE (was deferred in v1) — the served-media layer for the app:
-//   image thumbnail generation via macOS sips → previews/thumbs/ (rec.thumb, bare name)
+//   image thumbnail generation via macOS sips → previews/thumbs/ (rec.thumb, bare name);
+//     the bake is a LOCAL cache — previews/thumbs/ is gitignored, never committed (the
+//     Explorer has no published-view requirement; previews only need to work where a bake ran)
 //   a served /_assets/<p> `src` baked onto every real record (image/audio/3d)
 //   an `assetsRootAbs` payload field + the self-healed previews/_assets symlink
 //
@@ -78,7 +80,7 @@ const ASSETS_ROOT = join(PROJECT_ROOT, "external-locations", "assets");
 const DASHBOARD_DIR = join(PROJECT_ROOT, "previews", "dashboards");
 const OUT = join(DASHBOARD_DIR, "asset-registry.json");
 const REGISTRY_CSV = join(ASSETS_ROOT, "__master-asset-ids-validated.csv");
-const THUMBS_DIR = join(PROJECT_ROOT, "previews", "thumbs");   // Asset-Studio-OWNED thumb cache (not Soul-Steel's asset-explorer-thumbs)
+const THUMBS_DIR = join(PROJECT_ROOT, "previews", "thumbs");   // Asset-Studio-OWNED thumb cache — LOCAL/untracked (gitignored; no published Explorer view)
 const ASSETS_LINK = join(PROJECT_ROOT, "previews", "_assets"); // committed symlink → shared library realpath (served as /_assets)
 
 // ── constants ─────────────────────────────────────────────────────────────
@@ -479,11 +481,14 @@ function buildThumbs(records) {
     // ALWAYS rebake — no mtime skip. The thumb name hashes the PATH (not content), so an mtime-based
     // skip would keep a STALE thumbnail after a same-path content swap that preserved mtime (cp -p,
     // rsync -a, restore, git checkout of an older-authored asset) while rec.src streams the new bytes.
-    // `sips -Z 144 -s format png` is byte-deterministic (verified: repeat bakes are sha-identical), so
-    // re-baking unchanged images produces ZERO git churn — correctness with no cost but ~seconds of CPU
-    // (use --no-thumbs to skip entirely).
+    // `sips -Z … -s format png` is byte-deterministic (verified: repeat bakes are sha-identical), so
+    // re-baking unchanged images rewrites identical files — correctness with no cost but ~seconds of
+    // CPU (use --no-thumbs to skip entirely).
+    // 320px: the Explorer tiles render ~150–190 CSS px wide, so 320 stays crisp at 2× DPR. The bake
+    // is a LOCAL cache (previews/thumbs/ is gitignored — no published Explorer view), so resolution
+    // costs local disk only, not repo weight.
     try {
-      execFileSync("sips", ["-Z", "144", "-s", "format", "png", join(ASSETS_ROOT, rec.p), "--out", out], { stdio: "ignore" });
+      execFileSync("sips", ["-Z", "320", "-s", "format", "png", join(ASSETS_ROOT, rec.p), "--out", out], { stdio: "ignore" });
       made++;
     } catch {
       failed++;
@@ -575,7 +580,7 @@ function main() {
       }
     } else {
       // --no-thumbs: skip the bake, but REUSE any thumb already baked for the same path,
-      // so a non-macOS (or fast) run never strips the committed bake out of the registry.
+      // so a non-macOS (or fast) run never strips the existing local bake out of the registry.
       for (const rec of records) {
         if (rec.medium !== "image") continue;
         const name = thumbName(rec.p);
