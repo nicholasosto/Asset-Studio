@@ -854,22 +854,8 @@ body,
   justify-content: flex-end;
   max-width: 11rem;
 }
-.cc-ledger__chip {
-  font-size: 0.64rem;
-  white-space: nowrap;
-  padding: 0.12rem 0.45rem;
-  border-radius: var(--tcl-radius-full, 9999px);
-  background: var(--tcl-surface-raised, rgba(255, 255, 255, 0.06));
-  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.62));
-}
-.cc-ledger__chip--governs {
-  color: var(--tcl-text, #fff);
-  background: color-mix(in srgb, #44ddff 20%, transparent);
-}
-.cc-ledger__chip--builds {
-  color: var(--tcl-text, #fff);
-  background: color-mix(in srgb, #b884ff 20%, transparent);
-}
+/* The impact strip is now tone-coded @trembus/ui <Badge>s (soft) — the bespoke .cc-ledger__chip*
+   rules retired. Only the empty-set dash stays a plain span. */
 .cc-ledger__noimpact {
   font-size: 0.74rem;
   opacity: 0.4;
@@ -908,6 +894,16 @@ body,
   line-height: 1.55;
   color: var(--tcl-text-dim, rgba(255, 255, 255, 0.72));
 }
+
+/* The ADR body rendered as a <Brief> (sections only). The drawer already shows the title + status,
+   so the Brief's own header is hidden; the sections inherit the tuned .cc-detailpanel__card
+   .tcl-brief__* styling this drawer's Card already carries. Sits above the relationship graph. */
+.cc-decision-detail__brief {
+  margin-top: 1.05rem;
+}
+.cc-decision-detail__brief .tcl-brief__header {
+  display: none;
+}
 .cc-decision-detail__graph {
   margin-top: 1.05rem;
   padding-top: 0.85rem;
@@ -915,13 +911,10 @@ body,
   max-height: 20rem;
   overflow: auto;
 }
+/* The "stands alone" fallback is now a neutral <Callout> (its own tinted box owns the visual);
+   we only keep the top spacing so it sits where the ego-graph would. */
 .cc-decision-detail__alone {
   margin-top: 1.05rem;
-  padding-top: 0.85rem;
-  border-top: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.1));
-  font-size: 0.8rem;
-  font-style: italic;
-  opacity: 0.6;
 }
 .cc-decision-detail__source {
   margin: 1.05rem 0 0;

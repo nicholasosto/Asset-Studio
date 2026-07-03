@@ -86,8 +86,20 @@ band (stats + meter beside the type donut), flush square `MediaFrame` tiles with
 (~5–6/row, page height halved); and, per owner call, **`previews/thumbs/` is untracked + gitignored**
 ([[0007-keep-explorer-previews-dev-local-stop-committing-the-thumbna]] — no published Explorer view
 needed; the bake stays, now 320px; a fresh clone's static Explorer glyphs until the builder runs).
+**2026-07-03 Assets-library restructure EXECUTED** ([[0008-restructure-the-shared-assets-library-into-staging-library-r]]):
+the zoned architecture is live — `_inbox/_catalog/_tools/_archive` machinery + medium zones + `source/` +
+`runtime/roblox/soul-steel/` (absorbed the TGL `library/`; filename contract untouched). Manifest run:
+282 moved · 182 regenerable-cache deletes · 125 empty dirs pruned · 0 missing; undo map =
+`Assets/_catalog/migration-2026-07-03.csv` (`tools/migrate-assets-library.mjs --rollback --confirm`).
+Builder patched (area rules → `runtime`/`_inbox`, machinery zones skipped, CSV join → `_catalog/`):
+576 records / 500 real mediums, **medium tallies identical pre/post**, 362 thumbs rebaked; Explorer
+verified live. Surface checklist walked: asset-conventions skill chain (source → assets-repo → Claude +
+Codex installs), CLAUDE/AGENTS in Soul-Steel · Blender-Dev · Trembus-Tech, cross-project memories,
+4 vault notes, Codex trust entry, and live game-repo paths (`build-battle-room.lua`, conventions docs,
+`COMPATIBILITY.md`). Live game code has no literal `rbxasset://trembus/` URIs — nothing broke at
+runtime; historical records keep old paths by design.
 **Open (owner calls):** fetch-vs-inline for the contracts (would dissolve the stale-bundle class — wants
-an ADR). Corpus: 23 entities (7 decision · 1 roadmap · 1 report · 7 session · 3 workflow · 3 medium ·
+an ADR). Corpus: 25 entities (8 decision · 1 roadmap · 1 report · 8 session · 3 workflow · 3 medium ·
 1 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.4.0` + `game-viz 0.2.0`.
 **Deferred:** a portable (non-`sips`) thumbnail baker for non-macOS + baked 3D/audio posters (the 77
 non-glb/gltf 3D exts glyph). `proseStatusEnforcement` still `warn`

@@ -13,8 +13,9 @@
 // All relationship data comes from the emitted contract (edges[] + nodes[]) via the kind-agnostic
 // helpers in contract.ts — the panel adds presentation only, names no rel/kind the contract doesn't.
 import { useState } from 'react';
-import { Badge, Card, EmptyState } from '@trembus/ui';
+import { Badge, Brief, Callout, Card, EmptyState } from '@trembus/ui';
 import { Lineage } from '@trembus/viz';
+import { decisionBrief } from './decisionBriefs';
 import {
   constellation,
   egoGraph,
@@ -62,25 +63,27 @@ function phrase(r: RelatedEdge): string {
   return 'referenced by';
 }
 
-// The ledger row's compact relationship strip — the at-a-glance "shape" (builds-on ↑, governs ↓,
-// referenced-by ←, recorded ◆). Empty edge set → a muted dash.
+// The ledger row's compact relationship strip — the at-a-glance "shape" as tone-coded Badges
+// (builds-on ↑ lineage → accent, governs ↓ impact → info, referenced-by ←, recorded ◆ → neutral).
+// Empty edge set → a muted dash. (Badge has no violet, so the surface's cyan/violet coding softens
+// to info/accent here; the constellation keeps the exact hues.)
 function ImpactStrip({ ax }: { ax: Axes }) {
   const builds = ax.lineage.filter((r) => r.dir === 'out').length;
   const refdBy = ax.lineage.filter((r) => r.dir === 'in').length;
   const governs = ax.impact.filter((r) => r.dir === 'in').length;
   const recorded = ax.provenance.length;
-  const chips: { k: string; label: string }[] = [];
-  if (builds) chips.push({ k: 'builds', label: `↑ builds on ${builds}` });
-  if (governs) chips.push({ k: 'governs', label: `↓ governs ${governs}` });
-  if (refdBy) chips.push({ k: 'refby', label: `← ${refdBy}` });
-  if (recorded) chips.push({ k: 'rec', label: '◆ recorded' });
+  const chips: { k: string; label: string; tone: 'accent' | 'info' | 'neutral' }[] = [];
+  if (builds) chips.push({ k: 'builds', label: `↑ builds on ${builds}`, tone: 'accent' });
+  if (governs) chips.push({ k: 'governs', label: `↓ governs ${governs}`, tone: 'info' });
+  if (refdBy) chips.push({ k: 'refby', label: `← ${refdBy}`, tone: 'neutral' });
+  if (recorded) chips.push({ k: 'rec', label: '◆ recorded', tone: 'neutral' });
   if (!chips.length) return <span className="cc-ledger__noimpact">—</span>;
   return (
     <>
       {chips.map((c) => (
-        <span key={c.k} className={`cc-ledger__chip cc-ledger__chip--${c.k}`}>
+        <Badge key={c.k} tone={c.tone} variant="soft" size="sm">
           {c.label}
-        </span>
+        </Badge>
       ))}
     </>
   );
@@ -146,6 +149,7 @@ function Detail({
   const ax = axesFor(id, kind);
   const ego = egoGraph(id);
   const hasNeighbors = ego.nodes.length > 1;
+  const brief = decisionBrief(id);
   return (
     <Card className="cc-detailpanel__card cc-decision-detail">
       <button type="button" className="cc-detailpanel__close" onClick={onClose} aria-label="Close details">
@@ -161,14 +165,24 @@ function Detail({
         </Badge>
         <span className="cc-decision-detail__updated">{d.updated}</span>
       </div>
-      {d.excerpt ? <p className="cc-decision-detail__excerpt">{d.excerpt}</p> : null}
+      {brief ? (
+        // The ADR itself — collapsible Brief sections (Context open, the rest folded). When the
+        // emitter captured no body, fall back to the contract's one-line excerpt.
+        <div className="cc-decision-detail__brief">
+          <Brief data={brief.data} defaultCollapsed={brief.defaultCollapsed} />
+        </div>
+      ) : d.excerpt ? (
+        <p className="cc-decision-detail__excerpt">{d.excerpt}</p>
+      ) : null}
 
       {hasNeighbors ? (
         <div className="cc-decision-detail__graph" aria-label="Relationship map">
           <Lineage data={ego} selectedId={id} onSelect={(nid) => nid && nid !== id && onGo(nid)} />
         </div>
       ) : (
-        <p className="cc-decision-detail__alone">No links yet — this decision stands alone.</p>
+        <Callout tone="neutral" className="cc-decision-detail__alone">
+          No links yet — this decision stands alone.
+        </Callout>
       )}
 
       <Axis title="Provenance" edges={ax.provenance} kind={kind} onGo={onGo} />

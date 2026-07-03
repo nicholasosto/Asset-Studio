@@ -79,12 +79,12 @@ const PROJECT_ROOT = resolve(__dirname, ".."); // tool lives in tools/, root is 
 const ASSETS_ROOT = join(PROJECT_ROOT, "external-locations", "assets");
 const DASHBOARD_DIR = join(PROJECT_ROOT, "previews", "dashboards");
 const OUT = join(DASHBOARD_DIR, "asset-registry.json");
-const REGISTRY_CSV = join(ASSETS_ROOT, "__master-asset-ids-validated.csv");
+const REGISTRY_CSV = join(ASSETS_ROOT, "_catalog", "master-asset-ids-validated.csv");
 const THUMBS_DIR = join(PROJECT_ROOT, "previews", "thumbs");   // Asset-Studio-OWNED thumb cache — LOCAL/untracked (gitignored; no published Explorer view)
 const ASSETS_LINK = join(PROJECT_ROOT, "previews", "_assets"); // committed symlink → shared library realpath (served as /_assets)
 
 // ── constants ─────────────────────────────────────────────────────────────
-const SKIP_DIRS = new Set(["_archive", "__pycache__", ".git", "node_modules"]);
+const SKIP_DIRS = new Set(["_archive", "_catalog", "_tools", ".codex", "__pycache__", ".git", "node_modules"]);
 const SKIP_FILES = new Set([".DS_Store"]);
 const SKIP_EXTS = new Set([".pyc", ".blend1"]);
 // registry / sidecar reports living in ASSETS_ROOT root — never index ourselves
@@ -284,8 +284,8 @@ function deriveMediumType(rec) {
     if (cat === "PRP" || cat === "ENV" || cat === "ACC" || cat === "LAY") return "3d-model"; // 3c
     if (cat === "EFX") return "3d-model";                            // 3d (mesh tagged EFX)
     // No TGL prefix — folder + filename fallback:
-    if (rec.area === "library" && seg2 === "rigs") return "3d-rig";  // 3e
-    if (rec.area === "library" && seg2 === "layouts") return "3d-model"; // 3f
+    if (rec.area === "runtime" && segs[3]?.toLowerCase() === "rigs") return "3d-rig";  // 3e (runtime/<platform>/<project>/<cat>)
+    if (rec.area === "runtime" && segs[3]?.toLowerCase() === "layouts") return "3d-model"; // 3f
     if (RE_RIG_TOKEN.test(p) || RE_RIG_TOKEN.test(s)) return "3d-rig"; // 3g
     if (RE_ANIM_TOKEN.test(p) || RE_ANIM_TOKEN.test(s)) return "animation"; // 3h
     return "3d-model";                                                // 3i safe default
@@ -305,17 +305,17 @@ function deriveMediumType(rec) {
   // ── MEDIUM === 'audio' (kind audio) — folder PRIMARY, tokens SECONDARY ──
   if (medium === "audio") {
     // VOICE (highest — folder is the only reliable voice signal)
-    if (seg1 === "audio" && seg2 === "voice-dialog") return "audio-voice";                     // vA
-    if (seg1 === "ai-output" && (segs[2]?.toLowerCase() === "tts" || segs[2]?.toLowerCase() === "voice-previews"))
+    if (seg1 === "audio" && seg2 === "voice") return "audio-voice";                            // vA
+    if (seg1 === "_inbox" && seg2 === "audio" && (segs[2]?.toLowerCase() === "tts" || segs[2]?.toLowerCase() === "voice-previews"))
       return "audio-voice";                                                                     // vB
     if (RE_VOICE_TOKEN.test(p)) return "audio-voice";                                          // vC token backup
     // MUSIC
-    if (seg1 === "audio" && seg2 === "bg-music") return "audio-music";                          // mA
+    if (seg1 === "audio" && seg2 === "music") return "audio-music";                             // mA
     if (RE_MUSIC_TOKEN.test(s)) return "audio-music";                                          // mB music tokens
     // SFX (fallback catch-all — audio is NEVER 'unknown')
-    if (seg1 === "audio" && ["ability-combat-fx", "ui-fx", "world-fx", "environment", "generic"].includes(seg2))
+    if (seg1 === "audio" && ["sfx", "ui", "ambient"].includes(seg2))
       return "audio-sfx";                                                                        // sA
-    if (seg1 === "ai-output" && segs[2]?.toLowerCase() === "sfx") return "audio-sfx";           // sB
+    if (seg1 === "_inbox" && seg2 === "audio" && segs[2]?.toLowerCase() === "sfx") return "audio-sfx"; // sB
     return "audio-sfx";                                                                          // sC guaranteed fallback
   }
 
@@ -342,16 +342,16 @@ function scan() {
     const stem = base.slice(0, base.length - extDotted.length);
     const segs = relPath.split("/");
     const area = segs.length > 1 ? segs[0] : "(root)";
-    const inLibrary = area === "library";
+    const inRuntime = area === "runtime"; // runtime/<platform>/<project>/<cat>/… (was library/<cat>/…)
     const tgl = parseTgl(stem);
     const kind = KIND_BY_EXT[extDotted] || "other";   // lookup uses the DOTTED ext
 
-    // Conformance is only *expected* of files in library/, and only for
+    // Conformance is only *expected* of files in runtime/, and only for
     // asset payloads (models/images/audio) — docs and data are exempt.
     let conformance = "n/a";
-    if (inLibrary && ["model", "image", "audio"].includes(kind)) {
-      // library/ui/screens uses bare Name_STATUS by convention — status stamp only
-      if (segs[1] === "ui") {
+    if (inRuntime && ["model", "image", "audio"].includes(kind)) {
+      // runtime …/ui/screens uses bare Name_STATUS by convention — status stamp only
+      if (segs[3] === "ui") {
         conformance = statusSuffix(stem) ? "ok" : "stray";
       } else if (tgl?.grade === "full") {
         conformance = "ok";
@@ -635,7 +635,7 @@ function main() {
   console.log(`  medium:      ${JSON.stringify(payload.counts.byMedium)}`);
   console.log(`  mediumType:  ${JSON.stringify(payload.counts.byMediumType)}`);
   console.log(`  unknown mediumType: ${unknown}`);
-  console.log(`  tgl strays (library payloads): ${strays}`);
+  console.log(`  tgl strays (runtime payloads): ${strays}`);
   console.log(`  registry: ${registry.rows.length} rows, ${regMatched} matched to local files`);
   if (WANT_THUMBS) console.log(`  thumbs: ${thumbStats.made} baked, ${thumbStats.failed} failed, ${thumbStats.pruned} orphans pruned`);
   else console.log(`  thumbs: bake skipped (--no-thumbs); ${thumbStats.reused} already-baked thumbs reused`);
