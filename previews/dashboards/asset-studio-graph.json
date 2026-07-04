@@ -10,8 +10,8 @@
     "workflow": "workflows",
     "medium": "mediums"
   },
-  "entities": 25,
-  "migrated": 25,
+  "entities": 27,
+  "migrated": 27,
   "counts": {
     "error": 0,
     "warning": 0,
@@ -107,6 +107,15 @@
       "updated": "2026-06-30",
       "file": "_project/pipeline/example-prop-batch.md",
       "excerpt": "An illustrative production instance — a small batch of tower-defense-style props run end-to-end through the [[3d-asset]] workflow to exercise the studio's 3D path. Example — replace with (or delete in favor of) real bat…"
+    },
+    {
+      "id": "roguex-33-character",
+      "kind": "pipeline",
+      "title": "Roguex-33 character",
+      "status": "build",
+      "updated": "2026-07-04",
+      "file": "_project/pipeline/roguex-33-character.md",
+      "excerpt": "Pilot instance of the [[character-creation]] workflow. Roguex-33 is the lore-brain's most fully-realized persona — canon engram, full voice/dialog section, Grid District stall lore, and two finished theme mixes (soul-st…"
     },
     {
       "id": "migrate-asset-explorer-into-the-command-center",
@@ -208,6 +217,15 @@
       "excerpt": "A briefed audio cue — music bed, SFX, or voice line — generated, reviewed, and filed into the shared library. Generation runs through ElevenLabs (music / sound-effect / TTS); placement follows Pattern A (symlink, zero-u…"
     },
     {
+      "id": "character-creation",
+      "kind": "workflow",
+      "title": "Character creation",
+      "status": "draft",
+      "updated": "2026-07-04",
+      "file": "_project/workflows/character-creation.md",
+      "excerpt": "A lore-locked character taken from brain engram to a complete, roster-consistent asset set: the six-stage visual ladder (concept → portrait → model sheet → detail passes → poses), an optional audio identity, and a 3D ha…"
+    },
+    {
       "id": "image-generation",
       "kind": "workflow",
       "title": "Image generation",
@@ -298,12 +316,13 @@
       ]
     },
     "pipeline": {
-      "total": 1,
+      "total": 2,
       "byStatus": {
-        "build": 1
+        "build": 2
       },
       "ids": [
-        "example-prop-batch"
+        "example-prop-batch",
+        "roguex-33-character"
       ],
       "tone": "success",
       "statusOrder": [
@@ -356,13 +375,14 @@
       ]
     },
     "workflow": {
-      "total": 3,
+      "total": 4,
       "byStatus": {
-        "draft": 3
+        "draft": 4
       },
       "ids": [
         "3d-asset",
         "audio-production",
+        "character-creation",
         "image-generation"
       ],
       "tone": "neutral",
@@ -458,6 +478,12 @@
       "target": "workflows/3d-asset"
     },
     {
+      "from": "roguex-33-character",
+      "fromKind": "pipeline",
+      "rel": "references",
+      "target": "workflows/character-creation"
+    },
+    {
       "from": "2026-07-01-adopt-the-tcl-mediaframe-in-the-explorer",
       "fromKind": "session",
       "rel": "references",
@@ -524,6 +550,24 @@
       "target": "decision/0008-restructure-the-shared-assets-library-into-staging-library-r"
     },
     {
+      "from": "character-creation",
+      "fromKind": "workflow",
+      "rel": "references",
+      "target": "workflows/image-generation"
+    },
+    {
+      "from": "character-creation",
+      "fromKind": "workflow",
+      "rel": "references",
+      "target": "workflows/audio-production"
+    },
+    {
+      "from": "character-creation",
+      "fromKind": "workflow",
+      "rel": "references",
+      "target": "workflows/3d-asset"
+    },
+    {
       "from": "3d",
       "fromKind": "medium",
       "rel": "references",
@@ -543,7 +587,7 @@
     }
   ],
   "edgesByRel": {
-    "references": 24,
+    "references": 28,
     "decided-in": 1
   },
   "workflows": {
@@ -776,6 +820,171 @@
         }
       ]
     },
+    "character-creation": {
+      "view": "swimlane",
+      "title": "Character creation",
+      "code": "workflow.character-creation",
+      "caption": "A lore-locked character: six-stage visual ladder + optional audio identity + 3D handoff, one pipeline per character.",
+      "lanes": [
+        {
+          "id": "lore",
+          "label": "Lore (brain)",
+          "kind": "human"
+        },
+        {
+          "id": "gen",
+          "label": "Generate",
+          "kind": "ai"
+        },
+        {
+          "id": "review",
+          "label": "Review",
+          "kind": "human"
+        },
+        {
+          "id": "media",
+          "label": "Media (file + link)",
+          "kind": "system"
+        },
+        {
+          "id": "handoff",
+          "label": "Handoff",
+          "kind": "tool"
+        }
+      ],
+      "steps": [
+        {
+          "id": "lore-lock",
+          "lane": "lore",
+          "label": "Lore lock",
+          "detail": "palette · silhouette · signature tells",
+          "note": "The lore-brain engram is the source of truth. Before any art: confirm it carries visual tells (palette, silhouette, materials, one signature detail). If it doesn't, add them there first — briefs quote the engram, never invent.",
+          "status": "pending",
+          "to": [
+            "concept"
+          ]
+        },
+        {
+          "id": "concept",
+          "lane": "gen",
+          "label": "Concept (_concept-v1)",
+          "detail": "silhouette + read · T: concept",
+          "note": "One image-generation run with templates/character/concept.svg as composition ref. Goal: the character reads at a glance — silhouette, palette, attitude.",
+          "status": "pending",
+          "to": [
+            "portrait"
+          ],
+          "refs": [
+            {
+              "rel": "references",
+              "target": "image-generation",
+              "title": "Image generation",
+              "kind": "workflow"
+            }
+          ]
+        },
+        {
+          "id": "portrait",
+          "lane": "gen",
+          "label": "Portrait (_portrait-v1)",
+          "detail": "bust ¾ · T: portrait",
+          "note": "2:3 bust, eye-line on the upper-third guide. The only stage where an in-world atmospheric background is expected.",
+          "status": "pending",
+          "to": [
+            "modelsheet"
+          ]
+        },
+        {
+          "id": "modelsheet",
+          "lane": "gen",
+          "label": "Model sheet (front · side-back)",
+          "detail": "turnaround · T: turnaround",
+          "note": "Neutral studio-gray, relaxed A-pose, same scale across views, shared ground line. This pair is the primary 3D spec.",
+          "status": "pending",
+          "to": [
+            "details"
+          ]
+        },
+        {
+          "id": "details",
+          "lane": "gen",
+          "label": "Detail passes (props · materials)",
+          "detail": "T: detail-callouts",
+          "note": "One sheet per signature item: hero panels + close-up column + material swatch row (the Penitent Knight helm-sheet layout).",
+          "status": "pending",
+          "to": [
+            "poses"
+          ]
+        },
+        {
+          "id": "poses",
+          "lane": "gen",
+          "label": "Pose sheet (action + personality)",
+          "detail": "T: pose-sheet",
+          "note": "Action and personality poses on neutral background — silhouette-check every cell.",
+          "status": "pending",
+          "to": [
+            "set-review"
+          ]
+        },
+        {
+          "id": "set-review",
+          "lane": "review",
+          "label": "Set review — roster consistency",
+          "note": "Gate: the set coheres with the templates AND the roster — crops match, palette matches the engram, and it reads as the same being in every deliverable.",
+          "status": "pending",
+          "to": [
+            "file-media"
+          ]
+        },
+        {
+          "id": "file-media",
+          "lane": "media",
+          "label": "File to lore-brain Media/visual",
+          "detail": "<Name>_<stage>-v<N>.png + engram sensory_assets",
+          "note": "File under the grammar, then link the set back on the persona engram so the brain knows its own face.",
+          "status": "pending",
+          "to": [
+            "audio-identity",
+            "handoff-3d"
+          ]
+        },
+        {
+          "id": "audio-identity",
+          "lane": "gen",
+          "label": "Audio identity (optional)",
+          "detail": "theme · voice — audio-production",
+          "note": "Theme song / voice sample via the audio-production workflow. Optional lane — skip without blocking the 3D handoff.",
+          "status": "pending",
+          "to": [],
+          "refs": [
+            {
+              "rel": "references",
+              "target": "audio-production",
+              "title": "Audio production",
+              "kind": "workflow"
+            }
+          ]
+        },
+        {
+          "id": "handoff-3d",
+          "lane": "handoff",
+          "label": "3D handoff → 3d-asset",
+          "detail": "sheets are the model spec",
+          "note": "Seed a 3d-asset run: the turnaround pair + detail sheets are the modeling spec; poses inform rig checks.",
+          "status": "pending",
+          "to": [],
+          "refs": [
+            {
+              "rel": "references",
+              "target": "3d-asset",
+              "title": "3D asset",
+              "kind": "workflow"
+            }
+          ]
+        }
+      ]
+    },
     "image-generation": {
       "view": "swimlane",
       "title": "Image generation",
@@ -931,6 +1140,43 @@
           "outputs": [
             {
               "label": "2 blockout .blend files",
+              "kind": "doc"
+            }
+          ]
+        }
+      ]
+    },
+    "roguex-33-character": {
+      "total": 1,
+      "rollup": {
+        "byStatus": {
+          "partial": 1
+        }
+      },
+      "runs": [
+        {
+          "id": "run-1",
+          "label": "Retro-credit — audio identity landed before the workflow existed",
+          "status": "partial",
+          "trigger": "character-creation pilot kickoff",
+          "note": "Ghost in the Grid v1 + 80s v2 predate this pipeline; credited to the audio-identity step. Visual ladder not started — lore-lock is the active step.",
+          "stepOutcomes": [
+            {
+              "step": "lore-lock",
+              "status": "active"
+            },
+            {
+              "step": "audio-identity",
+              "status": "done"
+            }
+          ],
+          "outputs": [
+            {
+              "label": "soul-steel-ghost-in-the-grid-v1.mp3",
+              "kind": "doc"
+            },
+            {
+              "label": "soul-steel-ghost-in-the-grid-80s-v2.mp3",
               "kind": "doc"
             }
           ]
@@ -1276,7 +1522,7 @@
               "children": [
                 {
                   "id": "project/report/example",
-                  "label": "2026-07-03-example-title.md",
+                  "label": "2026-07-04-example-title.md",
                   "path": null,
                   "nodeType": "kind-file",
                   "origin": "derived",
@@ -1462,7 +1708,7 @@
               "children": [
                 {
                   "id": "project/session/example",
-                  "label": "2026-07-03-example-title.md",
+                  "label": "2026-07-04-example-title.md",
                   "path": null,
                   "nodeType": "kind-file",
                   "origin": "derived",

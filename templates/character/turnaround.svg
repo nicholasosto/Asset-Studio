@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" font-family="Helvetica, Arial, sans-serif">
+  <!-- Stage 3 · TURNAROUND / MODEL SHEET · seeded from Penitent-Knight modelsheets + Raspmutant_3d-poses 4-up strip -->
+  <rect width="1600" height="900" fill="#8b8b8b"/>
+
+  <!-- four view lanes -->
+  <line x1="400" y1="40" x2="400" y2="860" stroke="#d6408b" stroke-width="1.5" stroke-dasharray="8 8" opacity="0.6"/>
+  <line x1="800" y1="40" x2="800" y2="860" stroke="#d6408b" stroke-width="1.5" stroke-dasharray="8 8" opacity="0.6"/>
+  <line x1="1200" y1="40" x2="1200" y2="860" stroke="#d6408b" stroke-width="1.5" stroke-dasharray="8 8" opacity="0.6"/>
+  <text x="200" y="70" font-size="24" font-weight="bold" fill="#2c2c2c" text-anchor="middle">FRONT</text>
+  <text x="600" y="70" font-size="24" font-weight="bold" fill="#2c2c2c" text-anchor="middle">SIDE</text>
+  <text x="1000" y="70" font-size="24" font-weight="bold" fill="#2c2c2c" text-anchor="middle">BACK</text>
+  <text x="1400" y="70" font-size="24" font-weight="bold" fill="#2c2c2c" text-anchor="middle">¾ VIEW</text>
+
+  <!-- shared horizontal guides: every view aligns to these -->
+  <line x1="60" y1="110" x2="1540" y2="110" stroke="#d6408b" stroke-width="1.5" stroke-dasharray="10 6" opacity="0.7"/>
+  <text x="64" y="102" font-size="16" fill="#3a3a3a">crown</text>
+  <line x1="60" y1="200" x2="1540" y2="200" stroke="#d6408b" stroke-width="1" stroke-dasharray="6 6" opacity="0.55"/>
+  <text x="64" y="192" font-size="16" fill="#3a3a3a">chin</text>
+  <line x1="60" y1="252" x2="1540" y2="252" stroke="#d6408b" stroke-width="1" stroke-dasharray="6 6" opacity="0.55"/>
+  <text x="64" y="244" font-size="16" fill="#3a3a3a">shoulder</text>
+  <line x1="60" y1="470" x2="1540" y2="470" stroke="#d6408b" stroke-width="1" stroke-dasharray="6 6" opacity="0.55"/>
+  <text x="64" y="462" font-size="16" fill="#3a3a3a">waist</text>
+  <line x1="60" y1="650" x2="1540" y2="650" stroke="#d6408b" stroke-width="1" stroke-dasharray="6 6" opacity="0.55"/>
+  <text x="64" y="642" font-size="16" fill="#3a3a3a">knee</text>
+
+  <!-- head-height ruler (8 heads; adjust per character, keep across views) -->
+  <g stroke="#3a3a3a" stroke-width="1.5">
+    <line x1="40" y1="110" x2="40" y2="830"/>
+    <line x1="32" y1="110" x2="48" y2="110"/><line x1="32" y1="200" x2="48" y2="200"/>
+    <line x1="32" y1="290" x2="48" y2="290"/><line x1="32" y1="380" x2="48" y2="380"/>
+    <line x1="32" y1="470" x2="48" y2="470"/><line x1="32" y1="560" x2="48" y2="560"/>
+    <line x1="32" y1="650" x2="48" y2="650"/><line x1="32" y1="740" x2="48" y2="740"/>
+    <line x1="32" y1="830" x2="48" y2="830"/>
+  </g>
+  <text x="14" y="475" font-size="15" fill="#3a3a3a" transform="rotate(-90 14 475)">8-head ruler — same scale every view</text>
+
+  <!-- ground line + per-view contact shadows -->
+  <line x1="60" y1="830" x2="1540" y2="830" stroke="#3a3a3a" stroke-width="2.5"/>
+  <ellipse cx="200" cy="830" rx="110" ry="12" fill="#3a3a3a" opacity="0.25"/>
+  <ellipse cx="600" cy="830" rx="70" ry="12" fill="#3a3a3a" opacity="0.25"/>
+  <ellipse cx="1000" cy="830" rx="110" ry="12" fill="#3a3a3a" opacity="0.25"/>
+  <ellipse cx="1400" cy="830" rx="110" ry="12" fill="#3a3a3a" opacity="0.25"/>
+
+  <!-- per-lane center axes -->
+  <line x1="200" y1="90" x2="200" y2="830" stroke="#d6408b" stroke-width="1" stroke-dasharray="3 9" opacity="0.45"/>
+  <line x1="600" y1="90" x2="600" y2="830" stroke="#d6408b" stroke-width="1" stroke-dasharray="3 9" opacity="0.45"/>
+  <line x1="1000" y1="90" x2="1000" y2="830" stroke="#d6408b" stroke-width="1" stroke-dasharray="3 9" opacity="0.45"/>
+  <line x1="1400" y1="90" x2="1400" y2="830" stroke="#d6408b" stroke-width="1" stroke-dasharray="3 9" opacity="0.45"/>
+
+  <!-- header + rules -->
+  <text x="60" y="32" font-size="24" font-weight="bold" fill="#2c2c2c">TURNAROUND — &lt;Name&gt;_modelsheet-front-v1 · _side-back-v1</text>
+  <text x="60" y="878" font-size="17" fill="#2c2c2c">neutral studio-gray only · relaxed A-pose · same scale, shared ground line, guides continuous across views · this pair is the 3D modeling spec</text>
+</svg>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" font-family="Helvetica, Arial, sans-serif">
+  <!-- Stage 2 · PORTRAIT — bust ¾ identity shot · seeded from Penitent-Knight_portrait-v1 framing -->
+  <rect width="800" height="1200" fill="#8b8b8b"/>
+
+  <!-- safe margins -->
+  <rect x="56" y="48" width="688" height="1104" fill="none" stroke="#d6408b" stroke-width="2" stroke-dasharray="10 8" opacity="0.7"/>
+
+  <!-- subject width (~80% of frame) -->
+  <line x1="88" y1="60" x2="88" y2="1140" stroke="#d6408b" stroke-width="1.5" stroke-dasharray="4 8" opacity="0.5"/>
+  <line x1="712" y1="60" x2="712" y2="1140" stroke="#d6408b" stroke-width="1.5" stroke-dasharray="4 8" opacity="0.5"/>
+
+  <!-- head zone, ¾ angle -->
+  <ellipse cx="400" cy="360" rx="150" ry="185" fill="none" stroke="#d6408b" stroke-width="2" stroke-dasharray="6 6" opacity="0.8"/>
+  <text x="570" y="360" font-size="20" fill="#3a3a3a">head · ¾ turn</text>
+
+  <!-- eye-line on the upper-third guide -->
+  <line x1="70" y1="400" x2="730" y2="400" stroke="#d6408b" stroke-width="2" stroke-dasharray="12 6" opacity="0.85"/>
+  <text x="74" y="392" font-size="18" fill="#3a3a3a">eye-line (upper third)</text>
+
+  <!-- shoulder line -->
+  <line x1="70" y1="640" x2="730" y2="640" stroke="#d6408b" stroke-width="1.5" stroke-dasharray="6 6" opacity="0.6"/>
+  <text x="74" y="632" font-size="18" fill="#3a3a3a">shoulder line</text>
+
+  <!-- crop -->
+  <line x1="70" y1="1105" x2="730" y2="1105" stroke="#3a3a3a" stroke-width="2.5"/>
+  <text x="74" y="1097" font-size="18" fill="#3a3a3a">crop — bust to waist, never at a joint</text>
+
+  <!-- header + rules -->
+  <text x="56" y="34" font-size="24" font-weight="bold" fill="#2c2c2c">PORTRAIT — &lt;Name&gt;_portrait-v1</text>
+  <text x="56" y="1176" font-size="17" fill="#2c2c2c">2:3 · bust ¾ · the ONLY stage with in-world atmospheric background — rim light the silhouette</text>
+  <text x="56" y="1196" font-size="17" fill="#2c2c2c">read test: personality — this is the face the roster remembers</text>
+</svg>

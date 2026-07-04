@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" font-family="Helvetica, Arial, sans-serif">
+  <!-- Stage 5 · POSE SHEET · action + personality · seeded from Penitent-Knight_gameplay-three-quarter + Raspmutant strips -->
+  <rect width="1600" height="900" fill="#8b8b8b"/>
+
+  <!-- 2×2 grid -->
+  <line x1="800" y1="50" x2="800" y2="850" stroke="#d6408b" stroke-width="1.5" stroke-dasharray="8 8" opacity="0.6"/>
+  <line x1="70" y1="450" x2="1530" y2="450" stroke="#d6408b" stroke-width="1.5" stroke-dasharray="8 8" opacity="0.6"/>
+
+  <text x="90" y="86" font-size="24" font-weight="bold" fill="#2c2c2c">1 · IDLE / STANCE</text>
+  <text x="90" y="112" font-size="17" fill="#3a3a3a">how they stand when nothing is happening</text>
+  <text x="890" y="86" font-size="24" font-weight="bold" fill="#2c2c2c">2 · ACTION</text>
+  <text x="890" y="112" font-size="17" fill="#3a3a3a">mid-move — ability, swing, work</text>
+  <text x="90" y="486" font-size="24" font-weight="bold" fill="#2c2c2c">3 · SIGNATURE</text>
+  <text x="90" y="512" font-size="17" fill="#3a3a3a">the pose the marketing art steals</text>
+  <text x="890" y="486" font-size="24" font-weight="bold" fill="#2c2c2c">4 · PERSONALITY</text>
+  <text x="890" y="512" font-size="17" fill="#3a3a3a">the tell — the gesture only they make</text>
+
+  <!-- per-cell ground shadows -->
+  <ellipse cx="400" cy="410" rx="130" ry="12" fill="#3a3a3a" opacity="0.22"/>
+  <ellipse cx="1200" cy="410" rx="130" ry="12" fill="#3a3a3a" opacity="0.22"/>
+  <ellipse cx="400" cy="820" rx="130" ry="12" fill="#3a3a3a" opacity="0.22"/>
+  <ellipse cx="1200" cy="820" rx="130" ry="12" fill="#3a3a3a" opacity="0.22"/>
+
+  <!-- header + rules -->
+  <text x="60" y="34" font-size="24" font-weight="bold" fill="#2c2c2c">POSES — &lt;Name&gt;_3d-poses-v1 (or _gameplay-&lt;shot&gt;-v1)</text>
+  <text x="60" y="880" font-size="17" fill="#2c2c2c">neutral studio-gray · consistent scale across cells · silhouette-check every cell (would it read in black?)</text>
+</svg>
