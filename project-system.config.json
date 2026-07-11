@@ -225,7 +225,9 @@
     "ribbonTitle": "Milestones",
     "ribbon": [
       { "code": "M1", "name": "Launchable previews site", "kind": "shipped", "date": "2026-06-30" },
-      { "code": "M2", "name": "Asset Explorer → Command Center", "kind": "current", "date": "2026-07-01" }
+      { "code": "M2", "name": "Asset Explorer → Command Center", "kind": "shipped", "date": "2026-07-01" },
+      { "code": "M3", "name": "Assets-library restructure", "kind": "shipped", "date": "2026-07-03" },
+      { "code": "M4", "name": "Character factory + lore medium", "kind": "current", "date": "2026-07-04" }
     ],
     "hex": {
       "petals": [

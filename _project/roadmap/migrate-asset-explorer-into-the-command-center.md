@@ -1,12 +1,15 @@
 ---
 title: "Migrate Asset Explorer into the Command Center"
-status: active
-updated: 2026-07-01
+status: complete
+updated: 2026-07-11
+links:
+  - { rel: references, target: decisions/0007-keep-explorer-previews-dev-local-stop-committing-the-thumbna }
+  - { rel: references, target: decisions/0008-restructure-the-shared-assets-library-into-staging-library-r }
 ---
 
 # Migrate Asset Explorer into the Command Center
 
-> **Status:** active (2026-07-01)
+> **Status:** complete (2026-07-11)
 
 ## Context
 
@@ -40,17 +43,17 @@ through `external-locations/`; it never duplicates it. Current-state established
 The structured plan the Command Center renders as a Timeline. Phases 0–4 are complete (data + view +
 surfaced live); **CF-1 preview parity — the Phase-5 blocker — is now resolved** (2026-07-01: real
 image/audio/3D previews + reveal + copy landed and verified live on dev + static). Phase 5 — retiring the
-Soul-Steel source — is **unblocked**, awaiting owner confirmation for the cross-repo deprecation.
+Soul-Steel source — is **archived** (2026-07-11): a cross-repo change deliberately not pursued from here. The migrated Explorer fully replaces the source view, so this milestone is **complete**.
 
 ```json
 [
   { "id": "p0", "label": "Audit & taxonomy decision", "status": "done", "detail": "Explorer audited and the target taxonomy chosen — Medium ▸ MediumType adopted, the Soul-Steel domain axis dropped (ADR 0002)." },
-  { "id": "p1", "label": "Asset-registry contract", "status": "done", "detail": "tools/build-asset-registry.mjs (zero-dep) scans external-locations/assets → previews/dashboards/asset-registry.json: 769 records, every existing metadata field preserved." },
+  { "id": "p1", "label": "Asset-registry contract", "status": "done", "detail": "tools/build-asset-registry.mjs (zero-dep) scans external-locations/assets → previews/dashboards/asset-registry.json: 598 records (was 769 pre-restructure — ADR 0008), every existing metadata field preserved." },
   { "id": "p2", "label": "Taxonomy refactor", "status": "done", "detail": "Deterministic medium/mediumType derivation in the scanner (leans on the TGL filename grammar); domain kept as a tag only; 0 unknown. Confirmed by a 3-way adversarial verify." },
   { "id": "p3", "label": "Explorer view in the app", "status": "done", "detail": "AssetExplorer.tsx + registry.ts in apps/command-center: summary stats + donut, medium/mediumType/status/ext/search filters, grouped card grid, detail inspector. Built on @trembus/ui; typecheck + build clean; adversarially verified." },
   { "id": "p4", "label": "Wire it Live", "status": "done", "detail": "The Command Center now builds as a self-contained SPA into previews/app/ (relative base; all contracts inlined); previews/index.html reworked to five Live lens cards incl. a deep-linked Asset Explorer (app/#explorer); the orphaned static command-center.html retired. Verified served from the :4317 static site." },
-  { "id": "cf1", "label": "Preview parity (CF-1)", "status": "done", "detail": "Real previews landed: builder bakes 144px thumbs (sips → previews/thumbs) + a served /_assets src; a Vite dev middleware + committed previews/_assets symlink serve /_assets & /thumbs identically on :5175 dev and :4317 static; MediaFrame shows image thumbs (tile) + full image + glb/gltf turntable, AudioWaveform plays audio in the inspector; reveal-in-Finder (POST /api/reveal, Assets-root guarded) with copy-abs fallback + copy-path/copy-id. ADRs 0004–0006. Verified live on dev + static, 0 console errors." },
-  { "id": "p5", "label": "Retire the source artifact", "status": "active", "detail": "UNBLOCKED — CF-1 parity resolved (the migrated Explorer now renders the previews the Soul-Steel asset-explorer.html had). Remaining: deprecate + cross-link the Soul-Steel source. It is GENERATED, so the banner must go in its generator (tools/build-asset-explorer.mjs) — a cross-repo write held for explicit owner confirmation; no Soul-Steel change made this session." }
+  { "id": "cf1", "label": "Preview parity (CF-1)", "status": "done", "detail": "Real previews landed: builder bakes 320px thumbs (sips → previews/thumbs, now untracked/dev-local — ADR 0007) + a served /_assets src; a Vite dev middleware + committed previews/_assets symlink serve /_assets & /thumbs identically on :5175 dev and :4317 static; MediaFrame shows image thumbs (tile) + full image + glb/gltf turntable, AudioWaveform plays audio in the inspector; reveal-in-Finder (POST /api/reveal, Assets-root guarded) with copy-abs fallback + copy-path/copy-id. ADRs 0004–0007. Verified live on dev + static, 0 console errors." },
+  { "id": "p5", "label": "Retire the source artifact", "status": "skipped", "detail": "ARCHIVED (2026-07-11) — the migrated Explorer fully replaces the Soul-Steel asset-explorer.html, so this milestone's goal is met. Deprecating the *source* generator (tools/build-asset-explorer.mjs) is a cross-repo change deliberately not pursued from Asset-Studio; parked. If ever revisited, the deprecation banner goes in that generator." }
 ]
 ```
 
@@ -66,9 +69,9 @@ All five original questions are settled — kept with their resolutions so the t
 - **Scan scope** — resolved (p1 + ADR 0002): the whole shared library is scanned; non-asset kinds
   (data · doc · script · source) emit `medium: null` and hide behind the Explorer's
   "show source" toggle.
-- **Thumbnails** — resolved (ADR 0005, CF-1): regenerated into the Asset-Studio-owned
-  `previews/thumbs/` (`sips`, 144px, path-hash names, always-rebake); the Soul-Steel
-  `asset-explorer-thumbs/` cache is not reused.
+- **Thumbnails** — resolved (ADR 0005, CF-1; later ADR 0007): regenerated into the Asset-Studio-owned
+  `previews/thumbs/` (`sips`, 320px, path-hash names, always-rebake), now untracked/dev-local (ADR 0007);
+  the Soul-Steel `asset-explorer-thumbs/` cache is not reused.
 - **Status vocab** — resolved implicitly (ADR 0002 keeps it as a filter facet): `BLK · ALPHA ·
   BETA · FNL` unchanged; no Asset-Studio re-mapping.
 </content>

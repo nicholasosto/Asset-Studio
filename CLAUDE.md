@@ -64,9 +64,9 @@ Asset-Studio never duplicates that library or its id registry.
 
 ## Status
 
-Migrating the Asset Explorer into the Command Center
-([[migrate-asset-explorer-into-the-command-center]]) — Phases 0–4 done + **CF-1 preview parity landed**
-(2026-07-01): the `asset-registry.json` scanner, the `medium`/`mediumType` taxonomy, the React Explorer
+The Asset Explorer → Command Center migration is **complete** ([[migrate-asset-explorer-into-the-command-center]],
+2026-07-11); the **current initiative is the character factory** ([[character-factory-lore-medium]] — see the
+2026-07-04 entry). Phases 0–4 + **CF-1 preview parity** (2026-07-01) shipped: the `asset-registry.json` scanner, the `medium`/`mediumType` taxonomy, the React Explorer
 view, its adoption of the Trembus `MediaFrame`, surfaced live as a self-contained SPA (`previews/app/`,
 `vite build`, `base: './'`), and now **real previews** — the builder bakes 320px thumbnails (`sips` →
 **local, untracked** `previews/thumbs/`; ADR 0007) + a served `/_assets` `src`; a Vite dev middleware and a committed
@@ -74,8 +74,8 @@ view, its adoption of the Trembus `MediaFrame`, surfaced live as a self-containe
 `MediaFrame` shows image thumbs (tile) + full image + a glb/gltf turntable and `AudioWaveform` plays audio
 in the inspector; the inspector also does reveal-in-Finder (dev `POST /api/reveal`, Assets-root guarded,
 copy-abs fallback on static) + copy-path, and copy-id on the CSV-joined records (2/769 since the join-key
-fix — ADRs 0004–0006). **P5 (retire the Soul-Steel `asset-explorer.html`) is now unblocked** — awaiting owner
-confirmation for the cross-repo deprecation (the banner goes in its *generator*).
+fix — ADRs 0004–0006). **P5 (retire the Soul-Steel `asset-explorer.html`) is archived** (2026-07-11) — the migrated
+Explorer fully replaces it; deprecating the *source generator* is a cross-repo change deliberately not pursued from here.
 **2026-07-01 deep review + remediation landed** ([[2026-07-01-deep-review-of-the-project-space-and-remediation]]):
 static `:4317` server loopback-bound; builder hardened (100%-bake-failure aborts, `--no-thumbs` reuses the
 existing bake, orphan thumbs pruned, CSV-join `"Collection: "` prefix fixed, CRLF-safe CSV, scan-error
@@ -105,12 +105,13 @@ cross-medium composite (six-stage visual ladder `lore-lock → concept → portr
 details → poses`, optional audio identity, 3d handoff; each visual stage runs `image-generation`
 with a `templates/character/` SVG as composition ref, conventions seeded from the Penitent Knight
 sheets), piloted by the `roguex-33-character` pipeline (audio retro-credited done — two Ghost in
-the Grid mixes; `lore-lock` active). And **lore is the fourth medium** (`mediums/lore.md`,
+the Grid mixes; `lore-lock` done 2026-07-06, concept stage active — live phase state in
+[[character-factory-lore-medium]]). And **lore is the fourth medium** (`mediums/lore.md`,
 `mediumType: lore`, `experimental`): the *upstream* medium — engrams · briefs · shippable text —
 **by reference only**; the lore-brain graph is to lore what the shared library is to files
 (decision-0001 treaty, second application). Lore content itself never lives here.
 **Open (owner calls):** fetch-vs-inline for the contracts (would dissolve the stale-bundle class — wants
-an ADR). Corpus: 28 entities (8 decision · 1 roadmap · 1 report · 8 session · 4 workflow · 4 medium ·
+an ADR). Corpus: 29 entities (8 decision · 2 roadmap · 1 report · 8 session · 4 workflow · 4 medium ·
 2 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.4.0` + `game-viz 0.2.0`.
 **Deferred:** a portable (non-`sips`) thumbnail baker for non-macOS + baked 3D/audio posters (the 77
 non-glb/gltf 3D exts glyph). `proseStatusEnforcement` still `warn`

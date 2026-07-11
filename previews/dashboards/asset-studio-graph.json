@@ -10,8 +10,8 @@
     "workflow": "workflows",
     "medium": "mediums"
   },
-  "entities": 28,
-  "migrated": 28,
+  "entities": 29,
+  "migrated": 29,
   "counts": {
     "error": 0,
     "warning": 0,
@@ -118,11 +118,20 @@
       "excerpt": "Pilot instance of the [[character-creation]] workflow. Roguex-33 is the lore-brain's most fully-realized persona — canon engram, full voice/dialog section, Grid District stall lore, and two finished theme mixes (soul-st…"
     },
     {
+      "id": "character-factory-lore-medium",
+      "kind": "roadmap",
+      "title": "Character factory + lore medium",
+      "status": "active",
+      "updated": "2026-07-11",
+      "file": "_project/roadmap/character-factory-lore-medium.md",
+      "excerpt": "Two characters — Penitent Knight and Raspmutant — already ran a full character asset set by hand, out of the lore-brain and into its Media/visual/, with no shared process. The studio needs that to be repeatable: a lore-…"
+    },
+    {
       "id": "migrate-asset-explorer-into-the-command-center",
       "kind": "roadmap",
       "title": "Migrate Asset Explorer into the Command Center",
-      "status": "active",
-      "updated": "2026-07-01",
+      "status": "complete",
+      "updated": "2026-07-11",
       "file": "_project/roadmap/migrate-asset-explorer-into-the-command-center.md",
       "excerpt": "The Asset Explorer is a browser we like and want to keep — but it lives in another space and is wired to Soul-Steel. Today it is a single 349 KB hand-built HTML file at Roblox-Development/Soul-Steel-Official/previews/da…"
     },
@@ -348,11 +357,13 @@
       ]
     },
     "roadmap": {
-      "total": 1,
+      "total": 2,
       "byStatus": {
-        "active": 1
+        "active": 1,
+        "complete": 1
       },
       "ids": [
+        "character-factory-lore-medium",
         "migrate-asset-explorer-into-the-command-center"
       ],
       "tone": "accent",
@@ -498,6 +509,42 @@
       "target": "workflows/character-creation"
     },
     {
+      "from": "character-factory-lore-medium",
+      "fromKind": "roadmap",
+      "rel": "references",
+      "target": "workflows/character-creation"
+    },
+    {
+      "from": "character-factory-lore-medium",
+      "fromKind": "roadmap",
+      "rel": "references",
+      "target": "pipeline/roguex-33-character"
+    },
+    {
+      "from": "character-factory-lore-medium",
+      "fromKind": "roadmap",
+      "rel": "references",
+      "target": "mediums/lore"
+    },
+    {
+      "from": "character-factory-lore-medium",
+      "fromKind": "roadmap",
+      "rel": "references",
+      "target": "decisions/0001-reference-the-shared-asset-library-via-external-locations"
+    },
+    {
+      "from": "migrate-asset-explorer-into-the-command-center",
+      "fromKind": "roadmap",
+      "rel": "references",
+      "target": "decisions/0007-keep-explorer-previews-dev-local-stop-committing-the-thumbna"
+    },
+    {
+      "from": "migrate-asset-explorer-into-the-command-center",
+      "fromKind": "roadmap",
+      "rel": "references",
+      "target": "decisions/0008-restructure-the-shared-assets-library-into-staging-library-r"
+    },
+    {
       "from": "2026-07-01-adopt-the-tcl-mediaframe-in-the-explorer",
       "fromKind": "session",
       "rel": "references",
@@ -607,7 +654,7 @@
     }
   ],
   "edgesByRel": {
-    "references": 29,
+    "references": 35,
     "decided-in": 1
   },
   "workflows": {
@@ -1231,6 +1278,44 @@
     }
   },
   "phases": {
+    "character-factory-lore-medium": [
+      {
+        "id": "p0",
+        "label": "Distill the visual ladder",
+        "status": "done",
+        "detail": "The six-stage ladder (lore-lock → concept → portrait → model sheet → detail passes → poses) extracted from the two characters who ran it ad hoc (Penitent Knight, Raspmutant) into the character-creation composite workflow — each visual stage one image-generation run with a stage template as composition ref, plus an optional audio-identity lane and a 3D handoff. Landed 2026-07-04; the workflow stays status:draft pending the pilot."
+      },
+      {
+        "id": "p1",
+        "label": "Lore as the fourth medium",
+        "status": "done",
+        "detail": "mediums/lore.md declared — the upstream, by-reference medium (engrams · briefs · shippable text); the lore-brain graph is its library, decision-0001's treaty in its second application. Feeds the character ladder at the lore-lock gate. Status experimental."
+      },
+      {
+        "id": "p2",
+        "label": "Stage templates",
+        "status": "done",
+        "detail": "templates/character/ SVGs (concept · portrait · turnaround · detail-callouts · pose-sheet) seeded from the Penitent Knight sheets + Raspmutant turnaround; each template is its stage's definition-of-done. png/ twins for attaching as composition refs."
+      },
+      {
+        "id": "p3",
+        "label": "Pilot — roguex-33",
+        "status": "active",
+        "detail": "Exercise the whole ladder on the brain's most lopsided asset gap via the roguex-33-character pipeline. Audio identity retro-credited done; lore-lock landed 2026-07-06 (a Visual Identity section canonized on the engram); concept stage active. Proves the tracking model (retro-credit, optional lanes) + the templates before the workflow graduates."
+      },
+      {
+        "id": "p4",
+        "label": "Set-review + graduate the workflow",
+        "status": "planned",
+        "detail": "Pass the pilot's set-review gate (roster consistency — reads as the same being across every deliverable), lock the conventions the pilot surfaces, and promote character-creation from draft → active. Seed the roguex-33 3D handoff (turnaround + detail sheets as the model spec)."
+      },
+      {
+        "id": "p5",
+        "label": "Ratchet lore experimental → supported",
+        "status": "planned",
+        "detail": "Once lore has been exercised across enough personas/realities to trust the quality bar (continuity pass · tone-match · honest canon_status · lore-lock discipline), promote mediums/lore.md from experimental → supported."
+      }
+    ],
     "migrate-asset-explorer-into-the-command-center": [
       {
         "id": "p0",
@@ -1242,7 +1327,7 @@
         "id": "p1",
         "label": "Asset-registry contract",
         "status": "done",
-        "detail": "tools/build-asset-registry.mjs (zero-dep) scans external-locations/assets → previews/dashboards/asset-registry.json: 769 records, every existing metadata field preserved."
+        "detail": "tools/build-asset-registry.mjs (zero-dep) scans external-locations/assets → previews/dashboards/asset-registry.json: 598 records (was 769 pre-restructure — ADR 0008), every existing metadata field preserved."
       },
       {
         "id": "p2",
@@ -1266,13 +1351,13 @@
         "id": "cf1",
         "label": "Preview parity (CF-1)",
         "status": "done",
-        "detail": "Real previews landed: builder bakes 144px thumbs (sips → previews/thumbs) + a served /_assets src; a Vite dev middleware + committed previews/_assets symlink serve /_assets & /thumbs identically on :5175 dev and :4317 static; MediaFrame shows image thumbs (tile) + full image + glb/gltf turntable, AudioWaveform plays audio in the inspector; reveal-in-Finder (POST /api/reveal, Assets-root guarded) with copy-abs fallback + copy-path/copy-id. ADRs 0004–0006. Verified live on dev + static, 0 console errors."
+        "detail": "Real previews landed: builder bakes 320px thumbs (sips → previews/thumbs, now untracked/dev-local — ADR 0007) + a served /_assets src; a Vite dev middleware + committed previews/_assets symlink serve /_assets & /thumbs identically on :5175 dev and :4317 static; MediaFrame shows image thumbs (tile) + full image + glb/gltf turntable, AudioWaveform plays audio in the inspector; reveal-in-Finder (POST /api/reveal, Assets-root guarded) with copy-abs fallback + copy-path/copy-id. ADRs 0004–0007. Verified live on dev + static, 0 console errors."
       },
       {
         "id": "p5",
         "label": "Retire the source artifact",
-        "status": "active",
-        "detail": "UNBLOCKED — CF-1 parity resolved (the migrated Explorer now renders the previews the Soul-Steel asset-explorer.html had). Remaining: deprecate + cross-link the Soul-Steel source. It is GENERATED, so the banner must go in its generator (tools/build-asset-explorer.mjs) — a cross-repo write held for explicit owner confirmation; no Soul-Steel change made this session."
+        "status": "skipped",
+        "detail": "ARCHIVED (2026-07-11) — the migrated Explorer fully replaces the Soul-Steel asset-explorer.html, so this milestone's goal is met. Deprecating the *source* generator (tools/build-asset-explorer.mjs) is a cross-repo change deliberately not pursued from Asset-Studio; parked. If ever revisited, the deprecation banner goes in that generator."
       }
     ]
   },
@@ -1568,7 +1653,7 @@
               "children": [
                 {
                   "id": "project/report/example",
-                  "label": "2026-07-09-example-title.md",
+                  "label": "2026-07-11-example-title.md",
                   "path": null,
                   "nodeType": "kind-file",
                   "origin": "derived",
@@ -1754,7 +1839,7 @@
               "children": [
                 {
                   "id": "project/session/example",
-                  "label": "2026-07-09-example-title.md",
+                  "label": "2026-07-11-example-title.md",
                   "path": null,
                   "nodeType": "kind-file",
                   "origin": "derived",
