@@ -7,6 +7,7 @@
 // by default in the Explorer. Per-medium presentation styles are derived here so the panel
 // draws from one vocabulary.
 import assetRegistry from '../../../previews/dashboards/asset-registry.json';
+import type { FolderNode } from '@trembus/ui';
 
 // ── The emitted record shape (mirror of build-registry's output) ──
 // The core fields are always present; the OPTIONAL block (w/h/dims/res/specIssue/reg/thumb) is
@@ -211,3 +212,52 @@ export function humanBytes(bytes: number): string {
   }
   return `${v >= 10 || Number.isInteger(v) ? Math.round(v) : v.toFixed(1)} ${units[i]}`;
 }
+
+// ── Folder navigation tree (derived from record paths) ──
+// The Asset Explorer's side-nav: the library's real folder hierarchy as @trembus/ui's FolderNode
+// forest. Folders only — the grid is the file surface. A node's `id` IS its full path prefix (e.g.
+// "runtime/roblox/soul-steel/layouts"), which is exactly what the grid filters by (see underFolder),
+// so a tree selection needs no lookup. The label carries a subtree asset count. Built from ALL
+// records (a stable spine, independent of the Explorer's default-off "source" gate).
+interface TreeAcc {
+  path: string; // full prefix from the roots, e.g. "audio/voice"
+  count: number; // records at this folder or any descendant
+  children: Map<string, TreeAcc>;
+}
+
+export function buildAssetTree(recs: AssetRecord[]): FolderNode[] {
+  const root: TreeAcc = { path: '', count: 0, children: new Map() };
+  for (const r of recs) {
+    // Walk the DIRECTORY segments (not the filename): a folders-only spine. Root-level files
+    // (dir === '') contribute no folder node — they only show when nothing is selected.
+    const segs = r.dir ? r.dir.split('/') : [];
+    let node = root;
+    let prefix = '';
+    for (const seg of segs) {
+      prefix = prefix ? `${prefix}/${seg}` : seg;
+      let child = node.children.get(seg);
+      if (!child) {
+        child = { path: prefix, count: 0, children: new Map() };
+        node.children.set(seg, child);
+      }
+      child.count += 1; // every ancestor folder counts this record → subtree totals
+      node = child;
+    }
+  }
+  const toNodes = (acc: TreeAcc): FolderNode[] =>
+    [...acc.children.entries()]
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .map(([seg, child]) => ({
+        id: child.path,
+        label: `${seg} (${child.count})`,
+        children: child.children.size ? toNodes(child) : undefined,
+      }));
+  return toNodes(root);
+}
+
+/** The library folder forest (built once) — the Explorer side-nav's data source. */
+export const assetTree: FolderNode[] = buildAssetTree(records);
+
+/** True when record `r` lives under `folder` (or `folder` is empty = the whole library). */
+export const underFolder = (r: AssetRecord, folder: string): boolean =>
+  !folder || r.dir === folder || r.dir.startsWith(`${folder}/`);

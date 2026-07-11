@@ -18,21 +18,21 @@ import {
   Badge,
   Box,
   Button,
-  Card,
   DataStatusBar,
   Dialog,
   DonutChart,
   EmptyState,
+  FolderTree,
   IconButton,
   Inline,
   Input,
   Meter,
   Select,
-  Stack,
   Stat,
   Switch,
   Table,
   Tooltip,
+  VirtualAssetGrid,
 } from '@trembus/ui';
 import type { DataFilter } from '@trembus/ui';
 import {
@@ -40,6 +40,7 @@ import {
   MEDIUM_STYLE,
   MEDIUM_TYPES,
   absPathOf,
+  assetTree,
   counts,
   humanBytes,
   mediumKey,
@@ -48,17 +49,17 @@ import {
   statusVocab,
   summary,
   thumbUrl,
+  underFolder,
 } from './registry';
 import type { AssetRecord, Medium, MediumType } from './registry';
 import { MediaFrame } from '@trembus/game-viz';
 import type { MediaFrameData } from '@trembus/game-viz';
 
-// The initial cap for the unfiltered set (the 769-row worst case): render a slice, offer "show all".
-// Any active filter shrinks the set below this, so the cap only bites on the wide-open view.
-const INITIAL_CAP = 200;
-
-// The four medium keys, in axis order — the order Stat tiles + Meter segments + Donut slices share.
+// The three medium keys, in axis order — the order Stat tiles + Meter segments + Donut slices share.
 const MEDIUM_ORDER: Medium[] = ['image', '3d', 'audio'];
+
+// Section order for VirtualAssetGrid's mediumType grouping (medium ▸ its types), source bucket last.
+const GROUP_ORDER: string[] = [...MEDIUM_ORDER.flatMap((m) => MEDIUM_TYPES[m]), '(source)'];
 
 // A record is source (non-asset) when it has no medium — the null bucket, hidden by default.
 const isSource = (r: AssetRecord): boolean => r.medium === null;
@@ -150,13 +151,13 @@ interface Filters {
   status: string; // '' | BLK | ALPHA | BETA | FNL | none
   ext: string;
   q: string;
+  selectedPath: string; // '' = whole library; else a folder path prefix from the FolderTree
 }
-const EMPTY: Filters = { showSource: false, medium: '', mediumType: '', status: '', ext: '', q: '' };
+const EMPTY: Filters = { showSource: false, medium: '', mediumType: '', status: '', ext: '', q: '', selectedPath: '' };
 
 export function AssetExplorer() {
   const [filters, setFilters] = useState<Filters>(EMPTY);
   const [sel, setSel] = useState<AssetRecord | undefined>(undefined);
-  const [showAll, setShowAll] = useState(false);
 
   const set = <K extends keyof Filters>(key: K, value: Filters[K]) =>
     setFilters((f) => ({ ...f, [key]: value }));
@@ -177,7 +178,7 @@ export function AssetExplorer() {
   //    list, the ext-Select options (count-labeled, over the source-gated set), and the mediumType
   //    group buckets — never re-filtering per card. ──
   const { visible, extOptions, sourceOnlyHidden } = useMemo(() => {
-    const { showSource, medium, mediumType, status, ext, q } = filters;
+    const { showSource, medium, mediumType, status, ext, q, selectedPath } = filters;
     const needle = q.trim().toLowerCase();
 
     // Ext options come from the source-gated set (before the other facets narrow it), count-labeled.
@@ -196,6 +197,7 @@ export function AssetExplorer() {
       (!mediumType || r.mediumType === mediumType) &&
       (!status || r.status === (status === 'none' ? null : status)) &&
       (!ext || r.ext === ext) &&
+      underFolder(r, selectedPath) &&
       (!needle || `${r.stem} ${r.p}`.toLowerCase().includes(needle));
 
     const visible = records.filter(matches);
@@ -212,6 +214,7 @@ export function AssetExplorer() {
           isSource(r) &&
           (!status || r.status === (status === 'none' ? null : status)) &&
           (!ext || r.ext === ext) &&
+          underFolder(r, selectedPath) &&
           (!needle || `${r.stem} ${r.p}`.toLowerCase().includes(needle)),
       );
     }
@@ -220,46 +223,22 @@ export function AssetExplorer() {
   }, [filters]);
 
   const anyFilter =
-    filters.medium || filters.mediumType || filters.status || filters.ext || filters.q.trim();
+    filters.medium ||
+    filters.mediumType ||
+    filters.status ||
+    filters.ext ||
+    filters.q.trim() ||
+    filters.selectedPath;
   const hasFilter = Boolean(anyFilter);
 
-  // Group the visible set by mediumType only when no specific type is selected (the primary
-  // medium ▸ mediumType axis); a chosen type renders a flat grid. Filtered sets are small so the
-  // cap defaults off; the wide-open set slices to INITIAL_CAP until "show all".
-  const capped = hasFilter || showAll ? visible : visible.slice(0, INITIAL_CAP);
-  const overflow = visible.length - capped.length;
+  // Group the grid by mediumType only when no specific type is selected (the primary medium ▸
+  // mediumType axis); a chosen type renders a flat grid. VirtualAssetGrid owns the windowing, the
+  // sticky counted subheads, and the section order (GROUP_ORDER) — no manual bucketing/capping.
   const grouped = !filters.mediumType;
-
-  // Buckets are built from the FULL visible set — never the capped slice — so every subhead
-  // count is the type's real total and no older mediumType vanishes from the default view.
-  // The render cap is applied per group below (an even share of INITIAL_CAP).
-  const groups = useMemo(() => {
-    if (!grouped) return null;
-    const buckets = new Map<string, AssetRecord[]>();
-    for (const r of visible) {
-      const key = r.mediumType ?? '(source)';
-      const arr = buckets.get(key);
-      if (arr) arr.push(r);
-      else buckets.set(key, [r]);
-    }
-    // Order buckets by the axis (image types, 3d types, audio types), source last.
-    const order = [...MEDIUM_ORDER.flatMap((m) => MEDIUM_TYPES[m]), '(source)'];
-    return [...buckets.entries()].sort(
-      (a, b) => (order.indexOf(a[0]) + 1 || 99) - (order.indexOf(b[0]) + 1 || 99),
-    );
-  }, [visible, grouped]);
-
-  // Per-group slice of the render budget on the wide-open view; filters/"show all" lift it.
-  const groupCapActive = grouped && !hasFilter && !showAll;
-  const perGroup = groupCapActive && groups ? Math.max(12, Math.ceil(INITIAL_CAP / groups.length)) : Infinity;
-  const groupsShown = groups?.map(
-    ([type, rows]) => [type, rows, groupCapActive ? rows.slice(0, perGroup) : rows] as const,
-  );
-  const groupedOverflow =
-    groupsShown ? visible.length - groupsShown.reduce((n, [, , shown]) => n + shown.length, 0) : 0;
 
   // The active-filter chips (DataStatusBar `filters` — removable via onRemoveFilter).
   const chips: DataFilter[] = [];
+  if (filters.selectedPath) chips.push({ id: 'path', label: 'Folder', value: filters.selectedPath, tone: 'accent' });
   if (filters.medium) chips.push({ id: 'medium', label: 'Medium', value: MEDIUM_STYLE[filters.medium].label, tone: 'accent' });
   if (filters.mediumType) chips.push({ id: 'mediumType', label: 'Type', value: filters.mediumType });
   if (filters.status) chips.push({ id: 'status', label: 'Status', value: filters.status });
@@ -269,6 +248,7 @@ export function AssetExplorer() {
   const removeChip = (id: string) => {
     if (id === 'medium') setMedium('');
     else if (id === 'mediumType') set('mediumType', '');
+    else if (id === 'path') set('selectedPath', '');
     else set(id as keyof Filters, '' as never);
   };
   // Clear everything except the source toggle (the only default-on gate).
@@ -446,74 +426,61 @@ export function AssetExplorer() {
             </Button>
           </div>
         )}
-      </section>
-
-      {/* 3 — RESULTS GRID */}
-      <section className="cc-section">
         <p className="cc-explorer__count">
           {filters.showSource
             ? `${summary.total} files (incl. ${summary.source} source) · ${visible.length} shown`
             : `${summary.real} assets · ${visible.length} shown`}
         </p>
-        {visible.length === 0 ? (
-          <EmptyState
-            title="No assets match"
-            description={
-              sourceOnlyHidden
-                ? 'The only matches are source files — turn on “Show source files” to see them.'
-                : 'No assets match the current filters.'
-            }
-            pendingSource={sourceOnlyHidden ? 'registry.source' : undefined}
-            action={
-              hasFilter ? (
-                <Button size="sm" variant="outline" onPress={clearAll}>
-                  Clear filters
-                </Button>
-              ) : undefined
+      </section>
+
+      {/* 3 — RESULTS: the folder tree (left) beside the virtualized asset grid (right). The grid is
+          height-bounded so it windows + scrolls internally while the summary/filter/tree stay fixed. */}
+      <div className="cc-explorer__body">
+        <aside className="cc-explorer__tree" aria-label="Library folder navigation">
+          <FolderTree
+            data={assetTree}
+            label="Library folders"
+            defaultExpandedIds={assetTree.flatMap((n) => (n.id ? [n.id] : []))}
+            selectedId={filters.selectedPath}
+            onSelect={(id) => set('selectedPath', id)}
+            filter
+          />
+        </aside>
+        <div className="cc-explorer__main">
+          <VirtualAssetGrid
+            items={visible}
+            getKey={(r) => r.p}
+            getLabel={(r) => r.stem}
+            renderTile={(r, { selected }) => <AssetTile record={r} selected={selected} />}
+            groupBy={grouped ? (r) => r.mediumType ?? '(source)' : undefined}
+            groupOrder={grouped ? GROUP_ORDER : undefined}
+            selectedId={sel?.p ?? ''}
+            onSelect={(_id, r) => setSel(r)}
+            minTileWidth={160}
+            gap={12}
+            tileHeight={210}
+            label="Assets"
+            emptyState={
+              <EmptyState
+                title="No assets match"
+                description={
+                  sourceOnlyHidden
+                    ? 'The only matches are source files — turn on “Show source files” to see them.'
+                    : 'No assets match the current filters.'
+                }
+                pendingSource={sourceOnlyHidden ? 'registry.source' : undefined}
+                action={
+                  hasFilter ? (
+                    <Button size="sm" variant="outline" onPress={clearAll}>
+                      Clear filters
+                    </Button>
+                  ) : undefined
+                }
+              />
             }
           />
-        ) : grouped && groupsShown ? (
-          <>
-            {groupsShown.map(([type, rows, shown]) => (
-              <div key={type} className="cc-explorer__group">
-                <h4 className="cc-section-title cc-explorer__grouphead">
-                  {type}{' '}
-                  <span className="cc-explorer__groupcount">
-                    {shown.length < rows.length ? `${shown.length} of ${rows.length}` : rows.length}
-                  </span>
-                </h4>
-                <div className="cc-explorer__grid">
-                  {shown.map((r) => (
-                    <AssetTile key={r.p} record={r} selected={sel?.p === r.p} onOpen={setSel} />
-                  ))}
-                </div>
-              </div>
-            ))}
-            {groupedOverflow > 0 && (
-              <div className="cc-explorer__more">
-                <Button variant="outline" onPress={() => setShowAll(true)}>
-                  Show all {visible.length}
-                </Button>
-              </div>
-            )}
-          </>
-        ) : (
-          <>
-            <div className="cc-explorer__grid">
-              {capped.map((r) => (
-                <AssetTile key={r.p} record={r} selected={sel?.p === r.p} onOpen={setSel} />
-              ))}
-            </div>
-            {overflow > 0 && (
-              <div className="cc-explorer__more">
-                <Button variant="outline" onPress={() => setShowAll(true)}>
-                  Show all {visible.length}
-                </Button>
-              </div>
-            )}
-          </>
-        )}
-      </section>
+        </div>
+      </div>
 
       {/* 4 — INSPECTOR */}
       <Inspector record={sel} onClose={() => setSel(undefined)} onFilterToType={setMediumType} />
@@ -521,62 +488,41 @@ export function AssetExplorer() {
   );
 }
 
-// A single asset tile — a flush square MediaFrame (baked thumbnail for images; ext glyph
-// otherwise) over one compact body: the stem name, then a single wrap-line of type badge +
-// status badge + a dim "EXT · size" note. Area/domain live in the inspector, not the tile.
-function AssetTile({
-  record,
-  selected,
-  onOpen,
-}: {
-  record: AssetRecord;
-  selected: boolean;
-  onOpen: (r: AssetRecord) => void;
-}) {
+// A single asset tile — PRESENTATIONAL only: VirtualAssetGrid owns the option box, click,
+// keyboard, focus ring, and selected tint. A flush MediaFrame media area (baked thumbnail for
+// images; ext glyph otherwise) fills the cell above one compact body: the stem name, then a
+// wrap-line of type badge + status badge + a dim "EXT · size" note. Area/domain live in the
+// inspector, not the tile. Keep the MediaFrame NON-interactive so it doesn't nest a focusable
+// control inside the grid's option.
+function AssetTile({ record, selected }: { record: AssetRecord; selected: boolean }) {
   const key = mediumKey(record);
   const style = MEDIUM_STYLE[key];
   const typeLabel = record.mediumType ?? '(source)';
   const showStatus = record.status !== null;
   return (
-    <Card
-      interactive
-      className="cc-explorer__card"
-      data-selected={selected || undefined}
-      data-medium={key}
-      onClick={() => onOpen(record)}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          onOpen(record);
-        }
-      }}
-    >
-      <Card.Header>
+    <div className="cc-explorer__card" data-medium={key} data-selected={selected || undefined}>
+      <div className="cc-explorer__cardmedia">
         <MediaFrame data={toFrameData(record, { full: false })} />
-      </Card.Header>
-      <Card.Body>
-        <Stack gap={1}>
-          <Tooltip content={record.stem}>
-            <span className="cc-explorer__name">{record.stem}</span>
-          </Tooltip>
-          <Inline wrap gap={1} align="baseline">
-            <Badge tone={style.tone} variant="soft" size="sm">
-              {typeLabel}
+      </div>
+      <div className="cc-explorer__cardbody">
+        <Tooltip content={record.stem}>
+          <span className="cc-explorer__name">{record.stem}</span>
+        </Tooltip>
+        <Inline wrap gap={1} align="baseline">
+          <Badge tone={style.tone} variant="soft" size="sm">
+            {typeLabel}
+          </Badge>
+          {showStatus && (
+            <Badge tone={statusTone(record.status)} variant="soft" size="sm" dot>
+              {record.status}
             </Badge>
-            {showStatus && (
-              <Badge tone={statusTone(record.status)} variant="soft" size="sm" dot>
-                {record.status}
-              </Badge>
-            )}
-            <span className="cc-explorer__tilemeta">
-              {record.ext.toUpperCase()} · {humanBytes(record.size)}
-            </span>
-          </Inline>
-        </Stack>
-      </Card.Body>
-    </Card>
+          )}
+          <span className="cc-explorer__tilemeta">
+            {record.ext.toUpperCase()} · {humanBytes(record.size)}
+          </span>
+        </Inline>
+      </div>
+    </div>
   );
 }
 

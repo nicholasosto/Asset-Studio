@@ -125,8 +125,21 @@ place "per the brief's target slot" (dead `ai-output/` paths gone — audio stag
 validators → `_tools/`. Statuses: image-generation · audio-production · character-creation → `active`.
 Command Center follow-ups deliberately deferred: call-site glyphs on step tiles, a WorkflowConsole
 call-stack breadcrumb, a TCL subprocess marker (sibling-repo session), upstream `runs`/`seeds` rels.
+**2026-07-11 Explorer folder-nav + virtualized grid** ([[2026-07-11-add-a-foldertree-side-nav-and-virtualassetgrid-to-the-asset-]]):
+the Asset Explorer gained a **`FolderTree` folder-path side-nav** — `registry.ts` `buildAssetTree(records)`
+derives a folders-only `FolderNode[]` forest from record `dir`/`p` (node id = full path prefix, subtree
+counts in labels) + an `underFolder(r,folder)` predicate folded into `matches()` as a `selectedPath` facet
+(composes with the medium/type/status/ext filters; removable "Folder" chip). The hand-rolled card grid +
+`INITIAL_CAP` slice was **swapped for `VirtualAssetGrid<AssetRecord>`** (windowed, `groupBy` mediumType +
+`groupOrder` sections, `onSelect`→inspector, `renderTile` injecting the existing `MediaFrame`+badges tile;
+`AssetTile` now presentational). Layout became an **app-shell**: full-width summary + filter chrome over a
+height-bounded `.cc-explorer__body` (tree aside + internally-scrolling grid) — the `<60rem` breakpoint needs
+`.cc-explorer__main` at a *definite* height or VAG stops windowing. **No `@trembus/ui` bump** (both shipped
+in `0.4.0`; `FolderTree` was already used by the Field Guide), no cross-repo TCL work, no `asset-registry`
+change. Verified live + `tsc`/`vite build` clean. Open refinement: pin the summary/filter chrome (currently
+normal-flow); tune the `100vh - 22rem` offset.
 **Open (owner calls):** fetch-vs-inline for the contracts (would dissolve the stale-bundle class — wants
-an ADR). Corpus: 31 entities (9 decision · 2 roadmap · 1 report · 8 session · 5 workflow · 4 medium ·
+an ADR). Corpus: 32 entities (9 decision · 2 roadmap · 1 report · 9 session · 5 workflow · 4 medium ·
 2 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.4.0` + `game-viz 0.2.0`.
 **Deferred:** a portable (non-`sips`) thumbnail baker for non-macOS + baked 3D/audio posters (the 77
 non-glb/gltf 3D exts glyph). `proseStatusEnforcement` still `warn`

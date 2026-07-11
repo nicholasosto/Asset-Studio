@@ -10,8 +10,8 @@
     "workflow": "workflows",
     "medium": "mediums"
   },
-  "entities": 31,
-  "migrated": 31,
+  "entities": 32,
+  "migrated": 32,
   "counts": {
     "error": 0,
     "warning": 0,
@@ -217,6 +217,15 @@
       "excerpt": "Apply the reviewed migration manifest to ~/Master-Managed/Assets (ADR 0008) and update every tool, doc, and agent surface that referenced the old layout — one truth, no third generation of drift."
     },
     {
+      "id": "2026-07-11-add-a-foldertree-side-nav-and-virtualassetgrid-to-the-asset-",
+      "kind": "session",
+      "title": "Add a FolderTree side-nav and VirtualAssetGrid to the Asset Explorer",
+      "status": "completed",
+      "updated": "2026-07-11",
+      "file": "_project/sessions/2026-07-11-add-a-foldertree-side-nav-and-virtualassetgrid-to-the-asset-.md",
+      "excerpt": "Make the Asset Explorer navigable by the library's real folder hierarchy (not just the flat medium/type/status/ext filters) by adding a @trembus/ui FolderTree side-nav, and modernize the results grid at the same time —…"
+    },
+    {
       "id": "3d-asset",
       "kind": "workflow",
       "title": "3D asset",
@@ -394,9 +403,9 @@
       ]
     },
     "session": {
-      "total": 8,
+      "total": 9,
       "byStatus": {
-        "completed": 8
+        "completed": 9
       },
       "ids": [
         "2026-06-30-stand-up-the-launchable-previews-site",
@@ -406,7 +415,8 @@
         "2026-07-01-build-the-asset-explorer-view",
         "2026-07-01-deep-review-of-the-project-space-and-remediation",
         "2026-07-01-surface-the-asset-explorer-live-and-hold-the-soul-steel-reti",
-        "2026-07-03-execute-the-assets-library-restructure-and-walk-the-surface-"
+        "2026-07-03-execute-the-assets-library-restructure-and-walk-the-surface-",
+        "2026-07-11-add-a-foldertree-side-nav-and-virtualassetgrid-to-the-asset-"
       ],
       "tone": "warning",
       "statusOrder": [
@@ -632,6 +642,18 @@
       "target": "decision/0008-restructure-the-shared-assets-library-into-staging-library-r"
     },
     {
+      "from": "2026-07-11-add-a-foldertree-side-nav-and-virtualassetgrid-to-the-asset-",
+      "fromKind": "session",
+      "rel": "references",
+      "target": "roadmap/migrate-asset-explorer-into-the-command-center"
+    },
+    {
+      "from": "2026-07-11-add-a-foldertree-side-nav-and-virtualassetgrid-to-the-asset-",
+      "fromKind": "session",
+      "rel": "references",
+      "target": "decision/0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy"
+    },
+    {
       "from": "3d-asset",
       "fromKind": "workflow",
       "rel": "references",
@@ -705,7 +727,7 @@
     }
   ],
   "edgesByRel": {
-    "references": 40,
+    "references": 42,
     "decided-in": 1
   },
   "workflows": {
