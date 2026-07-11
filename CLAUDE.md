@@ -110,8 +110,23 @@ the Grid mixes; `lore-lock` done 2026-07-06, concept stage active — live phase
 `mediumType: lore`, `experimental`): the *upstream* medium — engrams · briefs · shippable text —
 **by reference only**; the lore-brain graph is to lore what the shared library is to files
 (decision-0001 treaty, second application). Lore content itself never lives here.
+**2026-07-11 workflow composition grammar** ([[0009-workflows-compose-by-call-and-handoff]]): workflows
+compose by two verbs — **call** (inline; the sub-run is `stepOutcomes` on the composite's pipeline) and
+**handoff** (a terminal step seeds a new pipeline) — and **composites stay depth-1** (bigger scale =
+handoffs, e.g. a roster workflow spawning one character pipeline per member). Call-sites carry step
+`refs` (rel `references`; a workflow-kind target *is* the composition edge — no new rel while the schema
+is vendored); calls are parameterized (template · filename grammar · target slot), so a composite
+overriding a leaf's placement (character sheets → lore-brain `Media/visual/`) is stated, not silent.
+**`lore-creation` landed as the fourth leaf** (brief → recall/continuity → author → canon review →
+reciprocal link → lore-lock gate; by-reference into the lore-brain), closing the 4×4 medium↔leaf pairing
+— every leaf now `references` its medium. Leaves de-drifted: `image-generation` absorbed the Codex batch
+contract (write `BATCH.md` → operator runs in Codex → `staging/` → Claude reviews/files); both 2D leaves
+place "per the brief's target slot" (dead `ai-output/` paths gone — audio stages `_inbox/audio/`);
+validators → `_tools/`. Statuses: image-generation · audio-production · character-creation → `active`.
+Command Center follow-ups deliberately deferred: call-site glyphs on step tiles, a WorkflowConsole
+call-stack breadcrumb, a TCL subprocess marker (sibling-repo session), upstream `runs`/`seeds` rels.
 **Open (owner calls):** fetch-vs-inline for the contracts (would dissolve the stale-bundle class — wants
-an ADR). Corpus: 29 entities (8 decision · 2 roadmap · 1 report · 8 session · 4 workflow · 4 medium ·
+an ADR). Corpus: 31 entities (9 decision · 2 roadmap · 1 report · 8 session · 5 workflow · 4 medium ·
 2 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.4.0` + `game-viz 0.2.0`.
 **Deferred:** a portable (non-`sips`) thumbnail baker for non-macOS + baked 3D/audio posters (the 77
 non-glb/gltf 3D exts glyph). `proseStatusEnforcement` still `warn`

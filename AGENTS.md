@@ -135,8 +135,15 @@ is the fourth medium** (`mediums/lore.md`, `mediumType: lore`, `experimental`): 
 medium — by reference only; the lore-brain graph is to lore what the shared library is to files.
 And the **generation handoff** is live: `generation/BATCH.md` (first batch: `roguex-33-concept`)
 per § Generation batches above.
+**2026-07-11 workflow composition grammar** ([[0009-workflows-compose-by-call-and-handoff]]): workflows
+compose by **call** (inline; sub-run = `stepOutcomes` on the composite's pipeline) and **handoff**
+(terminal step seeds a new pipeline); composites stay depth-1. Every call/handoff step carries a
+`refs` entry to its callee; calls bind template · filename grammar · target slot. `lore-creation` is
+the fourth leaf (by-reference into the lore-brain), closing the medium↔leaf pairing; `image-generation`
+now describes the batch contract above (staging `generation/staging/`; audio stages `_inbox/audio/`;
+validators `_tools/`).
 **Open (owner calls):** fetch-vs-inline for the contracts (would dissolve the stale-bundle class — wants
-an ADR). Corpus: 28 entities (8 decision · 1 roadmap · 1 report · 8 session · 4 workflow · 4 medium ·
+an ADR). Corpus: 31 entities (9 decision · 2 roadmap · 1 report · 8 session · 5 workflow · 4 medium ·
 2 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.4.0` + `game-viz 0.2.0`.
 **Deferred:** a portable (non-`sips`) thumbnail baker for non-macOS + baked 3D/audio posters (the 77
 non-glb/gltf 3D exts glyph). `proseStatusEnforcement` still `warn`

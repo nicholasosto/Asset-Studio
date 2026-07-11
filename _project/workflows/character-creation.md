@@ -1,8 +1,9 @@
 ---
 title: "Character creation"
-status: draft
-updated: 2026-07-09
+status: active
+updated: 2026-07-11
 links:
+  - { rel: references, target: workflows/lore-creation }
   - { rel: references, target: workflows/image-generation }
   - { rel: references, target: workflows/audio-production }
   - { rel: references, target: workflows/3d-asset }
@@ -10,15 +11,17 @@ links:
 
 # Character creation
 
-> **Status:** draft (2026-07-09)
+> **Status:** active (2026-07-11)
 
 ## Purpose
 
 A lore-locked character taken from brain engram to a complete, roster-consistent asset set: the
 six-stage visual ladder (lore-lock → concept → portrait → model sheet → detail passes → poses), an
-optional audio identity, and a 3D handoff. This is a **composite** swimlane — each visual stage is one run
-of [[image-generation]] with a stage template as the composition reference; the audio stage runs
-[[audio-production]]; the handoff seeds [[3d-asset]].
+optional audio identity, and a 3D handoff. This is a **composite** workflow per
+[[0009-workflows-compose-by-call-and-handoff]] — `lore-lock` *calls* [[lore-creation]]'s terminal
+gate; each visual stage is one *call* of [[image-generation]] with a stage template bound as the
+composition reference (and lore-brain `Media/visual/` bound as the target slot); the audio stage
+*calls* [[audio-production]]; `handoff-3d` *seeds* a [[3d-asset]] pipeline.
 
 The ladder was distilled from the two characters who already ran it ad hoc (Penitent Knight,
 Raspmutant, lore-brain `Media/visual/`). One `pipeline` instance per character tracks which
@@ -62,12 +65,12 @@ composition reference and treat it as the stage's definition-of-done.
     { "id": "handoff", "label": "Handoff", "kind": "tool" }
   ],
   "steps": [
-    { "id": "lore-lock", "lane": "lore", "label": "Lore lock", "detail": "palette · silhouette · signature tells", "note": "The lore-brain engram is the source of truth. Before any art: confirm it carries visual tells (palette, silhouette, materials, one signature detail). If it doesn't, add them there first — briefs quote the engram, never invent.", "status": "pending", "to": ["concept"] },
+    { "id": "lore-lock", "lane": "lore", "label": "Lore lock", "detail": "palette · silhouette · signature tells", "note": "The lore-brain engram is the source of truth. Before any art: confirm it carries visual tells (palette, silhouette, materials, one signature detail). If it doesn't, run lore-creation to add them there first — briefs quote the engram, never invent.", "status": "pending", "refs": [{ "rel": "references", "target": "workflows/lore-creation" }], "to": ["concept"] },
     { "id": "concept", "lane": "gen", "label": "Concept (_concept-v1)", "detail": "silhouette + read · T: concept", "note": "One image-generation run with templates/character/concept.svg as composition ref. Goal: the character reads at a glance — silhouette, palette, attitude.", "status": "pending", "refs": [{ "rel": "references", "target": "workflows/image-generation" }], "to": ["portrait"] },
-    { "id": "portrait", "lane": "gen", "label": "Portrait (_portrait-v1)", "detail": "bust ¾ · T: portrait", "note": "2:3 bust, eye-line on the upper-third guide. The only stage where an in-world atmospheric background is expected.", "status": "pending", "to": ["modelsheet"] },
-    { "id": "modelsheet", "lane": "gen", "label": "Model sheet (front · side-back)", "detail": "turnaround · T: turnaround", "note": "Neutral studio-gray, relaxed A-pose, same scale across views, shared ground line. This pair is the primary 3D spec.", "status": "pending", "to": ["details"] },
-    { "id": "details", "lane": "gen", "label": "Detail passes (props · materials)", "detail": "T: detail-callouts", "note": "One sheet per signature item: hero panels + close-up column + material swatch row (the Penitent Knight helm-sheet layout).", "status": "pending", "to": ["poses"] },
-    { "id": "poses", "lane": "gen", "label": "Pose sheet (action + personality)", "detail": "T: pose-sheet", "note": "Action and personality poses on neutral background — silhouette-check every cell.", "status": "pending", "to": ["set-review"] },
+    { "id": "portrait", "lane": "gen", "label": "Portrait (_portrait-v1)", "detail": "bust ¾ · T: portrait", "note": "One image-generation run, templates/character/portrait.svg as composition ref. 2:3 bust, eye-line on the upper-third guide. The only stage where an in-world atmospheric background is expected.", "status": "pending", "refs": [{ "rel": "references", "target": "workflows/image-generation" }], "to": ["modelsheet"] },
+    { "id": "modelsheet", "lane": "gen", "label": "Model sheet (front · side-back)", "detail": "turnaround · T: turnaround", "note": "One image-generation run, templates/character/turnaround.svg as composition ref. Neutral studio-gray, relaxed A-pose, same scale across views, shared ground line. This pair is the primary 3D spec.", "status": "pending", "refs": [{ "rel": "references", "target": "workflows/image-generation" }], "to": ["details"] },
+    { "id": "details", "lane": "gen", "label": "Detail passes (props · materials)", "detail": "T: detail-callouts", "note": "One image-generation run per signature item, templates/character/detail-callouts.svg as composition ref: hero panels + close-up column + material swatch row (the Penitent Knight helm-sheet layout).", "status": "pending", "refs": [{ "rel": "references", "target": "workflows/image-generation" }], "to": ["poses"] },
+    { "id": "poses", "lane": "gen", "label": "Pose sheet (action + personality)", "detail": "T: pose-sheet", "note": "One image-generation run, templates/character/pose-sheet.svg as composition ref. Action and personality poses on neutral background — silhouette-check every cell.", "status": "pending", "refs": [{ "rel": "references", "target": "workflows/image-generation" }], "to": ["set-review"] },
     { "id": "set-review", "lane": "review", "label": "Set review — roster consistency", "note": "Gate: the set coheres with the templates AND the roster — crops match, palette matches the engram, and it reads as the same being in every deliverable.", "status": "pending", "to": ["file-media"] },
     { "id": "file-media", "lane": "media", "label": "File to lore-brain Media/visual", "detail": "<Name>_<stage>-v<N>.png + engram sensory_assets", "note": "File under the grammar, then link the set back on the persona engram so the brain knows its own face.", "status": "pending", "to": ["audio-identity", "handoff-3d"] },
     { "id": "audio-identity", "lane": "gen", "label": "Audio identity (optional)", "detail": "theme · voice — audio-production", "note": "Theme song / voice sample via the audio-production workflow. Optional lane — skip without blocking the 3D handoff.", "status": "pending", "refs": [{ "rel": "references", "target": "workflows/audio-production" }], "to": [] },

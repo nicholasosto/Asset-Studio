@@ -1,7 +1,9 @@
 ---
 title: "3D asset"
 status: draft
-updated: 2026-06-30
+updated: 2026-07-11
+links:
+  - { rel: references, target: mediums/3d }
 ---
 
 # 3D asset
@@ -32,9 +34,9 @@ skill); 3D follows **Pattern B** (upload into `ServerStorage.TrembusGameLibrary`
     { "id": "blockout", "lane": "model", "label": "Blockout in Blender", "detail": "blender-mcp-craft", "note": "Greybox the form at correct scale before detailing.", "status": "pending", "refs": [{ "rel": "references", "target": "decisions/0001-reference-the-shared-asset-library-via-external-locations" }], "to": ["model-tex"] },
     { "id": "model-tex", "lane": "model", "label": "Model + texture", "status": "pending", "to": ["export-gltf"] },
     { "id": "export-gltf", "lane": "export", "label": "Export glTF / rbxm", "status": "pending", "to": ["validate-art"] },
-    { "id": "validate-art", "lane": "qa", "label": "validate-3d-asset-art.mjs", "detail": "source-art package check", "status": "pending", "to": ["studio-import"] },
+    { "id": "validate-art", "lane": "qa", "label": "_tools/validate-3d-asset-art.mjs", "detail": "source-art package check", "status": "pending", "to": ["studio-import"] },
     { "id": "studio-import", "lane": "import", "label": "Import (Pattern B upload)", "detail": "ServerStorage.TrembusGameLibrary", "status": "pending", "to": ["validate-ids"] },
-    { "id": "validate-ids", "lane": "qa", "label": "validate_asset_ids.py", "detail": "registry check", "status": "pending", "to": [] }
+    { "id": "validate-ids", "lane": "qa", "label": "_tools/validate_asset_ids.py", "detail": "registry check", "status": "pending", "to": [] }
   ]
 }
 ```
