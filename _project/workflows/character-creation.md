@@ -1,7 +1,7 @@
 ---
 title: "Character creation"
 status: draft
-updated: 2026-07-04
+updated: 2026-07-09
 links:
   - { rel: references, target: workflows/image-generation }
   - { rel: references, target: workflows/audio-production }
@@ -10,13 +10,13 @@ links:
 
 # Character creation
 
-> **Status:** draft (2026-07-04)
+> **Status:** draft (2026-07-09)
 
 ## Purpose
 
 A lore-locked character taken from brain engram to a complete, roster-consistent asset set: the
-six-stage visual ladder (concept → portrait → model sheet → detail passes → poses), an optional
-audio identity, and a 3D handoff. This is a **composite** swimlane — each visual stage is one run
+six-stage visual ladder (lore-lock → concept → portrait → model sheet → detail passes → poses), an
+optional audio identity, and a 3D handoff. This is a **composite** swimlane — each visual stage is one run
 of [[image-generation]] with a stage template as the composition reference; the audio stage runs
 [[audio-production]]; the handoff seeds [[3d-asset]].
 

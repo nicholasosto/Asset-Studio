@@ -20,8 +20,10 @@ Asset-Studio never duplicates that library or its id registry.
 | `.project-system/` | Vendored framework (schema · lib · tools). Never edit — update = re-copy from Project-System. |
 | `project-system.config.json` | The only project-specific file. Declares the kinds, statuses, tags, and render metadata. |
 | `_project/` | The planning surface — the source of truth. |
-| `_project/workflows/` | The production processes (swimlanes): `image-generation`, `audio-production`, `3d-asset`. |
-| `_project/mediums/` | The `medium` capability catalog (image · audio · 3d) — what the studio can produce, and how. |
+| `_project/workflows/` | The production processes (swimlanes): `image-generation`, `audio-production`, `3d-asset`, `character-creation` (cross-medium composite). |
+| `_project/mediums/` | The `medium` capability catalog (image · audio · 3d · **lore**) — what the studio can produce, and how. Lore is the *upstream* medium: by-reference only, the lore-brain graph is its library. |
+| `templates/character/` | Stage layout templates (SVG) for the character-creation workflow — process artifacts, seeded from the Penitent Knight sheets. `png/` twins for attaching as composition refs. |
+| `generation/` | The image-gen handoff to Codex: `BATCH.md` (one rolling batch contract, rewritten per batch) + `staging/`·`refs/` (untracked). Claude writes the batch + reviews/files; the operator runs "Run generation batch `<id>`" in the Codex app; Codex generates into `staging/`. Contract details in `AGENTS.md` § Generation batches. |
 | `_project/pipeline/` | Production *instances* (batches/commissions) that follow a workflow. |
 | `external-locations/` | Symlinks to the shared `Assets/` library + the `canonical/` kit & skills. Tracked links, untracked payload. |
 | `previews/dashboards/` | The emitted contracts — the planning graph (`asset-studio-graph.json` + `asset-studio-hub.json`) and the Asset Explorer's `asset-registry.json`. JSON only — the rendered surface is the Command Center app. |
@@ -98,9 +100,18 @@ Codex installs), CLAUDE/AGENTS in Soul-Steel · Blender-Dev · Trembus-Tech, cro
 4 vault notes, Codex trust entry, and live game-repo paths (`build-battle-room.lua`, conventions docs,
 `COMPATIBILITY.md`). Live game code has no literal `rbxasset://trembus/` URIs — nothing broke at
 runtime; historical records keep old paths by design.
+**2026-07-04 character factory + lore medium:** the `character-creation` workflow landed — a
+cross-medium composite (six-stage visual ladder `lore-lock → concept → portrait → modelsheet →
+details → poses`, optional audio identity, 3d handoff; each visual stage runs `image-generation`
+with a `templates/character/` SVG as composition ref, conventions seeded from the Penitent Knight
+sheets), piloted by the `roguex-33-character` pipeline (audio retro-credited done — two Ghost in
+the Grid mixes; `lore-lock` active). And **lore is the fourth medium** (`mediums/lore.md`,
+`mediumType: lore`, `experimental`): the *upstream* medium — engrams · briefs · shippable text —
+**by reference only**; the lore-brain graph is to lore what the shared library is to files
+(decision-0001 treaty, second application). Lore content itself never lives here.
 **Open (owner calls):** fetch-vs-inline for the contracts (would dissolve the stale-bundle class — wants
-an ADR). Corpus: 25 entities (8 decision · 1 roadmap · 1 report · 8 session · 3 workflow · 3 medium ·
-1 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.4.0` + `game-viz 0.2.0`.
+an ADR). Corpus: 28 entities (8 decision · 1 roadmap · 1 report · 8 session · 4 workflow · 4 medium ·
+2 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.4.0` + `game-viz 0.2.0`.
 **Deferred:** a portable (non-`sips`) thumbnail baker for non-macOS + baked 3D/audio posters (the 77
 non-glb/gltf 3D exts glyph). `proseStatusEnforcement` still `warn`
 — ratchet to `error` once the corpus settles.

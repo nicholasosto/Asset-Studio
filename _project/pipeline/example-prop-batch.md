@@ -38,6 +38,7 @@ of) real batches.**
     "id": "run-1",
     "label": "First pass — 2 of 5 props",
     "status": "partial",
+    "startedAt": "2026-06-30",
     "trigger": "studio kickoff",
     "note": "Blockouts landed for the first two props; modeling in progress.",
     "stepOutcomes": [

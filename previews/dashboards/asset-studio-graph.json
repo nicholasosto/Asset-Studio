@@ -10,8 +10,8 @@
     "workflow": "workflows",
     "medium": "mediums"
   },
-  "entities": 27,
-  "migrated": 27,
+  "entities": 28,
+  "migrated": 28,
   "counts": {
     "error": 0,
     "warning": 0,
@@ -113,7 +113,7 @@
       "kind": "pipeline",
       "title": "Roguex-33 character",
       "status": "build",
-      "updated": "2026-07-04",
+      "updated": "2026-07-09",
       "file": "_project/pipeline/roguex-33-character.md",
       "excerpt": "Pilot instance of the [[character-creation]] workflow. Roguex-33 is the lore-brain's most fully-realized persona — canon engram, full voice/dialog section, Grid District stall lore, and two finished theme mixes (soul-st…"
     },
@@ -221,9 +221,9 @@
       "kind": "workflow",
       "title": "Character creation",
       "status": "draft",
-      "updated": "2026-07-04",
+      "updated": "2026-07-09",
       "file": "_project/workflows/character-creation.md",
-      "excerpt": "A lore-locked character taken from brain engram to a complete, roster-consistent asset set: the six-stage visual ladder (concept → portrait → model sheet → detail passes → poses), an optional audio identity, and a 3D ha…"
+      "excerpt": "A lore-locked character taken from brain engram to a complete, roster-consistent asset set: the six-stage visual ladder (lore-lock → concept → portrait → model sheet → detail passes → poses), an optional audio identity,…"
     },
     {
       "id": "image-generation",
@@ -275,6 +275,19 @@
         "pattern": "symlink"
       },
       "excerpt": "The studio's 2D raster capability — UI icons, sprites, portraits, and tileable textures produced via AI generation and finalized into the shared library. Process: [[image-generation]]."
+    },
+    {
+      "id": "lore",
+      "kind": "medium",
+      "title": "Lore",
+      "status": "experimental",
+      "updated": "2026-07-04",
+      "file": "_project/mediums/lore.md",
+      "tags": {
+        "mediumType": "lore",
+        "tool": "lore-brain"
+      },
+      "excerpt": "The studio's narrative capability — the upstream medium: the engrams, production briefs, and shippable text (dialog, flavor, lyrics) that image / audio / 3d project from. The studio produces lore into the lore-brain; th…"
     }
   ],
   "byKind": {
@@ -393,14 +406,15 @@
       ]
     },
     "medium": {
-      "total": 3,
+      "total": 4,
       "byStatus": {
-        "experimental": 3
+        "experimental": 4
       },
       "ids": [
         "3d",
         "audio",
-        "image"
+        "image",
+        "lore"
       ],
       "tone": "success",
       "statusOrder": [
@@ -584,10 +598,16 @@
       "fromKind": "medium",
       "rel": "references",
       "target": "workflows/image-generation"
+    },
+    {
+      "from": "lore",
+      "fromKind": "medium",
+      "rel": "references",
+      "target": "workflows/character-creation"
     }
   ],
   "edgesByRel": {
-    "references": 28,
+    "references": 29,
     "decided-in": 1
   },
   "workflows": {
@@ -1121,6 +1141,7 @@
           "id": "run-1",
           "label": "First pass — 2 of 5 props",
           "status": "partial",
+          "startedAt": "2026-06-30",
           "trigger": "studio kickoff",
           "note": "Blockouts landed for the first two props; modeling in progress.",
           "stepOutcomes": [
@@ -1147,17 +1168,42 @@
       ]
     },
     "roguex-33-character": {
-      "total": 1,
+      "total": 2,
       "rollup": {
         "byStatus": {
-          "partial": 1
+          "partial": 2
         }
       },
       "runs": [
         {
+          "id": "run-2",
+          "label": "Lore lock landed — Visual Identity on the engram",
+          "status": "partial",
+          "startedAt": "2026-07-06",
+          "trigger": "lore medium quality bar, first exercise",
+          "note": "Continuity pass across Grid District / Roguex Depot / Ghost in the Grid / Monkey-Bot, then a Visual Identity section canonized on the engram: gunmetal chrome + warm amber neon (never gold — that's the tithe's mark), merchant-first silhouette with the Monkey-Bot perch plate, mixed-run materials, and three tells (amber-flicker vocoder grille, authenticator loupe, eleven uncounted copper pins). Visual specs speculative until set-review promotes them. Concept stage is next.",
+          "stepOutcomes": [
+            {
+              "step": "lore-lock",
+              "status": "done"
+            },
+            {
+              "step": "concept",
+              "status": "active"
+            }
+          ],
+          "outputs": [
+            {
+              "label": "Roguex-33 engram § Visual Identity (lore-brain)",
+              "kind": "doc"
+            }
+          ]
+        },
+        {
           "id": "run-1",
           "label": "Retro-credit — audio identity landed before the workflow existed",
           "status": "partial",
+          "startedAt": "2026-07-04",
           "trigger": "character-creation pilot kickoff",
           "note": "Ghost in the Grid v1 + 80s v2 predate this pipeline; credited to the audio-identity step. Visual ladder not started — lore-lock is the active step.",
           "stepOutcomes": [
@@ -1522,7 +1568,7 @@
               "children": [
                 {
                   "id": "project/report/example",
-                  "label": "2026-07-04-example-title.md",
+                  "label": "2026-07-09-example-title.md",
                   "path": null,
                   "nodeType": "kind-file",
                   "origin": "derived",
@@ -1708,7 +1754,7 @@
               "children": [
                 {
                   "id": "project/session/example",
-                  "label": "2026-07-04-example-title.md",
+                  "label": "2026-07-09-example-title.md",
                   "path": null,
                   "nodeType": "kind-file",
                   "origin": "derived",

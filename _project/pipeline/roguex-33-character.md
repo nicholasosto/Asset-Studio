@@ -1,14 +1,14 @@
 ---
 title: "Roguex-33 character"
 status: build
-updated: 2026-07-04
+updated: 2026-07-09
 links:
   - { rel: references, target: workflows/character-creation }
 ---
 
 # Roguex-33 character
 
-> **Status:** build (2026-07-04)
+> **Status:** build (2026-07-09)
 
 ## Context
 
@@ -52,6 +52,7 @@ constant vocoder patter, hidden lethality, one soft tell.
     "id": "run-1",
     "label": "Retro-credit — audio identity landed before the workflow existed",
     "status": "partial",
+    "startedAt": "2026-07-04",
     "trigger": "character-creation pilot kickoff",
     "note": "Ghost in the Grid v1 + 80s v2 predate this pipeline; credited to the audio-identity step. Visual ladder not started — lore-lock is the active step.",
     "stepOutcomes": [
@@ -61,6 +62,21 @@ constant vocoder patter, hidden lethality, one soft tell.
     "outputs": [
       { "label": "soul-steel-ghost-in-the-grid-v1.mp3", "kind": "doc" },
       { "label": "soul-steel-ghost-in-the-grid-80s-v2.mp3", "kind": "doc" }
+    ]
+  },
+  {
+    "id": "run-2",
+    "label": "Lore lock landed — Visual Identity on the engram",
+    "status": "partial",
+    "startedAt": "2026-07-06",
+    "trigger": "lore medium quality bar, first exercise",
+    "note": "Continuity pass across Grid District / Roguex Depot / Ghost in the Grid / Monkey-Bot, then a Visual Identity section canonized on the engram: gunmetal chrome + warm amber neon (never gold — that's the tithe's mark), merchant-first silhouette with the Monkey-Bot perch plate, mixed-run materials, and three tells (amber-flicker vocoder grille, authenticator loupe, eleven uncounted copper pins). Visual specs speculative until set-review promotes them. Concept stage is next.",
+    "stepOutcomes": [
+      { "step": "lore-lock", "status": "done" },
+      { "step": "concept", "status": "active" }
+    ],
+    "outputs": [
+      { "label": "Roguex-33 engram § Visual Identity (lore-brain)", "kind": "doc" }
     ]
   }
 ]

@@ -20,8 +20,10 @@ Asset-Studio never duplicates that library or its id registry.
 | `.project-system/` | Vendored framework (schema · lib · tools). Never edit — update = re-copy from Project-System. |
 | `project-system.config.json` | The only project-specific file. Declares the kinds, statuses, tags, and render metadata. |
 | `_project/` | The planning surface — the source of truth. |
-| `_project/workflows/` | The production processes (swimlanes): `image-generation`, `audio-production`, `3d-asset`. |
-| `_project/mediums/` | The `medium` capability catalog (image · audio · 3d) — what the studio can produce, and how. |
+| `_project/workflows/` | The production processes (swimlanes): `image-generation`, `audio-production`, `3d-asset`, `character-creation` (cross-medium composite). |
+| `_project/mediums/` | The `medium` capability catalog (image · audio · 3d · **lore**) — what the studio can produce, and how. Lore is the *upstream* medium: by-reference only, the lore-brain graph is its library. |
+| `templates/character/` | Stage layout templates for the character-creation workflow (SVG source + `png/` twins for attaching as composition refs). |
+| `generation/` | The image-gen handoff: `BATCH.md` (the rolling batch contract) + `staging/` and `refs/` (untracked working areas). See § Generation batches. |
 | `_project/pipeline/` | Production *instances* (batches/commissions) that follow a workflow. |
 | `external-locations/` | Symlinks to the shared `Assets/` library + the `canonical/` kit & skills. Tracked links, untracked payload. |
 | `previews/dashboards/` | The emitted contracts — the planning graph (`asset-studio-graph.json` + `asset-studio-hub.json`) and the Asset Explorer's `asset-registry.json`. JSON only — the rendered surface is the Command Center app. |
@@ -60,6 +62,31 @@ Asset-Studio never duplicates that library or its id registry.
   components → build + publish there (own session; `pnpm publish` needs the owner's npm token), then bump the
   `apps/command-center` deps. See [[command-center-consumes-tcl]].
 
+## Generation batches (image-gen handoff)
+
+Image generation is split between agents: **Claude Code plans and reviews; Codex generates.** The
+contract is one rolling file — `generation/BATCH.md` — rewritten per batch, never accumulated.
+
+When the operator says **"Run generation batch `<id>`"**:
+
+1. Read `generation/BATCH.md`. If its batch id ≠ `<id>`, **stop and report the mismatch** — never guess.
+2. For each variant listed: generate the stated number of candidates with the image tool. Attach the
+   template PNG named in the batch file as a composition reference **if the tool accepts image
+   inputs; if it doesn't** (field-tested 2026-07-04: it didn't), encode the template's constraints
+   textually in every prompt instead — aspect, full-body/crop framing, ground line + contact shadow,
+   safe margins. The magenta guides must never appear in the output either way. Append the batch's
+   Negatives block to every run. Same fallback applies to style anchors listed under
+   `generation/refs/`: attach if possible, otherwise describe the anchor's locked traits in text.
+3. Save every candidate to `generation/staging/` (create it if missing), named exactly
+   `<batch-id>_v<variant>c<n>.png`.
+4. **Stop there.** Do not review, rank, rename, or file anything; do not write into `_project/`,
+   `templates/`, the shared `Assets/` library, or the lore-brain vault — review + filing is the
+   Claude side of the loop. Report **"batch staged"** to the operator.
+
+`generation/staging/` and `generation/refs/` are untracked working areas (same rationale as
+`previews/thumbs/`, ADR 0007): candidates are ephemeral by design; only the reviewed winner leaves
+staging, and Claude does the filing (lore-brain `Media/visual/`, engram `sensory_assets`, pipeline run).
+
 ## Status
 
 Migrating the Asset Explorer into the Command Center
@@ -93,14 +120,24 @@ the zoned architecture is live — `_inbox/_catalog/_tools/_archive` machinery +
 `Assets/_catalog/migration-2026-07-03.csv` (`tools/migrate-assets-library.mjs --rollback --confirm`).
 Builder patched (area rules → `runtime`/`_inbox`, machinery zones skipped, CSV join → `_catalog/`):
 576 records / 500 real mediums, **medium tallies identical pre/post**, 362 thumbs rebaked; Explorer
-verified live. Surface checklist walked: asset-conventions skill chain (source → assets-repo → Codex +
-Codex installs), Codex/AGENTS in Soul-Steel · Blender-Dev · Trembus-Tech, cross-project memories,
+verified live. Surface checklist walked: asset-conventions skill chain (source → assets-repo → Claude +
+Codex installs), CLAUDE/AGENTS in Soul-Steel · Blender-Dev · Trembus-Tech, cross-project memories,
 4 vault notes, Codex trust entry, and live game-repo paths (`build-battle-room.lua`, conventions docs,
 `COMPATIBILITY.md`). Live game code has no literal `rbxasset://trembus/` URIs — nothing broke at
 runtime; historical records keep old paths by design.
+**2026-07-04 character factory + lore medium:** the `character-creation` workflow landed — a
+cross-medium composite (six-stage visual ladder `lore-lock → concept → portrait → modelsheet →
+details → poses`, optional audio identity, 3d handoff; each visual stage runs `image-generation`
+with a `templates/character/` SVG as composition ref, conventions seeded from the Penitent Knight
+sheets), piloted by the `roguex-33-character` pipeline (audio retro-credited done — two Ghost in
+the Grid mixes; lore-lock done, Visual Identity canonized on the engram; `concept` active). **Lore
+is the fourth medium** (`mediums/lore.md`, `mediumType: lore`, `experimental`): the *upstream*
+medium — by reference only; the lore-brain graph is to lore what the shared library is to files.
+And the **generation handoff** is live: `generation/BATCH.md` (first batch: `roguex-33-concept`)
+per § Generation batches above.
 **Open (owner calls):** fetch-vs-inline for the contracts (would dissolve the stale-bundle class — wants
-an ADR). Corpus: 25 entities (8 decision · 1 roadmap · 1 report · 8 session · 3 workflow · 3 medium ·
-1 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.4.0` + `game-viz 0.2.0`.
+an ADR). Corpus: 28 entities (8 decision · 1 roadmap · 1 report · 8 session · 4 workflow · 4 medium ·
+2 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.4.0` + `game-viz 0.2.0`.
 **Deferred:** a portable (non-`sips`) thumbnail baker for non-macOS + baked 3D/audio posters (the 77
 non-glb/gltf 3D exts glyph). `proseStatusEnforcement` still `warn`
 — ratchet to `error` once the corpus settles.

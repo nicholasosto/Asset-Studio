@@ -8,3 +8,9 @@ node_modules/
 # The Asset Explorer's thumbnail bake is a LOCAL cache (no published Explorer view) —
 # build-asset-registry.mjs regenerates it; machines without a bake fall back to glyphs.
 previews/thumbs/
+
+# Image-gen handoff working areas (same rationale as thumbs): candidates + style-anchor
+# copies are ephemeral by design — only the reviewed winner leaves staging, filed to the
+# lore-brain vault by the Claude side. The rolling contract generation/BATCH.md IS tracked.
+generation/staging/
+generation/refs/

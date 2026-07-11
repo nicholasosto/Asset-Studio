@@ -162,7 +162,8 @@
         "audio-voice",
         "3d-model",
         "3d-rig",
-        "animation"
+        "animation",
+        "lore"
       ],
       "unknownAllowed": true
     },
