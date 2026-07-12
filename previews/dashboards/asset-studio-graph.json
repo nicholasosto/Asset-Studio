@@ -10,8 +10,8 @@
     "workflow": "workflows",
     "medium": "mediums"
   },
-  "entities": 32,
-  "migrated": 32,
+  "entities": 33,
+  "migrated": 33,
   "counts": {
     "error": 0,
     "warning": 0,
@@ -244,6 +244,15 @@
       "excerpt": "A briefed audio cue — music bed, SFX, or voice line — generated, reviewed, and filed into its target slot. Generation runs through ElevenLabs (music / sound-effect / TTS); placement follows Pattern A (symlink, zero-uplo…"
     },
     {
+      "id": "background-music-audio",
+      "kind": "workflow",
+      "title": "Background music audio",
+      "status": "draft",
+      "updated": "2026-07-12",
+      "file": "_project/workflows/background-music-audio.md",
+      "excerpt": "<the outcome this process reliably produces>"
+    },
+    {
       "id": "character-creation",
       "kind": "workflow",
       "title": "Character creation",
@@ -428,14 +437,15 @@
       ]
     },
     "workflow": {
-      "total": 5,
+      "total": 6,
       "byStatus": {
-        "draft": 2,
+        "draft": 3,
         "active": 3
       },
       "ids": [
         "3d-asset",
         "audio-production",
+        "background-music-audio",
         "character-creation",
         "image-generation",
         "lore-creation"
@@ -666,6 +676,12 @@
       "target": "mediums/audio"
     },
     {
+      "from": "background-music-audio",
+      "fromKind": "workflow",
+      "rel": "references",
+      "target": "mediums/audio"
+    },
+    {
       "from": "character-creation",
       "fromKind": "workflow",
       "rel": "references",
@@ -727,7 +743,7 @@
     }
   ],
   "edgesByRel": {
-    "references": 42,
+    "references": 43,
     "decided-in": 1
   },
   "workflows": {
@@ -959,6 +975,44 @@
           "lane": "place",
           "label": "_tools/validate_asset_ids.py",
           "status": "pending",
+          "to": []
+        }
+      ]
+    },
+    "background-music-audio": {
+      "view": "swimlane",
+      "title": "Background music audio",
+      "code": "workflow.background-music-audio",
+      "caption": "<one line: what this process reliably produces>",
+      "lanes": [
+        {
+          "id": "you",
+          "label": "You",
+          "kind": "human"
+        },
+        {
+          "id": "system",
+          "label": "System",
+          "kind": "system"
+        }
+      ],
+      "steps": [
+        {
+          "id": "start",
+          "lane": "you",
+          "label": "<trigger>",
+          "status": "done",
+          "detail": "<shown on the card>",
+          "to": [
+            "work"
+          ]
+        },
+        {
+          "id": "work",
+          "lane": "system",
+          "label": "<step>",
+          "status": "active",
+          "note": "<shown in the inspector on click>",
           "to": []
         }
       ]
@@ -1900,7 +1954,7 @@
               "children": [
                 {
                   "id": "project/report/example",
-                  "label": "2026-07-11-example-title.md",
+                  "label": "2026-07-12-example-title.md",
                   "path": null,
                   "nodeType": "kind-file",
                   "origin": "derived",
@@ -2086,7 +2140,7 @@
               "children": [
                 {
                   "id": "project/session/example",
-                  "label": "2026-07-11-example-title.md",
+                  "label": "2026-07-12-example-title.md",
                   "path": null,
                   "nodeType": "kind-file",
                   "origin": "derived",
