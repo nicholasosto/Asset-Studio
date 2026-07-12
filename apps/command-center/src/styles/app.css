@@ -426,28 +426,86 @@ body,
   margin-bottom: 1rem;
 }
 
-/* Workflow picker — pill buttons to choose which workflow the console shows. */
-.cc-wf-picker {
+/* ── Processes shell: a full-width header bar (process title + run-history toggle) over a body row
+   — the process/pipeline tree (left) beside the console + build plans (right). Lifting the title
+   into the header lets the tree and swimlane top-align (the Swimlane's own header is hidden below).
+   Field-Guide sticky-aside pattern — .cc-panel is the scroll container, so the aside pins while the
+   main column scrolls. NO max-width (unlike .cc-guide): the Swimlane board is wide. ── */
+.cc-wf-shell {
   display: flex;
-  gap: 0.5rem;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.cc-wf-shell__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
   flex-wrap: wrap;
-  margin-bottom: 1.25rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.1));
 }
 
-.cc-wf-picker__btn {
-  font: inherit;
-  font-size: 0.85rem;
-  padding: 0.35rem 0.85rem;
-  border-radius: var(--tcl-radius-full, 9999px);
-  border: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.12));
-  background: var(--tcl-surface-raised, transparent);
-  color: var(--tcl-text-dim, inherit);
-  cursor: pointer;
-}
-
-.cc-wf-picker__btn[data-active='true'] {
+.cc-wf-shell__title {
+  margin: 0;
+  min-width: 0;
+  font-size: 1.4rem;
+  font-weight: 650;
   color: var(--tcl-text, inherit);
-  border-color: var(--tcl-accent, #d4af37);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cc-wf-shell__body {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.cc-wf-shell__tree {
+  flex: 0 0 18rem;
+  min-width: 0;
+  align-self: stretch;
+  position: sticky;
+  top: 0.25rem;
+  max-height: calc(100vh - 1rem);
+  overflow: auto;
+}
+
+/* min-width: 0 is load-bearing: without it this flex item sizes to the Swimlane's content width
+   and the board's own overflow-x scrolling breaks (same reason .cc-workflow__board carries it). */
+.cc-wf-shell__main {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* The process title now lives in .cc-wf-shell__header, so hide the Swimlane's own header
+   (code/title/caption/brand) — it would otherwise repeat the title and push the lanes down out
+   of line with the tree. Scoped to .cc-workflow so other Swimlanes are unaffected. */
+.cc-workflow .tcl-swimlane__header {
+  display: none;
+}
+
+/* Stack on narrow viewports — tree above console (guide-style normal flow, no height bound;
+   nothing here virtualizes, unlike .cc-explorer__body). */
+@media (max-width: 60rem) {
+  .cc-wf-shell__body {
+    flex-direction: column;
+    /* stretch, not flex-start: in column flow the main column must be bound to the container
+       width or the Swimlane's intrinsic width blows it out past the viewport. */
+    align-items: stretch;
+  }
+  .cc-wf-shell__tree {
+    flex-basis: auto;
+    width: 100%;
+    position: static;
+    max-height: none;
+  }
 }
 
 /* Workflow console — the flow (Swimlane) over its optional run history. */
@@ -610,29 +668,6 @@ body,
   font-size: 0.78rem;
   font-style: italic;
   opacity: 0.6;
-}
-
-.cc-workflow__bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.cc-eyebrow {
-  margin: 0;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  opacity: 0.6;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-}
-
-.cc-workflow__title {
-  margin: 0.15rem 0 0;
-  font-size: 1.15rem;
-  font-weight: 650;
 }
 
 .cc-section {

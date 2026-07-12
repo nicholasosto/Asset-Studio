@@ -138,6 +138,22 @@ height-bounded `.cc-explorer__body` (tree aside + internally-scrolling grid) —
 in `0.4.0`; `FolderTree` was already used by the Field Guide), no cross-repo TCL work, no `asset-registry`
 change. Verified live + `tsc`/`vite build` clean. Open refinement: pin the summary/filter chrome (currently
 normal-flow); tune the `100vh - 22rem` offset.
+**2026-07-12 Workflows→Processes side-nav** (FolderTree, third usage): the Workflows tab's pill picker was
+**replaced by a `FolderTree`** and the tab **renamed "Processes"** (display label only — `deriveNav`'s
+value/panel stay `workflows`, so `#workflows` deep-links · `tabForKind` · step-ref nav are untouched).
+`WORKFLOW_TREE`/`resolveTreeSel` in `workflows.ts` build a **three-group forest** — `group:scheduled` ·
+`group:core` · `group:specialized` — grouped by a *derived* rule (workflow nodes emit no category field and
+render-hub is vendored): **Specialized = composite** (has callee-workflow refs; = Character creation),
+**Scheduled** = a `SCHEDULED_IDS` set (empty today, ready for cadence flows), else **Core**. Group folders are
+`isGroupId('group:…')` → the console ignores selecting them (expansion only); under each, workflow roots hold
+callee links (ADR-0009 call edges, deduped) + pipeline leaves (`root/pipeline:<id>`; selecting one opens the
+console *and* preselects that pipeline's latest run via a mount-only `initialRunId` prop, App keying the console
+by tree selection). **Header refactor:** the run-history toggle was lifted out of `WorkflowConsole` into a
+full-width `.cc-wf-shell__header` (process title + exported `SwitchPill`) so the tree top-aligns with the
+swimlane; the Swimlane's own header (`code`/`title`/`caption`) is hidden via
+`.cc-workflow .tcl-swimlane__header{display:none}`. Partially delivers the deferred "surface composition in the
+Command Center" follow-up. No `@trembus/*` bump, no contract/`_project/` change; verified live + `tsc`/`vite build`
+clean. Deferred still: step-tile call glyphs · a call-stack breadcrumb.
 **Open (owner calls):** fetch-vs-inline for the contracts (would dissolve the stale-bundle class — wants
 an ADR). Corpus: 32 entities (9 decision · 2 roadmap · 1 report · 9 session · 5 workflow · 4 medium ·
 2 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.4.0` + `game-viz 0.2.0`.

@@ -5,7 +5,7 @@
 // a convention inherited from the upstream Project-System framework; NOT this repo's ADR 0004).
 // render-hub.mjs extracts each into graph.json's `workflows` map; this module just adapts that
 // map into the picker's option shape. Nothing is hardcoded here.
-import type { RunRecord } from '@trembus/ui';
+import type { FolderNode, RunRecord } from '@trembus/ui';
 import {
   entities,
   relatedEdges,
@@ -99,3 +99,151 @@ export const WORKFLOWS: WorkflowOption[] = Object.entries(contractWorkflows)
     };
   })
   .sort((a, b) => (a.source === b.source ? 0 : a.source === 'workflow' ? -1 : 1));
+
+// ── Workflows side-nav tree ──────────────────────────────────────────────────────────────
+// Node id scheme (entity ids are bare kebab slugs — never contain `/` — so `/` is a safe
+// separator; resolveTreeSel mis-splits if that ever changes):
+//   root           <wfId>                      the workflow's own console
+//   callee link    <rootId>/<calleeId>         a composite's call-site → the callee's console
+//   pipeline leaf  <rootId>/pipeline:<plId>    the root's console + that pipeline's latest run
+
+/** A workflows-tab tree selection, resolved: which workflow the console shows, and (for a
+ *  pipeline leaf) which pipeline's runs to preselect from. */
+export interface WorkflowTreeSel {
+  wfId: string;
+  pipelineId?: string;
+}
+
+const PIPELINE_MARK = 'pipeline:';
+
+/** Tree node id → console target (see the id scheme above). */
+export function resolveTreeSel(sel: string): WorkflowTreeSel {
+  const slash = sel.indexOf('/');
+  if (slash === -1) return { wfId: sel };
+  const rest = sel.slice(slash + 1);
+  if (rest.startsWith(PIPELINE_MARK)) {
+    return { wfId: sel.slice(0, slash), pipelineId: rest.slice(PIPELINE_MARK.length) };
+  }
+  return { wfId: rest }; // a callee link — the console shows the callee itself
+}
+
+// Explorer-style count baked into the label (FolderTree has no counts slot).
+const withCount = (title: string, n: number): string => (n > 0 ? `${title} (${n})` : title);
+
+// Deduped callee workflow ids from a composite's steps (refs with kind === 'workflow'), in
+// first-seen order. Self-refs are dropped (seen seeded with wfId) and so are targets missing
+// from the contract — a dangling id would resolve to a console fallback and mislead.
+function calleeIdsOf(wfId: string, contract: WorkflowContract): string[] {
+  const seen = new Set<string>([wfId]);
+  const out: string[] = [];
+  for (const step of contract.steps) {
+    for (const ref of step.refs ?? []) {
+      if (ref.kind === 'workflow' && !seen.has(ref.target) && contractWorkflows[ref.target]) {
+        seen.add(ref.target);
+        out.push(ref.target);
+      }
+    }
+  }
+  return out;
+}
+
+// Deduped pipelines that reference this workflow — the same inbound-edge walk runsForWorkflow does.
+function pipelinesOf(wfId: string): { id: string; title: string }[] {
+  const seen = new Set<string>();
+  const out: { id: string; title: string }[] = [];
+  for (const e of relatedEdges(wfId)) {
+    if (e.dir === 'in' && e.rel === 'references' && e.other.kind === 'pipeline' && !seen.has(e.other.id)) {
+      seen.add(e.other.id);
+      out.push({ id: e.other.id, title: e.other.title });
+    }
+  }
+  return out;
+}
+
+// ── Process groups ───────────────────────────────────────────────────────────────────────
+// The side-nav sorts every process into one of three groups. The contract carries no category
+// field (workflow nodes emit only id/kind/title/status) and render-hub is vendored, so the rule
+// lives here — derived from what the contract DOES carry:
+//   · Scheduled   — flows that run on a cadence. No contract signal yet, so declared by id in
+//                   SCHEDULED_IDS (empty today — add ids as flows gain a schedule).
+//   · Specialized — composite flows that call other workflows (e.g. Character creation). Derived
+//                   from callee refs — the same signal that gives them callee children.
+//   · Core flows  — general-purpose asset creation. The default bucket.
+const SCHEDULED_IDS = new Set<string>([]); // add workflow ids here as they gain a schedule
+
+type ProcessGroup = 'scheduled' | 'core' | 'specialized';
+
+/** Group-container node ids are marked so callers can tell them apart from workflow ids — a click
+ *  on a group toggles its expansion but must NOT be resolved to a console (isGroupId → skip). */
+export const isGroupId = (id: string): boolean => id.startsWith('group:');
+
+// Order + labels as the owner listed them: Scheduled, Core flows, Specialized.
+const GROUP_META: { key: ProcessGroup; id: string; label: string }[] = [
+  { key: 'scheduled', id: 'group:scheduled', label: 'Scheduled' },
+  { key: 'core', id: 'group:core', label: 'Core flows' },
+  { key: 'specialized', id: 'group:specialized', label: 'Specialized' },
+];
+
+// One workflow → its root node (callee links + pipeline leaves as children) and its group.
+// A pipeline carrying its own inline `## Workflow` legitimately appears both as a root (its
+// swimlane) and as a leaf under the workflow it follows — ids stay unique either way.
+function buildWorkflowNode(w: WorkflowOption): { node: FolderNode; group: ProcessGroup } {
+  const callees = calleeIdsOf(w.id, w.contract);
+  const calleeNodes: FolderNode[] = callees.map((calleeId) => ({
+    id: `${w.id}/${calleeId}`,
+    label: contractWorkflows[calleeId]?.title ?? calleeId,
+    kind: 'file',
+  }));
+  const pipelineNodes: FolderNode[] = pipelinesOf(w.id).map((p) => ({
+    id: `${w.id}/${PIPELINE_MARK}${p.id}`,
+    label: withCount(p.title, contractRuns[p.id]?.total ?? 0),
+    kind: 'file',
+  }));
+  const children = [...calleeNodes, ...pipelineNodes];
+  const group: ProcessGroup = SCHEDULED_IDS.has(w.id)
+    ? 'scheduled'
+    : callees.length
+      ? 'specialized' // a composite (it calls other workflows) — the "specific/specialized" bucket
+      : 'core';
+  return {
+    // Childless leaves render as files (no dead chevron); containers (callees/pipelines) as folders.
+    node: {
+      id: w.id,
+      label: withCount(w.label, w.runsTotal),
+      kind: children.length ? 'folder' : 'file',
+      children: children.length ? children : undefined,
+    },
+    group,
+  };
+}
+
+/** The Processes side-nav forest: three group folders (Scheduled · Core flows · Specialized),
+ *  each holding its workflow roots. A composite root expands to its callee links (ADR 0009 call
+ *  edges) + the pipelines that follow it; an empty group shows a disabled placeholder. */
+export const WORKFLOW_TREE: FolderNode[] = (() => {
+  const built = WORKFLOWS.map(buildWorkflowNode);
+  return GROUP_META.map((g) => {
+    const members = built.filter((b) => b.group === g.key).map((b) => b.node);
+    return {
+      id: g.id,
+      label: `${g.label} (${members.length})`,
+      kind: 'folder',
+      children: members.length
+        ? members
+        : [{ id: `${g.id}/empty`, label: 'None yet', kind: 'file', disabled: true }],
+    };
+  });
+})();
+
+/** Ids to expand by default — every folder that actually has children (the groups plus any
+ *  composite/instance roots), so the forest opens down to its workflows on first paint. */
+export const WORKFLOW_TREE_EXPANDED: string[] = (function collect(nodes: FolderNode[]): string[] {
+  const out: string[] = [];
+  for (const n of nodes) {
+    if (n.children?.length && n.id) {
+      out.push(n.id);
+      out.push(...collect(n.children));
+    }
+  }
+  return out;
+})(WORKFLOW_TREE);

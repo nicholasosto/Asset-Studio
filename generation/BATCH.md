@@ -1,74 +1,66 @@
 # Generation batch — ACTIVE
 
-> One rolling file. Claude rewrites it per batch; Codex executes it verbatim. Standing rules live
-> in `AGENTS.md` § Generation batches. If the operator's requested batch id doesn't match the id
-> below, **stop and report the mismatch**.
+> One rolling file. This batch is owned by the `roblox-textured-ui-reference-kit` composite run.
+> Codex generates into staging, then the composite's run lead performs the declared technical
+> review and `_BLK` filing. The standing operator-trigger stop rule in `AGENTS.md` still applies
+> when the operator explicitly says `Run generation batch <id>`; this approved composite run is
+> proceeding under its pipeline acceptance boundary instead.
 
-- **Batch id:** `roguex-33-concept-r2`
-- **Rerun of:** `roguex-33-concept` (r1 candidates remain in staging under their own names — do
-  not delete them)
-- **Character · stage:** Roguex-33 · Stage 1 — Concept (`Roguex-33_concept-v1`)
-- **Pipeline:** `_project/pipeline/roguex-33-character.md` (step `concept`)
-- **Lore source of truth:** lore-brain `Concepts/Roguex-33.md` § Visual Identity — this file
-  quotes it; on any conflict, the engram wins.
-- **Composition template:** `templates/character/png/concept.png` — attach if the tool accepts
-  image inputs; otherwise encode textually (2:3, full body, ground line + small contact shadow,
-  safe margins). Magenta guides must never appear in output.
-- **Style anchor:** none — this *is* the anchor stage.
-- **Candidates:** 2 per variant → 6 images total.
-- **Output:** `generation/staging/roguex-33-concept-r2_v<variant>c<n>.png`
+- **Batch id:** `roblox-textured-ui-reference-kit`
+- **Pipeline:** `_project/pipeline/roblox-textured-ui-reference-kit.md` (step `generate-art`)
+- **Visual direction:** game-agnostic brushed graphite · cool cyan · restrained industrial UI
+- **Composition reference:** none — exact geometry is encoded textually per asset
+- **Candidates:** 1 per variant → 3 images total; rerun only a failed variant
+- **Requested generation size:** 1024×1024 opaque PNG
+- **Built-in generator output:** 1254×1254 opaque PNG (recorded deviation; runtime derivative unchanged)
+- **Runtime derivative:** 256×256 opaque PNG after review
+- **Output:** `generation/staging/roblox-textured-ui-reference-kit_v<variant>c1.png`
 
-## What changed from r1 (owner review, 2026-07-04)
+## Shared rules
 
-1. **THE FACE — the headline fix.** r1 heads were clunky/boxy or menacing (skull-grin,
-   jack-o'-lantern, knight-visor). Respec: **humanoid face** — sleek person-shaped skull,
-   defined brow line with expressive brow plates, fully mechanical but *charming*. The brass
-   multi-slit vocoder grille sits where a mouth would, curved in a permanent **wry smirk** and
-   glowing soft warm amber. Expression register: **mischievous, roguish, Han-Solo swagger —
-   never menacing.** The threat is stillness, not the face.
-2. **Perch plate:** low-profile worn plate, flush to the shoulder armor — **not a raised
-   tray/pedestal/dish.**
-3. **Chrome polish:** customer-facing surfaces (chest, forearms, face) are *polished reflective
-   chrome* — showroom front, scuffed gunmetal everywhere the customers don't see.
-4. **Chassis language:** logistics, not combat — cargo hardpoints, strap anchors, load-rated
-   joints; a body built to move inventory.
-
-## Base prompt
-
-> Full-body character concept art, 2:3 portrait format, single figure, painterly cyber-gothic
-> finish — ritual weight on secular machinery. Subject: a charming rebuilt merchant robot in a
-> neon-noir market world. Lean, asymmetric logistics chassis — cargo hardpoints, strap anchors,
-> load-rated joints, a body built to move inventory, not to fight; no two armor panels from the
-> same production run; polished reflective chrome on the customer-facing surfaces (chest,
-> forearms, face), scuffed gunmetal where customers don't look. He wears a long open trader's
-> coat of waxed canvas over the chrome. **Head: humanoid proportions — a sleek, person-shaped
-> mechanical skull with a defined brow line and expressive brow plates; a brass-fitted multi-slit
-> vocoder grille curved in a permanent wry smirk where a mouth would be, glowing soft warm amber;
-> the expression is mischievous, roguish, sly — a chrome Han Solo mid-sales-pitch, never
-> menacing.** A flip-down jeweler's loupe sits over the left eye. A low-profile worn perch plate
-> lies flush on one shoulder. Relaxed counter-lean, deal-making confidence, open mid-patter
-> hands; nothing weapon-shaped anywhere on him. Lighting: warm amber neon rim light against a
-> cold blue-white fluorescent key; background kept quiet in value. Feet planted on a ground line
-> with a small contact shadow; figure fills the frame with safe margins.
+Front-on orthographic 2D game UI asset, production-ready texture sheet, square canvas, no words or
+letters, no logos, no watermark, no scene, no mockup device, no perspective, no dramatic lighting,
+no bloom, no drop shadow outside the canvas. Palette is charcoal graphite, gunmetal, soft cool-gray,
+and one restrained cyan accent (#55DDE0). Material detail must survive downscaling to 256×256.
 
 ## Variants
 
-- **V1 — clean plate:** base as written; dark neutral backdrop, nothing but the
-  amber-vs-fluorescent lighting split. (Anchor candidate.)
-- **V2 — coat + awning cape:** base coat, plus a short stall-awning half-cape layered over the
-  shoulders (canopy silhouette at the top, long coat lines below — no fringe).
-- **V3 — stall counter-lean:** at his open-air market stall, leaning on the counter on one arm,
-  curated cover-inventory blurred behind him; neon-market bokeh, kept quiet in value.
+### `panel` — 9-slice frame
+
+> Use case: stylized-concept. Asset type: Roblox 9-slice UI panel texture. A perfectly front-on
+> square graphite panel with an ornate-but-restrained industrial border. The outer border occupies
+> exactly the outer 12.5% of every side; all four corners are identical and rotationally coherent;
+> top/bottom edges repeat only horizontally; left/right edges repeat only vertically. Keep the
+> center 75% flat, uniform, quiet, and free of focal detail so it can stretch. Brushed graphite,
+> subtle bevels, tiny cyan hairline insets, crisp corners. All seams crossing the future slice lines
+> must be straight and continuous. No transparency required.
+
+### `tile` — seamless textured fill
+
+> Use case: stylized-concept. Asset type: seamless tileable game UI background. A subtle brushed
+> graphite micro-grid with very low-contrast horizontal and vertical machining marks and sparse
+> dim cyan pinpoints. Truly seamless on all four edges: left matches right and top matches bottom.
+> Uniform density, no center focal point, no large symbol, no lighting gradient, no border. Designed
+> to repeat behind readable interface content at 64–256 pixel tile sizes.
+
+### `atlas` — 2×2 control-state atlas
+
+> Use case: stylized-concept. Asset type: Roblox ImageRect 2×2 UI state atlas. Divide the square
+> canvas into four exact equal quadrants with no gutter and no separator line. Every quadrant shows
+> the same centered abstract hex-compass control glyph at identical scale and alignment with 20%
+> safe padding. State order: top-left idle (soft gray/cyan), top-right hover (brighter cyan rim),
+> bottom-left pressed (visibly inset/darker), bottom-right disabled (desaturated low contrast).
+> Each cell has the same flat graphite background and contains no letters, numerals, labels, arrows,
+> or text. Quadrant boundaries must remain clean when cropped independently.
 
 ## Negatives — append to every run
 
-no gold trim or gold accents anywhere · not a mass-produced or standardized robot design · no
-visible weapons · no human skin (fully mechanical) · **no skull-face, no jack-o'-lantern grin,
-no knight visor, no boxy industrial head, no menacing expression** · no raised tray or pedestal
-on the shoulder · no magenta/pink guide lines in the output · background never competes with the
-silhouette
+no text · no letters · no numerals · no logo · no watermark · no device mockup · no perspective ·
+no isometric angle · no photographic scene · no characters · no magenta · no saturated neon ·
+no harsh bloom · no blur · no one-pixel detail · no detail crossing required crop/slice boundaries
 
 ## After generation
 
-Stop. Report "batch staged" to the operator. Do not review, rank, rename, or file anything —
-review and filing happen on the Claude side.
+Stage the three candidates under the exact names above. The composite run lead then checks geometry,
+downscaled legibility, seams, slice safety, and atlas crops. Only reviewed derivatives leave staging;
+they remain `_BLK` until the owner accepts the real Studio proof.
