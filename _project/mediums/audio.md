@@ -1,7 +1,7 @@
 ---
 title: "Audio"
 status: experimental
-updated: 2026-06-30
+updated: 2026-07-12
 links:
   - { rel: references, target: workflows/audio-production }
 tags: { mediumType: audio-sfx, tool: elevenlabs, pattern: symlink }
@@ -9,7 +9,7 @@ tags: { mediumType: audio-sfx, tool: elevenlabs, pattern: symlink }
 
 # Audio
 
-> **Status:** experimental (2026-06-30)
+> **Status:** experimental (2026-07-12)
 
 ## Purpose
 
@@ -18,8 +18,9 @@ the shared library. Process: [[audio-production]].
 
 ## Standard
 
-`wav` / `mp3` / `ogg` / `flac`. Kebab-case descriptor + `_BLK`; categorized by context
-(ability-combat-fx · ui-fx · world-fx · voice-dialog · bg-music · environment · generic).
+`wav` / `mp3` / `ogg` / `flac`. Kebab-case descriptor + `_BLK`; categorized by zone
+(`audio/{music, sfx, ui, ambient, voice}` — voice per-character subfoldered), per
+[[0008-restructure-the-shared-assets-library-into-staging-library-r]].
 
 ## Tooling
 
@@ -28,8 +29,22 @@ for voice configuration.
 
 ## Output convention
 
-Staged in `ai-output/audio/` (+ `voice-previews/`, `sfx/`); finalized into `audio/<context>/`.
+Staged in `_inbox/audio/` (`tts/` · `voice-previews/` · `sfx/`); finalized into
+`audio/{music, sfx, ui, ambient, voice}/`. Persona-bound audio places **by reference** into
+lore-brain `Media/audio/` instead (Ghost in the Grid precedent).
 **Pattern A** (symlink, zero-upload) per [[0001-reference-the-shared-asset-library-via-external-locations]].
+
+## Named voices
+
+The studio's ElevenLabs voice registry — permanent designed voices, their IDs, and the owning
+persona (personas live by reference in the lore-brain; design prompts are recorded verbatim in
+each persona engram's *Voice Design (ElevenLabs)* section). Never store API keys here.
+
+| Voice (ElevenLabs name) | voice_id | Persona (lore-brain, by reference) | Provenance |
+|---|---|---|---|
+| Ashael - Soul Steel | `ruxSNzODa3KpaHd5XW6j` | Ashael, the Dreaming Scribe — narrator: the Record | Voice Design, 2026-07-12 |
+| The Custodian of the Ledger - Soul Steel | `VSiMhzoGYAWmh67ySiCN` | The Custodian of the Ledger — narrator: the Ledger | Voice Design, 2026-07-12 |
+| Penitent Knight - Soul Steel | `5T5zUlb7Z8odV3I15LJ9` | Penitent Knight | pre-existing; registered 2026-07-12 (collision check) |
 
 ## Quality bar
 

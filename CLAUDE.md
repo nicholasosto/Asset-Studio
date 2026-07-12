@@ -154,9 +154,24 @@ swimlane; the Swimlane's own header (`code`/`title`/`caption`) is hidden via
 `.cc-workflow .tcl-swimlane__header{display:none}`. Partially delivers the deferred "surface composition in the
 Command Center" follow-up. No `@trembus/*` bump, no contract/`_project/` change; verified live + `tsc`/`vite build`
 clean. Deferred still: step-tile call glyphs · a call-stack breadcrumb.
+**2026-07-12 Soul Steel narrator voices + narrated introduction** ([[soul-steel-narrator-voices]] ·
+[[soul-steel-introduction-narrated]], both `ship`): the canon's **narrator pair** exists — Ashael the
+Dreaming Scribe (male-based voice, ElevenLabs `ruxSNzODa3KpaHd5XW6j`) + **The Custodian of the Ledger**
+(NEW female-voiced persona: Reality Balance's canon alias "the cosmic ledger" given a voice; audience-only
+address preserving the one-way law; Vesper-firewalled; `VSiMhzoGYAWmh67ySiCN`) — plus a canon-only
+495-word introduction ("What follows is reconstruction, not memory"), authored via lore-creation
+(3 parallel drafts → 3-lens judge panel → 10 adversarial exclusion checks, operator-signed checklist),
+narrated in three takes (Ashael v1 · Custodian v1/v2, eleven_v3) filed **by reference** in lore-brain
+`Media/audio/`. **New convention: `mediums/audio § Named voices`** — the ElevenLabs voice-ID registry
+(design prompts live on the persona engrams; also registered the pre-existing Penitent Knight voice);
+the audio card de-drifted (`_inbox/` staging, 5-zone list). Mechanism note: the connected ElevenLabs
+MCPs render TTS but **cannot create voices** — Voice Design runs in the operator's Chrome.
+`lore-creation` got its 2nd/3rd clean exercises — promoting it `draft → active` is an owner call. Open:
+Custodian canonical cut (v1 vs v2); promoting the two speculative engrams; the canon Epoch-of-Eternity
+"encroaching Void Domain" seam (flagged again, routed around).
 **Open (owner calls):** fetch-vs-inline for the contracts (would dissolve the stale-bundle class — wants
-an ADR). Corpus: 32 entities (9 decision · 2 roadmap · 1 report · 9 session · 5 workflow · 4 medium ·
-2 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.4.0` + `game-viz 0.2.0`.
+an ADR). Corpus: 37 entities (9 decision · 2 roadmap · 1 report · 9 session · 7 workflow · 4 medium ·
+5 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.4.0` + `game-viz 0.2.0`.
 **Deferred:** a portable (non-`sips`) thumbnail baker for non-macOS + baked 3D/audio posters (the 77
 non-glb/gltf 3D exts glyph). `proseStatusEnforcement` still `warn`
 — ratchet to `error` once the corpus settles.

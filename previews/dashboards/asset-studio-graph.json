@@ -10,8 +10,8 @@
     "workflow": "workflows",
     "medium": "mediums"
   },
-  "entities": 35,
-  "migrated": 35,
+  "entities": 37,
+  "migrated": 37,
   "counts": {
     "error": 0,
     "warning": 0,
@@ -134,6 +134,24 @@
       "updated": "2026-07-09",
       "file": "_project/pipeline/roguex-33-character.md",
       "excerpt": "Pilot instance of the [[character-creation]] workflow. Roguex-33 is the lore-brain's most fully-realized persona — canon engram, full voice/dialog section, Grid District stall lore, and two finished theme mixes (soul-st…"
+    },
+    {
+      "id": "soul-steel-introduction-narrated",
+      "kind": "pipeline",
+      "title": "Soul Steel introduction (narrated)",
+      "status": "ship",
+      "updated": "2026-07-12",
+      "file": "_project/pipeline/soul-steel-introduction-narrated.md",
+      "excerpt": "A canon-only narrative introduction to Soul Steel — deliverable class: shippable text — an overture usable across media (trailers, session opens, in-game events), authored by reference into the lore-brain graph and then…"
+    },
+    {
+      "id": "soul-steel-narrator-voices",
+      "kind": "pipeline",
+      "title": "Soul Steel narrator voices",
+      "status": "ship",
+      "updated": "2026-07-12",
+      "file": "_project/pipeline/soul-steel-narrator-voices.md",
+      "excerpt": "Soul Steel media (trailers, session overtures, in-game events, downstream character pipelines) needs a recurring narration identity — two lore-fitted ElevenLabs voices, one male-based, one female-based, explicitly not t…"
     },
     {
       "id": "character-factory-lore-medium",
@@ -316,7 +334,7 @@
       "kind": "medium",
       "title": "Audio",
       "status": "experimental",
-      "updated": "2026-06-30",
+      "updated": "2026-07-12",
       "file": "_project/mediums/audio.md",
       "tags": {
         "mediumType": "audio-sfx",
@@ -393,14 +411,17 @@
       ]
     },
     "pipeline": {
-      "total": 3,
+      "total": 5,
       "byStatus": {
-        "build": 3
+        "build": 3,
+        "ship": 2
       },
       "ids": [
         "example-prop-batch",
         "roblox-textured-ui-reference-kit",
-        "roguex-33-character"
+        "roguex-33-character",
+        "soul-steel-introduction-narrated",
+        "soul-steel-narrator-voices"
       ],
       "tone": "success",
       "statusOrder": [
@@ -574,6 +595,30 @@
       "fromKind": "pipeline",
       "rel": "references",
       "target": "workflows/character-creation"
+    },
+    {
+      "from": "soul-steel-introduction-narrated",
+      "fromKind": "pipeline",
+      "rel": "references",
+      "target": "workflows/lore-creation"
+    },
+    {
+      "from": "soul-steel-introduction-narrated",
+      "fromKind": "pipeline",
+      "rel": "references",
+      "target": "workflows/audio-production"
+    },
+    {
+      "from": "soul-steel-narrator-voices",
+      "fromKind": "pipeline",
+      "rel": "references",
+      "target": "workflows/lore-creation"
+    },
+    {
+      "from": "soul-steel-narrator-voices",
+      "fromKind": "pipeline",
+      "rel": "references",
+      "target": "workflows/audio-production"
     },
     {
       "from": "character-factory-lore-medium",
@@ -793,7 +838,7 @@
     }
   ],
   "edgesByRel": {
-    "references": 48,
+    "references": 52,
     "decided-in": 1
   },
   "workflows": {
@@ -1928,6 +1973,222 @@
             },
             {
               "label": "soul-steel-ghost-in-the-grid-80s-v2.mp3",
+              "kind": "doc"
+            }
+          ]
+        }
+      ]
+    },
+    "soul-steel-introduction-narrated": {
+      "total": 2,
+      "rollup": {
+        "byStatus": {
+          "done": 2
+        }
+      },
+      "runs": [
+        {
+          "id": "run-1",
+          "label": "Introduction authored (lore-creation)",
+          "status": "done",
+          "startedAt": "2026-07-12",
+          "trigger": "Narrator-voices initiative kickoff (owner request)",
+          "note": "Brief = this pipeline's Context (form, beat outline, exclusion checklist). Lore-lock gate skipped: shippable text, not an asset-bound persona.",
+          "stepOutcomes": [
+            {
+              "step": "write-brief",
+              "status": "done"
+            },
+            {
+              "step": "recall-pass",
+              "status": "done"
+            },
+            {
+              "step": "author",
+              "status": "done"
+            },
+            {
+              "step": "canon-review",
+              "status": "done"
+            },
+            {
+              "step": "reciprocal-link",
+              "status": "done"
+            },
+            {
+              "step": "lore-lock-gate",
+              "status": "skipped"
+            }
+          ],
+          "outputs": [
+            {
+              "label": "Concepts/Soul Steel — The Watch Beyond the Wall (Introduction).md (lore-brain)",
+              "kind": "doc"
+            }
+          ]
+        },
+        {
+          "id": "run-2",
+          "label": "Two narration takes (audio-production)",
+          "status": "done",
+          "startedAt": "2026-07-12",
+          "trigger": "Follows run-1 canon review + narrator voices existing",
+          "note": "eleven_v3, full 495-word text verbatim, no audio tags. Ashael take via the ElevenLabs Player MCP (transport timed out; render recovered from account history — billed once). Custodian take via the web app produced two generations from one render; operator kept both (two-mix precedent; canonical cut = operator pick, open). stage-out deviation: browser downloads moved straight to lore-brain Media/audio/ — _inbox untouched; validate-ids skipped (nothing in the shared library). sensory_assets wired on the intro engram + both narrator engrams.",
+          "stepOutcomes": [
+            {
+              "step": "write-brief",
+              "status": "done"
+            },
+            {
+              "step": "generate",
+              "status": "done"
+            },
+            {
+              "step": "stage-out",
+              "status": "done"
+            },
+            {
+              "step": "review-take",
+              "status": "done"
+            },
+            {
+              "step": "finalize",
+              "status": "done"
+            },
+            {
+              "step": "place-asset",
+              "status": "done"
+            },
+            {
+              "step": "validate-ids",
+              "status": "skipped"
+            }
+          ],
+          "outputs": [
+            {
+              "label": "soul-steel-intro-ashael-v1.mp3 (lore-brain)",
+              "kind": "doc"
+            },
+            {
+              "label": "soul-steel-intro-custodian-v1.mp3 (lore-brain)",
+              "kind": "doc"
+            },
+            {
+              "label": "soul-steel-intro-custodian-v2.mp3 (lore-brain)",
+              "kind": "doc"
+            }
+          ]
+        }
+      ]
+    },
+    "soul-steel-narrator-voices": {
+      "total": 2,
+      "rollup": {
+        "byStatus": {
+          "done": 2
+        }
+      },
+      "runs": [
+        {
+          "id": "run-1",
+          "label": "Narrator personas authored (lore-creation)",
+          "status": "done",
+          "startedAt": "2026-07-12",
+          "trigger": "Narrator-voices initiative kickoff (owner request)",
+          "note": "Brief = this pipeline's Context. Lore-lock gate skipped: audio-bound personas, no visual tell yet — a future portrait run reopens it.",
+          "stepOutcomes": [
+            {
+              "step": "write-brief",
+              "status": "done"
+            },
+            {
+              "step": "recall-pass",
+              "status": "done"
+            },
+            {
+              "step": "author",
+              "status": "done"
+            },
+            {
+              "step": "canon-review",
+              "status": "done"
+            },
+            {
+              "step": "reciprocal-link",
+              "status": "done"
+            },
+            {
+              "step": "lore-lock-gate",
+              "status": "skipped"
+            }
+          ],
+          "outputs": [
+            {
+              "label": "Concepts/The Custodian of the Ledger.md (lore-brain)",
+              "kind": "doc"
+            },
+            {
+              "label": "Ashael engram § Voice Design (ElevenLabs) — additive (lore-brain)",
+              "kind": "doc"
+            }
+          ]
+        },
+        {
+          "id": "run-2",
+          "label": "Voice design + permanent voices (audio-production)",
+          "status": "done",
+          "startedAt": "2026-07-12",
+          "trigger": "Follows run-1 canon review",
+          "note": "Generated via elevenlabs.io Voice Design in the operator's Chrome (connected MCPs cannot create voices); operator auditioned 3 previews per voice audibly and picked (Ashael: take 3; Custodian: take 2). stage-out deviation: previews/takes arrived via browser download, moved straight to the bound destination (lore-brain Media/audio/) — _inbox untouched. validate-ids skipped: nothing placed in the shared Assets library. Registry convention created: mediums/audio § Named voices.",
+          "stepOutcomes": [
+            {
+              "step": "write-brief",
+              "status": "done"
+            },
+            {
+              "step": "generate",
+              "status": "done"
+            },
+            {
+              "step": "stage-out",
+              "status": "done"
+            },
+            {
+              "step": "review-take",
+              "status": "done"
+            },
+            {
+              "step": "finalize",
+              "status": "done"
+            },
+            {
+              "step": "place-asset",
+              "status": "done"
+            },
+            {
+              "step": "validate-ids",
+              "status": "skipped"
+            }
+          ],
+          "outputs": [
+            {
+              "label": "ElevenLabs voice ruxSNzODa3KpaHd5XW6j — Ashael - Soul Steel",
+              "kind": "doc"
+            },
+            {
+              "label": "ElevenLabs voice VSiMhzoGYAWmh67ySiCN — The Custodian of the Ledger - Soul Steel",
+              "kind": "doc"
+            },
+            {
+              "label": "mediums/audio § Named voices (registry, new convention)",
+              "kind": "doc"
+            },
+            {
+              "label": "soul-steel-ashael-voice-preview-v1.mp3 (lore-brain)",
+              "kind": "doc"
+            },
+            {
+              "label": "soul-steel-custodian-of-the-ledger-voice-preview-v1.mp3 (lore-brain)",
               "kind": "doc"
             }
           ]
