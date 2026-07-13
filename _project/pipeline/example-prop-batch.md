@@ -42,8 +42,20 @@ of) real batches.**
     "trigger": "studio kickoff",
     "note": "Blockouts landed for the first two props; modeling in progress.",
     "stepOutcomes": [
-      { "step": "board", "status": "done" },
-      { "step": "blockout", "status": "done" },
+      {
+        "step": "board", "status": "done",
+        "outputs": [
+          { "label": "Assets/_inbox/3d/example-prop-batch/prop-a/board.png", "kind": "doc" },
+          { "label": "Assets/_inbox/3d/example-prop-batch/prop-b/board.png", "kind": "doc" }
+        ]
+      },
+      {
+        "step": "blockout", "status": "done",
+        "outputs": [
+          { "label": "Assets/_inbox/3d/example-prop-batch/prop-a/prop-a_blockout.blend", "kind": "log" },
+          { "label": "Assets/_inbox/3d/example-prop-batch/prop-b/prop-b_blockout.blend", "kind": "log" }
+        ]
+      },
       { "step": "model-tex", "status": "active" }
     ],
     "outputs": [

@@ -30,12 +30,49 @@ skill); 3D follows **Pattern B** (upload into `ServerStorage.TrembusGameLibrary`
     { "id": "qa", "label": "Validate", "kind": "tool" }
   ],
   "steps": [
-    { "id": "board", "lane": "concept", "label": "Concept / production board", "detail": "silhouette · scale · domain", "status": "pending", "to": ["blockout"] },
-    { "id": "blockout", "lane": "model", "label": "Blockout in Blender", "detail": "blender-mcp-craft", "note": "Greybox the form at correct scale before detailing.", "status": "pending", "refs": [{ "rel": "references", "target": "decisions/0001-reference-the-shared-asset-library-via-external-locations" }], "to": ["model-tex"] },
-    { "id": "model-tex", "lane": "model", "label": "Model + texture", "status": "pending", "to": ["export-gltf"] },
-    { "id": "export-gltf", "lane": "export", "label": "Export glTF / rbxm", "status": "pending", "to": ["validate-art"] },
+    {
+      "id": "board", "lane": "concept", "label": "Concept / production board", "detail": "silhouette · scale · domain", "status": "pending",
+      "inputs": ["A prop brief — silhouette · scale · domain"],
+      "outputs": ["Assets/_inbox/3d/<name>/board.png"],
+      "to": ["blockout"]
+    },
+    {
+      "id": "blockout", "lane": "model", "label": "Blockout in Blender", "detail": "blender-mcp-craft",
+      "note": "Greybox the form at correct scale before detailing.", "status": "pending",
+      "substeps": [
+        "Greybox the form at correct scale",
+        "Name per [CAT]_[SUB]_[Name]_[Status]",
+        "Stage to Assets/_inbox for review"
+      ],
+      "inputs": ["The concept board", "Target scale + domain"],
+      "refs": [{ "rel": "references", "target": "decisions/0001-reference-the-shared-asset-library-via-external-locations" }],
+      "to": ["model-tex"]
+    },
+    {
+      "id": "model-tex", "lane": "model", "label": "Model + texture", "status": "pending",
+      "substeps": [
+        "Retopo + UV-unwrap the blockout",
+        "Author PBR textures",
+        "Pack textures into the .blend"
+      ],
+      "to": ["export-gltf"]
+    },
+    {
+      "id": "export-gltf", "lane": "export", "label": "Export glTF / rbxm", "status": "pending",
+      "substeps": ["Bake + pack textures", "Export glTF (.glb)", "Convert to Studio .rbxm"],
+      "outputs": [
+        "Assets/source-art/3d/<name>/<name>.glb",
+        "Assets/source-art/3d/<name>/<name>.rbxm"
+      ],
+      "to": ["validate-art"]
+    },
     { "id": "validate-art", "lane": "qa", "label": "_tools/validate-3d-asset-art.mjs", "detail": "source-art package check", "status": "pending", "to": ["studio-import"] },
-    { "id": "studio-import", "lane": "import", "label": "Import (Pattern B upload)", "detail": "ServerStorage.TrembusGameLibrary", "status": "pending", "to": ["validate-ids"] },
+    {
+      "id": "studio-import", "lane": "import", "label": "Import (Pattern B upload)", "detail": "ServerStorage.TrembusGameLibrary", "status": "pending",
+      "inputs": ["The .rbxm from export", "ServerStorage.TrembusGameLibrary target"],
+      "outputs": ["library/props/<name>.rbxm"],
+      "to": ["validate-ids"]
+    },
     { "id": "validate-ids", "lane": "qa", "label": "_tools/validate_asset_ids.py", "detail": "registry check", "status": "pending", "to": [] }
   ]
 }

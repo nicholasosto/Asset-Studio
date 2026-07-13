@@ -881,6 +881,12 @@
           "label": "Concept / production board",
           "detail": "silhouette · scale · domain",
           "status": "pending",
+          "inputs": [
+            "A prop brief — silhouette · scale · domain"
+          ],
+          "outputs": [
+            "Assets/_inbox/3d/<name>/board.png"
+          ],
           "to": [
             "blockout"
           ]
@@ -892,6 +898,15 @@
           "detail": "blender-mcp-craft",
           "note": "Greybox the form at correct scale before detailing.",
           "status": "pending",
+          "substeps": [
+            "Greybox the form at correct scale",
+            "Name per [CAT]_[SUB]_[Name]_[Status]",
+            "Stage to Assets/_inbox for review"
+          ],
+          "inputs": [
+            "The concept board",
+            "Target scale + domain"
+          ],
           "to": [
             "model-tex"
           ],
@@ -909,6 +924,11 @@
           "lane": "model",
           "label": "Model + texture",
           "status": "pending",
+          "substeps": [
+            "Retopo + UV-unwrap the blockout",
+            "Author PBR textures",
+            "Pack textures into the .blend"
+          ],
           "to": [
             "export-gltf"
           ]
@@ -918,6 +938,15 @@
           "lane": "export",
           "label": "Export glTF / rbxm",
           "status": "pending",
+          "substeps": [
+            "Bake + pack textures",
+            "Export glTF (.glb)",
+            "Convert to Studio .rbxm"
+          ],
+          "outputs": [
+            "Assets/source-art/3d/<name>/<name>.glb",
+            "Assets/source-art/3d/<name>/<name>.rbxm"
+          ],
           "to": [
             "validate-art"
           ]
@@ -938,6 +967,13 @@
           "label": "Import (Pattern B upload)",
           "detail": "ServerStorage.TrembusGameLibrary",
           "status": "pending",
+          "inputs": [
+            "The .rbxm from export",
+            "ServerStorage.TrembusGameLibrary target"
+          ],
+          "outputs": [
+            "library/props/<name>.rbxm"
+          ],
           "to": [
             "validate-ids"
           ]
@@ -1811,11 +1847,31 @@
           "stepOutcomes": [
             {
               "step": "board",
-              "status": "done"
+              "status": "done",
+              "outputs": [
+                {
+                  "label": "Assets/_inbox/3d/example-prop-batch/prop-a/board.png",
+                  "kind": "doc"
+                },
+                {
+                  "label": "Assets/_inbox/3d/example-prop-batch/prop-b/board.png",
+                  "kind": "doc"
+                }
+              ]
             },
             {
               "step": "blockout",
-              "status": "done"
+              "status": "done",
+              "outputs": [
+                {
+                  "label": "Assets/_inbox/3d/example-prop-batch/prop-a/prop-a_blockout.blend",
+                  "kind": "log"
+                },
+                {
+                  "label": "Assets/_inbox/3d/example-prop-batch/prop-b/prop-b_blockout.blend",
+                  "kind": "log"
+                }
+              ]
             },
             {
               "step": "model-tex",
