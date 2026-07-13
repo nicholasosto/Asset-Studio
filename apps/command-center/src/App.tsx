@@ -556,6 +556,8 @@ export function App() {
   // force-reveals it (see the tree onSelect) so its preselected run is actually visible.
   const [wfShowRuns, setWfShowRuns] = useState(true);
   const wfHasRuns = (activeWorkflow?.runs.length ?? 0) > 0;
+  // Collapsible side-nav: minimize the process tree to hand the swimlane the full width.
+  const [wfNavCollapsed, setWfNavCollapsed] = useState(false);
 
   // Field Guide: selected node drives the right-pane brief. FolderTree owns its own expansion
   // (uncontrolled, the top-level forest open by default); we just track the selection.
@@ -629,12 +631,27 @@ export function App() {
     />
   );
 
-  // Full-width header: the active process title (left) + the run-history toggle (right). Pulling
-  // the title up here lets the tree and swimlane top-align, and the Swimlane's own header
-  // (code/title/caption) is hidden in CSS so the title isn't shown twice.
+  // Full-width header: a nav-collapse toggle + the active process title (left) and the run-history
+  // toggle (right). Pulling the title up here lets the tree and swimlane top-align, and the
+  // Swimlane's own header (code/title/caption) is hidden in CSS so the title isn't shown twice.
   const wfHeader = activeWorkflow ? (
     <div className="cc-wf-shell__header">
-      <h2 className="cc-wf-shell__title">{activeWorkflow.label}</h2>
+      <div className="cc-wf-shell__headline">
+        {showWfTree && (
+          <button
+            type="button"
+            className="cc-wf-shell__navtoggle"
+            aria-expanded={!wfNavCollapsed}
+            aria-controls="cc-wf-nav"
+            aria-label={wfNavCollapsed ? 'Show process navigation' : 'Hide process navigation'}
+            title={wfNavCollapsed ? 'Show process navigation' : 'Hide process navigation'}
+            onClick={() => setWfNavCollapsed((v) => !v)}
+          >
+            <span aria-hidden="true">{wfNavCollapsed ? '☰' : '«'}</span>
+          </button>
+        )}
+        <h2 className="cc-wf-shell__title">{activeWorkflow.label}</h2>
+      </div>
       <SwitchPill
         checked={wfShowRuns}
         onChange={setWfShowRuns}
@@ -658,7 +675,12 @@ export function App() {
       {wfHeader}
       {showWfTree ? (
         <div className="cc-wf-shell__body">
-          <aside className="cc-wf-shell__tree" aria-label="Process navigation">
+          <aside
+            id="cc-wf-nav"
+            className="cc-wf-shell__tree"
+            aria-label="Process navigation"
+            hidden={wfNavCollapsed}
+          >
             <FolderTree
               data={WORKFLOW_TREE}
               label="Processes & pipelines"
