@@ -2628,7 +2628,7 @@
               "children": [
                 {
                   "id": "project/report/example",
-                  "label": "2026-07-12-example-title.md",
+                  "label": "YYYY-MM-DD-example-title.md",
                   "path": null,
                   "nodeType": "kind-file",
                   "origin": "derived",
@@ -2814,7 +2814,7 @@
               "children": [
                 {
                   "id": "project/session/example",
-                  "label": "2026-07-12-example-title.md",
+                  "label": "YYYY-MM-DD-example-title.md",
                   "path": null,
                   "nodeType": "kind-file",
                   "origin": "derived",
