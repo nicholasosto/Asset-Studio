@@ -39,6 +39,18 @@ body,
 
 .cc-tablist {
   padding: 0 1.75rem;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+}
+.cc-tablist::-webkit-scrollbar {
+  height: 4px;
+}
+.cc-tablist::-webkit-scrollbar-thumb {
+  background: var(--tcl-border-strong, rgba(255, 255, 255, 0.22));
+  border-radius: 999px;
 }
 
 .cc-panel {
@@ -1167,6 +1179,9 @@ body,
   font-size: 0.85rem;
   color: var(--tcl-text-dim, rgba(255, 255, 255, 0.6));
 }
+.cc-explorer__robloxstatus {
+  margin-top: 0.75rem;
+}
 /* App-shell body — a bounded-height row so VirtualAssetGrid can window + scroll internally while the
    summary, filter bar, and folder tree stay put. The offset approximates the chrome above it; the
    min-height keeps it usable if that estimate runs tall. */
@@ -1270,6 +1285,10 @@ body,
   flex-direction: column;
   gap: 0.85rem;
 }
+.cc-explorer__inspector > .tcl-media-frame {
+  width: 100%;
+  margin: 0;
+}
 .cc-explorer__inspectorbadges {
   margin: 0;
 }
@@ -1285,23 +1304,94 @@ body,
   gap: 0 1.5rem;
   margin: 0;
 }
-.cc-explorer__facts > div {
+.cc-explorer__facts > div,
+.cc-explorer__robloxfacts > div {
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
   padding: 0.45rem 0;
   border-bottom: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.07));
 }
-.cc-explorer__facts dt {
+.cc-explorer__facts dt,
+.cc-explorer__robloxfacts dt {
   font-size: 0.62rem;
   text-transform: uppercase;
   letter-spacing: 0.07em;
   color: var(--tcl-text-dim, rgba(255, 255, 255, 0.5));
 }
-.cc-explorer__facts dd {
+.cc-explorer__facts dd,
+.cc-explorer__robloxfacts dd {
   margin: 0;
   font-size: 0.83rem;
   color: var(--tcl-text, rgba(255, 255, 255, 0.9));
+}
+
+/* Canonical upload metadata uses one restrained signature: a narrow verification rail. Green
+   means the local bytes still match the upload; amber marks checksum drift; gray is local-only.
+   The section is deliberately denser than a generic callout because it is evidence, not promo. */
+.cc-explorer__roblox {
+  --cc-roblox-signal: #64748b;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.1));
+  border-left: 3px solid var(--cc-roblox-signal);
+  border-radius: var(--tcl-radius-md, 8px);
+  background: color-mix(in srgb, var(--cc-roblox-signal) 7%, var(--tcl-surface-raised, #151a21));
+}
+.cc-explorer__roblox[data-state='uploaded'] {
+  --cc-roblox-signal: #43aa8b;
+}
+.cc-explorer__roblox[data-state='needsReview'] {
+  --cc-roblox-signal: #e6a84a;
+}
+.cc-explorer__robloxhead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.cc-explorer__robloxhead > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.cc-explorer__robloxhead strong {
+  overflow-wrap: anywhere;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.84rem;
+  color: var(--tcl-text, rgba(255, 255, 255, 0.92));
+}
+.cc-explorer__robloxeyebrow {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--cc-roblox-signal);
+}
+.cc-explorer__robloxfacts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 0 1.25rem;
+  margin: 0;
+}
+.cc-explorer__robloxfacts > div {
+  min-width: 0;
+  padding: 0.35rem 0;
+}
+.cc-explorer__robloxwarning,
+.cc-explorer__robloxurl {
+  margin: 0;
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+.cc-explorer__robloxwarning {
+  color: var(--tcl-warning-text, #f0bd65);
+}
+.cc-explorer__robloxurl {
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.6));
 }
 
 /* The exhaustive field table, collapsed by default — progressive disclosure. Closed, the modal
