@@ -45,13 +45,15 @@ import {
   humanBytes,
   mediumKey,
   records,
+  robloxRegistry,
+  robloxUploadState,
   statusTone,
   statusVocab,
   summary,
   thumbUrl,
   underFolder,
 } from './registry';
-import type { AssetRecord, Medium, MediumType } from './registry';
+import type { AssetRecord, Medium, MediumType, RobloxUploadState } from './registry';
 import { MediaFrame } from '@trembus/game-viz';
 import type { MediaFrameData } from '@trembus/game-viz';
 
@@ -149,11 +151,21 @@ interface Filters {
   medium: '' | Medium;
   mediumType: '' | MediumType;
   status: string; // '' | BLK | ALPHA | BETA | FNL | none
+  roblox: '' | RobloxUploadState;
   ext: string;
   q: string;
   selectedPath: string; // '' = whole library; else a folder path prefix from the FolderTree
 }
-const EMPTY: Filters = { showSource: false, medium: '', mediumType: '', status: '', ext: '', q: '', selectedPath: '' };
+const EMPTY: Filters = {
+  showSource: false,
+  medium: '',
+  mediumType: '',
+  status: '',
+  roblox: '',
+  ext: '',
+  q: '',
+  selectedPath: '',
+};
 
 export function AssetExplorer() {
   const [filters, setFilters] = useState<Filters>(EMPTY);
@@ -178,7 +190,7 @@ export function AssetExplorer() {
   //    list, the ext-Select options (count-labeled, over the source-gated set), and the mediumType
   //    group buckets — never re-filtering per card. ──
   const { visible, extOptions, sourceOnlyHidden } = useMemo(() => {
-    const { showSource, medium, mediumType, status, ext, q, selectedPath } = filters;
+    const { showSource, medium, mediumType, status, roblox, ext, q, selectedPath } = filters;
     const needle = q.trim().toLowerCase();
 
     // Ext options come from the source-gated set (before the other facets narrow it), count-labeled.
@@ -196,6 +208,7 @@ export function AssetExplorer() {
       (!medium || r.medium === medium) &&
       (!mediumType || r.mediumType === mediumType) &&
       (!status || r.status === (status === 'none' ? null : status)) &&
+      (!roblox || (r.medium !== null && robloxUploadState(r) === roblox)) &&
       (!ext || r.ext === ext) &&
       underFolder(r, selectedPath) &&
       (!needle || `${r.stem} ${r.p}`.toLowerCase().includes(needle));
@@ -208,7 +221,7 @@ export function AssetExplorer() {
     // a source record (both are null on source), so the hint would otherwise promise a reveal
     // the toggle can't deliver.
     let sourceOnlyHidden = false;
-    if (!showSource && visible.length === 0 && !medium && !mediumType) {
+    if (!showSource && visible.length === 0 && !medium && !mediumType && !roblox) {
       sourceOnlyHidden = records.some(
         (r) =>
           isSource(r) &&
@@ -222,10 +235,17 @@ export function AssetExplorer() {
     return { visible, extOptions, sourceOnlyHidden };
   }, [filters]);
 
+  // A facet change can remove the selected tile from the result set. Clear that stale selection
+  // so VirtualAssetGrid's live status never announces a hidden record as still selected.
+  useEffect(() => {
+    if (sel && !visible.some((record) => record.p === sel.p)) setSel(undefined);
+  }, [sel, visible]);
+
   const anyFilter =
     filters.medium ||
     filters.mediumType ||
     filters.status ||
+    filters.roblox ||
     filters.ext ||
     filters.q.trim() ||
     filters.selectedPath;
@@ -242,6 +262,14 @@ export function AssetExplorer() {
   if (filters.medium) chips.push({ id: 'medium', label: 'Medium', value: MEDIUM_STYLE[filters.medium].label, tone: 'accent' });
   if (filters.mediumType) chips.push({ id: 'mediumType', label: 'Type', value: filters.mediumType });
   if (filters.status) chips.push({ id: 'status', label: 'Status', value: filters.status });
+  if (filters.roblox) {
+    const labels: Record<RobloxUploadState, string> = {
+      uploaded: 'Uploaded',
+      needsReview: 'Needs review',
+      unregistered: 'Not registered',
+    };
+    chips.push({ id: 'roblox', label: 'Roblox', value: labels[filters.roblox], tone: 'accent' });
+  }
   if (filters.ext) chips.push({ id: 'ext', label: 'Ext', value: filters.ext.toUpperCase() });
   if (filters.q.trim()) chips.push({ id: 'q', label: 'Search', value: filters.q.trim() });
 
@@ -403,6 +431,17 @@ export function AssetExplorer() {
                 </option>
               ))}
             </Select>
+            <Select
+              label="Roblox"
+              placeholder="Any upload state"
+              value={filters.roblox}
+              onChange={(e) => set('roblox', e.currentTarget.value as '' | RobloxUploadState)}
+            >
+              <option value="">Any upload state</option>
+              <option value="uploaded">Uploaded ({robloxRegistry.byState.uploaded})</option>
+              <option value="needsReview">Needs review ({robloxRegistry.byState.needsReview})</option>
+              <option value="unregistered">Not registered ({robloxRegistry.byState.unregistered})</option>
+            </Select>
             <Switch
               label="Show source files"
               checked={filters.showSource}
@@ -431,6 +470,22 @@ export function AssetExplorer() {
             ? `${summary.total} files (incl. ${summary.source} source) · ${visible.length} shown`
             : `${summary.real} assets · ${visible.length} shown`}
         </p>
+        {robloxRegistry.issues.length > 0 && (
+          <div className="cc-explorer__robloxstatus">
+            <DataStatusBar
+              dense
+              status="partial"
+              title="Roblox upload registry"
+              statusLabel="Needs review"
+              aria-label="Roblox upload registry diagnostics"
+              metrics={[
+                { id: 'drift', label: 'checksum drift', value: robloxRegistry.checksumMismatch },
+                { id: 'orphaned', label: 'orphaned', value: robloxRegistry.orphaned },
+                { id: 'legacy', label: 'legacy conflicts', value: robloxRegistry.legacyIdConflicts },
+              ]}
+            />
+          </div>
+        )}
       </section>
 
       {/* 3 — RESULTS: the folder tree (left) beside the virtualized asset grid (right). The grid is
@@ -499,6 +554,7 @@ function AssetTile({ record, selected }: { record: AssetRecord; selected: boolea
   const style = MEDIUM_STYLE[key];
   const typeLabel = record.mediumType ?? '(source)';
   const showStatus = record.status !== null;
+  const uploadState = robloxUploadState(record);
   return (
     <div className="cc-explorer__card" data-medium={key} data-selected={selected || undefined}>
       <div className="cc-explorer__cardmedia">
@@ -515,6 +571,16 @@ function AssetTile({ record, selected }: { record: AssetRecord; selected: boolea
           {showStatus && (
             <Badge tone={statusTone(record.status)} variant="soft" size="sm" dot>
               {record.status}
+            </Badge>
+          )}
+          {uploadState === 'uploaded' && (
+            <Badge tone="success" variant="outline" size="sm" dot>
+              Roblox uploaded
+            </Badge>
+          )}
+          {uploadState === 'needsReview' && (
+            <Badge tone="warning" variant="outline" size="sm" dot>
+              Roblox review
             </Badge>
           )}
           <span className="cc-explorer__tilemeta">
@@ -575,6 +641,9 @@ function Inspector({
   const style = MEDIUM_STYLE[key];
   const abs = absPathOf(record);
   const regId = record.reg?.id;
+  const roblox = record.roblox;
+  const uploadState = robloxUploadState(record);
+  const canonicalActionsEnabled = roblox?.checksum === 'match';
   const dims = record.dims ?? (record.w && record.h ? `${record.w}×${record.h}` : null);
   return (
     <Dialog
@@ -605,15 +674,37 @@ function Inspector({
             >
               Copy path
             </Button>
+            {canonicalActionsEnabled && roblox && (
+              <Button
+                size="sm"
+                variant="ghost"
+                onPress={async () =>
+                  setFlash((await copyText(roblox.active.assetUri)) ? 'Roblox URI copied ✓' : 'Copy failed')
+                }
+              >
+                Copy Roblox URI
+              </Button>
+            )}
+            {canonicalActionsEnabled && roblox?.active.creatorStoreUrl && (
+              <Button size="sm" variant="outline" asChild>
+                <a
+                  href={roblox.active.creatorStoreUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Open Creator Store
+                </a>
+              </Button>
+            )}
             {regId && (
               <Button
                 size="sm"
                 variant="ghost"
                 onPress={async () =>
-                  setFlash((await copyText(`rbxassetid://${regId}`)) ? 'Id copied ✓' : 'Copy failed')
+                  setFlash((await copyText(regId)) ? 'Name-matched ID copied ✓' : 'Copy failed')
                 }
               >
-                Copy id
+                Copy name-matched ID
               </Button>
             )}
             {flash && (
@@ -667,6 +758,16 @@ function Inspector({
               {record.status}
             </Badge>
           )}
+          {uploadState === 'uploaded' && (
+            <Badge tone="success" variant="outline" size="sm" dot>
+              Roblox uploaded
+            </Badge>
+          )}
+          {uploadState === 'needsReview' && (
+            <Badge tone="warning" variant="outline" size="sm" dot>
+              Roblox needs review
+            </Badge>
+          )}
         </Inline>
         {/* Essentials — the at-a-glance facts lead; the exhaustive field dump is tucked into the
             collapsed <details> below so the modal opens compact (progressive disclosure). */}
@@ -678,6 +779,58 @@ function Inspector({
           <Fact label="Area" value={record.area} />
           <Fact label="Domain" value={record.domain} />
         </dl>
+        <section className="cc-explorer__roblox" data-state={uploadState} aria-label="Roblox upload metadata">
+          <div className="cc-explorer__robloxhead">
+            <div>
+              <span className="cc-explorer__robloxeyebrow">Roblox upload</span>
+              <strong>{roblox ? roblox.active.assetId : 'No exact-path registration'}</strong>
+            </div>
+            <Badge
+              tone={uploadState === 'uploaded' ? 'success' : uploadState === 'needsReview' ? 'warning' : 'neutral'}
+              variant="soft"
+              size="sm"
+              dot
+            >
+              {uploadState === 'uploaded' ? 'Uploaded' : uploadState === 'needsReview' ? 'Needs review' : 'Not registered'}
+            </Badge>
+          </div>
+          {roblox ? (
+            <>
+              {roblox.checksum === 'mismatch' && (
+                <p className="cc-explorer__robloxwarning">
+                  Local bytes no longer match the verified upload. Roblox URI and store actions are withheld until review.
+                </p>
+              )}
+              {roblox.legacyIdConflict && (
+                <p className="cc-explorer__robloxwarning">
+                  The legacy name match points to {roblox.legacyIdConflict}; the exact-path mapping remains authoritative.
+                </p>
+              )}
+              <dl className="cc-explorer__robloxfacts">
+                <Fact label="URI" value={<code className="cc-explorer__mono">{roblox.active.assetUri}</code>} />
+                <Fact label="Inventory folder" value={roblox.active.inventoryPath} />
+                <Fact
+                  label="Creator"
+                  value={`${roblox.active.creator.name} · ${roblox.active.creator.type} ${roblox.active.creator.id}`}
+                />
+                <Fact label="Asset type" value={roblox.active.assetType} />
+                <Fact label="Checksum" value={roblox.checksum} />
+                <Fact label="Upload history" value={`${roblox.uploadCount} entr${roblox.uploadCount === 1 ? 'y' : 'ies'}`} />
+                <Fact label="Verified" value={roblox.active.verifiedAt} />
+                <Fact label="Method" value={roblox.active.verificationMethod} />
+              </dl>
+              <p className="cc-explorer__robloxurl">
+                {roblox.active.creatorStoreUrl
+                  ? 'Verified public Creator Store listing available.'
+                  : 'No public Creator Store listing.'}
+              </p>
+            </>
+          ) : (
+            <p className="cc-explorer__robloxurl">
+              No canonical Roblox upload is registered for this exact library path.
+            </p>
+          )}
+        </section>
         <details className="cc-explorer__morefields">
           <summary>All fields</summary>
           <Table density="compact" className="cc-explorer__inspectortable">
@@ -704,9 +857,17 @@ function Inspector({
             <Row label="Spec issue" value={record.specIssue} />
             {record.reg && (
               <>
-                <Row label="Registry id" value={record.reg.id} />
-                <Row label="Registry status" value={record.reg.status} />
-                <Row label="Registry kind" value={record.reg.kind} />
+                <Row label="Catalog ID — name matched" value={record.reg.id} />
+                <Row label="Catalog status — name matched" value={record.reg.status} />
+                <Row label="Catalog kind — name matched" value={record.reg.kind} />
+              </>
+            )}
+            {roblox && (
+              <>
+                <Row label="Roblox local URI" value={<code className="cc-explorer__mono">{roblox.localUri}</code>} />
+                <Row label="Roblox source SHA-256" value={<code className="cc-explorer__mono">{roblox.sourceSha256}</code>} />
+                <Row label="Roblox recorded" value={roblox.recordedAt} />
+                <Row label="Roblox Creator Store URL" value={roblox.active.creatorStoreUrl ?? 'No public listing'} />
               </>
             )}
             {record.tgl && (

@@ -62,6 +62,7 @@ import {
   readdirSync,
   readFileSync,
   realpathSync,
+  renameSync,
   rmSync,
   statSync,
   symlinkSync,
@@ -71,6 +72,10 @@ import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  joinRobloxUploadRegistry,
+  loadRobloxUploadRegistry,
+} from "./lib/roblox-upload-registry.mjs";
 
 // ── paths ───────────────────────────────────────────────────────────────
 const __filename = fileURLToPath(import.meta.url);
@@ -80,6 +85,7 @@ const ASSETS_ROOT = join(PROJECT_ROOT, "external-locations", "assets");
 const DASHBOARD_DIR = join(PROJECT_ROOT, "previews", "dashboards");
 const OUT = join(DASHBOARD_DIR, "asset-registry.json");
 const REGISTRY_CSV = join(ASSETS_ROOT, "_catalog", "master-asset-ids-validated.csv");
+const ROBLOX_UPLOAD_REGISTRY = join(ASSETS_ROOT, "_catalog", "roblox-upload-registry.jsonl");
 const THUMBS_DIR = join(PROJECT_ROOT, "previews", "thumbs");   // Asset-Studio-OWNED thumb cache — LOCAL/untracked (gitignored; no published Explorer view)
 const ASSETS_LINK = join(PROJECT_ROOT, "previews", "_assets"); // committed symlink → shared library realpath (served as /_assets)
 
@@ -561,6 +567,14 @@ function main() {
   const registry = loadRegistry();
   const regMatched = joinRegistry(records, registry);
   const { unknown } = derive(records);
+  // The JSONL ledger is the canonical upload mapping. Its structural contract is strict and
+  // validated before any thumbnail or output side effect. Joining is exact local_path equality;
+  // checksum drift, orphaned rows, and conflicts with the legacy fuzzy-name CSV remain visible
+  // diagnostics in the emitted contract instead of silently overriding either source.
+  const robloxRows = loadRobloxUploadRegistry(ROBLOX_UPLOAD_REGISTRY);
+  const robloxRegistry = joinRobloxUploadRegistry(records, robloxRows, {
+    assetsRoot: ASSETS_ROOT,
+  });
 
   // Bake the served-media side effects BEFORE building the payload so `thumb`/`src`
   // flow into the JSON — but SKIP them under --print-json so that stays a pure,
@@ -603,6 +617,7 @@ function main() {
     // counts keys come verbatim from the CSV status column — spread FIRST so a status
     // value literally named "total" can never clobber the row count.
     registry: { ...registry.counts, total: registry.rows.length },
+    robloxRegistry,
     counts: {
       total: records.length,
       byMedium: tally(records, (r) => r.medium ?? "(source)"),
@@ -621,7 +636,13 @@ function main() {
   }
 
   mkdirSync(DASHBOARD_DIR, { recursive: true });
-  writeFileSync(OUT, JSON.stringify(payload, null, 2));
+  const pendingOut = `${OUT}.tmp-${process.pid}`;
+  try {
+    writeFileSync(pendingOut, JSON.stringify(payload, null, 2));
+    renameSync(pendingOut, OUT);
+  } finally {
+    rmSync(pendingOut, { force: true });
+  }
 
   // DONE: image thumbnails baked via macOS sips → previews/thumbs/ (rec.thumb), each real
   //   record given a served /_assets/<p> `src`, and the previews/_assets symlink self-healed.
@@ -637,6 +658,11 @@ function main() {
   console.log(`  unknown mediumType: ${unknown}`);
   console.log(`  tgl strays (runtime payloads): ${strays}`);
   console.log(`  registry: ${registry.rows.length} rows, ${regMatched} matched to local files`);
+  console.log(
+    `  roblox uploads: ${robloxRegistry.joined}/${robloxRegistry.total} exact-path joins; ` +
+      `${robloxRegistry.checksumMismatch} checksum drift; ${robloxRegistry.orphaned} orphaned; ` +
+      `${robloxRegistry.legacyIdConflicts} legacy conflicts`,
+  );
   if (WANT_THUMBS) console.log(`  thumbs: ${thumbStats.made} baked, ${thumbStats.failed} failed, ${thumbStats.pruned} orphans pruned`);
   else console.log(`  thumbs: bake skipped (--no-thumbs); ${thumbStats.reused} already-baked thumbs reused`);
   if (scanErrors) console.warn(`  WARN: ${scanErrors} unreadable entries skipped during the scan — the registry may be missing records`);

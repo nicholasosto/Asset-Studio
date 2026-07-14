@@ -28,6 +28,44 @@ export interface RegRef {
   status?: string;
   kind?: string;
 }
+export interface RobloxAssetRef {
+  schemaVersion: 1;
+  recordedAt: string;
+  localUri: string;
+  sourceSha256: string;
+  checksum: 'match' | 'mismatch';
+  uploadCount: number;
+  active: {
+    assetId: string;
+    assetUri: string;
+    assetType: string;
+    creator: { id: string; name: string; type: string };
+    inventoryPath: string;
+    creatorStoreUrl: string | null;
+    status: 'active';
+    verifiedAt: string;
+    verificationMethod: string;
+  };
+  /** Present when the legacy fuzzy-name CSV points at a different numeric ID. */
+  legacyIdConflict?: string;
+}
+export type RobloxUploadState = 'uploaded' | 'needsReview' | 'unregistered';
+export interface RobloxRegistrySummary {
+  schemaVersion: 1;
+  /** Canonical JSONL rows, including rows that no longer join to a scanned file. */
+  total: number;
+  joined: number;
+  orphaned: number;
+  checksumMismatch: number;
+  legacyIdConflicts: number;
+  /** Mutually exclusive states over real assets only (`medium !== null`). */
+  byState: Record<RobloxUploadState, number>;
+  issues: Array<{
+    kind: 'orphan' | 'checksum-mismatch' | 'legacy-id-conflict';
+    localPath: string;
+    message: string;
+  }>;
+}
 export type Medium = 'image' | 'audio' | '3d';
 export type MediumType =
   | 'image'
@@ -73,6 +111,9 @@ export interface AssetRecord {
   dims?: string;
   res?: string;
   specIssue?: string | null;
+  /** Exact local_path join from the canonical Roblox upload JSONL ledger. */
+  roblox?: RobloxAssetRef;
+  /** Legacy master CSV match by normalized display name; never authoritative. */
   reg?: RegRef;
   /** Bare baked-thumbnail filename (`<hash>.png`); resolve with thumbUrl(). Image records only. */
   thumb?: string;
@@ -95,6 +136,7 @@ interface RegistryFile {
   assetsRootAbs?: string;
   taxonomy: { version: number; axis: string; statusVocab: RobloxStatus[] };
   registry: { total: number; [k: string]: number };
+  robloxRegistry: RobloxRegistrySummary;
   counts: RegistryCounts;
   records: AssetRecord[];
 }
@@ -105,10 +147,21 @@ interface RegistryFile {
 const file = assetRegistry as unknown as Partial<RegistryFile>;
 
 const EMPTY_COUNTS: RegistryCounts = { total: 0, byMedium: {}, byMediumType: {}, byStatus: {}, byKind: {}, unknown: 0 };
+const EMPTY_ROBLOX_REGISTRY: RobloxRegistrySummary = {
+  schemaVersion: 1,
+  total: 0,
+  joined: 0,
+  orphaned: 0,
+  checksumMismatch: 0,
+  legacyIdConflicts: 0,
+  byState: { uploaded: 0, needsReview: 0, unregistered: 0 },
+  issues: [],
+};
 
 // ── Typed exports ──
 export const records: AssetRecord[] = Array.isArray(file.records) ? file.records : [];
 export const counts: RegistryCounts = file.counts ?? EMPTY_COUNTS;
+export const robloxRegistry: RobloxRegistrySummary = file.robloxRegistry ?? EMPTY_ROBLOX_REGISTRY;
 export const taxonomy = file.taxonomy ?? { version: 0, axis: 'medium/mediumType', statusVocab: [] as RobloxStatus[] };
 /** The Roblox grade vocab, in order (BLK → FNL) — the status Select's real options. */
 export const statusVocab: RobloxStatus[] = taxonomy.statusVocab ?? [];
@@ -132,6 +185,12 @@ export const thumbUrl = (thumb?: string): string | undefined =>
 export const assetsRootAbs: string = file.assetsRootAbs ?? file.assetsRootHint ?? 'external-locations/assets';
 /** Absolute filesystem path of a record — used by the reveal-in-Finder fallback (copy path). */
 export const absPathOf = (r: AssetRecord): string => `${assetsRootAbs}/${r.p}`;
+
+/** Canonical Roblox-upload state for the Explorer's facet and badges. */
+export const robloxUploadState = (r: AssetRecord): RobloxUploadState => {
+  if (!r.roblox) return 'unregistered';
+  return r.roblox.checksum === 'match' ? 'uploaded' : 'needsReview';
+};
 
 // The four summary tallies the header reads O(1) from `counts` (never iterating records).
 // `real` excludes the medium===null source bucket — the default, non-empty view.

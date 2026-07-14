@@ -1,6 +1,6 @@
 {
-  "built": "2026-07-12 17:00",
-  "builtMs": 1783875648677,
+  "built": "2026-07-14 16:32",
+  "builtMs": 1784046771401,
   "assetsRootHint": "external-locations/assets",
   "assetsRootAbs": "/Users/nicholasosto/Master-Managed/Assets",
   "taxonomy": {
@@ -18,6 +18,20 @@
     "placeholder": 7,
     "ok": 8,
     "total": 193
+  },
+  "robloxRegistry": {
+    "schemaVersion": 1,
+    "total": 8,
+    "joined": 8,
+    "orphaned": 0,
+    "checksumMismatch": 0,
+    "legacyIdConflicts": 0,
+    "byState": {
+      "uploaded": 8,
+      "needsReview": 0,
+      "unregistered": 518
+    },
+    "issues": []
   },
   "counts": {
     "total": 613,
@@ -10646,6 +10660,29 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "roblox": {
+        "schemaVersion": 1,
+        "recordedAt": "2026-07-14",
+        "localUri": "rbxasset://trembus/textures/surfaces/floor-sandy-brick_BLK.png",
+        "sourceSha256": "e32aa555c9f2b2e0af7992073a2676dd5daac0eea0f5058786a68289377a4238",
+        "checksum": "match",
+        "uploadCount": 1,
+        "active": {
+          "assetId": "135933238006775",
+          "assetUri": "rbxassetid://135933238006775",
+          "assetType": "Image",
+          "creator": {
+            "id": "3394700055",
+            "name": "TrembusTech",
+            "type": "User"
+          },
+          "inventoryPath": "textures/part-texture",
+          "creatorStoreUrl": null,
+          "status": "active",
+          "verifiedAt": "2026-07-14",
+          "verificationMethod": "studio-mcp.search_asset + Asset Manager visual confirmation; match evidence: name and ID search; 64x64 thumbnail comparison; textures/part-texture selected in Edit"
+        }
+      },
       "thumb": "0768ea88f822.png",
       "src": "/_assets/textures/surfaces/floor-sandy-brick_BLK.png",
       "mtimeMs": 1766843772678
@@ -10669,6 +10706,29 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "roblox": {
+        "schemaVersion": 1,
+        "recordedAt": "2026-07-14",
+        "localUri": "rbxasset://trembus/textures/surfaces/wall-dark-castle_BLK.png",
+        "sourceSha256": "2796e64bca859b2dd25e704d9c71e06d4e0781159397a78ef90f62a88eb2e33e",
+        "checksum": "match",
+        "uploadCount": 1,
+        "active": {
+          "assetId": "138215577350954",
+          "assetUri": "rbxassetid://138215577350954",
+          "assetType": "Image",
+          "creator": {
+            "id": "3394700055",
+            "name": "TrembusTech",
+            "type": "User"
+          },
+          "inventoryPath": "textures/part-texture",
+          "creatorStoreUrl": null,
+          "status": "active",
+          "verifiedAt": "2026-07-14",
+          "verificationMethod": "studio-mcp.search_asset + Asset Manager visual confirmation; match evidence: name and ID search; 64x64 thumbnail comparison; textures/part-texture selected in Edit"
+        }
+      },
       "thumb": "257133011d2f.png",
       "src": "/_assets/textures/surfaces/wall-dark-castle_BLK.png",
       "mtimeMs": 1766842306332
@@ -12397,6 +12457,29 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "roblox": {
+        "schemaVersion": 1,
+        "recordedAt": "2026-07-14",
+        "localUri": "rbxasset://trembus/textures/surfaces/floor-bloody-tiles_BLK.png",
+        "sourceSha256": "8b3bb729a89f95f45c75ef3aec9fa858e23992bc60c92e96fe8605e94b5449ef",
+        "checksum": "match",
+        "uploadCount": 2,
+        "active": {
+          "assetId": "120144660037537",
+          "assetUri": "rbxassetid://120144660037537",
+          "assetType": "Image",
+          "creator": {
+            "id": "3394700055",
+            "name": "TrembusTech",
+            "type": "User"
+          },
+          "inventoryPath": "textures/part-texture",
+          "creatorStoreUrl": null,
+          "status": "active",
+          "verifiedAt": "2026-07-14",
+          "verificationMethod": "studio-mcp.search_asset + Asset Manager visual confirmation; match evidence: name and ID search; 64x64 thumbnail comparison; textures/part-texture selected in Edit"
+        }
+      },
       "thumb": "cd2c936cb2ac.png",
       "src": "/_assets/textures/surfaces/floor-bloody-tiles_BLK.png",
       "mtimeMs": 1756063691000
@@ -12420,6 +12503,29 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "roblox": {
+        "schemaVersion": 1,
+        "recordedAt": "2026-07-14",
+        "localUri": "rbxasset://trembus/textures/surfaces/floor-cyber-octagon_BLK.png",
+        "sourceSha256": "4caf4c6f219890edaaf46b2bf5964fe4a25f92dca63fb36d8086c73e13c504b5",
+        "checksum": "match",
+        "uploadCount": 1,
+        "active": {
+          "assetId": "140359866794725",
+          "assetUri": "rbxassetid://140359866794725",
+          "assetType": "Image",
+          "creator": {
+            "id": "3394700055",
+            "name": "TrembusTech",
+            "type": "User"
+          },
+          "inventoryPath": "textures/part-texture",
+          "creatorStoreUrl": null,
+          "status": "active",
+          "verifiedAt": "2026-07-14",
+          "verificationMethod": "studio-mcp.search_asset + Asset Manager visual confirmation; match evidence: name and ID search; 64x64 thumbnail comparison; textures/part-texture selected in Edit"
+        }
+      },
       "thumb": "07b821b719f6.png",
       "src": "/_assets/textures/surfaces/floor-cyber-octagon_BLK.png",
       "mtimeMs": 1756063691000
@@ -12443,6 +12549,29 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "roblox": {
+        "schemaVersion": 1,
+        "recordedAt": "2026-07-14",
+        "localUri": "rbxasset://trembus/textures/surfaces/floor-soul-lava_BLK.png",
+        "sourceSha256": "78364570caf415fb109d9d17134d94f5a2ba1d4bd72d7e28d7ca07a2dee2a325",
+        "checksum": "match",
+        "uploadCount": 1,
+        "active": {
+          "assetId": "90994658994211",
+          "assetUri": "rbxassetid://90994658994211",
+          "assetType": "Image",
+          "creator": {
+            "id": "3394700055",
+            "name": "TrembusTech",
+            "type": "User"
+          },
+          "inventoryPath": "textures/part-texture",
+          "creatorStoreUrl": null,
+          "status": "active",
+          "verifiedAt": "2026-07-14",
+          "verificationMethod": "studio-mcp.search_asset + Asset Manager visual confirmation; match evidence: name and ID search; 64x64 thumbnail comparison; textures/part-texture selected in Edit"
+        }
+      },
       "thumb": "00c3953c5ae7.png",
       "src": "/_assets/textures/surfaces/floor-soul-lava_BLK.png",
       "mtimeMs": 1756063691000
@@ -12535,6 +12664,29 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "roblox": {
+        "schemaVersion": 1,
+        "recordedAt": "2026-07-14",
+        "localUri": "rbxasset://trembus/textures/surfaces/wall-bottom-dark-castle_BLK.png",
+        "sourceSha256": "1cfa88b5fb70af1096027501186a106eb090d86c354c08c5b52ac244c1d336d7",
+        "checksum": "match",
+        "uploadCount": 1,
+        "active": {
+          "assetId": "90388407259209",
+          "assetUri": "rbxassetid://90388407259209",
+          "assetType": "Image",
+          "creator": {
+            "id": "3394700055",
+            "name": "TrembusTech",
+            "type": "User"
+          },
+          "inventoryPath": "textures/part-texture",
+          "creatorStoreUrl": null,
+          "status": "active",
+          "verifiedAt": "2026-07-14",
+          "verificationMethod": "studio-mcp.search_asset + Asset Manager visual confirmation; match evidence: name and ID search; 64x64 thumbnail comparison; textures/part-texture selected in Edit"
+        }
+      },
       "thumb": "18c36a3306bf.png",
       "src": "/_assets/textures/surfaces/wall-bottom-dark-castle_BLK.png",
       "mtimeMs": 1756063691000
@@ -12558,6 +12710,29 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "roblox": {
+        "schemaVersion": 1,
+        "recordedAt": "2026-07-14",
+        "localUri": "rbxasset://trembus/textures/surfaces/wall-cyber-01_BLK.png",
+        "sourceSha256": "0d1e466738339668a2f6eb55063f6657a65b471b7a301606954c80e0a8d33401",
+        "checksum": "match",
+        "uploadCount": 1,
+        "active": {
+          "assetId": "106549441328584",
+          "assetUri": "rbxassetid://106549441328584",
+          "assetType": "Image",
+          "creator": {
+            "id": "3394700055",
+            "name": "TrembusTech",
+            "type": "User"
+          },
+          "inventoryPath": "textures/part-texture",
+          "creatorStoreUrl": null,
+          "status": "active",
+          "verifiedAt": "2026-07-14",
+          "verificationMethod": "studio-mcp.search_asset + Asset Manager visual confirmation; match evidence: name and ID search; 64x64 thumbnail comparison; textures/part-texture selected in Edit"
+        }
+      },
       "thumb": "5686b43bb742.png",
       "src": "/_assets/textures/surfaces/wall-cyber-01_BLK.png",
       "mtimeMs": 1756063691000
@@ -12581,6 +12756,29 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "roblox": {
+        "schemaVersion": 1,
+        "recordedAt": "2026-07-14",
+        "localUri": "rbxasset://trembus/textures/surfaces/wall-cyber-02_BLK.png",
+        "sourceSha256": "648e8cb273a7a5ea520126a8ff7e2ed4a16e61405b0716291da5918378d612bd",
+        "checksum": "match",
+        "uploadCount": 1,
+        "active": {
+          "assetId": "127683965415044",
+          "assetUri": "rbxassetid://127683965415044",
+          "assetType": "Image",
+          "creator": {
+            "id": "3394700055",
+            "name": "TrembusTech",
+            "type": "User"
+          },
+          "inventoryPath": "textures/part-texture",
+          "creatorStoreUrl": null,
+          "status": "active",
+          "verifiedAt": "2026-07-14",
+          "verificationMethod": "studio-mcp.search_asset + Asset Manager visual confirmation; match evidence: name and ID search; 64x64 thumbnail comparison; textures/part-texture selected in Edit"
+        }
+      },
       "thumb": "34814f9f7b33.png",
       "src": "/_assets/textures/surfaces/wall-cyber-02_BLK.png",
       "mtimeMs": 1756063691000
