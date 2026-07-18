@@ -1,7 +1,7 @@
 ---
 title: "Character factory + lore medium"
 status: active
-updated: 2026-07-11
+updated: 2026-07-18
 links:
   - { rel: references, target: workflows/character-creation }
   - { rel: references, target: pipeline/roguex-33-character }
@@ -44,7 +44,7 @@ surfaces.
   { "id": "p0", "label": "Distill the visual ladder", "status": "done", "detail": "The six-stage ladder (lore-lock → concept → portrait → model sheet → detail passes → poses) extracted from the two characters who ran it ad hoc (Penitent Knight, Raspmutant) into the character-creation composite workflow — each visual stage one image-generation run with a stage template as composition ref, plus an optional audio-identity lane and a 3D handoff. Landed 2026-07-04; the workflow stays status:draft pending the pilot." },
   { "id": "p1", "label": "Lore as the fourth medium", "status": "done", "detail": "mediums/lore.md declared — the upstream, by-reference medium (engrams · briefs · shippable text); the lore-brain graph is its library, decision-0001's treaty in its second application. Feeds the character ladder at the lore-lock gate. Status experimental." },
   { "id": "p2", "label": "Stage templates", "status": "done", "detail": "templates/character/ SVGs (concept · portrait · turnaround · detail-callouts · pose-sheet) seeded from the Penitent Knight sheets + Raspmutant turnaround; each template is its stage's definition-of-done. png/ twins for attaching as composition refs." },
-  { "id": "p3", "label": "Pilot — roguex-33", "status": "active", "detail": "Exercise the whole ladder on the brain's most lopsided asset gap via the roguex-33-character pipeline. Audio identity retro-credited done; lore-lock landed 2026-07-06 (a Visual Identity section canonized on the engram); concept stage active. Proves the tracking model (retro-credit, optional lanes) + the templates before the workflow graduates." },
+  { "id": "p3", "label": "Pilot — roguex-33", "status": "active", "detail": "Exercise the whole ladder on the brain's most lopsided asset gap via the roguex-33-character pipeline. Audio identity retro-credited done; lore-lock landed 2026-07-06 (a Visual Identity section canonized on the engram); concept done 2026-07-18 — two sheets filed from the salvaged 07-04 batches (counter-lean stall scene + clean silhouette), the wry-smirk face canon carried into portrait as its hard constraint; portrait stage active, batch awaiting the Codex trigger. Proves the tracking model (retro-credit, optional lanes) + the templates before the workflow graduates." },
   { "id": "p4", "label": "Set-review + graduate the workflow", "status": "planned", "detail": "Pass the pilot's set-review gate (roster consistency — reads as the same being across every deliverable), lock the conventions the pilot surfaces, and promote character-creation from draft → active. Seed the roguex-33 3D handoff (turnaround + detail sheets as the model spec)." },
   { "id": "p5", "label": "Ratchet lore experimental → supported", "status": "planned", "detail": "Once lore has been exercised across enough personas/realities to trust the quality bar (continuity pass · tone-match · honest canon_status · lore-lock discipline), promote mediums/lore.md from experimental → supported." }
 ]

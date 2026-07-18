@@ -131,7 +131,7 @@
       "kind": "pipeline",
       "title": "Roguex-33 character",
       "status": "build",
-      "updated": "2026-07-09",
+      "updated": "2026-07-18",
       "file": "_project/pipeline/roguex-33-character.md",
       "excerpt": "Pilot instance of the [[character-creation]] workflow. Roguex-33 is the lore-brain's most fully-realized persona — canon engram, full voice/dialog section, Grid District stall lore, and two finished theme mixes (soul-st…"
     },
@@ -158,7 +158,7 @@
       "kind": "roadmap",
       "title": "Character factory + lore medium",
       "status": "active",
-      "updated": "2026-07-11",
+      "updated": "2026-07-18",
       "file": "_project/roadmap/character-factory-lore-medium.md",
       "excerpt": "Two characters — Penitent Knight and Raspmutant — already ran a full character asset set by hand, out of the lore-brain and into its Media/visual/, with no shared process. The studio needs that to be repeatable: a lore-…"
     },
@@ -1974,13 +1974,45 @@
       ]
     },
     "roguex-33-character": {
-      "total": 2,
+      "total": 3,
       "rollup": {
         "byStatus": {
-          "partial": 2
+          "partial": 3
         }
       },
       "runs": [
+        {
+          "id": "run-3",
+          "label": "Concept review — two winners filed; face refinement deferred to portrait",
+          "status": "partial",
+          "startedAt": "2026-07-18",
+          "trigger": "salvage review of the stalled 2026-07-04 concept batches (r1 + r2, 12 candidates)",
+          "note": "The 07-04 batches were the exploration that fed the 07-06 lore-lock, then stalled unreviewed (their batch contract was overwritten 07-12). Reviewed 07-18 against the engram's Visual Identity: v2 lane (poncho/cape, skull-faces) cut per the mischief-never-menace call; winners r2_v3c1 (counter-lean stall scene — the amber-vs-cold lighting thesis) filed as concept-v1 and r1_v1c2 (clean studio silhouette, template-pure) as concept-v2. No candidate fully lands the wry-smirk face canon — carried into the portrait stage as its hard constraint. Portrait batch (roguex-33-portrait, 3 face variants × 2 candidates, portrait.png template + filed concepts as identity anchors) written; awaiting the operator's Codex trigger.",
+          "stepOutcomes": [
+            {
+              "step": "concept",
+              "status": "done"
+            },
+            {
+              "step": "portrait",
+              "status": "active"
+            }
+          ],
+          "outputs": [
+            {
+              "label": "Roguex-33_concept-v1.png (lore-brain Media/visual)",
+              "kind": "doc"
+            },
+            {
+              "label": "Roguex-33_concept-v2.png (lore-brain Media/visual)",
+              "kind": "doc"
+            },
+            {
+              "label": "generation/BATCH.md — roguex-33-portrait",
+              "kind": "doc"
+            }
+          ]
+        },
         {
           "id": "run-2",
           "label": "Lore lock landed — Visual Identity on the engram",
@@ -2276,7 +2308,7 @@
         "id": "p3",
         "label": "Pilot — roguex-33",
         "status": "active",
-        "detail": "Exercise the whole ladder on the brain's most lopsided asset gap via the roguex-33-character pipeline. Audio identity retro-credited done; lore-lock landed 2026-07-06 (a Visual Identity section canonized on the engram); concept stage active. Proves the tracking model (retro-credit, optional lanes) + the templates before the workflow graduates."
+        "detail": "Exercise the whole ladder on the brain's most lopsided asset gap via the roguex-33-character pipeline. Audio identity retro-credited done; lore-lock landed 2026-07-06 (a Visual Identity section canonized on the engram); concept done 2026-07-18 — two sheets filed from the salvaged 07-04 batches (counter-lean stall scene + clean silhouette), the wry-smirk face canon carried into portrait as its hard constraint; portrait stage active, batch awaiting the Codex trigger. Proves the tracking model (retro-credit, optional lanes) + the templates before the workflow graduates."
       },
       {
         "id": "p4",

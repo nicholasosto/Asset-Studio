@@ -1,7 +1,7 @@
 ---
 title: "Roguex-33 character"
 status: build
-updated: 2026-07-09
+updated: 2026-07-18
 links:
   - { rel: references, target: workflows/character-creation }
 ---
@@ -77,6 +77,23 @@ constant vocoder patter, hidden lethality, one soft tell.
     ],
     "outputs": [
       { "label": "Roguex-33 engram § Visual Identity (lore-brain)", "kind": "doc" }
+    ]
+  },
+  {
+    "id": "run-3",
+    "label": "Concept review — two winners filed; face refinement deferred to portrait",
+    "status": "partial",
+    "startedAt": "2026-07-18",
+    "trigger": "salvage review of the stalled 2026-07-04 concept batches (r1 + r2, 12 candidates)",
+    "note": "The 07-04 batches were the exploration that fed the 07-06 lore-lock, then stalled unreviewed (their batch contract was overwritten 07-12). Reviewed 07-18 against the engram's Visual Identity: v2 lane (poncho/cape, skull-faces) cut per the mischief-never-menace call; winners r2_v3c1 (counter-lean stall scene — the amber-vs-cold lighting thesis) filed as concept-v1 and r1_v1c2 (clean studio silhouette, template-pure) as concept-v2. No candidate fully lands the wry-smirk face canon — carried into the portrait stage as its hard constraint. Portrait batch (roguex-33-portrait, 3 face variants × 2 candidates, portrait.png template + filed concepts as identity anchors) written; awaiting the operator's Codex trigger.",
+    "stepOutcomes": [
+      { "step": "concept", "status": "done" },
+      { "step": "portrait", "status": "active" }
+    ],
+    "outputs": [
+      { "label": "Roguex-33_concept-v1.png (lore-brain Media/visual)", "kind": "doc" },
+      { "label": "Roguex-33_concept-v2.png (lore-brain Media/visual)", "kind": "doc" },
+      { "label": "generation/BATCH.md — roguex-33-portrait", "kind": "doc" }
     ]
   }
 ]

@@ -169,6 +169,18 @@ MCPs render TTS but **cannot create voices** — Voice Design runs in the operat
 `lore-creation` got its 2nd/3rd clean exercises — promoting it `draft → active` is an owner call. Open:
 Custodian canonical cut (v1 vs v2); promoting the two speculative engrams; the canon Epoch-of-Eternity
 "encroaching Void Domain" seam (flagged again, routed around).
+**2026-07-18 Roguex-33 concept stage closed (salvage review):** the stalled 07-04 concept batches
+(r1+r2, 12 candidates — the exploration that *fed* the 07-06 lore-lock, then sat unreviewed after
+`BATCH.md` was paved over on 07-12) were reviewed against the engram § Visual Identity: the v2
+poncho/cape lane cut (skull-face violations of the mischief-never-menace call); winners filed —
+`Roguex-33_concept-v1.png` (r2_v3c1, counter-lean stall scene — the amber-vs-cold lighting thesis) +
+`concept-v2.png` (r1_v1c2, clean template-pure silhouette) → lore-brain `Media/visual/`, engram
+`sensory_assets` + `modalities: visual`. **No candidate landed the wry-smirk face canon** — carried
+into portrait as its hard constraint. Run-3 logged (concept done → portrait active), roadmap p3
+advanced, and the **`roguex-33-portrait` batch written** (3 face variants `smirk`/`patter`/`loupe`
+× 2, portrait template + filed concepts as identity anchors in `refs/`) — **awaiting the operator's
+Codex trigger** ("Run generation batch roguex-33-portrait"). The 10 losing candidates stay in
+untracked staging until a sweep.
 **Open (owner calls):** fetch-vs-inline for the contracts (would dissolve the stale-bundle class — wants
 an ADR). Corpus: 37 entities (9 decision · 2 roadmap · 1 report · 9 session · 7 workflow · 4 medium ·
 5 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.4.0` + `game-viz 0.2.0`.
