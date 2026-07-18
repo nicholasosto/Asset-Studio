@@ -276,17 +276,29 @@ export function humanBytes(bytes: number): string {
 // The Asset Explorer's side-nav: the library's real folder hierarchy as @trembus/ui's FolderNode
 // forest. Folders only — the grid is the file surface. A node's `id` IS its full path prefix (e.g.
 // "runtime/roblox/soul-steel/layouts"), which is exactly what the grid filters by (see underFolder),
-// so a tree selection needs no lookup. The label carries a subtree asset count. Built from ALL
-// records (a stable spine, independent of the Explorer's default-off "source" gate).
-interface TreeAcc {
+// so a tree selection needs no lookup. The label carries a subtree asset count.
+//
+// Two-stage build: an immutable SPINE walked once from ALL records (the library's real shape,
+// independent of any filter), then spineToNodes() maps it to FolderNode[] — either with the full
+// spine totals (counts=null) or re-labeled/pruned from a filtered tally (the Explorer's
+// filter↔tree interplay). Node ids are identical across both derivations, so FolderTree's
+// uncontrolled expansion state survives every filter change.
+interface FolderSpine {
   path: string; // full prefix from the roots, e.g. "audio/voice"
-  count: number; // records at this folder or any descendant
-  children: Map<string, TreeAcc>;
+  seg: string; // this folder's own segment name
+  total: number; // records at this folder or any descendant (unfiltered)
+  children: FolderSpine[];
 }
 
-export function buildAssetTree(recs: AssetRecord[]): FolderNode[] {
-  const root: TreeAcc = { path: '', count: 0, children: new Map() };
-  for (const r of recs) {
+const folderSpine: FolderSpine[] = (() => {
+  interface Acc {
+    path: string;
+    seg: string;
+    total: number;
+    children: Map<string, Acc>;
+  }
+  const root: Acc = { path: '', seg: '', total: 0, children: new Map() };
+  for (const r of records) {
     // Walk the DIRECTORY segments (not the filename): a folders-only spine. Root-level files
     // (dir === '') contribute no folder node — they only show when nothing is selected.
     const segs = r.dir ? r.dir.split('/') : [];
@@ -296,26 +308,78 @@ export function buildAssetTree(recs: AssetRecord[]): FolderNode[] {
       prefix = prefix ? `${prefix}/${seg}` : seg;
       let child = node.children.get(seg);
       if (!child) {
-        child = { path: prefix, count: 0, children: new Map() };
+        child = { path: prefix, seg, total: 0, children: new Map() };
         node.children.set(seg, child);
       }
-      child.count += 1; // every ancestor folder counts this record → subtree totals
+      child.total += 1; // every ancestor folder counts this record → subtree totals
       node = child;
     }
   }
-  const toNodes = (acc: TreeAcc): FolderNode[] =>
-    [...acc.children.entries()]
-      .sort((a, b) => a[0].localeCompare(b[0]))
-      .map(([seg, child]) => ({
-        id: child.path,
-        label: `${seg} (${child.count})`,
-        children: child.children.size ? toNodes(child) : undefined,
-      }));
-  return toNodes(root);
+  const freeze = (acc: Acc): FolderSpine[] =>
+    [...acc.children.values()]
+      .sort((a, b) => a.seg.localeCompare(b.seg))
+      .map((c) => ({ path: c.path, seg: c.seg, total: c.total, children: freeze(c) }));
+  return freeze(root);
+})();
+
+// Depth-0 zone identities — glyph NAMES from the registry bundled inside @trembus/ui (an unknown
+// name renders nothing, worse than the folder default — so only names that exist are mapped;
+// audio and _resort deliberately keep the stock folder glyph).
+const ZONE_ICON: Record<string, string> = {
+  ui: 'component',
+  textures: 'layers',
+  models: 'box',
+  'concept-art': 'image',
+  source: 'wrench',
+  runtime: 'server',
+  _inbox: 'queue',
+  templates: 'file',
+};
+
+/** Per-folder subtree tallies over an arbitrary record subset — feeds spineToNodes(counts). */
+export function tallyByDir(recs: AssetRecord[]): Map<string, number> {
+  const tally = new Map<string, number>();
+  for (const r of recs) {
+    if (!r.dir) continue;
+    let prefix = '';
+    for (const seg of r.dir.split('/')) {
+      prefix = prefix ? `${prefix}/${seg}` : seg;
+      tally.set(prefix, (tally.get(prefix) ?? 0) + 1);
+    }
+  }
+  return tally;
 }
 
-/** The library folder forest (built once) — the Explorer side-nav's data source. */
-export const assetTree: FolderNode[] = buildAssetTree(records);
+/**
+ * The spine as FolderNode[]. With `counts` (a filtered tallyByDir), labels carry the FILTERED
+ * subtree counts and zero-match folders are hidden — except `keepPath` and its ancestors, which
+ * stay visible at (0) so the active tree selection remains deselectable.
+ */
+export function spineToNodes(counts: Map<string, number> | null, keepPath: string): FolderNode[] {
+  const onSelectedTrail = (path: string): boolean =>
+    keepPath === path || keepPath.startsWith(`${path}/`);
+  const walk = (nodes: FolderSpine[], depth: number): FolderNode[] =>
+    nodes.flatMap((n) => {
+      const count = counts ? counts.get(n.path) ?? 0 : n.total;
+      if (counts && count === 0 && !onSelectedTrail(n.path)) return [];
+      const children = walk(n.children, depth + 1);
+      // Childless nodes (real leaves, or interiors pruned empty by the filter) name the folder
+      // glyph explicitly — FolderTree's inference would otherwise give them a FILE glyph.
+      const icon = (depth === 0 ? ZONE_ICON[n.seg] : undefined) ?? (children.length === 0 ? 'folder' : undefined);
+      return [
+        {
+          id: n.path,
+          label: `${n.seg} (${count})`,
+          icon,
+          children: children.length ? children : undefined,
+        },
+      ];
+    });
+  return walk(folderSpine, 0);
+}
+
+/** The full library folder forest (built once) — the side-nav's unfiltered data source. */
+export const assetTree: FolderNode[] = spineToNodes(null, '');
 
 /** True when record `r` lives under `folder` (or `folder` is empty = the whole library). */
 export const underFolder = (r: AssetRecord, folder: string): boolean =>

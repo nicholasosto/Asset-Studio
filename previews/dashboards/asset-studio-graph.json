@@ -10,8 +10,8 @@
     "workflow": "workflows",
     "medium": "mediums"
   },
-  "entities": 38,
-  "migrated": 38,
+  "entities": 39,
+  "migrated": 39,
   "counts": {
     "error": 0,
     "warning": 0,
@@ -107,6 +107,15 @@
       "updated": "2026-07-18",
       "file": "_project/decisions/0010-templates-split-by-authorship-exemplars-get-a-library-templa.md",
       "excerpt": "The 2026-07-18 template/workflow coverage review found template-grade images in four locations, three of them accidental: the healthy templates/character/ set (Asset-Studio, cited by character-creation), six unregistere…"
+    },
+    {
+      "id": "0011-explorer-asset-actions-dev-only-move-endpoint-warn-don-t-wri",
+      "kind": "decision",
+      "title": "Explorer asset actions: dev-only move endpoint, warn-don't-write on the Roblox ledger",
+      "status": "accepted",
+      "updated": "2026-07-18",
+      "file": "_project/decisions/0011-explorer-asset-actions-dev-only-move-endpoint-warn-don-t-wri.md",
+      "excerpt": "The Asset Explorer's cosmetic upgrade (TCL ui 0.4.0 → 0.8.x) added a per-asset command bar — an inspector Toolbar + a tile ⋯ kebab Menu — whose action set includes file moves: \"Move to _resort\" (triage pen) and \"Move to…"
     },
     {
       "id": "2026-07-01-session-review-explorer-migration-and-tcl-round-trip",
@@ -382,9 +391,9 @@
   ],
   "byKind": {
     "decision": {
-      "total": 10,
+      "total": 11,
       "byStatus": {
-        "accepted": 10
+        "accepted": 11
       },
       "ids": [
         "0001-reference-the-shared-asset-library-via-external-locations",
@@ -396,7 +405,8 @@
         "0007-keep-explorer-previews-dev-local-stop-committing-the-thumbna",
         "0008-restructure-the-shared-assets-library-into-staging-library-r",
         "0009-workflows-compose-by-call-and-handoff",
-        "0010-templates-split-by-authorship-exemplars-get-a-library-templa"
+        "0010-templates-split-by-authorship-exemplars-get-a-library-templa",
+        "0011-explorer-asset-actions-dev-only-move-endpoint-warn-don-t-wri"
       ],
       "tone": "info",
       "statusOrder": [
@@ -599,6 +609,18 @@
       "fromKind": "decision",
       "rel": "references",
       "target": "mediums/image"
+    },
+    {
+      "from": "0011-explorer-asset-actions-dev-only-move-endpoint-warn-don-t-wri",
+      "fromKind": "decision",
+      "rel": "references",
+      "target": "decisions/0006-reveal-in-finder-and-copy-asset-id-from-the-explorer"
+    },
+    {
+      "from": "0011-explorer-asset-actions-dev-only-move-endpoint-warn-don-t-wri",
+      "fromKind": "decision",
+      "rel": "references",
+      "target": "decisions/0008-restructure-the-shared-assets-library-into-staging-library-r"
     },
     {
       "from": "2026-07-01-session-review-explorer-migration-and-tcl-round-trip",
@@ -872,7 +894,7 @@
     }
   ],
   "edgesByRel": {
-    "references": 56,
+    "references": 58,
     "decided-in": 1
   },
   "workflows": {

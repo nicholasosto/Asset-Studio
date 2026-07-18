@@ -1,6 +1,6 @@
 {
-  "built": "2026-07-18 18:29",
-  "builtMs": 1784399372818,
+  "built": "2026-07-18 19:36",
+  "builtMs": 1784403368988,
   "assetsRootHint": "external-locations/assets",
   "assetsRootAbs": "/Users/nicholasosto/Master-Managed/Assets",
   "taxonomy": {
@@ -36,15 +36,15 @@
   "counts": {
     "total": 557,
     "byMedium": {
+      "(source)": 87,
       "image": 317,
       "3d": 94,
-      "(source)": 87,
       "audio": 59
     },
     "byMediumType": {
+      "(source)": 87,
       "ui": 146,
       "3d-model": 88,
-      "(source)": 87,
       "image": 108,
       "texture": 63,
       "3d-rig": 6,
@@ -53,16 +53,16 @@
       "audio-sfx": 33
     },
     "byStatus": {
-      "BLK": 311,
       "(none)": 242,
+      "BLK": 311,
       "ALPHA": 1,
       "FNL": 3
     },
     "byKind": {
+      "doc": 61,
       "image": 317,
       "model": 94,
       "other": 3,
-      "doc": 61,
       "data": 17,
       "source": 5,
       "script": 1,
@@ -71,6 +71,27 @@
     "unknown": 0
   },
   "records": [
+    {
+      "p": "README.md",
+      "area": "(root)",
+      "dir": "",
+      "base": "README.md",
+      "stem": "README",
+      "ext": "md",
+      "kind": "doc",
+      "size": 3384,
+      "mtime": "2026-07-18",
+      "domain": null,
+      "tgl": null,
+      "status": null,
+      "conformance": "n/a",
+      "issue": null,
+      "instance": null,
+      "medium": null,
+      "mediumType": null,
+      "spec": "n/a",
+      "mtimeMs": 1784403244592
+    },
     {
       "p": "ui/sprites/atlas-graphite-cyan-states_BLK.png",
       "area": "ui",
@@ -794,27 +815,6 @@
       "spec": "n/a",
       "src": "/_assets/models/tower-defense-towers/aeon-spire-tower/exports/AeonSpireTower_Raw.fbx",
       "mtimeMs": 1783076655595
-    },
-    {
-      "p": "README.md",
-      "area": "(root)",
-      "dir": "",
-      "base": "README.md",
-      "stem": "README",
-      "ext": "md",
-      "kind": "doc",
-      "size": 3186,
-      "mtime": "2026-07-03",
-      "domain": null,
-      "tgl": null,
-      "status": null,
-      "conformance": "n/a",
-      "issue": null,
-      "instance": null,
-      "medium": null,
-      "mediumType": null,
-      "spec": "n/a",
-      "mtimeMs": 1783075325401
     },
     {
       "p": "runtime/roblox/soul-steel/README.md",

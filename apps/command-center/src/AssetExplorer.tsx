@@ -10,14 +10,17 @@
 //   2. FILTER BAR — search + medium/mediumType/status/ext Selects + a "show source" Switch, plus a
 //      removable-chip strip reflecting the active filters.
 //   3. RESULTS GRID — a count line + a CSS grid of asset cards (optionally grouped by mediumType).
-//   4. INSPECTOR — a Dialog modal holding the selected record's full metadata dump.
-import { useEffect, useMemo, useState } from 'react';
+//   4. INSPECTOR — a Dialog modal (command Toolbar in the footer) + the move-confirm dialog.
+// Per-asset ACTIONS (copy id/path · reveal · view online · move to _resort/_archive) live in
+// ./assetActions — one vocabulary shared by the inspector Toolbar and the tile ⋯ kebab Menu.
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import {
   AudioWaveform,
   Badge,
   Box,
   Button,
+  Callout,
   DataStatusBar,
   Dialog,
   DonutChart,
@@ -26,15 +29,31 @@ import {
   IconButton,
   Inline,
   Input,
+  Menu,
   Meter,
   Select,
   Stat,
   Switch,
   Table,
+  Toolbar,
   Tooltip,
   VirtualAssetGrid,
 } from '@trembus/ui';
 import type { DataFilter } from '@trembus/ui';
+import { ExternalLinkIcon, FolderOpenIcon } from '@trembus/icons';
+import { ArchiveIcon, CopyIcon, KebabIcon, ResortIcon } from './glyphs';
+import {
+  MOVE_DISABLED_HINT,
+  actionEnabled,
+  assetIdOf,
+  buildMoveConfirm,
+  canMove,
+  moveAsset,
+  moveEnabled,
+  needsMoveConfirm,
+  runAction,
+} from './assetActions';
+import type { MoveDest } from './assetActions';
 import {
   MEDIUM_OF_TYPE,
   MEDIUM_STYLE,
@@ -47,9 +66,11 @@ import {
   records,
   robloxRegistry,
   robloxUploadState,
+  spineToNodes,
   statusTone,
   statusVocab,
   summary,
+  tallyByDir,
   thumbUrl,
   underFolder,
 } from './registry';
@@ -101,51 +122,6 @@ const toFrameData = (r: AssetRecord, { full }: { full: boolean }): MediaFrameDat
   return { ...base, medium: 'doc' }; // source / null → ext glyph
 };
 
-// ── Clipboard + reveal (client) ───────────────────────────────────────────────────────
-// Clipboard write with a hidden-textarea + execCommand fallback so copy also works in a
-// non-secure-context webview (mirrors the reference tool's copyText).
-async function copyText(text: string): Promise<boolean> {
-  try {
-    await navigator.clipboard.writeText(text);
-    return true;
-  } catch {
-    /* fall through to the legacy path */
-  }
-  try {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.style.cssText = 'position:fixed;opacity:0';
-    document.body.appendChild(ta);
-    ta.select();
-    const ok = document.execCommand('copy');
-    ta.remove();
-    return ok;
-  } catch {
-    return false;
-  }
-}
-
-// Reveal a library-relative path in Finder via the dev-only POST /api/reveal, degrading to
-// copying the ABSOLUTE path when no helper answers (the static :4317 site, or any failure) — the
-// user pastes it into Finder's Go-to-Folder (⇧⌘G). Returns which branch actually ran.
-async function revealOrCopy(p: string, abs: string): Promise<'revealed' | 'copied'> {
-  try {
-    const res = await fetch('/api/reveal', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ path: p }),
-    });
-    if (res.ok) {
-      const j = (await res.json().catch(() => ({}))) as { ok?: boolean };
-      if (j.ok) return 'revealed';
-    }
-  } catch {
-    /* no helper — fall through to copy */
-  }
-  await copyText(abs);
-  return 'copied';
-}
-
 interface Filters {
   showSource: boolean;
   medium: '' | Medium;
@@ -171,6 +147,34 @@ export function AssetExplorer() {
   const [filters, setFilters] = useState<Filters>(EMPTY);
   const [sel, setSel] = useState<AssetRecord | undefined>(undefined);
 
+  // Transient feedback for TILE-level actions (the ⋯ kebab) — rendered in the count line. Copy
+  // confirmations self-clear fast; a move-in-flight notice (ends with '…') outlives the ~seconds
+  // registry rebuild that reloads the page, but still caps out so a failed rebuild can't pin a
+  // stale "rebuilding…" forever.
+  const [gridFlash, setGridFlash] = useState<string | null>(null);
+  useEffect(() => {
+    if (!gridFlash) return;
+    const t = window.setTimeout(() => setGridFlash(null), gridFlash.endsWith('…') ? 30000 : 1600);
+    return () => window.clearTimeout(t);
+  }, [gridFlash]);
+
+  // The move flow (ADR 0011): archive always confirms; _resort confirms only when the record
+  // carries the Roblox ledger join (warn-don't-write). Explorer-level state because both the tile
+  // kebab and the inspector Toolbar route through the same confirm dialog.
+  const [confirmMove, setConfirmMove] = useState<{ record: AssetRecord; dest: MoveDest } | null>(null);
+  const performMove = async (record: AssetRecord, dest: MoveDest) => {
+    setConfirmMove(null);
+    setSel(undefined); // the record's p/src/thumb are dead the moment the rename lands
+    const res = await moveAsset(record.p, dest);
+    if (res.ok) setGridFlash(`Moved to ${res.to} — rebuilding registry…`);
+    else if (res.unavailable) setGridFlash('Move needs the dev server');
+    else setGridFlash(`Move failed — ${res.error ?? 'unknown error'}`);
+  };
+  const requestMove = (record: AssetRecord, dest: MoveDest) => {
+    if (needsMoveConfirm(record, dest)) setConfirmMove({ record, dest });
+    else void performMove(record, dest);
+  };
+
   const set = <K extends keyof Filters>(key: K, value: Filters[K]) =>
     setFilters((f) => ({ ...f, [key]: value }));
 
@@ -187,9 +191,9 @@ export function AssetExplorer() {
     setFilters((f) => ({ ...f, mediumType: mt, medium: mt ? MEDIUM_OF_TYPE[mt] : f.medium }));
 
   // ── The single derived pass over records[], keyed on the whole filter state. Builds the visible
-  //    list, the ext-Select options (count-labeled, over the source-gated set), and the mediumType
-  //    group buckets — never re-filtering per card. ──
-  const { visible, extOptions, sourceOnlyHidden } = useMemo(() => {
+  //    list, the ext-Select options (count-labeled, over the source-gated set), the mediumType
+  //    group buckets, AND the tree's filtered tallies — never re-filtering per card. ──
+  const { visible, extOptions, sourceOnlyHidden, treeCounts } = useMemo(() => {
     const { showSource, medium, mediumType, status, roblox, ext, q, selectedPath } = filters;
     const needle = q.trim().toLowerCase();
 
@@ -203,17 +207,29 @@ export function AssetExplorer() {
       .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
       .map(([e, n]) => ({ ext: e, label: `${e} (${n})` }));
 
-    const matches = (r: AssetRecord): boolean =>
+    // Every facet EXCEPT the folder selection — the tree derives from this set, so selecting a
+    // folder never zeroes its siblings' counts (the tree is the "where" axis; it must not be
+    // narrowed by itself).
+    const facetMatch = (r: AssetRecord): boolean =>
       (showSource || r.medium !== null) &&
       (!medium || r.medium === medium) &&
       (!mediumType || r.mediumType === mediumType) &&
       (!status || r.status === (status === 'none' ? null : status)) &&
       (!roblox || (r.medium !== null && robloxUploadState(r) === roblox)) &&
       (!ext || r.ext === ext) &&
-      underFolder(r, selectedPath) &&
       (!needle || `${r.stem} ${r.p}`.toLowerCase().includes(needle));
 
+    const matches = (r: AssetRecord): boolean => facetMatch(r) && underFolder(r, selectedPath);
+
     const visible = records.filter(matches);
+
+    // Filter↔tree interplay: with any non-path facet active, re-tally the tree from the
+    // facet-matched set (folders with zero matches get hidden by spineToNodes); otherwise null
+    // keeps the stable full spine. `showSource` counts as a facet: the spine totals include
+    // source files, so a facet+source-off combination must recount to exclude them.
+    const hasNonPathFacet =
+      Boolean(medium || mediumType || status || roblox || ext || needle) || showSource;
+    const treeCounts = hasNonPathFacet ? tallyByDir(records.filter(facetMatch)) : null;
 
     // Would turning on "show source" reveal matches? True when the current (non-source-gated)
     // filters hit source records that are hidden only by the OFF toggle — powers the empty-state
@@ -232,8 +248,15 @@ export function AssetExplorer() {
       );
     }
 
-    return { visible, extOptions, sourceOnlyHidden };
+    return { visible, extOptions, sourceOnlyHidden, treeCounts };
   }, [filters]);
+
+  // The side-nav data: the full spine, or the filter-recounted derivation. Node ids are identical
+  // across both, so FolderTree's uncontrolled expansion state survives every swap.
+  const treeData = useMemo(
+    () => (treeCounts ? spineToNodes(treeCounts, filters.selectedPath) : assetTree),
+    [treeCounts, filters.selectedPath],
+  );
 
   // A facet change can remove the selected tile from the result set. Clear that stale selection
   // so VirtualAssetGrid's live status never announces a hidden record as still selected.
@@ -360,7 +383,7 @@ export function AssetExplorer() {
 
       {/* 2 — FILTER BAR */}
       <section className="cc-section">
-        <Box className="cc-explorer__toolbar" border radius="md" p={3}>
+        <Box className="cc-explorer__toolbar" material="glass" p={3}>
           <Inline wrap gap={2} align="end">
             <Input
               type="search"
@@ -469,6 +492,11 @@ export function AssetExplorer() {
           {filters.showSource
             ? `${summary.total} files (incl. ${summary.source} source) · ${visible.length} shown`
             : `${summary.real} assets · ${visible.length} shown`}
+          {gridFlash && (
+            <span className="cc-explorer__flash" role="status">
+              {gridFlash}
+            </span>
+          )}
         </p>
         {robloxRegistry.issues.length > 0 && (
           <div className="cc-explorer__robloxstatus">
@@ -493,7 +521,7 @@ export function AssetExplorer() {
       <div className="cc-explorer__body">
         <aside className="cc-explorer__tree" aria-label="Library folder navigation">
           <FolderTree
-            data={assetTree}
+            data={treeData}
             label="Library folders"
             defaultExpandedIds={assetTree.flatMap((n) => (n.id ? [n.id] : []))}
             selectedId={filters.selectedPath}
@@ -506,7 +534,9 @@ export function AssetExplorer() {
             items={visible}
             getKey={(r) => r.p}
             getLabel={(r) => r.stem}
-            renderTile={(r, { selected }) => <AssetTile record={r} selected={selected} />}
+            renderTile={(r, { selected }) => (
+              <AssetTile record={r} selected={selected} flash={setGridFlash} requestMove={requestMove} />
+            )}
             groupBy={grouped ? (r) => r.mediumType ?? '(source)' : undefined}
             groupOrder={grouped ? GROUP_ORDER : undefined}
             selectedId={sel?.p ?? ''}
@@ -537,29 +567,135 @@ export function AssetExplorer() {
         </div>
       </div>
 
-      {/* 4 — INSPECTOR */}
-      <Inspector record={sel} onClose={() => setSel(undefined)} onFilterToType={setMediumType} />
+      {/* 4 — INSPECTOR + the move-confirm dialog (a SIBLING, not a child: the tile kebab opens it
+          with no inspector mounted, and stacking two Dialogs needs the inspector's dismissal gated
+          while the confirm is up). */}
+      <Inspector
+        record={sel}
+        onClose={() => setSel(undefined)}
+        onFilterToType={setMediumType}
+        requestMove={requestMove}
+        confirmOpen={Boolean(confirmMove)}
+      />
+      {confirmMove && (
+        <MoveConfirmDialog
+          record={confirmMove.record}
+          dest={confirmMove.dest}
+          onCancel={() => setConfirmMove(null)}
+          onConfirm={() => void performMove(confirmMove.record, confirmMove.dest)}
+        />
+      )}
     </div>
   );
 }
 
-// A single asset tile — PRESENTATIONAL only: VirtualAssetGrid owns the option box, click,
-// keyboard, focus ring, and selected tint. A flush MediaFrame media area (baked thumbnail for
-// images; ext glyph otherwise) fills the cell above one compact body: the stem name, then a
-// wrap-line of type badge + status badge + a dim "EXT · size" note. Area/domain live in the
-// inspector, not the tile. Keep the MediaFrame NON-interactive so it doesn't nest a focusable
-// control inside the grid's option.
-function AssetTile({ record, selected }: { record: AssetRecord; selected: boolean }) {
+// A single asset tile — presentational EXCEPT the ⋯ kebab, a pointer-only quick-action shortcut.
+// VirtualAssetGrid owns the option box, click, keyboard, focus ring, and selected tint; tiles are
+// role="option", so a nested focusable control would break both ARIA and the single-tab-stop
+// model. The kebab therefore lives inside an aria-hidden wrapper with tabIndex={-1} (unreachable
+// via Tab; the ACCESSIBLE path to every action is the inspector's command Toolbar, one Enter
+// away), and the wrapper stops click/keydown/pointerdown propagation — the portaled Menu bubbles
+// its events through the React tree back into the tile, which would otherwise select it and cover
+// the menu with the inspector. On close, focus hops back to the enclosing option so arrow-key
+// navigation resumes. Roblox upload state is a corner dot over the media (full badges live in the
+// inspector). Keep the MediaFrame NON-interactive.
+function AssetTile({
+  record,
+  selected,
+  flash,
+  requestMove,
+}: {
+  record: AssetRecord;
+  selected: boolean;
+  flash: (msg: string) => void;
+  requestMove: (r: AssetRecord, dest: MoveDest) => void;
+}) {
   const key = mediumKey(record);
   const style = MEDIUM_STYLE[key];
   const typeLabel = record.mediumType ?? '(source)';
   const showStatus = record.status !== null;
   const uploadState = robloxUploadState(record);
+  const [kebabOpen, setKebabOpen] = useState(false);
+  const wrapRef = useRef<HTMLSpanElement>(null);
   return (
     <div className="cc-explorer__card" data-medium={key} data-selected={selected || undefined}>
       <div className="cc-explorer__cardmedia">
         <MediaFrame data={toFrameData(record, { full: false })} />
       </div>
+      {uploadState !== 'unregistered' && (
+        <span
+          className="cc-explorer__uploaddot"
+          data-state={uploadState}
+          title={uploadState === 'uploaded' ? 'Roblox uploaded' : 'Roblox needs review'}
+        />
+      )}
+      <span
+        ref={wrapRef}
+        className="cc-explorer__kebabwrap"
+        aria-hidden="true"
+        data-open={kebabOpen || undefined}
+        onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => e.stopPropagation()}
+        onPointerDown={(e) => e.stopPropagation()}
+      >
+        <Menu
+          open={kebabOpen}
+          onOpenChange={(o) => {
+            setKebabOpen(o);
+            // Menu restores focus to its (aria-hidden) trigger; hop it onto the option div so
+            // the grid's arrow-key navigation resumes from this tile. A 0ms timeout (not rAF —
+            // frame callbacks can stall in occluded/embedded views) lets Menu's own restore land
+            // first, then overrides it.
+            if (!o)
+              window.setTimeout(
+                () => (wrapRef.current?.closest('[role="option"]') as HTMLElement | null)?.focus(),
+                0,
+              );
+          }}
+        >
+          <Menu.Trigger>
+            <button type="button" tabIndex={-1} className="cc-explorer__kebab" aria-label="Asset actions">
+              <KebabIcon />
+            </button>
+          </Menu.Trigger>
+          <Menu.Content align="end">
+            <Menu.Label>{record.stem}</Menu.Label>
+            <Menu.Item
+              disabled={!actionEnabled('copy-id', record)}
+              onSelect={() => void runAction('copy-id', record, flash)}
+            >
+              <CopyIcon /> Copy asset id
+            </Menu.Item>
+            <Menu.Item onSelect={() => void runAction('copy-path', record, flash)}>
+              <CopyIcon /> Copy path
+            </Menu.Item>
+            <Menu.Item onSelect={() => void runAction('reveal', record, flash)}>
+              <FolderOpenIcon /> Reveal in Finder
+            </Menu.Item>
+            <Menu.Item
+              disabled={!actionEnabled('view-online', record)}
+              onSelect={() => void runAction('view-online', record, flash)}
+            >
+              <ExternalLinkIcon /> View online
+            </Menu.Item>
+            <Menu.Separator />
+            <Menu.Item
+              disabled={!moveEnabled(record, 'resort')}
+              title={canMove ? undefined : MOVE_DISABLED_HINT}
+              onSelect={() => requestMove(record, 'resort')}
+            >
+              <ResortIcon /> Move to _resort
+            </Menu.Item>
+            <Menu.Item
+              disabled={!moveEnabled(record, 'archive')}
+              title={canMove ? undefined : MOVE_DISABLED_HINT}
+              onSelect={() => requestMove(record, 'archive')}
+            >
+              <ArchiveIcon /> Move to _archive…
+            </Menu.Item>
+          </Menu.Content>
+        </Menu>
+      </span>
       <div className="cc-explorer__cardbody">
         <Tooltip content={record.stem}>
           <span className="cc-explorer__name">{record.stem}</span>
@@ -571,16 +707,6 @@ function AssetTile({ record, selected }: { record: AssetRecord; selected: boolea
           {showStatus && (
             <Badge tone={statusTone(record.status)} variant="soft" size="sm" dot>
               {record.status}
-            </Badge>
-          )}
-          {uploadState === 'uploaded' && (
-            <Badge tone="success" variant="outline" size="sm" dot>
-              Roblox uploaded
-            </Badge>
-          )}
-          {uploadState === 'needsReview' && (
-            <Badge tone="warning" variant="outline" size="sm" dot>
-              Roblox review
             </Badge>
           )}
           <span className="cc-explorer__tilemeta">
@@ -616,17 +742,23 @@ function Fact({ label, value }: { label: string; value: ReactNode }) {
   );
 }
 
-// The Dialog inspector — the full metadata dump for the selected record. Every present field
-// renders; absent fields are skipped. The medium/mediumType/status Badges lead for continuity
-// with the card.
+// The Dialog inspector — the full metadata dump for the selected record, with the COMMAND BAR in
+// the footer: a roving-focus Toolbar (one Tab stop; ←/→ roves) of primary actions + a ⋯ overflow
+// Menu for the rarer verbs and the moves. Dialog dismissal is GATED while the overflow menu or
+// the move-confirm dialog is up: both portal outside the dialog card, so an ungated inspector
+// would close on their Escape/outside-click before the action lands.
 function Inspector({
   record,
   onClose,
   onFilterToType,
+  requestMove,
+  confirmOpen,
 }: {
   record: AssetRecord | undefined;
   onClose: () => void;
   onFilterToType: (mt: '' | MediumType) => void;
+  requestMove: (r: AssetRecord, dest: MoveDest) => void;
+  confirmOpen: boolean;
 }) {
   // Transient confirmation label for the reveal/copy actions (self-clears). Hooks stay above the
   // early return — this component is always mounted (record may be undefined).
@@ -636,14 +768,14 @@ function Inspector({
     const t = window.setTimeout(() => setFlash(null), 1600);
     return () => window.clearTimeout(t);
   }, [flash]);
+  const [menuOpen, setMenuOpen] = useState(false);
   if (!record) return null;
   const key = mediumKey(record);
   const style = MEDIUM_STYLE[key];
   const abs = absPathOf(record);
-  const regId = record.reg?.id;
   const roblox = record.roblox;
   const uploadState = robloxUploadState(record);
-  const canonicalActionsEnabled = roblox?.checksum === 'match';
+  const idInfo = assetIdOf(record);
   const dims = record.dims ?? (record.w && record.h ? `${record.w}×${record.h}` : null);
   return (
     <Dialog
@@ -652,81 +784,120 @@ function Inspector({
       size="md"
       title={record.stem}
       description={record.p}
+      closeOnEsc={!menuOpen && !confirmOpen}
+      closeOnOverlayClick={!menuOpen && !confirmOpen}
+      className="cc-explorer__dialogglass"
       footer={
-        <Inline gap={2} justify="between" wrap>
-          <Inline gap={2} align="center">
-            <Tooltip content={`Reveal in Finder — falls back to copying ${abs}`}>
-              <Button
-                size="sm"
-                variant="outline"
-                onPress={async () => {
-                  const how = await revealOrCopy(record.p, abs);
-                  setFlash(how === 'revealed' ? 'Shown in Finder ✓' : 'No helper — path copied');
-                }}
+        <div className="cc-explorer__footerbar">
+          <Toolbar aria-label="Asset actions" className="cc-explorer__cmdbar">
+            <Toolbar.Group aria-label="Copy">
+              <Toolbar.Button
+                disabled={!idInfo}
+                title={idInfo ? `Copy ${idInfo.id}` : 'No known asset id for this record'}
+                onClick={() => void runAction('copy-id', record, setFlash)}
               >
-                Reveal in Finder
-              </Button>
-            </Tooltip>
-            <Button
-              size="sm"
-              variant="ghost"
-              onPress={async () => setFlash((await copyText(record.p)) ? 'Path copied ✓' : 'Copy failed')}
-            >
-              Copy path
-            </Button>
-            {canonicalActionsEnabled && roblox && (
-              <Button
-                size="sm"
-                variant="ghost"
-                onPress={async () =>
-                  setFlash((await copyText(roblox.active.assetUri)) ? 'Roblox URI copied ✓' : 'Copy failed')
+                <CopyIcon /> Copy id
+              </Toolbar.Button>
+              <Toolbar.Button
+                title="Copy the library-relative path"
+                onClick={() => void runAction('copy-path', record, setFlash)}
+              >
+                <CopyIcon /> Path
+              </Toolbar.Button>
+            </Toolbar.Group>
+            <Toolbar.Separator />
+            <Toolbar.Group aria-label="Locate">
+              <Toolbar.Button
+                title={`Reveal in Finder — falls back to copying ${abs}`}
+                onClick={() => void runAction('reveal', record, setFlash)}
+              >
+                <FolderOpenIcon /> Reveal
+              </Toolbar.Button>
+              <Toolbar.Button
+                disabled={!actionEnabled('view-online', record)}
+                title={
+                  actionEnabled('view-online', record)
+                    ? 'Open the public Roblox asset page'
+                    : 'Needs a checksum-verified Roblox upload'
                 }
+                onClick={() => void runAction('view-online', record, setFlash)}
               >
-                Copy Roblox URI
-              </Button>
-            )}
-            {canonicalActionsEnabled && roblox?.active.creatorStoreUrl && (
-              <Button size="sm" variant="outline" asChild>
-                <a
-                  href={roblox.active.creatorStoreUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Open Creator Store
-                </a>
-              </Button>
-            )}
-            {regId && (
-              <Button
-                size="sm"
-                variant="ghost"
-                onPress={async () =>
-                  setFlash((await copyText(regId)) ? 'Name-matched ID copied ✓' : 'Copy failed')
-                }
-              >
-                Copy name-matched ID
-              </Button>
-            )}
-            {flash && (
-              <span className="cc-explorer__flash" role="status">
-                {flash}
-              </span>
-            )}
-          </Inline>
-          {record.mediumType && (
-            <Button
-              variant="solid"
-              tone="accent"
-              size="sm"
-              onPress={() => {
-                onFilterToType(record.mediumType as MediumType);
-                onClose();
+                <ExternalLinkIcon /> View online
+              </Toolbar.Button>
+            </Toolbar.Group>
+            <Toolbar.Separator />
+            <Menu
+              open={menuOpen}
+              onOpenChange={(o) => {
+                // Closing must be DEFERRED one task: the menu's own Escape/outside-press fires
+                // mid-dispatch, and flipping menuOpen synchronously re-attaches the Dialog's
+                // document-level dismiss listeners in time to catch the SAME event — one Escape
+                // would close both the menu and the inspector.
+                if (o) setMenuOpen(true);
+                else window.setTimeout(() => setMenuOpen(false), 0);
               }}
             >
-              Filter to this type
-            </Button>
+              <Menu.Trigger>
+                <Toolbar.Button aria-label="More actions" title="More actions">
+                  <KebabIcon />
+                </Toolbar.Button>
+              </Menu.Trigger>
+              <Menu.Content align="end" side="top">
+                <Menu.Label>{record.stem}</Menu.Label>
+                <Menu.Item
+                  disabled={!actionEnabled('copy-uri', record)}
+                  onSelect={() => void runAction('copy-uri', record, setFlash)}
+                >
+                  <CopyIcon /> Copy Roblox URI
+                </Menu.Item>
+                <Menu.Item
+                  disabled={!actionEnabled('copy-reg-id', record)}
+                  onSelect={() => void runAction('copy-reg-id', record, setFlash)}
+                >
+                  <CopyIcon /> Copy name-matched ID
+                </Menu.Item>
+                <Menu.Item
+                  disabled={!actionEnabled('view-dashboard', record)}
+                  onSelect={() => void runAction('view-dashboard', record, setFlash)}
+                >
+                  <ExternalLinkIcon /> Open in Creator Dashboard
+                </Menu.Item>
+                <Menu.Separator />
+                <Menu.Item
+                  disabled={!moveEnabled(record, 'resort')}
+                  title={canMove ? undefined : MOVE_DISABLED_HINT}
+                  onSelect={() => requestMove(record, 'resort')}
+                >
+                  <ResortIcon /> Move to _resort
+                </Menu.Item>
+                <Menu.Item
+                  disabled={!moveEnabled(record, 'archive')}
+                  title={canMove ? undefined : MOVE_DISABLED_HINT}
+                  onSelect={() => requestMove(record, 'archive')}
+                >
+                  <ArchiveIcon /> Move to _archive…
+                </Menu.Item>
+              </Menu.Content>
+            </Menu>
+            {record.mediumType && (
+              <Toolbar.Button
+                tone="accent"
+                className="cc-explorer__filtertype"
+                onClick={() => {
+                  onFilterToType(record.mediumType as MediumType);
+                  onClose();
+                }}
+              >
+                Filter to this type
+              </Toolbar.Button>
+            )}
+          </Toolbar>
+          {flash && (
+            <span className="cc-explorer__flash" role="status">
+              {flash}
+            </span>
           )}
-        </Inline>
+        </div>
       }
     >
       <div className="cc-explorer__inspector">
@@ -883,6 +1054,54 @@ function Inspector({
             </Table.Body>
           </Table>
         </details>
+      </div>
+    </Dialog>
+  );
+}
+
+// The move-confirm dialog — renders the buildMoveConfirm fact sheet verbatim. The warning Callout
+// is the ADR 0011 warn-don't-write contract: moving a Roblox-joined file orphans its ledger
+// mapping, and the ledger is never rewritten from here.
+function MoveConfirmDialog({
+  record,
+  dest,
+  onCancel,
+  onConfirm,
+}: {
+  record: AssetRecord;
+  dest: MoveDest;
+  onCancel: () => void;
+  onConfirm: () => void;
+}) {
+  const facts = buildMoveConfirm(record, dest);
+  return (
+    <Dialog
+      open
+      onClose={onCancel}
+      size="sm"
+      title={facts.title}
+      description={facts.from}
+      footer={
+        <Inline gap={2} justify="end">
+          <Button variant="ghost" size="sm" onPress={onCancel}>
+            Cancel
+          </Button>
+          <Button variant="solid" tone="warning" size="sm" onPress={onConfirm}>
+            {facts.confirmLabel}
+          </Button>
+        </Inline>
+      }
+    >
+      <div className="cc-explorer__moveconfirm">
+        {facts.robloxWarning && (
+          <Callout tone="warning" title="Registered Roblox upload">
+            {facts.robloxWarning}
+          </Callout>
+        )}
+        <p>
+          Moves to <code className="cc-explorer__mono">{facts.to}</code>. {facts.destNote}
+        </p>
+        <p className="cc-explorer__movenote">{facts.rebuildNote}</p>
       </div>
     </Dialog>
   );

@@ -181,9 +181,20 @@ advanced, and the **`roguex-33-portrait` batch written** (3 face variants `smirk
 × 2, portrait template + filed concepts as identity anchors in `refs/`) — **awaiting the operator's
 Codex trigger** ("Run generation batch roguex-33-portrait"). The 10 losing candidates stay in
 untracked staging until a sweep.
+**2026-07-18 Menu-inside-Dialog fixed upstream (TCL triple release):** the inspector command bar's
+invisible overflow menu was a three-part TCL composition defect, fixed in the sibling repo and
+published — `tokens 0.2.0` (new `--tcl-z-popover: 1350` layer, above modal 1300), `ui 0.8.1`
+(`.tcl-menu` → popover layer with a `calc(modal+50)` fallback; Dialog outside-press exempts
+`[role="menu"]` so item clicks don't dismiss the dialog; root-menu Escape stops propagating —
+one layer per press), and `game-viz 0.3.1` (rebuild: its `styles.css` bundles a frozen copy of
+ui's CSS which was re-overriding the fix — dedupe spun off as a background task). Locked in by the
+`Components/Menu → InsideDialog` Storybook play test. Consumer side: ui/game-viz bumped, the
+app.css `.tcl-menu` z-override deleted, verified live (z 1350 > 1300), static bundle rebuilt.
+Operational gotchas memorized: game-viz CSS re-bundling; vite dev keeps serving the old `.pnpm`
+path after a dep swap — restart it, a reload isn't enough ([[command-center-consumes-tcl]]).
 **Open (owner calls):** fetch-vs-inline for the contracts (would dissolve the stale-bundle class — wants
-an ADR). Corpus: 37 entities (9 decision · 2 roadmap · 1 report · 9 session · 7 workflow · 4 medium ·
-5 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.4.0` + `game-viz 0.2.0`.
+an ADR). Corpus: 39 entities (11 decision · 2 roadmap · 1 report · 9 session · 7 workflow · 4 medium ·
+5 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.8.1` + `game-viz 0.3.1`.
 **Deferred:** a portable (non-`sips`) thumbnail baker for non-macOS + baked 3D/audio posters (the 77
 non-glb/gltf 3D exts glyph). `proseStatusEnforcement` still `warn`
 — ratchet to `error` once the corpus settles.

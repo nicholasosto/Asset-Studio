@@ -1156,10 +1156,11 @@ body,
   font-weight: 600;
 }
 
-/* Filter bar — a bordered toolbar Box; the search input takes the lead width, Selects size to
-   content. */
+/* Filter bar — a GLASS toolbar Box (material="glass" on the Box; border/background/radius come
+   from the tcl.materials layer — an unlayered background rule here would defeat the translucency).
+   The tint knob leans the frost toward the explorer accent. */
 .cc-explorer__toolbar {
-  background: var(--tcl-surface-raised, rgba(255, 255, 255, 0.03));
+  --tcl-mat-tint: color-mix(in srgb, var(--cc-explorer-accent) 6%, var(--tcl-surface-raised, #151a21));
 }
 .cc-explorer__search {
   flex: 1 1 16rem;
@@ -1196,6 +1197,7 @@ body,
   flex: 0 0 18rem;
   min-width: 0;
   overflow: auto; /* the tree scrolls on its own when tall */
+  scrollbar-gutter: stable; /* filter-driven folder hiding shouldn't jitter the tree width */
 }
 /* A definite box for VirtualAssetGrid's height:100% to fill (it owns its own overflow scroller). */
 .cc-explorer__main {
@@ -1218,6 +1220,7 @@ body,
    body. The per-medium accent rides the top border via --cc-medium. */
 .cc-explorer__card {
   --cc-medium: #6b7280; /* source (null-medium) fallback */
+  position: relative; /* seats the corner upload dot + the ⋯ kebab over the media area */
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -1226,12 +1229,32 @@ body,
   border-top: 2px solid color-mix(in srgb, var(--cc-medium) 55%, transparent);
   border-radius: var(--tcl-radius-md, 8px);
   background: var(--tcl-surface-raised, rgba(255, 255, 255, 0.03));
+  transition:
+    box-shadow var(--tcl-dur-fast, 120ms) var(--tcl-ease-calm, ease-out),
+    border-color var(--tcl-dur-fast, 120ms) var(--tcl-ease-calm, ease-out),
+    translate var(--tcl-dur-fast, 120ms) var(--tcl-ease-calm, ease-out);
 }
 .cc-explorer__card[data-medium='image'] { --cc-medium: #4aa8ff; }
 .cc-explorer__card[data-medium='3d'] { --cc-medium: #d4af37; }
 .cc-explorer__card[data-medium='audio'] { --cc-medium: #43aa8b; }
+/* Hover/focus lift — elevation + a full-strength medium accent on the top border; the -2px
+   translate only when motion is welcome. The :hover/:focus-visible live on the GRID's option
+   tile (the focusable box), not the card. */
+.tcl-virtual-asset-grid__tile:hover .cc-explorer__card,
+.tcl-virtual-asset-grid__tile:focus-visible .cc-explorer__card {
+  box-shadow: var(--tcl-elevation-2, 0 4px 12px rgba(0, 0, 0, 0.4));
+  border-top-color: var(--cc-medium);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tcl-virtual-asset-grid__tile:hover .cc-explorer__card {
+    translate: 0 -2px;
+  }
+}
 .cc-explorer__card[data-selected] {
-  box-shadow: inset 0 0 0 1px var(--cc-explorer-accent);
+  box-shadow:
+    inset 0 0 0 1px var(--cc-explorer-accent),
+    0 0 0 1px color-mix(in srgb, var(--cc-explorer-accent) 35%, transparent),
+    var(--tcl-elevation-1, 0 2px 6px rgba(0, 0, 0, 0.35));
 }
 /* Media area fills the tile above the body; the frame is absolutely seated so its intrinsic 1:1
    ratio can't push the tile past its windowed height. object-fit:contain shows the WHOLE asset
@@ -1248,8 +1271,66 @@ body,
   width: 100%;
   margin: 0;
 }
+/* A soft per-medium wash across the media area's top edge — ties the artwork to the tile's
+   accent without touching the asset pixels. */
+.cc-explorer__cardmedia::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 34%;
+  z-index: 1;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--cc-medium) 9%, transparent), transparent);
+  pointer-events: none;
+}
 .cc-explorer .tcl-media-frame__img {
   object-fit: contain;
+}
+
+/* Roblox upload state as a corner dot over the media (the textual badges live in the inspector) —
+   colors mirror the inspector's verification rail. */
+.cc-explorer__uploaddot {
+  position: absolute;
+  top: 0.45rem;
+  left: 0.45rem;
+  z-index: 2;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.45);
+}
+.cc-explorer__uploaddot[data-state='uploaded'] { background: #43aa8b; }
+.cc-explorer__uploaddot[data-state='needsReview'] { background: #e6a84a; }
+
+/* The tile ⋯ kebab — a pointer-only quick-action shortcut (tabIndex=-1, aria-hidden wrapper; the
+   accessible action path is the inspector Toolbar). Hidden until the tile is hovered/focused or
+   its menu is open. */
+.cc-explorer__kebabwrap {
+  position: absolute;
+  top: 0.3rem;
+  right: 0.3rem;
+  z-index: 2;
+}
+.cc-explorer__kebab {
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: 1px solid var(--tcl-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--tcl-radius-sm, 4px);
+  background: color-mix(in srgb, var(--tcl-surface-sunken, #0d1117) 72%, transparent);
+  color: var(--tcl-text, rgba(255, 255, 255, 0.9));
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--tcl-dur-fast, 120ms) var(--tcl-ease-calm, ease-out);
+}
+.tcl-virtual-asset-grid__tile:hover .cc-explorer__kebab,
+.tcl-virtual-asset-grid__tile:focus-visible .cc-explorer__kebab,
+.cc-explorer__kebabwrap[data-open] .cc-explorer__kebab {
+  opacity: 1;
+}
+.cc-explorer__kebab:hover {
+  background: var(--tcl-surface-hover, rgba(255, 255, 255, 0.08));
 }
 .cc-explorer__cardbody {
   flex: 0 0 auto;
@@ -1440,6 +1521,56 @@ body,
   font-size: 0.75rem;
   color: var(--cc-text-dim, #8b949e);
   white-space: nowrap;
+}
+.cc-explorer__count .cc-explorer__flash {
+  margin-left: 0.6rem;
+  color: var(--cc-explorer-accent);
+}
+
+/* The inspector's command bar footer — the Toolbar (one roving Tab stop) over the flash line. */
+.cc-explorer__footerbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  width: 100%;
+}
+.cc-explorer__cmdbar {
+  flex-wrap: wrap;
+}
+.cc-explorer__cmdbar svg {
+  margin-right: 0.3rem;
+}
+/* Push the accent "Filter to this type" action to the bar's far edge. */
+.cc-explorer__filtertype {
+  margin-left: auto;
+}
+
+/* Glass recipe for the inspector Dialog card — Dialog can't take material="glass" (no rest-prop
+   spread), so the tcl.materials dark-theme knobs are replicated here; being unlayered, this wins
+   over the component's own surface. */
+.cc-explorer__dialogglass {
+  background: color-mix(in oklab, var(--tcl-mat-tint, #151a21) 50%, transparent);
+  -webkit-backdrop-filter: blur(var(--tcl-mat-blur, 14px)) saturate(var(--tcl-mat-saturate, 1.2));
+  backdrop-filter: blur(var(--tcl-mat-blur, 14px)) saturate(var(--tcl-mat-saturate, 1.2));
+  border: 1px solid color-mix(in oklab, var(--tcl-mat-specular, #fff) 16%, transparent);
+  box-shadow:
+    inset 0 1px 0 0 color-mix(in oklab, var(--tcl-mat-specular, #fff) 22%, transparent),
+    var(--tcl-mat-elevation, var(--tcl-elevation-3, 0 12px 32px rgba(0, 0, 0, 0.5)));
+}
+
+/* The move-confirm dialog body — Callout warning over two short fact lines. */
+.cc-explorer__moveconfirm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.cc-explorer__moveconfirm p {
+  margin: 0;
+  font-size: 0.83rem;
+  line-height: 1.5;
+}
+.cc-explorer__movenote {
+  color: var(--tcl-text-dim, rgba(255, 255, 255, 0.6));
 }
 
 /* Narrow viewports — stack the summary band (donut under the stats) and stack the tree above grid. */

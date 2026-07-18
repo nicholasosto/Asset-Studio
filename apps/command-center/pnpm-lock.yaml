@@ -9,14 +9,17 @@ importers:
   .:
     dependencies:
       '@trembus/game-viz':
+        specifier: ^0.3.1
+        version: 0.3.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(three@0.183.2)
+      '@trembus/icons':
         specifier: ^0.2.0
-        version: 0.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(three@0.183.2)
+        version: 0.2.0(react@19.2.7)
       '@trembus/ui':
-        specifier: ^0.4.0
-        version: 0.4.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: ^0.8.1
+        version: 0.8.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@trembus/viz':
-        specifier: ^0.3.0
-        version: 0.3.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: ^0.5.0
+        version: 0.5.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react:
         specifier: ^19.0.0
         version: 19.2.7
@@ -464,8 +467,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@trembus/game-viz@0.2.0':
-    resolution: {integrity: sha512-TOQiWHNFKB+VEdiXz8hvJKXS2wa+dOamzbsBjP5EbtCU5ttZQr5HRGkiP2pQLwKObvzmEsqbd4J8rxaQFUnqcQ==}
+  '@trembus/game-viz@0.3.1':
+    resolution: {integrity: sha512-2/WF9kAV5z/6nkU12Kl4R29zE49A+VWkcTGYqYF0QawwFVWq2Kg9h4Kukut723tyFzBAOJENuY40ezSnb4ELcQ==}
     engines: {node: '>=20'}
     peerDependencies:
       react: ^19.0.0
@@ -473,6 +476,12 @@ packages:
 
   '@trembus/icons@0.1.0':
     resolution: {integrity: sha512-TPlo0qvVOc05h+AxYw9YqSk+FDa3/7QSuzoOxaOOsLIpv2fJgSw/h43/mhZ7IH8ZqaPpdLFcWqXNCPz8E6PNUQ==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      react: ^19.0.0
+
+  '@trembus/icons@0.2.0':
+    resolution: {integrity: sha512-zAj9Ex9p8EL0p1sdqYr5QCulL1doQ97pAkObIBiJBGE9WurFxOrc4aLRnW0wLgG/dH9OaeCmMeRT65CZLjHN2g==}
     engines: {node: '>=20'}
     peerDependencies:
       react: ^19.0.0
@@ -486,15 +495,24 @@ packages:
       jest-axe:
         optional: true
 
-  '@trembus/ui@0.4.0':
-    resolution: {integrity: sha512-Y08wsZeVLyhptKXAFyverJuL8dSbVPEmbObkh5iBs4HT1kLy6/2L4a5WwjcLt5mUbNeIyw5KLD6BLGjw0wWNpw==}
+  '@trembus/tokens@0.2.0':
+    resolution: {integrity: sha512-YssV15uw4ciAOfUsNkAaKHT/8ddl+22l7XJK2xIJIq1rh6D0ShcIq5q09an4EkWbnegko1ivz3YE8uJwmBzb5g==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      jest-axe: ^9.0.0
+    peerDependenciesMeta:
+      jest-axe:
+        optional: true
+
+  '@trembus/ui@0.8.1':
+    resolution: {integrity: sha512-ezHnz2q0+z7hxfZKAeUKoySI2G+Gv4UwltdqqcTpcM8Qqkl5d0U3UuY15lAeM1yY85rJdZWvWZ7cE7URnT6kSw==}
     engines: {node: '>=20'}
     peerDependencies:
       react: ^19.0.0
       react-dom: ^19.0.0
 
-  '@trembus/viz@0.3.1':
-    resolution: {integrity: sha512-7ElBoJFkBHbSERQTxU/7mZTtmBQytzVmgqeWnyuhc/i1TXZ7nO1hLL+7YvxYHtcx987u9NMOPF9xTDQqwX2hww==}
+  '@trembus/viz@0.5.0':
+    resolution: {integrity: sha512-M3IoB7AVqMlcYYEAOBHHZYGTTCbWKyykHP9B3EF7emzTkARQ19v/tpUwkhjAhFXCV4b3FvHTaaLQoODpEGQiJg==}
     engines: {node: '>=20'}
     peerDependencies:
       react: ^19.0.0
@@ -1061,12 +1079,13 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.62.2':
     optional: true
 
-  '@trembus/game-viz@0.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(three@0.183.2)':
+  '@trembus/game-viz@0.3.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(three@0.183.2)':
     dependencies:
       '@google/model-viewer': 4.3.1(three@0.183.2)
-      '@trembus/icons': 0.1.0(react@19.2.7)
-      '@trembus/tokens': 0.1.0
-      '@trembus/ui': 0.4.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      '@trembus/icons': 0.2.0(react@19.2.7)
+      '@trembus/tokens': 0.2.0
+      '@trembus/ui': 0.8.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      '@trembus/viz': 0.5.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
     transitivePeerDependencies:
@@ -1077,18 +1096,24 @@ snapshots:
     dependencies:
       react: 19.2.7
 
+  '@trembus/icons@0.2.0(react@19.2.7)':
+    dependencies:
+      react: 19.2.7
+
   '@trembus/tokens@0.1.0': {}
 
-  '@trembus/ui@0.4.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@trembus/tokens@0.2.0': {}
+
+  '@trembus/ui@0.8.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
-      '@trembus/icons': 0.1.0(react@19.2.7)
-      '@trembus/tokens': 0.1.0
+      '@trembus/icons': 0.2.0(react@19.2.7)
+      '@trembus/tokens': 0.2.0
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
     transitivePeerDependencies:
       - jest-axe
 
-  '@trembus/viz@0.3.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@trembus/viz@0.5.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       '@dagrejs/dagre': 3.0.0
       '@trembus/icons': 0.1.0(react@19.2.7)

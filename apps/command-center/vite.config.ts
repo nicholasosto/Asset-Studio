@@ -1,7 +1,7 @@
 import { execFile, spawn } from 'node:child_process';
-import { createReadStream, realpathSync, statSync } from 'node:fs';
+import { createReadStream, existsSync, mkdirSync, realpathSync, renameSync, statSync } from 'node:fs';
 import type { ServerResponse } from 'node:http';
-import { dirname, extname, join, normalize, resolve, sep } from 'node:path';
+import { basename, dirname, extname, join, normalize, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
@@ -136,6 +136,31 @@ function liveAssets(): Plugin {
     name: 'asset-studio:live-assets',
     apply: 'serve',
     configureServer(server) {
+      const log = (msg: string) => server.config.logger.info(`[live-assets] ${msg}`, { timestamp: true });
+
+      // Rebuild the asset registry after a successful /api/move — the same single-flight
+      // subprocess shape as liveContract's render-hub runner: rapid moves coalesce into ONE
+      // trailing rebuild instead of two concurrent scanners racing the thumb prune. The rewritten
+      // asset-registry.json then hits the app's static import and Vite full-reloads the page.
+      // Default thumbs (no --no-thumbs): a moved image needs its new path-hash bake.
+      const REBUILDER = resolve(REPO_ROOT, 'tools/build-asset-registry.mjs');
+      let rebuilding = false;
+      let rebuildPending = false;
+      const rebuildRegistry = () => {
+        if (rebuilding) { rebuildPending = true; return; }
+        rebuilding = true;
+        let stderr = '';
+        const child = spawn(process.execPath, [REBUILDER], { cwd: REPO_ROOT });
+        child.stderr?.on('data', (d) => { stderr += d; });
+        child.on('error', (e) => { rebuilding = false; log(`could not run build-asset-registry — ${e.message}`); });
+        child.on('close', (code) => {
+          rebuilding = false;
+          if (code === 0) log('asset registry rebuilt after move → reloading');
+          else log(`build-asset-registry exited ${code}${stderr ? `\n${stderr.trim()}` : ''}`);
+          if (rebuildPending) { rebuildPending = false; rebuildRegistry(); }
+        });
+      };
+
       server.middlewares.use((req, res, next) => {
         const url = (req.url ?? '').split('?')[0];
 
@@ -202,6 +227,82 @@ function liveAssets(): Plugin {
               res.setHeader('Content-Type', 'application/json');
               res.end(JSON.stringify({ ok: true }));
             });
+          });
+          return;
+        }
+        // Move an asset into a triage zone (ADR 0011). Same threat model as /api/reveal but a
+        // MUTATION, so every guard is kept and tightened: `dest` is a server-owned enum (never a
+        // caller path — a free-form destination would be an arbitrary-write primitive over the
+        // library), the destination is built from the source's basename (traversal-proof by
+        // construction; containment re-checked anyway), and collisions abort with 409 exactly like
+        // migrate-assets-library.mjs — no silent suffixing in a non-git tree. The Roblox upload
+        // ledger is deliberately NOT rewritten (warn-don't-write): moving a joined file orphans
+        // its mapping until _catalog/roblox-upload-registry.jsonl is hand-edited.
+        if (url === '/api/move') {
+          if (req.method !== 'POST') { res.statusCode = 405; res.end('method not allowed'); return; }
+          // Origin/CSRF gate — a move is reachable as a no-preflight "simple request" and mutates
+          // the shared library; only same-machine browser origins (or Origin-less tools) may call.
+          const origin = req.headers.origin;
+          if (origin) {
+            let originHost: string | null = null;
+            try { originHost = new URL(origin).hostname; } catch { /* malformed → reject */ }
+            if (originHost !== 'localhost' && originHost !== '127.0.0.1') { res.statusCode = 403; res.end('forbidden'); return; }
+          }
+          const fail = (code: number, error: string) => { res.statusCode = code; res.setHeader('Content-Type', 'application/json'); res.end(JSON.stringify({ ok: false, error })); };
+          const chunks: Buffer[] = [];
+          let received = 0;
+          let aborted = false;
+          req.on('data', (c: Buffer) => {
+            if (aborted) return;
+            chunks.push(c);
+            received += c.length;
+            if (received > 4096) { aborted = true; fail(413, 'too large'); req.destroy(); }
+          });
+          req.on('end', () => {
+            if (aborted) return;
+            const body = Buffer.concat(chunks).toString('utf8');
+            let rel: string;
+            let dest: string;
+            try {
+              const parsed = JSON.parse(body || '{}') as { path?: unknown; dest?: unknown };
+              rel = String(parsed.path ?? '');
+              dest = String(parsed.dest ?? '');
+            } catch { return fail(400, 'bad json'); }
+            if (!rel || rel.includes('\0')) return fail(400, 'bad path');
+            if (dest !== 'resort' && dest !== 'archive') return fail(400, 'bad dest');
+            rel = rel.replace(/^external-locations\/assets\//, '').replace(/^\/+/, '');
+            let assetsRoot: string;
+            try { assetsRoot = realpathSync(resolve(REPO_ROOT, 'external-locations/assets')); }
+            catch { return fail(404, 'assets root missing'); }
+            let absSrc: string;
+            try { absSrc = realpathSync(join(assetsRoot, rel)); }
+            catch { return fail(404, 'not found'); }
+            if (!within(assetsRoot, absSrc)) return fail(403, 'forbidden');
+            let srcStat;
+            try { srcStat = statSync(absSrc); } catch { return fail(404, 'not found'); }
+            if (!srcStat.isFile()) return fail(400, 'not a file');
+            // Destination: flat _resort/ (a triage pen) or a dated _archive/ retirement folder,
+            // matching the zones' existing on-disk conventions.
+            const destRel = dest === 'resort'
+              ? `_resort/${basename(absSrc)}`
+              : `_archive/${new Date().toISOString().slice(0, 10)}-explorer/${basename(absSrc)}`;
+            const absDest = join(assetsRoot, destRel);
+            if (existsSync(absDest)) return fail(409, 'destination exists');
+            try {
+              mkdirSync(dirname(absDest), { recursive: true });
+              // Re-contain the REAL destination parent — guards a hostile symlink pre-planted
+              // at _resort/ or _archive/ redirecting the write outside the library.
+              const parentReal = realpathSync(dirname(absDest));
+              if (!within(assetsRoot, parentReal)) return fail(403, 'forbidden');
+              renameSync(absSrc, absDest); // same-volume tree; EXDEV out of scope for this dev tool
+            } catch { return fail(500, 'move failed'); }
+            log(`moved ${rel} → ${destRel}`);
+            // Respond BEFORE the rebuild: the rewritten registry JSON triggers a full page
+            // reload, and answering first gives the client the whole rebuild window to show
+            // "Moved — rebuilding…" and close its inspector gracefully.
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ ok: true, from: rel, to: destRel, rebuild: 'started' }));
+            rebuildRegistry();
           });
           return;
         }
