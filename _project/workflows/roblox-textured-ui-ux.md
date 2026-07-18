@@ -26,6 +26,11 @@ This is a **specialized composite** under [[0009-workflows-compose-by-call-and-h
 `generate-art` step calls the image-generation leaf with a bound asset brief, filename grammar,
 and `ui/` target slot. Asset-Studio stores the process and its run record, not the produced assets.
 
+**Standing style kit:** the graphite-cyan reference set (9-slice panel · seamless tile · 2×2 state
+atlas, produced by the `roblox-textured-ui-reference-kit` run) lives in the library
+`Assets/templates/ui-style/graphite-cyan/` per ADR 0010 and is the default specimen kit for the
+`write-art-contract` step. Full template index: [[mediums/image]] § Template registry.
+
 ## Roblox rendering standard
 
 - Use `ImageLabel` for non-interactive art and `ImageButton` only when the image itself is the

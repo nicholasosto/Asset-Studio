@@ -10,8 +10,8 @@
     "workflow": "workflows",
     "medium": "mediums"
   },
-  "entities": 37,
-  "migrated": 37,
+  "entities": 38,
+  "migrated": 38,
   "counts": {
     "error": 0,
     "warning": 0,
@@ -98,6 +98,15 @@
       "updated": "2026-07-11",
       "file": "_project/decisions/0009-workflows-compose-by-call-and-handoff.md",
       "excerpt": "The character factory made composition real before the model had a word for it: [[character-creation]] is a workflow whose steps run other workflows — five visual stages each run [[image-generation]], the optional audio…"
+    },
+    {
+      "id": "0010-templates-split-by-authorship-exemplars-get-a-library-templa",
+      "kind": "decision",
+      "title": "Templates split by authorship - exemplars get a library templates zone",
+      "status": "accepted",
+      "updated": "2026-07-18",
+      "file": "_project/decisions/0010-templates-split-by-authorship-exemplars-get-a-library-templa.md",
+      "excerpt": "The 2026-07-18 template/workflow coverage review found template-grade images in four locations, three of them accidental: the healthy templates/character/ set (Asset-Studio, cited by character-creation), six unregistere…"
     },
     {
       "id": "2026-07-01-session-review-explorer-migration-and-tcl-round-trip",
@@ -348,7 +357,7 @@
       "kind": "medium",
       "title": "Image",
       "status": "experimental",
-      "updated": "2026-06-30",
+      "updated": "2026-07-18",
       "file": "_project/mediums/image.md",
       "tags": {
         "mediumType": "image",
@@ -373,9 +382,9 @@
   ],
   "byKind": {
     "decision": {
-      "total": 9,
+      "total": 10,
       "byStatus": {
-        "accepted": 9
+        "accepted": 10
       },
       "ids": [
         "0001-reference-the-shared-asset-library-via-external-locations",
@@ -386,7 +395,8 @@
         "0006-reveal-in-finder-and-copy-asset-id-from-the-explorer",
         "0007-keep-explorer-previews-dev-local-stop-committing-the-thumbna",
         "0008-restructure-the-shared-assets-library-into-staging-library-r",
-        "0009-workflows-compose-by-call-and-handoff"
+        "0009-workflows-compose-by-call-and-handoff",
+        "0010-templates-split-by-authorship-exemplars-get-a-library-templa"
       ],
       "tone": "info",
       "statusOrder": [
@@ -571,6 +581,24 @@
       "fromKind": "decision",
       "rel": "references",
       "target": "decision/0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy"
+    },
+    {
+      "from": "0010-templates-split-by-authorship-exemplars-get-a-library-templa",
+      "fromKind": "decision",
+      "rel": "references",
+      "target": "decisions/0001-reference-the-shared-asset-library-via-external-locations"
+    },
+    {
+      "from": "0010-templates-split-by-authorship-exemplars-get-a-library-templa",
+      "fromKind": "decision",
+      "rel": "references",
+      "target": "decisions/0008-restructure-the-shared-assets-library-into-staging-library-r"
+    },
+    {
+      "from": "0010-templates-split-by-authorship-exemplars-get-a-library-templa",
+      "fromKind": "decision",
+      "rel": "references",
+      "target": "mediums/image"
     },
     {
       "from": "2026-07-01-session-review-explorer-migration-and-tcl-round-trip",
@@ -831,6 +859,12 @@
       "target": "workflows/image-generation"
     },
     {
+      "from": "image",
+      "fromKind": "medium",
+      "rel": "references",
+      "target": "decisions/0010-templates-split-by-authorship-exemplars-get-a-library-templa"
+    },
+    {
       "from": "lore",
       "fromKind": "medium",
       "rel": "references",
@@ -838,7 +872,7 @@
     }
   ],
   "edgesByRel": {
-    "references": 52,
+    "references": 56,
     "decided-in": 1
   },
   "workflows": {

@@ -52,6 +52,12 @@ background, same-scale views on a shared ground line; detail sheets use hero pan
 column + material swatch row. Attach the stage template to each generation run as the
 composition reference and treat it as the stage's definition-of-done.
 
+Domain-skinned exemplar alternates for the modelsheet stage — five themed turnarounds (blood ·
+decay · fateless · robot · spirit; no `shared` variant yet) — live in the library
+`Assets/templates/turnaround-themes/` per ADR 0010; bind one in the brief when a domain-flavored
+sheet serves the character better than the neutral master. The full index is
+[[mediums/image]] § Template registry.
+
 ## Workflow
 
 ```json
