@@ -1,7 +1,7 @@
 ---
 title: "Image generation"
 status: active
-updated: 2026-07-11
+updated: 2026-07-20
 links:
   - { rel: references, target: mediums/image }
 ---
@@ -22,6 +22,23 @@ reviews/files, the operator runs it in the Codex app, Codex generates into `gene
 names the destination (library `ui/ | textures/` by default; a calling workflow may bind a
 by-reference destination such as lore-brain `Media/visual/`).
 
+## Domain-neutral composition refs
+
+Prop and environment briefs may bind either authored master below. Both keep subject-specific art
+direction outside the layout so one structural template can serve any domain, faction, biome, mob,
+character, or prop family:
+
+- `templates/environment/prop-family.svg` (+ `png/prop-family.png`) — anchor prop, six related
+  gameplay roles, scale lineup, and material/value swatches. Bind subject family, palette, materials,
+  shape language, motif, wear/age, interaction state, and VFX behavior in the brief.
+- `templates/environment/encounter-environment.svg` (+ `png/encounter-environment.png`) — gameplay
+  keyframe, top-down blockout, elevation, set-dressing clusters, and lighting/state keys. Bind the
+  location or encounter, palette/value, materials/motifs, weather/VFX, and story/damage state in the
+  brief.
+
+The SVG is the versioned structural source; attach its PNG twin to generation. Domain styling belongs
+to the brief or a separately-filed generated exemplar, never to these masters.
+
 ## Workflow
 
 ```json
@@ -35,8 +52,8 @@ by-reference destination such as lore-brain `Media/visual/`).
     { "id": "place", "label": "Place + validate", "kind": "tool" }
   ],
   "steps": [
-    { "id": "write-brief", "lane": "brief", "label": "Write the image brief", "detail": "subject · style · target slot", "note": "The target slot is the leaf's parameter point: library ui/ | textures/ by default; a calling workflow (e.g. character-creation) may bind a template as composition ref, a filename grammar, and a by-reference destination.", "status": "pending", "to": ["write-batch"] },
-    { "id": "write-batch", "lane": "claude", "label": "Write generation/BATCH.md", "detail": "one rolling batch · variants + negatives", "note": "One rolling contract, rewritten per batch. Composition refs (e.g. templates/character/ PNG twins) named in the batch or staged under generation/refs/; if the tool can't take image inputs, the template's constraints are encoded textually in every prompt.", "status": "pending", "to": ["run-batch"] },
+    { "id": "write-brief", "lane": "brief", "label": "Write the image brief", "detail": "subject · style · target slot", "note": "The target slot is the leaf's parameter point: library ui/ | textures/ by default; a calling workflow may bind a template, filename grammar, and by-reference destination. Prop/environment briefs may bind templates/environment/prop-family.svg or encounter-environment.svg, with domain-specific palette, materials, motifs, and VFX supplied dynamically by the brief.", "status": "pending", "to": ["write-batch"] },
+    { "id": "write-batch", "lane": "claude", "label": "Write generation/BATCH.md", "detail": "one rolling batch · variants + negatives", "note": "One rolling contract, rewritten per batch. Composition refs (e.g. templates/character/ or templates/environment/ PNG twins) named in the batch or staged under generation/refs/; if the tool can't take image inputs, the template's constraints are encoded textually in every prompt.", "status": "pending", "to": ["run-batch"] },
     { "id": "run-batch", "lane": "operator", "label": "Run generation batch <id>", "detail": "Codex app", "note": "The operator trigger phrase. Codex stops if BATCH.md's id doesn't match.", "status": "pending", "to": ["generate"] },
     { "id": "generate", "lane": "codex", "label": "Generate into generation/staging/", "detail": "<batch-id>_v<variant>c<n>.png", "note": "Codex generates candidates only — no review, rename, or filing on the Codex side. Staging is untracked; candidates are ephemeral by design.", "status": "pending", "to": ["review-cand"] },
     { "id": "review-cand", "lane": "claude", "label": "Review candidates vs brief + template", "note": "Claude reviews against the brief and composition ref and shortlists keeps; the operator has final say. Approve one, or send back for another pass.", "status": "pending", "to": ["finalize", "revise"] },

@@ -192,6 +192,19 @@ ui's CSS which was re-overriding the fix — dedupe spun off as a background tas
 app.css `.tcl-menu` z-override deleted, verified live (z 1350 > 1300), static bundle rebuilt.
 Operational gotchas memorized: game-viz CSS re-bundling; vite dev keeps serving the old `.pnpm`
 path after a dep swap — restart it, a reload isn't enough ([[command-center-consumes-tcl]]).
+**2026-07-20 Roblox upload registration one-shot + ledger reconciled 21/21:** the upload ledger
+(`Assets/_catalog/roblox-upload-registry.jsonl`) got a sanctioned one-liner — a `register <path>
+<asset-id>` subcommand in `Assets/_tools/roblox_asset_metadata.py` that drives the existing review
+machinery internally (atomic apply · snapshots · xattr sync · full audit all free; supersede carries
+history byte-exact and heals same-path checksum drift; Open Cloud auto-verify when
+`ROBLOX_CLOUD_API_KEY` is set, else `--evidence`; sandbox-tested, doc'd in
+`_catalog/roblox-upload-registry.md` § One-shot registration). Exercised for real: wall-order-01
+(97888273125861, via the manual review flow that motivated it), then 12 tileables (robotic +
+fateless) batch-registered from operator hub screenshots with MCP `asset_get_info` evidence —
+ledger 9 → 21 records, Explorer `robloxRegistry` 21/21 exact-path joins, static bundle rebuilt.
+Open: the 9 pre-07-20 records' `inventory_path` (`textures/part-texture`) vs the hub's current
+`textures/surfaces` folder (batch de-drift = owner call); hub asset `Images/texture-cyber-01` has
+no local file → ledger-unregistrable as-is.
 **Open (owner calls):** fetch-vs-inline for the contracts (would dissolve the stale-bundle class — wants
 an ADR). Corpus: 39 entities (11 decision · 2 roadmap · 1 report · 9 session · 7 workflow · 4 medium ·
 5 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.8.1` + `game-viz 0.3.1`.

@@ -16,7 +16,9 @@
 | Subdir | Masters | Bound by |
 |---|---|---|
 | `character/` | concept · portrait · turnaround · detail-callouts · pose-sheet | `character-creation` stages 1–5 |
+| `environment/` | prop-family · encounter-environment | `image-generation` optional composition refs for prop and encounter briefs |
 | `ui/` | (planned) icon-tile spec | `roblox-textured-ui-ux` art contract |
 
 Library exemplar sets (see the registry for bindings): `turnaround-themes/` (5 domain-skinned
-turnarounds; `shared` variant still missing) · `key-art/` · `ui-style/graphite-cyan/`.
+turnarounds; `shared` variant still missing) · `key-art/` · `ui-style/graphite-cyan/` ·
+`roguex-depot/` (supply prop-family + encounter-environment sheets).

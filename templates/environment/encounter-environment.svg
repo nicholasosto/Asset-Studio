@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" font-family="Helvetica, Arial, sans-serif">
+  <!-- Domain-neutral ENCOUNTER ENVIRONMENT sheet — location identity is parameterized by the brief. -->
+  <rect width="1600" height="900" fill="#8b8b8b"/>
+
+  <!-- Header -->
+  <text x="40" y="32" font-size="24" font-weight="bold" fill="#2c2c2c">ENCOUNTER ENVIRONMENT — &lt;Location-or-Mob&gt;_encounter-environment-v1</text>
+  <text x="40" y="58" font-size="16" fill="#3a3a3a">experience keyframe + build logic · theme and domain supplied dynamically by the generation brief</text>
+
+  <!-- Gameplay keyframe -->
+  <rect x="40" y="82" width="970" height="522" fill="#ffffff" opacity="0.045"/>
+  <rect x="40" y="82" width="970" height="522" fill="none" stroke="#3a3a3a" stroke-width="2"/>
+  <rect x="60" y="124" width="930" height="446" fill="none" stroke="#d6408b" stroke-width="1.5" stroke-dasharray="10 8" opacity="0.7"/>
+  <line x1="370" y1="124" x2="370" y2="570" stroke="#d6408b" stroke-width="1" stroke-dasharray="6 8" opacity="0.45"/>
+  <line x1="680" y1="124" x2="680" y2="570" stroke="#d6408b" stroke-width="1" stroke-dasharray="6 8" opacity="0.45"/>
+  <line x1="60" y1="272" x2="990" y2="272" stroke="#d6408b" stroke-width="1" stroke-dasharray="6 8" opacity="0.45"/>
+  <line x1="60" y1="422" x2="990" y2="422" stroke="#d6408b" stroke-width="1" stroke-dasharray="6 8" opacity="0.45"/>
+  <line x1="60" y1="338" x2="990" y2="338" stroke="#3a3a3a" stroke-width="1.5" opacity="0.62"/>
+  <text x="58" y="112" font-size="22" font-weight="bold" fill="#2c2c2c">GAMEPLAY KEYFRAME — PLAYER EYE LEVEL</text>
+  <text x="72" y="328" font-size="14" fill="#3a3a3a">horizon / player eye line</text>
+  <circle cx="680" cy="338" r="42" fill="none" stroke="#d6408b" stroke-width="2" stroke-dasharray="8 6" opacity="0.72"/>
+  <text x="730" y="344" font-size="15" fill="#3a3a3a">encounter focal point</text>
+  <path d="M180 532 C330 500 430 476 560 430 C640 402 660 374 680 338" fill="none" stroke="#d6408b" stroke-width="3" stroke-dasharray="12 8" opacity="0.72"/>
+  <path d="M670 347 L680 338 L666 334" fill="none" stroke="#d6408b" stroke-width="3" opacity="0.72"/>
+  <rect x="142" y="468" width="28" height="64" rx="14" fill="none" stroke="#3a3a3a" stroke-width="2"/>
+  <text x="178" y="522" font-size="14" fill="#3a3a3a">player scale</text>
+  <text x="58" y="594" font-size="15" fill="#3a3a3a">read test: path, threat, cover, landmark, and usable space remain legible after theme is applied</text>
+
+  <!-- Top-down plan -->
+  <rect x="1030" y="82" width="530" height="250" fill="#ffffff" opacity="0.04"/>
+  <rect x="1030" y="82" width="530" height="250" fill="none" stroke="#3a3a3a" stroke-width="2"/>
+  <text x="1048" y="112" font-size="20" font-weight="bold" fill="#2c2c2c">TOP-DOWN BLOCKOUT</text>
+  <rect x="1052" y="132" width="486" height="178" fill="none" stroke="#d6408b" stroke-width="1.5" stroke-dasharray="8 6" opacity="0.64"/>
+  <path d="M1076 270 C1148 236 1182 270 1240 224 C1296 180 1344 246 1410 196 C1450 166 1492 176 1514 150" fill="none" stroke="#3a3a3a" stroke-width="8" opacity="0.6"/>
+  <circle cx="1292" cy="214" r="46" fill="none" stroke="#d6408b" stroke-width="2" stroke-dasharray="8 6" opacity="0.78"/>
+  <text x="1064" y="294" font-size="13" fill="#3a3a3a">ENTRY</text><text x="1462" y="144" font-size="13" fill="#3a3a3a">EXIT</text>
+  <text x="1248" y="218" font-size="13" fill="#3a3a3a" text-anchor="end">FOCAL</text>
+
+  <!-- Elevation / silhouette -->
+  <rect x="1030" y="352" width="530" height="252" fill="#ffffff" opacity="0.04"/>
+  <rect x="1030" y="352" width="530" height="252" fill="none" stroke="#3a3a3a" stroke-width="2"/>
+  <text x="1048" y="382" font-size="20" font-weight="bold" fill="#2c2c2c">ELEVATION / LANDMARK SILHOUETTE</text>
+  <line x1="1052" y1="564" x2="1538" y2="564" stroke="#3a3a3a" stroke-width="2"/>
+  <line x1="1052" y1="420" x2="1538" y2="420" stroke="#d6408b" stroke-width="1" stroke-dasharray="8 6" opacity="0.5"/>
+  <line x1="1052" y1="492" x2="1538" y2="492" stroke="#d6408b" stroke-width="1" stroke-dasharray="8 6" opacity="0.5"/>
+  <path d="M1080 564 L1080 528 L1160 528 L1160 468 L1238 468 L1238 408 L1322 408 L1322 492 L1410 492 L1410 536 L1508 536 L1508 564" fill="none" stroke="#d6408b" stroke-width="2" stroke-dasharray="10 7" opacity="0.72"/>
+  <rect x="1110" y="506" width="24" height="58" rx="12" fill="none" stroke="#3a3a3a" stroke-width="2"/>
+  <text x="1048" y="594" font-size="14" fill="#3a3a3a">lock height, traversal bands, skyline rhythm, and entrances</text>
+
+  <!-- Set-dressing cluster studies -->
+  <rect x="40" y="626" width="470" height="190" fill="#ffffff" opacity="0.04"/>
+  <rect x="40" y="626" width="470" height="190" fill="none" stroke="#3a3a3a" stroke-width="2"/>
+  <text x="58" y="656" font-size="20" font-weight="bold" fill="#2c2c2c">SET-DRESSING CLUSTERS</text>
+  <g fill="none" stroke="#d6408b" stroke-width="1.5" stroke-dasharray="7 6" opacity="0.7">
+    <rect x="60" y="678" width="132" height="108"/><rect x="208" y="678" width="132" height="108"/><rect x="356" y="678" width="134" height="108"/>
+  </g>
+  <g font-size="13" fill="#3a3a3a" text-anchor="middle">
+    <text x="126" y="804">QUIET / COMMON</text><text x="274" y="804">GUIDE / FOCAL</text><text x="423" y="804">DANGER / STORY</text>
+  </g>
+
+  <!-- Lighting keys -->
+  <rect x="530" y="626" width="500" height="190" fill="#ffffff" opacity="0.04"/>
+  <rect x="530" y="626" width="500" height="190" fill="none" stroke="#3a3a3a" stroke-width="2"/>
+  <text x="548" y="656" font-size="20" font-weight="bold" fill="#2c2c2c">LIGHTING / STATE KEYS</text>
+  <g fill="none" stroke="#d6408b" stroke-width="1.5" stroke-dasharray="7 6" opacity="0.7">
+    <rect x="550" y="678" width="104" height="108"/><rect x="668" y="678" width="104" height="108"/><rect x="786" y="678" width="104" height="108"/><rect x="904" y="678" width="106" height="108"/>
+  </g>
+  <g font-size="13" fill="#3a3a3a" text-anchor="middle">
+    <text x="602" y="804">BASE</text><text x="720" y="804">ACTIVE</text><text x="838" y="804">ALERT</text><text x="957" y="804">AFTERMATH</text>
+  </g>
+
+  <!-- Dynamic brief bindings -->
+  <rect x="1050" y="626" width="510" height="190" fill="#ffffff" opacity="0.04"/>
+  <rect x="1050" y="626" width="510" height="190" fill="none" stroke="#3a3a3a" stroke-width="2"/>
+  <text x="1068" y="656" font-size="20" font-weight="bold" fill="#2c2c2c">DYNAMIC BRIEF SLOTS</text>
+  <g font-size="15" fill="#2c2c2c">
+    <text x="1068" y="687">LOCATION / ENCOUNTER:</text><text x="1280" y="687" fill="#3a3a3a">&lt;bind&gt;</text>
+    <text x="1068" y="711">PALETTE / VALUE:</text><text x="1280" y="711" fill="#3a3a3a">&lt;bind&gt;</text>
+    <text x="1068" y="735">MATERIALS / MOTIFS:</text><text x="1280" y="735" fill="#3a3a3a">&lt;bind&gt;</text>
+    <text x="1068" y="759">WEATHER / VFX:</text><text x="1280" y="759" fill="#3a3a3a">&lt;bind&gt;</text>
+    <text x="1068" y="783">STORY / DAMAGE STATE:</text><text x="1280" y="783" fill="#3a3a3a">&lt;bind&gt;</text>
+  </g>
+
+  <!-- Rules -->
+  <text x="40" y="850" font-size="16" fill="#2c2c2c">16:9 · preserve gameplay readability before atmosphere · keyframe and plan describe the same space · prop clusters reuse the bound family language</text>
+  <text x="40" y="878" font-size="16" fill="#2c2c2c">domain-neutral master · subject-specific palette, materials, motifs, weather, VFX, and story state are prompt parameters · magenta guides never appear in output</text>
+</svg>

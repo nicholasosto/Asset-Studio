@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" font-family="Helvetica, Arial, sans-serif">
+  <!-- Domain-neutral PROP FAMILY sheet — bind art direction through the brief, never bake it into this master. -->
+  <rect width="1600" height="900" fill="#8b8b8b"/>
+
+  <!-- Header -->
+  <text x="40" y="32" font-size="24" font-weight="bold" fill="#2c2c2c">PROP FAMILY — &lt;Collection&gt;_prop-family-v1</text>
+  <text x="40" y="58" font-size="16" fill="#3a3a3a">one visual language · multiple gameplay roles · theme and domain supplied by the generation brief</text>
+
+  <!-- Anchor prop -->
+  <rect x="40" y="82" width="520" height="526" fill="#ffffff" opacity="0.045"/>
+  <rect x="40" y="82" width="520" height="526" fill="none" stroke="#3a3a3a" stroke-width="2"/>
+  <rect x="58" y="122" width="484" height="454" fill="none" stroke="#d6408b" stroke-width="1.5" stroke-dasharray="10 8" opacity="0.72"/>
+  <line x1="300" y1="122" x2="300" y2="576" stroke="#d6408b" stroke-width="1" stroke-dasharray="4 8" opacity="0.48"/>
+  <line x1="72" y1="556" x2="528" y2="556" stroke="#3a3a3a" stroke-width="2"/>
+  <ellipse cx="300" cy="556" rx="132" ry="12" fill="#3a3a3a" opacity="0.22"/>
+  <text x="58" y="112" font-size="22" font-weight="bold" fill="#2c2c2c">ANCHOR PROP — ¾ HERO</text>
+  <text x="58" y="598" font-size="15" fill="#3a3a3a">largest identity carrier · clear function · complete silhouette · neutral presentation</text>
+
+  <!-- Family grid: three roles across, two rows -->
+  <g fill="#ffffff" opacity="0.04">
+    <rect x="580" y="82" width="306" height="252"/><rect x="906" y="82" width="306" height="252"/><rect x="1232" y="82" width="328" height="252"/>
+    <rect x="580" y="354" width="306" height="254"/><rect x="906" y="354" width="306" height="254"/><rect x="1232" y="354" width="328" height="254"/>
+  </g>
+  <g fill="none" stroke="#3a3a3a" stroke-width="2">
+    <rect x="580" y="82" width="306" height="252"/><rect x="906" y="82" width="306" height="252"/><rect x="1232" y="82" width="328" height="252"/>
+    <rect x="580" y="354" width="306" height="254"/><rect x="906" y="354" width="306" height="254"/><rect x="1232" y="354" width="328" height="254"/>
+  </g>
+  <g stroke="#d6408b" stroke-width="1" stroke-dasharray="4 8" opacity="0.46">
+    <line x1="733" y1="126" x2="733" y2="306"/><line x1="1059" y1="126" x2="1059" y2="306"/><line x1="1396" y1="126" x2="1396" y2="306"/>
+    <line x1="733" y1="398" x2="733" y2="580"/><line x1="1059" y1="398" x2="1059" y2="580"/><line x1="1396" y1="398" x2="1396" y2="580"/>
+  </g>
+  <g stroke="#3a3a3a" stroke-width="1.5" opacity="0.75">
+    <line x1="604" y1="306" x2="862" y2="306"/><line x1="930" y1="306" x2="1188" y2="306"/><line x1="1256" y1="306" x2="1536" y2="306"/>
+    <line x1="604" y1="580" x2="862" y2="580"/><line x1="930" y1="580" x2="1188" y2="580"/><line x1="1256" y1="580" x2="1536" y2="580"/>
+  </g>
+  <g font-size="16" font-weight="bold" fill="#2c2c2c">
+    <text x="596" y="112">FAMILY 01 — SMALL / COMMON</text>
+    <text x="922" y="112">FAMILY 02 — MEDIUM / REPEAT</text>
+    <text x="1248" y="112">FAMILY 03 — TALL / LANDMARK</text>
+    <text x="596" y="384">FAMILY 04 — INTERACTIVE</text>
+    <text x="922" y="384">FAMILY 05 — AGED / DAMAGED</text>
+    <text x="1248" y="384">FAMILY 06 — CLUSTER / DRESSING</text>
+  </g>
+
+  <!-- Scale lineup -->
+  <rect x="40" y="630" width="700" height="194" fill="#ffffff" opacity="0.04"/>
+  <rect x="40" y="630" width="700" height="194" fill="none" stroke="#3a3a3a" stroke-width="2"/>
+  <text x="58" y="660" font-size="20" font-weight="bold" fill="#2c2c2c">SCALE LINEUP — SAME CAMERA / SAME GROUND</text>
+  <line x1="60" y1="790" x2="720" y2="790" stroke="#3a3a3a" stroke-width="2"/>
+  <g fill="none" stroke="#d6408b" stroke-width="2" stroke-dasharray="6 6" opacity="0.72">
+    <rect x="92" y="740" width="44" height="50"/><rect x="180" y="704" width="62" height="86"/><rect x="292" y="660" width="86" height="130"/>
+    <rect x="438" y="690" width="104" height="100"/><rect x="630" y="666" width="34" height="124" rx="17"/>
+  </g>
+  <g font-size="14" fill="#3a3a3a" text-anchor="middle">
+    <text x="114" y="812">XS</text><text x="211" y="812">S</text><text x="335" y="812">M</text><text x="490" y="812">L / CLUSTER</text><text x="647" y="812">PLAYER / NPC</text>
+  </g>
+
+  <!-- Materials and dynamic bindings -->
+  <rect x="760" y="630" width="800" height="194" fill="#ffffff" opacity="0.04"/>
+  <rect x="760" y="630" width="800" height="194" fill="none" stroke="#3a3a3a" stroke-width="2"/>
+  <text x="778" y="660" font-size="20" font-weight="bold" fill="#2c2c2c">MATERIAL / VALUE SWATCHES — BIND FROM BRIEF</text>
+  <g fill="none" stroke="#d6408b" stroke-width="1.5" stroke-dasharray="8 6" opacity="0.72">
+    <rect x="780" y="682" width="136" height="86"/><rect x="934" y="682" width="136" height="86"/><rect x="1088" y="682" width="136" height="86"/>
+    <rect x="1242" y="682" width="136" height="86"/><rect x="1396" y="682" width="144" height="86"/>
+  </g>
+  <g font-size="14" fill="#3a3a3a" text-anchor="middle">
+    <text x="848" y="792">PRIMARY</text><text x="1002" y="792">SECONDARY</text><text x="1156" y="792">ACCENT</text>
+    <text x="1310" y="792">WEAR / AGE</text><text x="1468" y="792">EMISSIVE / VFX</text>
+  </g>
+
+  <!-- Binding contract -->
+  <text x="40" y="854" font-size="16" font-weight="bold" fill="#2c2c2c">DYNAMIC BRIEF SLOTS:</text>
+  <text x="240" y="854" font-size="16" fill="#2c2c2c">subject family · palette · materials · shape language · motif · wear/age · interaction state · VFX behavior</text>
+  <text x="40" y="882" font-size="16" fill="#2c2c2c">16:9 · domain-neutral master · every family member must look related without becoming a scaled copy · magenta guides never appear in output</text>
+</svg>

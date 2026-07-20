@@ -311,7 +311,7 @@
       "kind": "workflow",
       "title": "Image generation",
       "status": "active",
-      "updated": "2026-07-11",
+      "updated": "2026-07-20",
       "file": "_project/workflows/image-generation.md",
       "excerpt": "A briefed 2D image — UI icon, sprite, portrait, or texture — taken from prompt to a finalized file in its target slot, with a review gate and a revise loop. Generation runs through the Codex batch contract (generation/B…"
     },
@@ -366,7 +366,7 @@
       "kind": "medium",
       "title": "Image",
       "status": "experimental",
-      "updated": "2026-07-18",
+      "updated": "2026-07-20",
       "file": "_project/mediums/image.md",
       "tags": {
         "mediumType": "image",
@@ -1447,7 +1447,7 @@
           "lane": "brief",
           "label": "Write the image brief",
           "detail": "subject · style · target slot",
-          "note": "The target slot is the leaf's parameter point: library ui/ | textures/ by default; a calling workflow (e.g. character-creation) may bind a template as composition ref, a filename grammar, and a by-reference destination.",
+          "note": "The target slot is the leaf's parameter point: library ui/ | textures/ by default; a calling workflow may bind a template, filename grammar, and by-reference destination. Prop/environment briefs may bind templates/environment/prop-family.svg or encounter-environment.svg, with domain-specific palette, materials, motifs, and VFX supplied dynamically by the brief.",
           "status": "pending",
           "to": [
             "write-batch"
@@ -1458,7 +1458,7 @@
           "lane": "claude",
           "label": "Write generation/BATCH.md",
           "detail": "one rolling batch · variants + negatives",
-          "note": "One rolling contract, rewritten per batch. Composition refs (e.g. templates/character/ PNG twins) named in the batch or staged under generation/refs/; if the tool can't take image inputs, the template's constraints are encoded textually in every prompt.",
+          "note": "One rolling contract, rewritten per batch. Composition refs (e.g. templates/character/ or templates/environment/ PNG twins) named in the batch or staged under generation/refs/; if the tool can't take image inputs, the template's constraints are encoded textually in every prompt.",
           "status": "pending",
           "to": [
             "run-batch"

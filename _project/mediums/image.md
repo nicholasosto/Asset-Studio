@@ -1,7 +1,7 @@
 ---
 title: "Image"
 status: experimental
-updated: 2026-07-18
+updated: 2026-07-20
 links:
   - { rel: references, target: workflows/image-generation }
   - { rel: references, target: decisions/0010-templates-split-by-authorship-exemplars-get-a-library-templa }
@@ -46,6 +46,9 @@ listed here is buried).
 | Template | Home | Bound by |
 |---|---|---|
 | Character stage masters ×5 (concept · portrait · turnaround · detail-callouts · pose-sheet) | `templates/character/*.svg` (+ `png/` twins) | [[character-creation]] stages 1–5 |
+| Domain-neutral prop-family master | `templates/environment/prop-family.svg` (+ `png/prop-family.png`) | [[image-generation]] optional composition ref for prop-family briefs |
+| Domain-neutral encounter-environment master | `templates/environment/encounter-environment.svg` (+ `png/encounter-environment.png`) | [[image-generation]] optional composition ref for encounter/environment briefs |
+| Roguex Depot generated exemplars ×2 (supply prop family · encounter environment) | library `templates/roguex-depot/` | [[image-generation]] optional style + content refs for Roguex/industrial prop and environment briefs |
 | Domain-themed turnarounds ×5 (blood · decay · fateless · robot · spirit; `shared` missing) | library `templates/turnaround-themes/` | [[character-creation]] modelsheet — optional domain-skinned alternates |
 | Character promo key-art layout | library `templates/key-art/character-promo-boxing-theme.png` | unbound — no workflow produces promo art yet |
 | Graphite-cyan UI style kit ×3 (9-slice panel · seamless tile · 2×2 state atlas) | library `templates/ui-style/graphite-cyan/` | [[roblox-textured-ui-ux]] write-art-contract — standing specimen kit (produced by the `roblox-textured-ui-reference-kit` run) |
