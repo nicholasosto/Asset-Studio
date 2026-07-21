@@ -1,6 +1,6 @@
 {
-  "built": "2026-07-20 16:01",
-  "builtMs": 1784563293685,
+  "built": "2026-07-21 12:17",
+  "builtMs": 1784636247172,
   "assetsRootHint": "external-locations/assets",
   "assetsRootAbs": "/Users/nicholasosto/Master-Managed/Assets",
   "taxonomy": {
@@ -21,31 +21,31 @@
   },
   "robloxRegistry": {
     "schemaVersion": 1,
-    "total": 21,
-    "joined": 21,
+    "total": 27,
+    "joined": 27,
     "orphaned": 0,
     "checksumMismatch": 0,
     "legacyIdConflicts": 0,
     "byState": {
-      "uploaded": 21,
+      "uploaded": 27,
       "needsReview": 0,
-      "unregistered": 427
+      "unregistered": 416
     },
     "issues": []
   },
   "counts": {
-    "total": 527,
+    "total": 523,
     "byMedium": {
-      "image": 294,
-      "3d": 95,
-      "(source)": 79,
+      "(source)": 80,
+      "3d": 96,
+      "image": 288,
       "audio": 59
     },
     "byMediumType": {
+      "(source)": 80,
+      "3d-model": 90,
       "image": 112,
-      "3d-model": 89,
-      "(source)": 79,
-      "ui": 143,
+      "ui": 137,
       "texture": 39,
       "3d-rig": 6,
       "audio-music": 6,
@@ -53,16 +53,16 @@
       "audio-sfx": 33
     },
     "byStatus": {
-      "(none)": 230,
-      "BLK": 293,
+      "(none)": 232,
+      "BLK": 287,
       "ALPHA": 1,
       "FNL": 3
     },
     "byKind": {
-      "image": 294,
-      "model": 95,
+      "other": 4,
+      "model": 96,
+      "image": 288,
       "doc": 53,
-      "other": 3,
       "data": 17,
       "source": 5,
       "script": 1,
@@ -71,6 +71,71 @@
     "unknown": 0
   },
   "records": [
+    {
+      "p": "runtime/roblox/hub.rbxl",
+      "area": "runtime",
+      "dir": "runtime/roblox",
+      "base": "hub.rbxl",
+      "stem": "hub",
+      "ext": "rbxl",
+      "kind": "other",
+      "size": 87195,
+      "mtime": "2026-07-20",
+      "domain": null,
+      "tgl": null,
+      "status": null,
+      "conformance": "n/a",
+      "issue": null,
+      "instance": null,
+      "medium": null,
+      "mediumType": null,
+      "spec": "n/a",
+      "mtimeMs": 1784574524654
+    },
+    {
+      "p": "source/blender/meshy-robot/Animated-Robot-Test.blend",
+      "area": "source",
+      "dir": "source/blender/meshy-robot",
+      "base": "Animated-Robot-Test.blend",
+      "stem": "Animated-Robot-Test",
+      "ext": "blend",
+      "kind": "model",
+      "size": 8430891,
+      "mtime": "2026-07-20",
+      "domain": null,
+      "tgl": null,
+      "status": null,
+      "conformance": "n/a",
+      "issue": null,
+      "instance": "MeshPart",
+      "medium": "3d",
+      "mediumType": "3d-model",
+      "spec": "n/a",
+      "src": "/_assets/source/blender/meshy-robot/Animated-Robot-Test.blend",
+      "mtimeMs": 1784574042171
+    },
+    {
+      "p": "runtime/roblox/TGL-backup/TrembusGameLibrary.rbxm",
+      "area": "runtime",
+      "dir": "runtime/roblox/TGL-backup",
+      "base": "TrembusGameLibrary.rbxm",
+      "stem": "TrembusGameLibrary",
+      "ext": "rbxm",
+      "kind": "model",
+      "size": 18788,
+      "mtime": "2026-07-20",
+      "domain": null,
+      "tgl": null,
+      "status": null,
+      "conformance": "stray",
+      "issue": "not TGL-shaped",
+      "instance": "MeshPart",
+      "medium": "3d",
+      "mediumType": "3d-model",
+      "spec": "n/a",
+      "src": "/_assets/runtime/roblox/TGL-backup/TrembusGameLibrary.rbxm",
+      "mtimeMs": 1784568149851
+    },
     {
       "p": "templates/roguex-depot/roguex-depot-supply-encounter-environment-v1.png",
       "area": "templates",
@@ -116,28 +181,6 @@
       "thumb": "28ffd349c181.png",
       "src": "/_assets/templates/roguex-depot/roguex-depot-supply-prop-family-v1.png",
       "mtimeMs": 1784545784338
-    },
-    {
-      "p": "source/blender/meshy-robot/Animated-Robot-Test.blend",
-      "area": "source",
-      "dir": "source/blender/meshy-robot",
-      "base": "Animated-Robot-Test.blend",
-      "stem": "Animated-Robot-Test",
-      "ext": "blend",
-      "kind": "model",
-      "size": 8431020,
-      "mtime": "2026-07-20",
-      "domain": null,
-      "tgl": null,
-      "status": null,
-      "conformance": "n/a",
-      "issue": null,
-      "instance": "MeshPart",
-      "medium": "3d",
-      "mediumType": "3d-model",
-      "spec": "n/a",
-      "src": "/_assets/source/blender/meshy-robot/Animated-Robot-Test.blend",
-      "mtimeMs": 1784545186642
     },
     {
       "p": "concept-art/soul-steel/mobs/blood-mosquito-bat-evolution-turnaround_BLK.png",
@@ -2466,6 +2509,29 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "roblox": {
+        "schemaVersion": 1,
+        "recordedAt": "2026-07-20",
+        "localUri": "rbxasset://trembus/textures/skybox/soul-steel-01/dn_BLK.png",
+        "sourceSha256": "9e6248230bf84e07234bbbc6bee1f9334424dee2c11849c5cd79d51bb7bcbeb4",
+        "checksum": "match",
+        "uploadCount": 1,
+        "active": {
+          "assetId": "97467375392388",
+          "assetUri": "rbxassetid://97467375392388",
+          "assetType": "Image",
+          "creator": {
+            "id": "3394700055",
+            "name": "TrembusTech",
+            "type": "User"
+          },
+          "inventoryPath": "skybox",
+          "creatorStoreUrl": null,
+          "status": "active",
+          "verifiedAt": "2026-07-20",
+          "verificationMethod": "open-cloud assets.get via roblox-cloud MCP (asset_get_info); match evidence: asset_type derived from the .png extension; open-cloud assets.get via roblox-cloud MCP (asset_get_info): displayName=dn_BLK matches file stem; assetType=Image; state=Active; creator userId=3394700055 (TrembusTech)"
+        }
+      },
       "thumb": "87a18c1cc42a.png",
       "src": "/_assets/textures/skybox/soul-steel-01/dn_BLK.png",
       "mtimeMs": 1780071739736
@@ -5894,29 +5960,6 @@
       "mtimeMs": 1778071554235
     },
     {
-      "p": "ui/icons/currency-scrip_BLK.png",
-      "area": "ui",
-      "dir": "ui/icons",
-      "base": "currency-scrip_BLK.png",
-      "stem": "currency-scrip_BLK",
-      "ext": "png",
-      "kind": "image",
-      "size": 48387,
-      "mtime": "2026-05-03",
-      "domain": null,
-      "tgl": null,
-      "status": "BLK",
-      "conformance": "n/a",
-      "issue": null,
-      "instance": "ImageLabel/Button",
-      "medium": "image",
-      "mediumType": "ui",
-      "spec": "n/a",
-      "thumb": "522d0a4829d3.png",
-      "src": "/_assets/ui/icons/currency-scrip_BLK.png",
-      "mtimeMs": 1777825480027
-    },
-    {
       "p": "runtime/roblox/soul-steel/rigs/shared/RIG_CRE_BAD_EVOLUTION_BLK.rbxm",
       "area": "runtime",
       "dir": "runtime/roblox/soul-steel/rigs/shared",
@@ -7859,52 +7902,6 @@
       "mtimeMs": 1773741367995
     },
     {
-      "p": "ui/soul-steel/factions/crimson-order/icon-v2_BLK.png",
-      "area": "ui",
-      "dir": "ui/soul-steel/factions/crimson-order",
-      "base": "icon-v2_BLK.png",
-      "stem": "icon-v2_BLK",
-      "ext": "png",
-      "kind": "image",
-      "size": 1734197,
-      "mtime": "2026-03-17",
-      "domain": null,
-      "tgl": null,
-      "status": "BLK",
-      "conformance": "n/a",
-      "issue": null,
-      "instance": "ImageLabel/Button",
-      "medium": "image",
-      "mediumType": "ui",
-      "spec": "n/a",
-      "thumb": "edfb6e0a217d.png",
-      "src": "/_assets/ui/soul-steel/factions/crimson-order/icon-v2_BLK.png",
-      "mtimeMs": 1773741367994
-    },
-    {
-      "p": "ui/soul-steel/abilities/void-spiral/icon_BLK.png",
-      "area": "ui",
-      "dir": "ui/soul-steel/abilities/void-spiral",
-      "base": "icon_BLK.png",
-      "stem": "icon_BLK",
-      "ext": "png",
-      "kind": "image",
-      "size": 1641832,
-      "mtime": "2026-03-16",
-      "domain": null,
-      "tgl": null,
-      "status": "BLK",
-      "conformance": "n/a",
-      "issue": null,
-      "instance": "ImageLabel/Button",
-      "medium": "image",
-      "mediumType": "ui",
-      "spec": "n/a",
-      "thumb": "feb8e43d5e42.png",
-      "src": "/_assets/ui/soul-steel/abilities/void-spiral/icon_BLK.png",
-      "mtimeMs": 1773696134913
-    },
-    {
       "p": "ui/soul-steel/abilities/speed-mode/icon_BLK.png",
       "area": "ui",
       "dir": "ui/soul-steel/abilities/speed-mode",
@@ -8081,29 +8078,6 @@
       "spec": "n/a",
       "src": "/_assets/audio/sfx/world/ball-bounce-heavy-sfx.mp3",
       "mtimeMs": 1773572235673
-    },
-    {
-      "p": "ui/soul-steel/bestiary/blood-knight/portrait_BLK.png",
-      "area": "ui",
-      "dir": "ui/soul-steel/bestiary/blood-knight",
-      "base": "portrait_BLK.png",
-      "stem": "portrait_BLK",
-      "ext": "png",
-      "kind": "image",
-      "size": 1669608,
-      "mtime": "2026-03-15",
-      "domain": null,
-      "tgl": null,
-      "status": "BLK",
-      "conformance": "n/a",
-      "issue": null,
-      "instance": "ImageLabel/Button",
-      "medium": "image",
-      "mediumType": "ui",
-      "spec": "n/a",
-      "thumb": "684ce0d0bc7e.png",
-      "src": "/_assets/ui/soul-steel/bestiary/blood-knight/portrait_BLK.png",
-      "mtimeMs": 1773570740138
     },
     {
       "p": "ui/soul-steel/bestiary/skeleton-warrior/portrait_BLK.png",
@@ -10515,29 +10489,6 @@
       "mtimeMs": 1756117890223
     },
     {
-      "p": "ui/frames/frame-purple_BLK.png",
-      "area": "ui",
-      "dir": "ui/frames",
-      "base": "frame-purple_BLK.png",
-      "stem": "frame-purple_BLK",
-      "ext": "png",
-      "kind": "image",
-      "size": 260440,
-      "mtime": "2025-08-25",
-      "domain": null,
-      "tgl": null,
-      "status": "BLK",
-      "conformance": "n/a",
-      "issue": null,
-      "instance": "ImageLabel/Button",
-      "medium": "image",
-      "mediumType": "ui",
-      "spec": "n/a",
-      "thumb": "61c5494ac74c.png",
-      "src": "/_assets/ui/frames/frame-purple_BLK.png",
-      "mtimeMs": 1756117532105
-    },
-    {
       "p": "audio/ui/button-hover_BLK.wav",
       "area": "audio",
       "dir": "audio/ui",
@@ -10876,6 +10827,29 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "roblox": {
+        "schemaVersion": 1,
+        "recordedAt": "2026-07-20",
+        "localUri": "rbxasset://trembus/textures/skybox/soul-steel-01/bk_BLK.png",
+        "sourceSha256": "5be0bd5ee3a367a4dee1c5b30a7856e8bc7b1091467b57bf6d2946bcb702f3c5",
+        "checksum": "match",
+        "uploadCount": 1,
+        "active": {
+          "assetId": "125021986054305",
+          "assetUri": "rbxassetid://125021986054305",
+          "assetType": "Image",
+          "creator": {
+            "id": "3394700055",
+            "name": "TrembusTech",
+            "type": "User"
+          },
+          "inventoryPath": "skybox",
+          "creatorStoreUrl": null,
+          "status": "active",
+          "verifiedAt": "2026-07-20",
+          "verificationMethod": "open-cloud assets.get via roblox-cloud MCP (asset_get_info); match evidence: asset_type derived from the .png extension; open-cloud assets.get via roblox-cloud MCP (asset_get_info): displayName=bk_BLK matches file stem; assetType=Image; state=Active; creator userId=3394700055 (TrembusTech)"
+        }
+      },
       "thumb": "c0e9303fe2f8.png",
       "src": "/_assets/textures/skybox/soul-steel-01/bk_BLK.png",
       "mtimeMs": 1756063691000
@@ -10899,6 +10873,29 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "roblox": {
+        "schemaVersion": 1,
+        "recordedAt": "2026-07-20",
+        "localUri": "rbxasset://trembus/textures/skybox/soul-steel-01/ft_BLK.png",
+        "sourceSha256": "5d8f03082a7a11a7943e54a1776163c155a3544b9c722d2b8954d8e70661e7b3",
+        "checksum": "match",
+        "uploadCount": 1,
+        "active": {
+          "assetId": "73278310646765",
+          "assetUri": "rbxassetid://73278310646765",
+          "assetType": "Image",
+          "creator": {
+            "id": "3394700055",
+            "name": "TrembusTech",
+            "type": "User"
+          },
+          "inventoryPath": "skybox",
+          "creatorStoreUrl": null,
+          "status": "active",
+          "verifiedAt": "2026-07-20",
+          "verificationMethod": "open-cloud assets.get via roblox-cloud MCP (asset_get_info); match evidence: asset_type derived from the .png extension; open-cloud assets.get via roblox-cloud MCP (asset_get_info): displayName=ft_BLK matches file stem; assetType=Image; state=Active; creator userId=3394700055 (TrembusTech)"
+        }
+      },
       "thumb": "aca7b28c47f7.png",
       "src": "/_assets/textures/skybox/soul-steel-01/ft_BLK.png",
       "mtimeMs": 1756063691000
@@ -10922,6 +10919,29 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "roblox": {
+        "schemaVersion": 1,
+        "recordedAt": "2026-07-20",
+        "localUri": "rbxasset://trembus/textures/skybox/soul-steel-01/lf_BLK.png",
+        "sourceSha256": "a6f9d154414d2fa1c4473e12ff7f205f366dee006e52754d65c9a559a8de6881",
+        "checksum": "match",
+        "uploadCount": 1,
+        "active": {
+          "assetId": "87871472304906",
+          "assetUri": "rbxassetid://87871472304906",
+          "assetType": "Image",
+          "creator": {
+            "id": "3394700055",
+            "name": "TrembusTech",
+            "type": "User"
+          },
+          "inventoryPath": "skybox",
+          "creatorStoreUrl": null,
+          "status": "active",
+          "verifiedAt": "2026-07-20",
+          "verificationMethod": "open-cloud assets.get via roblox-cloud MCP (asset_get_info); match evidence: asset_type derived from the .png extension; open-cloud assets.get via roblox-cloud MCP (asset_get_info): displayName=lf_BLK matches file stem; assetType=Image; state=Active; creator userId=3394700055 (TrembusTech)"
+        }
+      },
       "thumb": "842498ada5cd.png",
       "src": "/_assets/textures/skybox/soul-steel-01/lf_BLK.png",
       "mtimeMs": 1756063691000
@@ -10945,6 +10965,29 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "roblox": {
+        "schemaVersion": 1,
+        "recordedAt": "2026-07-20",
+        "localUri": "rbxasset://trembus/textures/skybox/soul-steel-01/rt_BLK.png",
+        "sourceSha256": "41a72187a03f6718ecad53e0997023fbe2abe0529926d63af2ca3ebfbe5c3643",
+        "checksum": "match",
+        "uploadCount": 1,
+        "active": {
+          "assetId": "70945433967718",
+          "assetUri": "rbxassetid://70945433967718",
+          "assetType": "Image",
+          "creator": {
+            "id": "3394700055",
+            "name": "TrembusTech",
+            "type": "User"
+          },
+          "inventoryPath": "skybox",
+          "creatorStoreUrl": null,
+          "status": "active",
+          "verifiedAt": "2026-07-20",
+          "verificationMethod": "open-cloud assets.get via roblox-cloud MCP (asset_get_info); match evidence: asset_type derived from the .png extension; open-cloud assets.get via roblox-cloud MCP (asset_get_info): displayName=rt_BLK matches file stem; assetType=Image; state=Active; creator userId=3394700055 (TrembusTech)"
+        }
+      },
       "thumb": "451d48dfe53a.png",
       "src": "/_assets/textures/skybox/soul-steel-01/rt_BLK.png",
       "mtimeMs": 1756063691000
@@ -10968,6 +11011,29 @@
       "medium": "image",
       "mediumType": "texture",
       "spec": "n/a",
+      "roblox": {
+        "schemaVersion": 1,
+        "recordedAt": "2026-07-20",
+        "localUri": "rbxasset://trembus/textures/skybox/soul-steel-01/up_BLK.png",
+        "sourceSha256": "7476a1aaf18a1817cae85636f6ac79e9f47be253aa6dd8f9dcadd246447ad0d3",
+        "checksum": "match",
+        "uploadCount": 1,
+        "active": {
+          "assetId": "107789975031211",
+          "assetUri": "rbxassetid://107789975031211",
+          "assetType": "Image",
+          "creator": {
+            "id": "3394700055",
+            "name": "TrembusTech",
+            "type": "User"
+          },
+          "inventoryPath": "skybox",
+          "creatorStoreUrl": null,
+          "status": "active",
+          "verifiedAt": "2026-07-20",
+          "verificationMethod": "open-cloud assets.get via roblox-cloud MCP (asset_get_info); match evidence: asset_type derived from the .png extension; open-cloud assets.get via roblox-cloud MCP (asset_get_info): displayName=up_BLK matches file stem; assetType=Image; state=Active; creator userId=3394700055 (TrembusTech)"
+        }
+      },
       "thumb": "de4ad9dab944.png",
       "src": "/_assets/textures/skybox/soul-steel-01/up_BLK.png",
       "mtimeMs": 1756063691000
@@ -12236,29 +12302,6 @@
       "thumb": "49416340dfdf.png",
       "src": "/_assets/ui/icons/weapon-smiths-hammer_BLK.png",
       "mtimeMs": 1756063691000
-    },
-    {
-      "p": "_resort/examples-ability-button-concepts_BLK.png",
-      "area": "_resort",
-      "dir": "_resort",
-      "base": "examples-ability-button-concepts_BLK.png",
-      "stem": "examples-ability-button-concepts_BLK",
-      "ext": "png",
-      "kind": "image",
-      "size": 1766040,
-      "mtime": "2025-08-24",
-      "domain": null,
-      "tgl": null,
-      "status": "BLK",
-      "conformance": "n/a",
-      "issue": null,
-      "instance": "ImageLabel/Button",
-      "medium": "image",
-      "mediumType": "ui",
-      "spec": "n/a",
-      "thumb": "314c81288d4d.png",
-      "src": "/_assets/_resort/examples-ability-button-concepts_BLK.png",
-      "mtimeMs": 1756063690000
     },
     {
       "p": "_resort/infinity_BLK.webp",

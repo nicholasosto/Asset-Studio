@@ -3,8 +3,8 @@ title: "Restructure the shared Assets library into staging, library, runtime, an
 status: accepted
 updated: 2026-07-03
 links:
-  - { rel: references, target: decision/0001-reference-the-shared-asset-library-via-external-locations }
-  - { rel: references, target: decision/0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy }
+  - { rel: references, target: decisions/0001-reference-the-shared-asset-library-via-external-locations }
+  - { rel: references, target: decisions/0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy }
 ---
 
 # Restructure the shared Assets library into staging, library, runtime, and machinery zones

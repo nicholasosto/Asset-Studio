@@ -4,7 +4,7 @@ status: completed
 updated: 2026-07-11
 links:
   - { rel: references, target: roadmap/migrate-asset-explorer-into-the-command-center }
-  - { rel: references, target: decision/0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy }
+  - { rel: references, target: decisions/0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy }
 ---
 
 # Add a FolderTree side-nav and VirtualAssetGrid to the Asset Explorer

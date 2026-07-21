@@ -10,8 +10,8 @@
     "workflow": "workflows",
     "medium": "mediums"
   },
-  "entities": 39,
-  "migrated": 39,
+  "entities": 38,
+  "migrated": 38,
   "counts": {
     "error": 0,
     "warning": 0,
@@ -125,15 +125,6 @@
       "updated": "2026-07-01",
       "file": "_project/reports/2026-07-01-session-review-explorer-migration-and-tcl-round-trip.md",
       "excerpt": "What shipped (commits c8a475b … d28dc36, all on origin/main)"
-    },
-    {
-      "id": "example-prop-batch",
-      "kind": "pipeline",
-      "title": "Example prop batch",
-      "status": "build",
-      "updated": "2026-06-30",
-      "file": "_project/pipeline/example-prop-batch.md",
-      "excerpt": "An illustrative production instance — a small batch of tower-defense-style props run end-to-end through the [[3d-asset]] workflow to exercise the studio's 3D path. Example — replace with (or delete in favor of) real bat…"
     },
     {
       "id": "roblox-textured-ui-reference-kit",
@@ -271,6 +262,19 @@
       "excerpt": "Make the Asset Explorer navigable by the library's real folder hierarchy (not just the flat medium/type/status/ext filters) by adding a @trembus/ui FolderTree side-nav, and modernize the results grid at the same time —…"
     },
     {
+      "id": "2026-07-21-overall-review-of-the-project-space",
+      "kind": "session",
+      "title": "Overall review of the project space",
+      "status": "active",
+      "updated": "2026-07-21",
+      "file": "_project/sessions/2026-07-21-overall-review-of-the-project-space.md",
+      "tags": {
+        "last-active": "2026-07-21T15:23",
+        "kos": "decisions, explorer, memory"
+      },
+      "excerpt": "A whole-of-space health review of Asset-Studio: corpus/validation state, dashboard-contract drift, uncommitted repo state, and the open production threads (character factory + the five pipelines) — surfacing what is sta…"
+    },
+    {
       "id": "3d-asset",
       "kind": "workflow",
       "title": "3D asset",
@@ -287,15 +291,6 @@
       "updated": "2026-07-11",
       "file": "_project/workflows/audio-production.md",
       "excerpt": "A briefed audio cue — music bed, SFX, or voice line — generated, reviewed, and filed into its target slot. Generation runs through ElevenLabs (music / sound-effect / TTS); placement follows Pattern A (symlink, zero-uplo…"
-    },
-    {
-      "id": "background-music-audio",
-      "kind": "workflow",
-      "title": "Background music audio",
-      "status": "draft",
-      "updated": "2026-07-12",
-      "file": "_project/workflows/background-music-audio.md",
-      "excerpt": "<the outcome this process reliably produces>"
     },
     {
       "id": "character-creation",
@@ -338,7 +333,7 @@
       "kind": "medium",
       "title": "3D",
       "status": "experimental",
-      "updated": "2026-06-30",
+      "updated": "2026-07-21",
       "file": "_project/mediums/3d.md",
       "tags": {
         "mediumType": "3d-model",
@@ -431,13 +426,12 @@
       ]
     },
     "pipeline": {
-      "total": 5,
+      "total": 4,
       "byStatus": {
-        "build": 3,
+        "build": 2,
         "ship": 2
       },
       "ids": [
-        "example-prop-batch",
         "roblox-textured-ui-reference-kit",
         "roguex-33-character",
         "soul-steel-introduction-narrated",
@@ -472,9 +466,10 @@
       ]
     },
     "session": {
-      "total": 9,
+      "total": 10,
       "byStatus": {
-        "completed": 9
+        "completed": 9,
+        "active": 1
       },
       "ids": [
         "2026-06-30-stand-up-the-launchable-previews-site",
@@ -485,7 +480,8 @@
         "2026-07-01-deep-review-of-the-project-space-and-remediation",
         "2026-07-01-surface-the-asset-explorer-live-and-hold-the-soul-steel-reti",
         "2026-07-03-execute-the-assets-library-restructure-and-walk-the-surface-",
-        "2026-07-11-add-a-foldertree-side-nav-and-virtualassetgrid-to-the-asset-"
+        "2026-07-11-add-a-foldertree-side-nav-and-virtualassetgrid-to-the-asset-",
+        "2026-07-21-overall-review-of-the-project-space"
       ],
       "tone": "warning",
       "statusOrder": [
@@ -497,15 +493,14 @@
       ]
     },
     "workflow": {
-      "total": 7,
+      "total": 6,
       "byStatus": {
-        "draft": 4,
+        "draft": 3,
         "active": 3
       },
       "ids": [
         "3d-asset",
         "audio-production",
-        "background-music-audio",
         "character-creation",
         "image-generation",
         "lore-creation",
@@ -572,7 +567,7 @@
       "from": "0007-keep-explorer-previews-dev-local-stop-committing-the-thumbna",
       "fromKind": "decision",
       "rel": "references",
-      "target": "decision/0005-bake-asset-studio-owned-image-thumbnails-in-the-registry-bui"
+      "target": "decisions/0005-bake-asset-studio-owned-image-thumbnails-in-the-registry-bui"
     },
     {
       "from": "0007-keep-explorer-previews-dev-local-stop-committing-the-thumbna",
@@ -584,13 +579,13 @@
       "from": "0008-restructure-the-shared-assets-library-into-staging-library-r",
       "fromKind": "decision",
       "rel": "references",
-      "target": "decision/0001-reference-the-shared-asset-library-via-external-locations"
+      "target": "decisions/0001-reference-the-shared-asset-library-via-external-locations"
     },
     {
       "from": "0008-restructure-the-shared-assets-library-into-staging-library-r",
       "fromKind": "decision",
       "rel": "references",
-      "target": "decision/0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy"
+      "target": "decisions/0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy"
     },
     {
       "from": "0010-templates-split-by-authorship-exemplars-get-a-library-templa",
@@ -627,12 +622,6 @@
       "fromKind": "report",
       "rel": "references",
       "target": "roadmap/migrate-asset-explorer-into-the-command-center"
-    },
-    {
-      "from": "example-prop-batch",
-      "fromKind": "pipeline",
-      "rel": "references",
-      "target": "workflows/3d-asset"
     },
     {
       "from": "roblox-textured-ui-reference-kit",
@@ -770,7 +759,7 @@
       "from": "2026-07-03-execute-the-assets-library-restructure-and-walk-the-surface-",
       "fromKind": "session",
       "rel": "references",
-      "target": "decision/0008-restructure-the-shared-assets-library-into-staging-library-r"
+      "target": "decisions/0008-restructure-the-shared-assets-library-into-staging-library-r"
     },
     {
       "from": "2026-07-11-add-a-foldertree-side-nav-and-virtualassetgrid-to-the-asset-",
@@ -782,7 +771,7 @@
       "from": "2026-07-11-add-a-foldertree-side-nav-and-virtualassetgrid-to-the-asset-",
       "fromKind": "session",
       "rel": "references",
-      "target": "decision/0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy"
+      "target": "decisions/0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy"
     },
     {
       "from": "3d-asset",
@@ -792,12 +781,6 @@
     },
     {
       "from": "audio-production",
-      "fromKind": "workflow",
-      "rel": "references",
-      "target": "mediums/audio"
-    },
-    {
-      "from": "background-music-audio",
       "fromKind": "workflow",
       "rel": "references",
       "target": "mediums/audio"
@@ -869,6 +852,12 @@
       "target": "workflows/3d-asset"
     },
     {
+      "from": "3d",
+      "fromKind": "medium",
+      "rel": "references",
+      "target": "decisions/0008-restructure-the-shared-assets-library-into-staging-library-r"
+    },
+    {
       "from": "audio",
       "fromKind": "medium",
       "rel": "references",
@@ -894,7 +883,7 @@
     }
   ],
   "edgesByRel": {
-    "references": 58,
+    "references": 57,
     "decided-in": 1
   },
   "workflows": {
@@ -1162,44 +1151,6 @@
           "lane": "place",
           "label": "_tools/validate_asset_ids.py",
           "status": "pending",
-          "to": []
-        }
-      ]
-    },
-    "background-music-audio": {
-      "view": "swimlane",
-      "title": "Background music audio",
-      "code": "workflow.background-music-audio",
-      "caption": "<one line: what this process reliably produces>",
-      "lanes": [
-        {
-          "id": "you",
-          "label": "You",
-          "kind": "human"
-        },
-        {
-          "id": "system",
-          "label": "System",
-          "kind": "system"
-        }
-      ],
-      "steps": [
-        {
-          "id": "start",
-          "lane": "you",
-          "label": "<trigger>",
-          "status": "done",
-          "detail": "<shown on the card>",
-          "to": [
-            "work"
-          ]
-        },
-        {
-          "id": "work",
-          "lane": "system",
-          "label": "<step>",
-          "status": "active",
-          "note": "<shown in the inspector on click>",
           "to": []
         }
       ]
@@ -1885,64 +1836,6 @@
     }
   },
   "runs": {
-    "example-prop-batch": {
-      "total": 1,
-      "rollup": {
-        "byStatus": {
-          "partial": 1
-        }
-      },
-      "runs": [
-        {
-          "id": "run-1",
-          "label": "First pass — 2 of 5 props",
-          "status": "partial",
-          "startedAt": "2026-06-30",
-          "trigger": "studio kickoff",
-          "note": "Blockouts landed for the first two props; modeling in progress.",
-          "stepOutcomes": [
-            {
-              "step": "board",
-              "status": "done",
-              "outputs": [
-                {
-                  "label": "Assets/_inbox/3d/example-prop-batch/prop-a/board.png",
-                  "kind": "doc"
-                },
-                {
-                  "label": "Assets/_inbox/3d/example-prop-batch/prop-b/board.png",
-                  "kind": "doc"
-                }
-              ]
-            },
-            {
-              "step": "blockout",
-              "status": "done",
-              "outputs": [
-                {
-                  "label": "Assets/_inbox/3d/example-prop-batch/prop-a/prop-a_blockout.blend",
-                  "kind": "log"
-                },
-                {
-                  "label": "Assets/_inbox/3d/example-prop-batch/prop-b/prop-b_blockout.blend",
-                  "kind": "log"
-                }
-              ]
-            },
-            {
-              "step": "model-tex",
-              "status": "active"
-            }
-          ],
-          "outputs": [
-            {
-              "label": "2 blockout .blend files",
-              "kind": "doc"
-            }
-          ]
-        }
-      ]
-    },
     "roblox-textured-ui-reference-kit": {
       "total": 1,
       "rollup": {
@@ -2892,6 +2785,7 @@
                     "Success Criteria",
                     "Source References",
                     "Decisions",
+                    "First-Principles Candidates",
                     "Outputs",
                     "Blockers",
                     "Next Action",

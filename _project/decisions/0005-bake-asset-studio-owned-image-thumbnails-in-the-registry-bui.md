@@ -10,6 +10,10 @@ links:
 
 > **Status:** accepted (2026-07-01)
 
+> **Amended by [[0007-keep-explorer-previews-dev-local-stop-committing-the-thumbna]]** (2026-07-02):
+> `previews/thumbs/` is now **gitignored, not committed**, and thumbnails are baked at **320px** — the
+> "generated PNGs are committed / nothing added to `.gitignore`" and 144px details below are superseded.
+
 ## Context
 
 The migrated Asset Explorer rendered image tiles as ext-glyph placeholders because `asset-registry.json`

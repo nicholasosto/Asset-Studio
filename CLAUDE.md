@@ -20,7 +20,7 @@ Asset-Studio never duplicates that library or its id registry.
 | `.project-system/` | Vendored framework (schema · lib · tools). Never edit — update = re-copy from Project-System. |
 | `project-system.config.json` | The only project-specific file. Declares the kinds, statuses, tags, and render metadata. |
 | `_project/` | The planning surface — the source of truth. |
-| `_project/workflows/` | The production processes (swimlanes): `image-generation`, `audio-production`, `3d-asset`, `character-creation` (cross-medium composite). |
+| `_project/workflows/` | The production processes (swimlanes): `image-generation`, `audio-production`, `3d-asset`, `character-creation` (cross-medium composite), `roblox-textured-ui-ux` (specialized composite, draft). |
 | `_project/mediums/` | The `medium` capability catalog (image · audio · 3d · **lore**) — what the studio can produce, and how. Lore is the *upstream* medium: by-reference only, the lore-brain graph is its library. |
 | `templates/character/` | Stage layout templates (SVG) for the character-creation workflow — process artifacts, seeded from the Penitent Knight sheets. `png/` twins for attaching as composition refs. |
 | `generation/` | The image-gen handoff to Codex: `BATCH.md` (one rolling batch contract, rewritten per batch) + `staging/`·`refs/` (untracked). Claude writes the batch + reviews/files; the operator runs "Run generation batch `<id>`" in the Codex app; Codex generates into `staging/`. Contract details in `AGENTS.md` § Generation batches. |
@@ -205,9 +205,31 @@ ledger 9 → 21 records, Explorer `robloxRegistry` 21/21 exact-path joins, stati
 Open: the 9 pre-07-20 records' `inventory_path` (`textures/part-texture`) vs the hub's current
 `textures/surfaces` folder (batch de-drift = owner call); hub asset `Images/texture-cyber-01` has
 no local file → ledger-unregistrable as-is.
+**2026-07-12→18 Roblox textured-UI thread (Codex-led; surfaced in the 2026-07-21 review):** a
+previously-unlogged island — the `roblox-textured-ui-ux` **workflow** (draft; a specialized composite
+under [[0009-workflows-compose-by-call-and-handoff]] that calls `image-generation` for a briefed Roblox
+UI surface: render-strategy → image call → in-Studio proof → upload handoff) and its first instance the
+`roblox-textured-ui-reference-kit` **pipeline** (build). Two ADRs landed with it: **0010** (templates
+split by authorship — authored SVG masters stay in Asset-Studio `templates/<class>/` git-versioned;
+generated exemplars get a new library zone `Assets/templates/<set>/`, one-folder-per-set, registration
+mandatory in `mediums/image` § Template registry; manifest `_catalog/templates-migration-2026-07-18.csv`)
+and **0011** (Explorer asset actions — a dev-only `POST /api/move` mirroring `/api/reveal` hardening,
+`dest` a server-owned `resort|archive` enum, 409-on-collision, respond-first/rebuild-in-background, and
+**warn-don't-write** on the Roblox ledger: moving a joined record knowingly orphans it until
+`_catalog/roblox-upload-registry.jsonl` is hand-fixed; `_resort/` now documented in the library README as
+the flat triage pen). The graphite-cyan reference kit (9-slice · seamless tile · 2×2 atlas) lives at
+`Assets/templates/ui-style/graphite-cyan/`. **The reference-kit pilot is blocked** on a missing Studio
+`content/trembus` symlink after an app update — generation · `_BLK` filing · Studio structure ·
+responsive QA are done; rendered-asset acceptance + `_FNL` promotion are paused pending an interactive
+`sudo` relink (`Trembus-Technologies/tools/rbx-asset-sync.sh link`, Studio quit first).
+**2026-07-21 project-space review + reconcile:** regenerated the drifted planning contracts; fixed 5
+silent dangling `decision/`→`decisions/` frontmatter links; re-pathed `mediums/3d.md` to the ADR-0008
+zones (`models/<collection>/<slug>/` + `runtime/roblox/soul-steel/<cat>/<domain>/`); amended ADR 0005
+(thumbs gitignored/320px); deleted two dead entities — the hollow `background-music-audio` workflow
+scaffold and the self-flagged disposable `example-prop-batch` pipeline.
 **Open (owner calls):** fetch-vs-inline for the contracts (would dissolve the stale-bundle class — wants
-an ADR). Corpus: 39 entities (11 decision · 2 roadmap · 1 report · 9 session · 7 workflow · 4 medium ·
-5 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.8.1` + `game-viz 0.3.1`.
+an ADR). Corpus: 38 entities (11 decision · 2 roadmap · 1 report · 10 session · 6 workflow · 4 medium ·
+4 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.8.1` + `game-viz 0.3.1`.
 **Deferred:** a portable (non-`sips`) thumbnail baker for non-macOS + baked 3D/audio posters (the 77
 non-glb/gltf 3D exts glyph). `proseStatusEnforcement` still `warn`
 — ratchet to `error` once the corpus settles.

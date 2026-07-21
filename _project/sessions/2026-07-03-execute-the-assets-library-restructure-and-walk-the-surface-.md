@@ -3,7 +3,7 @@ title: "Execute the Assets-library restructure and walk the surface checklist"
 status: completed
 updated: 2026-07-03
 links:
-  - { rel: references, target: decision/0008-restructure-the-shared-assets-library-into-staging-library-r }
+  - { rel: references, target: decisions/0008-restructure-the-shared-assets-library-into-staging-library-r }
 ---
 
 # Execute the Assets-library restructure and walk the surface checklist

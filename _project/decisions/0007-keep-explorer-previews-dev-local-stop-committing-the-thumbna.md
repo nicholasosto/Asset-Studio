@@ -3,7 +3,7 @@ title: "Keep Explorer previews dev-local — stop committing the thumbnail bake"
 status: accepted
 updated: 2026-07-02
 links:
-  - { rel: references, target: decision/0005-bake-asset-studio-owned-image-thumbnails-in-the-registry-bui }
+  - { rel: references, target: decisions/0005-bake-asset-studio-owned-image-thumbnails-in-the-registry-bui }
   - { rel: references, target: roadmap/migrate-asset-explorer-into-the-command-center }
 ---
 

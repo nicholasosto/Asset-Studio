@@ -98,6 +98,17 @@
         "Blockers",
         "Next Action",
         "Handoff Notes"
+      ],
+      "scaffoldSections": [
+        "Goal",
+        "Success Criteria",
+        "Source References",
+        "Decisions",
+        "First-Principles Candidates",
+        "Outputs",
+        "Blockers",
+        "Next Action",
+        "Handoff Notes"
       ]
     },
     "workflow": {
@@ -184,6 +195,14 @@
         "symlink",
         "upload"
       ]
+    },
+    "last-active": {
+      "type": "string",
+      "unknownAllowed": true
+    },
+    "kos": {
+      "type": "string",
+      "unknownAllowed": true
     }
   },
   "relTargetKinds": {
