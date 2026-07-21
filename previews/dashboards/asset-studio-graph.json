@@ -265,12 +265,12 @@
       "id": "2026-07-21-overall-review-of-the-project-space",
       "kind": "session",
       "title": "Overall review of the project space",
-      "status": "active",
+      "status": "completed",
       "updated": "2026-07-21",
       "file": "_project/sessions/2026-07-21-overall-review-of-the-project-space.md",
       "tags": {
-        "last-active": "2026-07-21T15:23",
-        "kos": "decisions, explorer, memory"
+        "last-active": "2026-07-21T16:30",
+        "kos": "decisions, explorer, memory, assets-library, mediums"
       },
       "excerpt": "A whole-of-space health review of Asset-Studio: corpus/validation state, dashboard-contract drift, uncommitted repo state, and the open production threads (character factory + the five pipelines) — surfacing what is sta…"
     },
@@ -468,8 +468,7 @@
     "session": {
       "total": 10,
       "byStatus": {
-        "completed": 9,
-        "active": 1
+        "completed": 10
       },
       "ids": [
         "2026-06-30-stand-up-the-launchable-previews-site",

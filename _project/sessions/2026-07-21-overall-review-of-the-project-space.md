@@ -1,13 +1,13 @@
 ---
 title: "Overall review of the project space"
-status: active
+status: completed
 updated: 2026-07-21
-tags: { last-active: 2026-07-21T15:23, kos: "decisions, explorer, memory" }
+tags: { last-active: 2026-07-21T16:30, kos: "decisions, explorer, memory, assets-library, mediums" }
 ---
 
 # Overall review of the project space
 
-> **Status:** active (2026-07-21)
+> **Status:** completed (2026-07-21)
 
 ## Goal
 
@@ -50,6 +50,10 @@ assessment by default; no production or `_project/` mutation beyond this engram 
 - Engram discipline lapsed 2026-07-12→07-20 (≈8 logged work items, 0 session engrams) while the CLAUDE.md
   status log kept going — the status log absorbed what engrams should have carried. → candidate home:
   feedback / memory
+- The Roblox upload ledger is library-file-centric (hashes a local file; joins by exact `Assets/`-relative
+  path) → live game-repo uploads with no library home aren't trackable until adopted into the library; the
+  `register` subcommand's `--run-id` must be unique per call (a prior `--dry-run` reserves the folder). →
+  candidate home: memory (extends [[roblox-upload-registration]]).
 
 ## Outputs
 
@@ -66,6 +70,12 @@ assessment by default; no production or `_project/` mutation beyond this engram 
   reference-kit pipeline) and corrected the corpus count 39→38; regenerated contracts (38 entities / 58
   edges / 0 err), refreshed the Explorer `asset-registry`, rebuilt the static bundle (verified it embeds
   38 entities, drops `example-prop-batch`, includes this session); one reconciliation commit on `main`.
+- Icon adoption + Roblox registration (operator Studio screenshot → ledger): adopted 9 Soul-Steel UI
+  icons (5 `Status_Icon_*` + 4 `*_GemSlotIcon`) from the `trembus-master-repo-new` archive into
+  `Assets/ui/icons/` under asset-conventions `_FNL` names (`status-*` / `emblem-*`, viewed each to name
+  by depiction), then registered each to its live Roblox upload via `roblox_asset_metadata.py register`
+  (evidence from MCP `asset_get_info`; `--allow-name-mismatch` for the convention rename). Ledger 27→36;
+  asset-registry rebuilt → **36/36 exact-path joins, 0 drift/orphans**; 298 thumbs baked; bundle rebuilt.
 
 ## Owner calls (surfaced by the deep-dive, awaiting decision)
 
@@ -85,8 +95,10 @@ assessment by default; no production or `_project/` mutation beyond this engram 
 
 ## Next Action
 
-Session stays open for any further review. Reconcile is committed; optional owner follow-ups: run the
-reference-kit Studio relink, and add the `mediums/image` building-reference registry row.
+Session complete — goal met (review + reconcile committed `af5544e`) plus the 9-icon adoption/registration.
+Optional future-session follow-ups: run the reference-kit Studio relink (the one blocked pipeline); add the
+`mediums/image` building-reference registry row; a `/reflect` bridge review (the 07-12→20 engram gap). The
+07-20 ledger items (9 records' `inventory_path` drift; hub-only `texture-cyber-01`) remain open.
 
 ## Handoff Notes
 
