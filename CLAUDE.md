@@ -254,9 +254,11 @@ Handed to a Fable session via a disposable root-level `FABLE-SESSION-BRIEF.md`. 
 artboards (architectural openings · portal mechanisms · portal material study) landed the same day —
 4K concept boards, **not** tileables; unreviewed, unfiled, and recorded as an open thread.
 **Open (owner calls):** fetch-vs-inline for the contracts (would dissolve the stale-bundle class — wants
-an ADR); the two-path ADR + rig-naming remediation + a `vfx` medium card (all handed to Fable); whether
-the new artboards are `concept-art/` or ADR-0010 exemplars; the tileable size-budget amendment.
-Corpus: 39 entities (11 decision · 2 roadmap · 1 report · 10 session · 6 workflow · 4 medium ·
+an ADR); ratify ADR 0012 (two-path delivery, landed `proposed` 2026-07-22; the rig remediation it
+carries was executed the same day — 16/16 conformant, `_FNL` promotions pending); the `vfx` medium
+card (still queued); whether the new artboards are `concept-art/` or ADR-0010 exemplars; the
+tileable size-budget amendment.
+Corpus: 40 entities (12 decision · 2 roadmap · 1 report · 10 session · 6 workflow · 4 medium ·
 5 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.8.1` + `game-viz 0.3.1`.
 **Deferred:** a portable (non-`sips`) thumbnail baker for non-macOS + baked 3D/audio posters (the 77
 non-glb/gltf 3D exts glyph). `proseStatusEnforcement` still `warn`
