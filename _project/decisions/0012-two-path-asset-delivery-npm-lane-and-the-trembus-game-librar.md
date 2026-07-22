@@ -101,6 +101,9 @@ Three calls, proposed together:
 
 Live-verified in Edit mode; preserved here because the session brief that carried it is
 disposable. Target = domain subfolder under `Rigs`, then rename. 2 of 16 conformant.
+**Executed 2026-07-22** in a single MCP execution (its undo wrapper supplied the recording; an
+explicit `TryBeginRecording` was declined as one was already active): 16/16 moved and renamed,
+`Mechanisms` typo fixed, zero strays left under `Rigs`. Lands in the next parent publish (→ v16).
 
 | # | Current | → Folder | → Name | SUB confidence |
 |---:|---|---|---|---|
