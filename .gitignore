@@ -17,3 +17,15 @@ output/playwright/
 # lore-brain vault by the Claude side. The rolling contract generation/BATCH.md IS tracked.
 generation/staging/
 generation/refs/
+
+# Codex batch drops (same rationale again). Batches land here as multi-megabyte PNGs —
+# the ancient-tech run alone was ~110 MB across five folders — and the reviewed winners
+# leave for the shared library, where the full-resolution masters are kept in a dated
+# textures/.../_archive/. What stays behind is losing candidates + QA repeats + preview
+# sheets: review evidence, cited by the pipeline record, not artifacts worth versioning.
+# NOTE: two pre-existing PNGs at output/imagegen/ root were committed before this rule and
+# stay tracked — .gitignore does not untrack. `git rm --cached` them if you want them out.
+output/imagegen/
+
+# Codex's scratch area for in-flight batches (prompt files, intermediates).
+tmp/

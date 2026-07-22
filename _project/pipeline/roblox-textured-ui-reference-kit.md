@@ -1,9 +1,10 @@
 ---
 title: "Roblox textured UI reference kit"
 status: build
-updated: 2026-07-12
+updated: 2026-07-22
 links:
   - { rel: references, target: workflows/roblox-textured-ui-ux }
+  - { rel: references, target: pipeline/ancient-tech-surface-kit }
 ---
 
 # Roblox textured UI reference kit
@@ -171,17 +172,21 @@ lower-kebab names with `_BLK`; their local proof URIs are `rbxasset://trembus/` 
 Studio Device Simulator was restored to the default viewport and landscape orientation after the
 matrix. The previously enabled mini-map preview was restored to its original state.
 
-## Current blocker
+## Blocker — CLEARED 2026-07-22
 
-`/Applications/RobloxStudio.app/Contents/Resources/content/trembus` is not linked. The supported
-repair script refuses to modify the app bundle while Studio is running and needs an interactive
-`sudo` session. Save and quit Studio, then run:
+`/Applications/RobloxStudio.app/Contents/Resources/content/trembus` **is linked again**
+(→ `/Users/nicholasosto/Master-Managed/Assets`, relinked 2026-07-22 11:36). Verified live the same
+day from an unrelated run: all six tiles of the `ancient-tech` surface kit resolved through
+`rbxasset://trembus/…` and passed `ContentProvider:PreloadAsync` in the Soul Steel place — so local
+content delivery works end to end again. See [[ancient-tech-surface-kit]] run-2.
 
-```bash
-/Users/nicholasosto/Master-Managed/Project-Spaces/Trembus-Technologies/tools/rbx-asset-sync.sh link
-```
+**This run is unblocked and nothing about it has changed otherwise.** Remaining work is exactly what
+was paused: rerun only the rendered-asset checks — confirm 3/3 preload, inspect the short/wide/tall
+9-slice panels, inspect 64/128/256 tiling seams, inspect all four atlas crops and state transitions,
+and capture the owner-acceptance screenshots. No new image generation or layout work is expected.
+`_FNL` promotion and upload remain unauthorized until the owner accepts at the gate.
 
-After Studio relaunches and the MCP reconnects, rerun only the rendered-asset checks: confirm 3/3
-preload, inspect the short/wide/tall 9-slice panels, inspect 64/128/256 tiling seams, inspect all
-four atlas crops and state transitions, and capture the owner-acceptance screenshots. No new image
-generation or layout work is expected.
+Note for next time: the link is broken by Roblox Studio app updates, and repairing it needs an
+interactive `sudo` with Studio quit —
+`Trembus-Technologies/tools/rbx-asset-sync.sh link`. Treat a sudden wave of
+missing-texture failures in Studio as this, not as an asset problem.
