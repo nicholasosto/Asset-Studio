@@ -75,8 +75,11 @@ Three calls, proposed together:
   manifest cost — a fraction of syncback — and full-fidelity history remains available as an
   upgrade path rather than a prerequisite.
 - The rig conformance table (appendix) becomes the first remediation pass executed *under* this
-  decision: pre-computed, one `ChangeHistoryService` recording, two owner calls still open
-  (`Anime_Female`'s domain; whether any rig is `_FNL` rather than `_BLK`).
+  decision: pre-computed, one `ChangeHistoryService` recording, one owner call still open
+  (whether any rig is `_FNL` rather than `_BLK`). `Anime_Female` is resolved (2026-07-22): it is
+  a **test dummy** — domain-neutral tooling, so it files under `shared/`. A dedicated `other`
+  domain stays unminted unless genuinely unclassifiable assets accumulate, and then only via the
+  asset-conventions registration chain (schema bump + changelog), never ad hoc.
 - No manifest tooling lands until this decision is ratified (one-concern gate discipline).
 - What gets harder: two lanes plus a manifest is more moving parts than "just trust Package
   versions" — the cost of making drift visible is owning the probe that sees it.
@@ -103,7 +106,7 @@ disposable. Target = domain subfolder under `Rigs`, then rename. 2 of 16 conform
 |---:|---|---|---|---|
 | 1 | `RIG_MCH_DroneBot_BLK` | `robotic/` | *(conformant)* | — |
 | 2 | `RIG_MCH_TankBot_BLK` | `robotic/` | *(conformant)* | — |
-| 3 | `Anime_Female` | `shared/` (owner call) | `RIG_HUM_AnimeFemale_BLK` | high |
+| 3 | `Anime_Female` | `shared/` (test dummy) | `RIG_HUM_AnimeFemale_BLK` | high |
 | 4 | `Blood_Toad` | `blood/` | `RIG_CRE_BloodToad_BLK` | verify |
 | 5 | `Decay_Zombie` | `decay/` | `RIG_HUM_Zombie_BLK` | high |
 | 6 | `Decay_Zombie_Hipster` | `decay/` | `RIG_HUM_ZombieHipster_BLK` | high |
