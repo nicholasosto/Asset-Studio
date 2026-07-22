@@ -107,25 +107,28 @@ disposable. Target = domain subfolder under `Rigs`, then rename. 2 of 16 conform
 | 1 | `RIG_MCH_DroneBot_BLK` | `robotic/` | *(conformant)* | — |
 | 2 | `RIG_MCH_TankBot_BLK` | `robotic/` | *(conformant)* | — |
 | 3 | `Anime_Female` | `shared/` (test dummy) | `RIG_HUM_AnimeFemale_BLK` | high |
-| 4 | `Blood_Toad` | `blood/` | `RIG_CRE_BloodToad_BLK` | verify |
+| 4 | `Blood_Toad` | `blood/` | `RIG_HUM_BloodToad_BLK` | probed R15 |
 | 5 | `Decay_Zombie` | `decay/` | `RIG_HUM_Zombie_BLK` | high |
 | 6 | `Decay_Zombie_Hipster` | `decay/` | `RIG_HUM_ZombieHipster_BLK` | high |
-| 7 | `Robot_Evil_Hal` | `robotic/` | `RIG_MCH_EvilHal_BLK` | verify |
+| 7 | `Robot_Evil_Hal` | `robotic/` | `RIG_MCH_EvilHal_BLK` | probed — MCH by nature |
 | 8 | `Robot_Freddy_Faz` | `robotic/` | `RIG_MCH_FreddyFaz_BLK` | high |
 | 9 | `Robot_Monkey_Mecha` | `robotic/` | `RIG_MCH_MonkeyMecha_BLK` | high |
 | 10 | `Robot_Steambot` | `robotic/` | `RIG_MCH_Steambot_BLK` | high |
 | 11 | `Robot_Worker` | `robotic/` | `RIG_MCH_WorkerBot_BLK` | high |
-| 12 | `Spirit_Dragon_Boy` | `spirit/` | `RIG_HUM_DragonBoy_BLK` | verify |
-| 13 | `Spirit_Dragon_Girl` | `spirit/` | `RIG_HUM_DragonGirl_BLK` | verify |
-| 14 | `Spirit_Elemental` | `spirit/` | `RIG_CRE_Elemental_BLK` | verify |
+| 12 | `Spirit_Dragon_Boy` | `spirit/` | `RIG_HUM_DragonBoy_BLK` | probed R15 |
+| 13 | `Spirit_Dragon_Girl` | `spirit/` | `RIG_HUM_DragonGirl_BLK` | probed R15 |
+| 14 | `Spirit_Elemental` | `spirit/` | `RIG_HUM_Elemental_BLK` | probed R15 |
 | 15 | `Void_Master` | `fateless/` | `RIG_HUM_VoidMaster_BLK` | high |
-| 16 | `Void_Wendigo` | `fateless/` | `RIG_CRE_Wendigo_BLK` | verify |
+| 16 | `Void_Wendigo` | `fateless/` | `RIG_HUM_Wendigo_BLK` | probed R15 |
 
-The six `verify` rows need one batched rig-topology check (Humanoid RigType + Motor6D joint
-names) before renaming — `R15`/`R6` standard limbs → `HUM`; otherwise `CRE`/`MCH` by whether the
-rig reads biological or mechanical. All statuses assume `_BLK` until the owner says otherwise.
-Adjacent hygiene items riding the same future recording: delete the empty `TrembusGameLibrary`
-husk, fix `Animations/Mechinisms` → `Mechanisms`.
+Probed 2026-07-22, post-republish (library v15, sub-packages v3 · v3 · v5, 9,020 descendants):
+all six uncertain rigs are standard 15-joint R15 bipeds, so the three `CRE` guesses were wrong —
+`BloodToad`, `Elemental`, and `Wendigo` are `HUM`. `EvilHal` stays `MCH`: the SUB classes by
+nature (mechanical), matching its five high-confidence robot siblings — topology cannot
+distinguish a robot from a human and does not need to. **No rig in the library is `CRE`.**
+All statuses assume `_BLK` until the owner says otherwise. Hygiene: the empty
+`TrembusGameLibrary` husk is already gone (owner, 2026-07-22); still riding the future rename
+recording: `Animations/Mechinisms` → `Mechanisms` and per-lab spatial bays.
 
 ## Cites
 
