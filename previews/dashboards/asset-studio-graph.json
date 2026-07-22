@@ -10,8 +10,8 @@
     "workflow": "workflows",
     "medium": "mediums"
   },
-  "entities": 38,
-  "migrated": 38,
+  "entities": 40,
+  "migrated": 40,
   "counts": {
     "error": 0,
     "warning": 0,
@@ -118,6 +118,15 @@
       "excerpt": "The Asset Explorer's cosmetic upgrade (TCL ui 0.4.0 → 0.8.x) added a per-asset command bar — an inspector Toolbar + a tile ⋯ kebab Menu — whose action set includes file moves: \"Move to _resort\" (triage pen) and \"Move to…"
     },
     {
+      "id": "0012-two-path-asset-delivery-npm-lane-and-the-trembus-game-librar",
+      "kind": "decision",
+      "title": "Two-path asset delivery: npm lane and the Trembus-Game-Library Package",
+      "status": "proposed",
+      "updated": "2026-07-22",
+      "file": "_project/decisions/0012-two-path-asset-delivery-npm-lane-and-the-trembus-game-librar.md",
+      "excerpt": "The same asset corpus now ships to Roblox along two parallel delivery paths:"
+    },
+    {
       "id": "2026-07-01-session-review-explorer-migration-and-tcl-round-trip",
       "kind": "report",
       "title": "Session review — Explorer migration and TCL round-trip",
@@ -127,11 +136,20 @@
       "excerpt": "What shipped (commits c8a475b … d28dc36, all on origin/main)"
     },
     {
+      "id": "ancient-tech-surface-kit",
+      "kind": "pipeline",
+      "title": "Ancient-tech surface kit",
+      "status": "build",
+      "updated": "2026-07-22",
+      "file": "_project/pipeline/ancient-tech-surface-kit.md",
+      "excerpt": "A six-tile seamless environment-texture family for the robotic domain's ancient-tech flavour — the monumental cyan-on-graphite precursor architecture, as distinct from the domain's existing industrial-armour lane (exter…"
+    },
+    {
       "id": "roblox-textured-ui-reference-kit",
       "kind": "pipeline",
       "title": "Roblox textured UI reference kit",
       "status": "build",
-      "updated": "2026-07-12",
+      "updated": "2026-07-22",
       "file": "_project/pipeline/roblox-textured-ui-reference-kit.md",
       "excerpt": "First planned instance of [[roblox-textured-ui-ux]]. Its job is to prove the full workflow with a small, inspectable reference kit before applying the process to a production screen. Codex is the run lead: it maintains…"
     },
@@ -386,9 +404,10 @@
   ],
   "byKind": {
     "decision": {
-      "total": 11,
+      "total": 12,
       "byStatus": {
-        "accepted": 11
+        "accepted": 11,
+        "proposed": 1
       },
       "ids": [
         "0001-reference-the-shared-asset-library-via-external-locations",
@@ -401,7 +420,8 @@
         "0008-restructure-the-shared-assets-library-into-staging-library-r",
         "0009-workflows-compose-by-call-and-handoff",
         "0010-templates-split-by-authorship-exemplars-get-a-library-templa",
-        "0011-explorer-asset-actions-dev-only-move-endpoint-warn-don-t-wri"
+        "0011-explorer-asset-actions-dev-only-move-endpoint-warn-don-t-wri",
+        "0012-two-path-asset-delivery-npm-lane-and-the-trembus-game-librar"
       ],
       "tone": "info",
       "statusOrder": [
@@ -426,12 +446,13 @@
       ]
     },
     "pipeline": {
-      "total": 4,
+      "total": 5,
       "byStatus": {
-        "build": 2,
+        "build": 3,
         "ship": 2
       },
       "ids": [
+        "ancient-tech-surface-kit",
         "roblox-textured-ui-reference-kit",
         "roguex-33-character",
         "soul-steel-introduction-narrated",
@@ -617,16 +638,52 @@
       "target": "decisions/0008-restructure-the-shared-assets-library-into-staging-library-r"
     },
     {
+      "from": "0012-two-path-asset-delivery-npm-lane-and-the-trembus-game-librar",
+      "fromKind": "decision",
+      "rel": "references",
+      "target": "decisions/0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy"
+    },
+    {
+      "from": "0012-two-path-asset-delivery-npm-lane-and-the-trembus-game-librar",
+      "fromKind": "decision",
+      "rel": "references",
+      "target": "decisions/0008-restructure-the-shared-assets-library-into-staging-library-r"
+    },
+    {
       "from": "2026-07-01-session-review-explorer-migration-and-tcl-round-trip",
       "fromKind": "report",
       "rel": "references",
       "target": "roadmap/migrate-asset-explorer-into-the-command-center"
     },
     {
+      "from": "ancient-tech-surface-kit",
+      "fromKind": "pipeline",
+      "rel": "references",
+      "target": "workflows/image-generation"
+    },
+    {
+      "from": "ancient-tech-surface-kit",
+      "fromKind": "pipeline",
+      "rel": "references",
+      "target": "mediums/image"
+    },
+    {
+      "from": "ancient-tech-surface-kit",
+      "fromKind": "pipeline",
+      "rel": "references",
+      "target": "pipeline/roblox-textured-ui-reference-kit"
+    },
+    {
       "from": "roblox-textured-ui-reference-kit",
       "fromKind": "pipeline",
       "rel": "references",
       "target": "workflows/roblox-textured-ui-ux"
+    },
+    {
+      "from": "roblox-textured-ui-reference-kit",
+      "fromKind": "pipeline",
+      "rel": "references",
+      "target": "pipeline/ancient-tech-surface-kit"
     },
     {
       "from": "roguex-33-character",
@@ -882,7 +939,7 @@
     }
   ],
   "edgesByRel": {
-    "references": 57,
+    "references": 63,
     "decided-in": 1
   },
   "workflows": {
@@ -1835,6 +1892,109 @@
     }
   },
   "runs": {
+    "ancient-tech-surface-kit": {
+      "total": 2,
+      "rollup": {
+        "byStatus": {
+          "partial": 1,
+          "done": 1
+        }
+      },
+      "runs": [
+        {
+          "id": "run-1",
+          "label": "Codex out-of-contract generation — wall family + transit surfaces",
+          "status": "partial",
+          "startedAt": "2026-07-22",
+          "trigger": "operator ran the family in the Codex app outside generation/BATCH.md; surfaced for review 2026-07-22",
+          "note": "Six tiles generated and verified 4-way seamless with 2x2 QA proofs and two family previews. The run bypassed the BATCH.md contract, so write-batch/run-batch have no artifact to point at. Naming, domain, resolution and Roblox config resolved 2026-07-22; filing scripted and awaiting the --confirm pass.",
+          "stepOutcomes": [
+            {
+              "step": "write-brief",
+              "status": "done"
+            },
+            {
+              "step": "write-batch",
+              "status": "skipped"
+            },
+            {
+              "step": "run-batch",
+              "status": "skipped"
+            },
+            {
+              "step": "generate",
+              "status": "done"
+            },
+            {
+              "step": "review-cand",
+              "status": "done"
+            },
+            {
+              "step": "finalize",
+              "status": "done"
+            },
+            {
+              "step": "place-asset",
+              "status": "done"
+            },
+            {
+              "step": "validate-ids",
+              "status": "pending"
+            }
+          ],
+          "outputs": [
+            {
+              "label": "output/imagegen/ancient-alien-wall-family/ (3 tiles + 3 QA repeats + assembly preview)",
+              "kind": "doc"
+            },
+            {
+              "label": "output/imagegen/ancient-alien-transit-surfaces/ (3 tiles + 3 QA repeats + family preview)",
+              "kind": "doc"
+            },
+            {
+              "label": "tools/file-ancient-tech-surface-kit.sh",
+              "kind": "doc"
+            },
+            {
+              "label": "textures/tileable/robotic/ancient-tech-*_BLK.png + .trembus.md (6 pairs)",
+              "kind": "doc"
+            }
+          ]
+        },
+        {
+          "id": "run-2",
+          "label": "Studio scale pass — Part-Texture-Testing-Lab",
+          "status": "done",
+          "startedAt": "2026-07-22",
+          "trigger": "owner: \"use the Part-Texture-Testing-Lab with that new texture family\"",
+          "note": "Dressed all 79 texture slots of the Soul Steel Workspace.Part-Texture-Testing-Lab package (34 were empty) with the family, via two ChangeHistoryService-recorded batches. Scale swept empirically on the rig's authored 2/4/8/12-stud slots; band rule and road lane axis confirmed; resolved values written back to the six sidecars. The package now carries local changes and is NOT published — that is the owner's call.",
+          "stepOutcomes": [
+            {
+              "step": "place-asset",
+              "status": "done"
+            },
+            {
+              "step": "validate-ids",
+              "status": "skipped"
+            }
+          ],
+          "outputs": [
+            {
+              "label": "Workspace.Part-Texture-Testing-Lab — 79 Texture slots dressed (0 empty remaining)",
+              "kind": "doc"
+            },
+            {
+              "label": "tools/patch-ancient-tech-sidecars.mjs",
+              "kind": "doc"
+            },
+            {
+              "label": "Resolved studs-per-tile: field 12 · road 12 · sidewalk 8 · plaza 12 · bands V=face extent",
+              "kind": "doc"
+            }
+          ]
+        }
+      ]
+    },
     "roblox-textured-ui-reference-kit": {
       "total": 1,
       "rollup": {
