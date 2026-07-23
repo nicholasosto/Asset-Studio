@@ -325,10 +325,11 @@ export default defineConfig({
   },
   server: {
     port: PORT,
+    strictPort: true,
     // Allow the dev server to read the emitted contract in REPO_ROOT/previews (outside the app root).
     fs: { allow: [REPO_ROOT] },
   },
-  preview: { port: PORT },
+  preview: { port: PORT, strictPort: true },
   // Build the self-contained SPA straight into the previews site (previews/app/) so a plain
   // `pnpm build` refreshes the launchable static bundle the :4317 server serves. outDir is
   // outside the app root, so emptyOutDir must be explicit.

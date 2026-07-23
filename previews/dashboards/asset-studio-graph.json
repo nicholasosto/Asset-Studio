@@ -10,8 +10,8 @@
     "workflow": "workflows",
     "medium": "mediums"
   },
-  "entities": 41,
-  "migrated": 41,
+  "entities": 42,
+  "migrated": 42,
   "counts": {
     "error": 0,
     "warning": 0,
@@ -306,6 +306,19 @@
       "excerpt": "Knowledge transfer: teach the owner how texture trims (trim sheets) work in detail — the mechanic, the sheet anatomy, the UV workflow, and where the technique sits relative to the studio's existing tileable pipeline (an…"
     },
     {
+      "id": "2026-07-23-wall-with-mechanical-iris-test-in-blender",
+      "kind": "session",
+      "title": "Wall with mechanical iris test in Blender",
+      "status": "active",
+      "updated": "2026-07-23",
+      "file": "_project/sessions/2026-07-23-wall-with-mechanical-iris-test-in-blender.md",
+      "tags": {
+        "last-active": "2026-07-23T13:02",
+        "kos": "blender, roblox-brain, memory, assets-library, explorer"
+      },
+      "excerpt": "Build a test asset in Blender: a wall section with a working mechanical iris (aperture-style portal that opens/closes) — exercising the new lookdev lab on its first real review piece."
+    },
+    {
       "id": "3d-asset",
       "kind": "workflow",
       "title": "3D asset",
@@ -500,9 +513,10 @@
       ]
     },
     "session": {
-      "total": 11,
+      "total": 12,
       "byStatus": {
-        "completed": 11
+        "completed": 11,
+        "active": 1
       },
       "ids": [
         "2026-06-30-stand-up-the-launchable-previews-site",
@@ -515,7 +529,8 @@
         "2026-07-03-execute-the-assets-library-restructure-and-walk-the-surface-",
         "2026-07-11-add-a-foldertree-side-nav-and-virtualassetgrid-to-the-asset-",
         "2026-07-21-overall-review-of-the-project-space",
-        "2026-07-23-texture-trim-deep-dive-how-trim-sheets-work"
+        "2026-07-23-texture-trim-deep-dive-how-trim-sheets-work",
+        "2026-07-23-wall-with-mechanical-iris-test-in-blender"
       ],
       "tone": "warning",
       "statusOrder": [

@@ -278,3 +278,7 @@ Corpus: 41 entities (12 decision · 2 roadmap · 1 report · 11 session · 6 wor
 **Deferred:** a portable (non-`sips`) thumbnail baker for non-macOS + baked 3D/audio posters (the 77
 non-glb/gltf 3D exts glyph). `proseStatusEnforcement` still `warn`
 — ratchet to `error` once the corpus settles.
+
+Ports: `:5175` (command-center dev) · `:4317` (previews-static) are claimed in the
+cross-space port registry (`~/Master-Managed/Project-Spaces/Project-System/docs/port-registry.md`) —
+claim there before adding a server.

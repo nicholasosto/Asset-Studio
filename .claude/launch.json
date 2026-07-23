@@ -10,9 +10,10 @@
     },
     {
       "name": "previews-static",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4317", "--bind", "127.0.0.1", "--directory", "previews"],
-      "port": 4317
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "exec python3 -m http.server \"${PORT:-4317}\" --bind 127.0.0.1 --directory previews"],
+      "port": 4317,
+      "autoPort": true
     },
     {
       "name": "tcl-storybook",
