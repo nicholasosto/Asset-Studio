@@ -85,7 +85,7 @@ existing config). The config lands at the project root.
 - `node .project-system/tools/validate.mjs --root . --config ./project-system.config.json` → expect
   0 errors (a fresh project has 0 entities).
 - If the `.claude/` wiring isn't in place yet, copy `templates/consumer/.claude/` into the project
-  (the two hooks + the `/new` command).
+  (the two hooks + the `/new`·`/start`·`/end`·`/reflect` commands + these skills).
 - Scaffold the first entities: `node .project-system/tools/new-entity.mjs <kind> "<title>"` — one
   per kind to create the `_project/<folder>/` tree.
 - If a Command Center is in use, the **Field Guide** tab now reflects exactly these conventions

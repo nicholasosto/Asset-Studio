@@ -10,8 +10,8 @@
     "workflow": "workflows",
     "medium": "mediums"
   },
-  "entities": 40,
-  "migrated": 40,
+  "entities": 41,
+  "migrated": 41,
   "counts": {
     "error": 0,
     "warning": 0,
@@ -293,6 +293,19 @@
       "excerpt": "A whole-of-space health review of Asset-Studio: corpus/validation state, dashboard-contract drift, uncommitted repo state, and the open production threads (character factory + the five pipelines) — surfacing what is sta…"
     },
     {
+      "id": "2026-07-23-texture-trim-deep-dive-how-trim-sheets-work",
+      "kind": "session",
+      "title": "Texture trim deep-dive: how trim sheets work",
+      "status": "completed",
+      "updated": "2026-07-23",
+      "file": "_project/sessions/2026-07-23-texture-trim-deep-dive-how-trim-sheets-work.md",
+      "tags": {
+        "last-active": "2026-07-23T11:45",
+        "kos": "memory, assets-library, blender, mediums"
+      },
+      "excerpt": "Knowledge transfer: teach the owner how texture trims (trim sheets) work in detail — the mechanic, the sheet anatomy, the UV workflow, and where the technique sits relative to the studio's existing tileable pipeline (an…"
+    },
+    {
       "id": "3d-asset",
       "kind": "workflow",
       "title": "3D asset",
@@ -351,7 +364,7 @@
       "kind": "medium",
       "title": "3D",
       "status": "experimental",
-      "updated": "2026-07-21",
+      "updated": "2026-07-23",
       "file": "_project/mediums/3d.md",
       "tags": {
         "mediumType": "3d-model",
@@ -487,9 +500,9 @@
       ]
     },
     "session": {
-      "total": 10,
+      "total": 11,
       "byStatus": {
-        "completed": 10
+        "completed": 11
       },
       "ids": [
         "2026-06-30-stand-up-the-launchable-previews-site",
@@ -501,7 +514,8 @@
         "2026-07-01-surface-the-asset-explorer-live-and-hold-the-soul-steel-reti",
         "2026-07-03-execute-the-assets-library-restructure-and-walk-the-surface-",
         "2026-07-11-add-a-foldertree-side-nav-and-virtualassetgrid-to-the-asset-",
-        "2026-07-21-overall-review-of-the-project-space"
+        "2026-07-21-overall-review-of-the-project-space",
+        "2026-07-23-texture-trim-deep-dive-how-trim-sheets-work"
       ],
       "tone": "warning",
       "statusOrder": [

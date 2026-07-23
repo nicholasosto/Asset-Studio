@@ -141,7 +141,7 @@ Scaffold these the same way (§4), through `new-entity.mjs`, with statuses groun
 - `node .project-system/tools/validate.mjs --root . --config ./project-system.config.json` → expect
   0 errors. Fix anything it flags (it reuses the same check the guard enforces).
 - If the `.claude/` wiring isn't in place, copy `templates/consumer/.claude/` into the project (the two
-  hooks + the `/new` command + these skills).
+  hooks + the `/new`·`/start`·`/end`·`/reflect` commands + these skills).
 - If a Command Center is in use, the **Field Guide** now reflects the inferred conventions and the
   graph shows the migrated entities — point the user there to review the result.
 

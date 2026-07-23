@@ -253,12 +253,27 @@ domain-as-prefix instead of domain-as-folder — the concrete proof the two deli
 Handed to a Fable session via a disposable root-level `FABLE-SESSION-BRIEF.md`. Three further Codex
 artboards (architectural openings · portal mechanisms · portal material study) landed the same day —
 4K concept boards, **not** tileables; unreviewed, unfiled, and recorded as an open thread.
+**2026-07-23 teaching triad + the Blender lookdev lab** ([[2026-07-23-texture-trim-deep-dive-how-trim-sheets-work]]):
+a knowledge-transfer session (trim sheets — strip anatomy, the slide/stretch UV mechanic, and the Roblox
+gate: `Texture`/`Decal` can never sub-rect an image, so trims require MeshPart + `SurfaceAppearance`,
+1024 upload cap; Blender collections — membership-not-location, link-vs-append = the decision-0001
+treaty native in Blender; HDRI/IBL) that turned productive: **`Assets/_tools/blender/lookdev.blend`**
+built headless — rig_cameras/reference/testgeo + three exclude-swapped light rigs + an empty `review`
+link slot, 24-patch color checker, **1 BU = 1 stud** — then `StylizedHuman.blend` reorganized into
+linkable sub-collections (`human` · `rig-helpers` · `_scene-lights`; organizational-only, `.blend1`
+rollback) and its R15 stylized reference (6.43 studs, Rthro-class) **linked** in place of the primitive
+dummy, which immediately exposed a toy-scaled doorframe (rebuilt at a 7×3 opening); its packed cloudy
+HDRI was extracted into a second World `world_sky-cloudy` (flat world stays the saved default — worlds
+aren't collection-swappable and the dark/harsh rigs need the dim one). **Two-lab convention named**:
+Blender lookdev = authoring truth · Part-Texture-Testing-Lab = acceptance — recorded in `mediums/3d`
+§ Scale & lookdev. Operational: the Blender MCP `*_for_cli` variants error without `BLENDER_PATH` in
+the MCP server env — headless = the app binary + `--factory-startup` ([[lookdev-lab]] memory).
 **Open (owner calls):** fetch-vs-inline for the contracts (would dissolve the stale-bundle class — wants
 an ADR); ratify ADR 0012 (two-path delivery, landed `proposed` 2026-07-22; the rig remediation it
 carries was executed the same day — 16/16 conformant, `_FNL` promotions pending); the `vfx` medium
 card (still queued); whether the new artboards are `concept-art/` or ADR-0010 exemplars; the
-tileable size-budget amendment.
-Corpus: 40 entities (12 decision · 2 roadmap · 1 report · 10 session · 6 workflow · 4 medium ·
+tileable size-budget amendment; the ancient-tech **trim-sheet pilot** (proposed 2026-07-23).
+Corpus: 41 entities (12 decision · 2 roadmap · 1 report · 11 session · 6 workflow · 4 medium ·
 5 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.8.1` + `game-viz 0.3.1`.
 **Deferred:** a portable (non-`sips`) thumbnail baker for non-macOS + baked 3D/audio posters (the 77
 non-glb/gltf 3D exts glyph). `proseStatusEnforcement` still `warn`

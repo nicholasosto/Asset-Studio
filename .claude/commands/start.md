@@ -44,7 +44,10 @@ review: the lexically last file in the retro-shaped kind's folder (standard:
 line that opens its `## Window covered` section (no such report → treat the cursor as the
 epoch). If the count of closed engrams whose `last-active` is strictly greater than the cursor
 is ≥ 3, add ONE line to the wake report: "Bridge: <n> closed sessions since the last review —
-consider /reflect" (it ships alongside this command). Below 3 → say nothing.
+consider /reflect" (it ships alongside this command). Below 3 → say nothing. (The ≥ 3 threshold
+and `reflect.md` §0's 1–2 low-signal band are two halves of one boundary constant — move one and
+you must move the other; a third home sits upstream in the framework's own copy of this command,
+which only framework maintainers edit.)
 
 ## 2 · Orient — one-shot brief (compact; no re-running what hooks already ran)
 
@@ -56,7 +59,10 @@ interpret that output from context and re-run only if absent:
    Next Action and Handoff Notes, compressed. If pass 1 resumed a session, that one leads.
 3. **Open threads** — statuses greped directly from this project's plan-shaped folders
    (standard: `_project/pipeline/*.md`, `_project/roadmap/*.md`) — any emitted dashboard JSON
-   may be stale; `_project/` is the source of truth and is a handful of files.
+   may be stale; `_project/` is the source of truth and is a handful of files. Where the config
+   declares a workflow-shaped kind (standard: `_project/workflows/`), an entity there carrying a
+   `cadence` tag is the ledger *record* of a standing scheduled routine — registered or still only
+   proposed, since the entity is never the runner; list them in one line. No such kind → no line.
 4. **Repo state** — `git status --porcelain` count, `git log -1 --oneline` (skip if this space
    isn't git-tracked; say so).
 5. **Context systems** — from the roster below, name only what plausibly serves the goal.
@@ -109,8 +115,10 @@ them to things you already narrate:
 
 - **A decision lands** → append one line to Decisions (offer `/new decision` if formal).
 - **A durable insight surfaces** → append to First-Principles Candidates:
-  `- <one sentence> → <candidate home: decision · brain capture · memory · none yet>`.
-  /end's Capture pass consumes this list — it is the session's export queue.
+  `- <one sentence> → <candidate home: decision · brain capture · memory · routine · none yet>`.
+  /end's Capture pass consumes this list — it is the session's export queue. The `routine` home
+  marks recurring toil better served as a standing scheduled run — /end records the candidate,
+  /reflect turns it into a routine proposal.
 - **First reach for a context system** → append its slug to `kos`.
 - **Any natural checkpoint** (task done, before a long build, on Blockers changes) → refresh
   `last-active`; bump `updated` only if the date rolled.
