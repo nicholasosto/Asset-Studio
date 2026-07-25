@@ -1,5 +1,10 @@
 # Generation batch — ACTIVE
 
+> Compatibility copy for
+> [`generation/contracts/roguex-33-portrait.md`](contracts/roguex-33-portrait.md), selected by
+> [`generation/ACTIVE.md`](ACTIVE.md). Keep the batch id and substantive prompt synchronized with
+> the immutable contract; historical contracts are never recovered from this rolling file.
+>
 > One rolling file. Previous batch (`roblox-textured-ui-reference-kit`) completed its generation
 > pass 2026-07-12 and its candidates are staged/filed; that run's remaining work is Studio-side
 > and needs no further generation. This batch belongs to the `roguex-33-character` pipeline,

@@ -87,7 +87,7 @@ order in `main.tsx` (ui → viz → game-viz → app chrome).
 ## What renders
 
 The nav is **derived from the contract** (no hardcoded tabs): Overview (the Hub hex) · Roadmap
-(planning artifacts incl. sessions) · Decisions · Mediums · Workflows (the 3 swimlanes, with the
-step drawer + `example-prop-batch` run replay) · **Explorer** (the Asset Explorer, over
+(planning artifacts incl. sessions) · Decisions · Mediums · Workflows (workflow swimlanes with
+the step drawer and pipeline run replays) · **Explorer** (the Asset Explorer, over
 `asset-registry.json`) · Field Guide. Adding a kind or a `## Workflow` block surfaces
 automatically on the next `render-hub.mjs`.

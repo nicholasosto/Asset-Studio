@@ -1,284 +1,50 @@
-# Asset-Studio — Workspace
+# Asset-Studio — Claude adapter
 
-## What This Is
+Read `AGENTS.md` first. It is the shared workspace, authority, capability-routing, and production
+boundary contract for Claude and Codex.
 
-**Asset-Studio** is the game-agnostic **planning layer for asset production** — the repeatable
-workflows that turn briefs into finished creative assets (images, audio, 3D), independent of any one
-game or creative project. It adopts the **Project-System** framework as a vendored consumer: the
-contract + engines live in `.project-system/`; the one project-specific file is
-`project-system.config.json`.
+## Claude's role
 
-It is the *factory's process layer*, **not an asset store**. The assets themselves live in the shared,
-game-independent library at `~/Master-Managed/Assets/`, reached through `external-locations/` symlinks —
-see [decision 0001](_project/decisions/0001-reference-the-shared-asset-library-via-external-locations.md).
-Asset-Studio never duplicates that library or its id registry.
+Claude is the planning and review side of the Asset-Studio image handoff:
 
-## Map
+- author briefs and immutable generation contracts;
+- update `generation/ACTIVE.md` and the compatibility `generation/BATCH.md` together;
+- preserve earlier contracts instead of overwriting prompt history;
+- review staged candidates against the brief, references, negatives, and mechanical checks;
+- record accepted outcomes and remaining gates in the owning `_project/pipeline/`;
+- invoke `roblox-dev:asset-conventions` before filing, registering, or proposing promotion.
 
-| Path | What |
-|---|---|
-| `.project-system/` | Vendored framework (schema · lib · tools). Never edit — update = re-copy from Project-System. |
-| `project-system.config.json` | The only project-specific file. Declares the kinds, statuses, tags, and render metadata. |
-| `_project/` | The planning surface — the source of truth. |
-| `_project/workflows/` | The production processes (swimlanes): `image-generation`, `audio-production`, `3d-asset`, `character-creation` (cross-medium composite), `roblox-textured-ui-ux` (specialized composite, draft). |
-| `_project/mediums/` | The `medium` capability catalog (image · audio · 3d · **lore**) — what the studio can produce, and how. Lore is the *upstream* medium: by-reference only, the lore-brain graph is its library. |
-| `templates/character/` | Stage layout templates (SVG) for the character-creation workflow — process artifacts, seeded from the Penitent Knight sheets. `png/` twins for attaching as composition refs. |
-| `generation/` | The image-gen handoff to Codex: `BATCH.md` (one rolling batch contract, rewritten per batch) + `staging/`·`refs/` (untracked). Claude writes the batch + reviews/files; the operator runs "Run generation batch `<id>`" in the Codex app; Codex generates into `staging/`. Contract details in `AGENTS.md` § Generation batches. |
-| `_project/pipeline/` | Production *instances* (batches/commissions) that follow a workflow. |
-| `external-locations/` | Symlinks to the shared `Assets/` library + the `canonical/` kit & skills. Tracked links, untracked payload. |
-| `previews/dashboards/` | The emitted contracts — the planning graph (`asset-studio-graph.json` + `asset-studio-hub.json`) and the Asset Explorer's `asset-registry.json`. JSON only — the rendered surface is the Command Center app. |
-| `apps/command-center/` | The live Vite/React Command Center — renders the contracts + the **Asset Explorer**, on the Trembus Component Library (`@trembus/ui · viz · game-viz`). A separate dependency island consuming published npm packages; the vendored framework stays zero-dep. |
-| `tools/` | Project-owned build tools (distinct from the vendored `.project-system/tools/`). `build-asset-registry.mjs` scans the shared library → emits the Explorer's `asset-registry.json`. |
+Claude does not claim that a candidate was generated, registered, promoted, uploaded, published, or
+shipped without direct evidence for that gate.
 
-## Conventions
+## Session lifecycle
 
-- **Kinds:** the canonical six (decision · report · pipeline · roadmap · session · workflow) **plus**
-  `medium` (the per-asset-type capability catalog; status `experimental → supported → deprecated`).
-- **Scaffold, don't hand-write.** Create entities with `node .project-system/tools/new-entity.mjs <kind>
-  "<title>"` (or `/new <kind>`); a PreToolUse guard blocks invalid `_project/` writes made via the
-  Write/Edit tools (Bash-mediated writes bypass it — run `validate.mjs` after any).
-- **Workflow vs pipeline:** a `workflow` is a reusable template (swimlane); a `pipeline` is one stateful
-  production batch that follows it. Enforced strictly — `swimlaneEnforcement: error`.
-- **Tags:** `mediumType` · `tool` · `pattern` (symlink = Pattern A; upload = Pattern B).
-- **Tooling:** Blender MCP (`blender-mcp-craft`), ElevenLabs (audio), Figma/OpenAI (image), Roblox
-  Studio MCP (3D import). Dashboards: `render-hub.mjs` emits the JSON contract → the Command Center renders it.
-- **Render the dashboard:** `node .project-system/tools/render-hub.mjs` after `_project/` edits (emits
-  JSON only). The **dev** server hot-reloads it automatically; to refresh the **committed static site**
-  also run `pnpm --dir apps/command-center build` → `previews/app/`. See [[dashboard-regen-is-two-steps]].
-- **Roadmap = one initiative.** One `roadmap` per milestone-sized initiative; author its plan as a
-  `## Phases` fenced-JSON block (not just prose `## Plan`) so the Command Center renders its Timeline.
-  "The Roadmap" (the milestone-progress ribbon) is the curated `render.ribbon` list in the config —
-  see [decision 0003](_project/decisions/0003-roadmap-equals-one-initiative-the-ribbon-is-the-project-mile.md).
-- **Internal links are folder-qualified:** frontmatter `links[].target` must be `<folder>/<stem>`
-  (e.g. `roadmap/migrate-asset-explorer-into-the-command-center`) to form a real graph edge; a bare
-  stem resolves as an off-graph external ref.
-- **Two emitted contracts, two build steps.** The **planning** contract (`asset-studio-graph.json` +
-  `hub.json`) comes from `render-hub.mjs` after `_project/` edits. The **Asset Explorer** reads a separate
-  `asset-registry.json` from `node tools/build-asset-registry.mjs` (a zero-dep scan of
-  `external-locations/assets` — preserves file metadata, derives `medium`/`mediumType`). Re-run whichever
-  matches what changed. See [[asset-registry-pipeline]].
-- **The Command Center consumes Trembus from npm.** `@trembus/ui · viz · game-viz` are built and published
-  from a *sibling* repo (`~/Master-Managed/Repositories/Trembus-Component-Library`), not here. New/changed
-  components → build + publish there (own session; `pnpm publish` needs the owner's npm token), then bump the
-  `apps/command-center` deps. See [[command-center-consumes-tcl]].
+- `/start` performs wake-up, orientation, and session-ledger handling.
+- `/reflect` mines settled sessions for durable improvements.
+- `/end` validates drift, captures durable knowledge, and audits instruction conflicts.
+- `/new <kind>` scaffolds Project-System entities.
 
-## Status
+These command files are Claude adapters. Stable image/UI production rules belong in
+`agent-assets/`, `_project/workflows/`, or `_project/decisions/`, not inside a command.
 
-The Asset Explorer → Command Center migration is **complete** ([[migrate-asset-explorer-into-the-command-center]],
-2026-07-11); the **current initiative is the character factory** ([[character-factory-lore-medium]] — see the
-2026-07-04 entry). Phases 0–4 + **CF-1 preview parity** (2026-07-01) shipped: the `asset-registry.json` scanner, the `medium`/`mediumType` taxonomy, the React Explorer
-view, its adoption of the Trembus `MediaFrame`, surfaced live as a self-contained SPA (`previews/app/`,
-`vite build`, `base: './'`), and now **real previews** — the builder bakes 320px thumbnails (`sips` →
-**local, untracked** `previews/thumbs/`; ADR 0007) + a served `/_assets` `src`; a Vite dev middleware and a committed
-`previews/_assets` symlink serve `/_assets` + `/thumbs` identically on `:5175` dev and `:4317` static, so
-`MediaFrame` shows image thumbs (tile) + full image + a glb/gltf turntable and `AudioWaveform` plays audio
-in the inspector; the inspector also does reveal-in-Finder (dev `POST /api/reveal`, Assets-root guarded,
-copy-abs fallback on static) + copy-path, and copy-id on the CSV-joined records (2/769 since the join-key
-fix — ADRs 0004–0006). **P5 (retire the Soul-Steel `asset-explorer.html`) is archived** (2026-07-11) — the migrated
-Explorer fully replaces it; deprecating the *source generator* is a cross-repo change deliberately not pursued from here.
-**2026-07-01 deep review + remediation landed** ([[2026-07-01-deep-review-of-the-project-space-and-remediation]]):
-static `:4317` server loopback-bound; builder hardened (100%-bake-failure aborts, `--no-thumbs` reuses the
-existing bake, orphan thumbs pruned, CSV-join `"Collection: "` prefix fixed, CRLF-safe CSV, scan-error
-warnings); reveal endpoint hardened (Origin check, chunk-safe UTF-8, per-request root); `registry.ts`
-degrades instead of crashing on registry shape drift; docs/corpus/memories de-drifted. (CF-1 + the review
-artifacts were committed in `2455abe`.)
-**2026-07-02 Explorer polish + thumbs de-publication:** the Explorer de-bloated — a two-column summary
-band (stats + meter beside the type donut), flush square `MediaFrame` tiles with `object-fit: contain`
-(whole asset, never cropped/upscaled), one compact body line (footer dropped), grid minmax `15rem → 10rem`
-(~5–6/row, page height halved); and, per owner call, **`previews/thumbs/` is untracked + gitignored**
-([[0007-keep-explorer-previews-dev-local-stop-committing-the-thumbna]] — no published Explorer view
-needed; the bake stays, now 320px; a fresh clone's static Explorer glyphs until the builder runs).
-**2026-07-03 Assets-library restructure EXECUTED** ([[0008-restructure-the-shared-assets-library-into-staging-library-r]]):
-the zoned architecture is live — `_inbox/_catalog/_tools/_archive` machinery + medium zones + `source/` +
-`runtime/roblox/soul-steel/` (absorbed the TGL `library/`; filename contract untouched). Manifest run:
-282 moved · 182 regenerable-cache deletes · 125 empty dirs pruned · 0 missing; undo map =
-`Assets/_catalog/migration-2026-07-03.csv` (`tools/migrate-assets-library.mjs --rollback --confirm`).
-Builder patched (area rules → `runtime`/`_inbox`, machinery zones skipped, CSV join → `_catalog/`):
-576 records / 500 real mediums, **medium tallies identical pre/post**, 362 thumbs rebaked; Explorer
-verified live. Surface checklist walked: asset-conventions skill chain (source → assets-repo → Claude +
-Codex installs), CLAUDE/AGENTS in Soul-Steel · Blender-Dev · Trembus-Tech, cross-project memories,
-4 vault notes, Codex trust entry, and live game-repo paths (`build-battle-room.lua`, conventions docs,
-`COMPATIBILITY.md`). Live game code has no literal `rbxasset://trembus/` URIs — nothing broke at
-runtime; historical records keep old paths by design.
-**2026-07-04 character factory + lore medium:** the `character-creation` workflow landed — a
-cross-medium composite (six-stage visual ladder `lore-lock → concept → portrait → modelsheet →
-details → poses`, optional audio identity, 3d handoff; each visual stage runs `image-generation`
-with a `templates/character/` SVG as composition ref, conventions seeded from the Penitent Knight
-sheets), piloted by the `roguex-33-character` pipeline (audio retro-credited done — two Ghost in
-the Grid mixes; `lore-lock` done 2026-07-06, concept stage active — live phase state in
-[[character-factory-lore-medium]]). And **lore is the fourth medium** (`mediums/lore.md`,
-`mediumType: lore`, `experimental`): the *upstream* medium — engrams · briefs · shippable text —
-**by reference only**; the lore-brain graph is to lore what the shared library is to files
-(decision-0001 treaty, second application). Lore content itself never lives here.
-**2026-07-11 workflow composition grammar** ([[0009-workflows-compose-by-call-and-handoff]]): workflows
-compose by two verbs — **call** (inline; the sub-run is `stepOutcomes` on the composite's pipeline) and
-**handoff** (a terminal step seeds a new pipeline) — and **composites stay depth-1** (bigger scale =
-handoffs, e.g. a roster workflow spawning one character pipeline per member). Call-sites carry step
-`refs` (rel `references`; a workflow-kind target *is* the composition edge — no new rel while the schema
-is vendored); calls are parameterized (template · filename grammar · target slot), so a composite
-overriding a leaf's placement (character sheets → lore-brain `Media/visual/`) is stated, not silent.
-**`lore-creation` landed as the fourth leaf** (brief → recall/continuity → author → canon review →
-reciprocal link → lore-lock gate; by-reference into the lore-brain), closing the 4×4 medium↔leaf pairing
-— every leaf now `references` its medium. Leaves de-drifted: `image-generation` absorbed the Codex batch
-contract (write `BATCH.md` → operator runs in Codex → `staging/` → Claude reviews/files); both 2D leaves
-place "per the brief's target slot" (dead `ai-output/` paths gone — audio stages `_inbox/audio/`);
-validators → `_tools/`. Statuses: image-generation · audio-production · character-creation → `active`.
-Command Center follow-ups deliberately deferred: call-site glyphs on step tiles, a WorkflowConsole
-call-stack breadcrumb, a TCL subprocess marker (sibling-repo session), upstream `runs`/`seeds` rels.
-**2026-07-11 Explorer folder-nav + virtualized grid** ([[2026-07-11-add-a-foldertree-side-nav-and-virtualassetgrid-to-the-asset-]]):
-the Asset Explorer gained a **`FolderTree` folder-path side-nav** — `registry.ts` `buildAssetTree(records)`
-derives a folders-only `FolderNode[]` forest from record `dir`/`p` (node id = full path prefix, subtree
-counts in labels) + an `underFolder(r,folder)` predicate folded into `matches()` as a `selectedPath` facet
-(composes with the medium/type/status/ext filters; removable "Folder" chip). The hand-rolled card grid +
-`INITIAL_CAP` slice was **swapped for `VirtualAssetGrid<AssetRecord>`** (windowed, `groupBy` mediumType +
-`groupOrder` sections, `onSelect`→inspector, `renderTile` injecting the existing `MediaFrame`+badges tile;
-`AssetTile` now presentational). Layout became an **app-shell**: full-width summary + filter chrome over a
-height-bounded `.cc-explorer__body` (tree aside + internally-scrolling grid) — the `<60rem` breakpoint needs
-`.cc-explorer__main` at a *definite* height or VAG stops windowing. **No `@trembus/ui` bump** (both shipped
-in `0.4.0`; `FolderTree` was already used by the Field Guide), no cross-repo TCL work, no `asset-registry`
-change. Verified live + `tsc`/`vite build` clean. Open refinement: pin the summary/filter chrome (currently
-normal-flow); tune the `100vh - 22rem` offset.
-**2026-07-12 Workflows→Processes side-nav** (FolderTree, third usage): the Workflows tab's pill picker was
-**replaced by a `FolderTree`** and the tab **renamed "Processes"** (display label only — `deriveNav`'s
-value/panel stay `workflows`, so `#workflows` deep-links · `tabForKind` · step-ref nav are untouched).
-`WORKFLOW_TREE`/`resolveTreeSel` in `workflows.ts` build a **three-group forest** — `group:scheduled` ·
-`group:core` · `group:specialized` — grouped by a *derived* rule (workflow nodes emit no category field and
-render-hub is vendored): **Specialized = composite** (has callee-workflow refs; = Character creation),
-**Scheduled** = a `SCHEDULED_IDS` set (empty today, ready for cadence flows), else **Core**. Group folders are
-`isGroupId('group:…')` → the console ignores selecting them (expansion only); under each, workflow roots hold
-callee links (ADR-0009 call edges, deduped) + pipeline leaves (`root/pipeline:<id>`; selecting one opens the
-console *and* preselects that pipeline's latest run via a mount-only `initialRunId` prop, App keying the console
-by tree selection). **Header refactor:** the run-history toggle was lifted out of `WorkflowConsole` into a
-full-width `.cc-wf-shell__header` (process title + exported `SwitchPill`) so the tree top-aligns with the
-swimlane; the Swimlane's own header (`code`/`title`/`caption`) is hidden via
-`.cc-workflow .tcl-swimlane__header{display:none}`. Partially delivers the deferred "surface composition in the
-Command Center" follow-up. No `@trembus/*` bump, no contract/`_project/` change; verified live + `tsc`/`vite build`
-clean. Deferred still: step-tile call glyphs · a call-stack breadcrumb.
-**2026-07-12 Soul Steel narrator voices + narrated introduction** ([[soul-steel-narrator-voices]] ·
-[[soul-steel-introduction-narrated]], both `ship`): the canon's **narrator pair** exists — Ashael the
-Dreaming Scribe (male-based voice, ElevenLabs `ruxSNzODa3KpaHd5XW6j`) + **The Custodian of the Ledger**
-(NEW female-voiced persona: Reality Balance's canon alias "the cosmic ledger" given a voice; audience-only
-address preserving the one-way law; Vesper-firewalled; `VSiMhzoGYAWmh67ySiCN`) — plus a canon-only
-495-word introduction ("What follows is reconstruction, not memory"), authored via lore-creation
-(3 parallel drafts → 3-lens judge panel → 10 adversarial exclusion checks, operator-signed checklist),
-narrated in three takes (Ashael v1 · Custodian v1/v2, eleven_v3) filed **by reference** in lore-brain
-`Media/audio/`. **New convention: `mediums/audio § Named voices`** — the ElevenLabs voice-ID registry
-(design prompts live on the persona engrams; also registered the pre-existing Penitent Knight voice);
-the audio card de-drifted (`_inbox/` staging, 5-zone list). Mechanism note: the connected ElevenLabs
-MCPs render TTS but **cannot create voices** — Voice Design runs in the operator's Chrome.
-`lore-creation` got its 2nd/3rd clean exercises — promoting it `draft → active` is an owner call. Open:
-Custodian canonical cut (v1 vs v2); promoting the two speculative engrams; the canon Epoch-of-Eternity
-"encroaching Void Domain" seam (flagged again, routed around).
-**2026-07-18 Roguex-33 concept stage closed (salvage review):** the stalled 07-04 concept batches
-(r1+r2, 12 candidates — the exploration that *fed* the 07-06 lore-lock, then sat unreviewed after
-`BATCH.md` was paved over on 07-12) were reviewed against the engram § Visual Identity: the v2
-poncho/cape lane cut (skull-face violations of the mischief-never-menace call); winners filed —
-`Roguex-33_concept-v1.png` (r2_v3c1, counter-lean stall scene — the amber-vs-cold lighting thesis) +
-`concept-v2.png` (r1_v1c2, clean template-pure silhouette) → lore-brain `Media/visual/`, engram
-`sensory_assets` + `modalities: visual`. **No candidate landed the wry-smirk face canon** — carried
-into portrait as its hard constraint. Run-3 logged (concept done → portrait active), roadmap p3
-advanced, and the **`roguex-33-portrait` batch written** (3 face variants `smirk`/`patter`/`loupe`
-× 2, portrait template + filed concepts as identity anchors in `refs/`) — **awaiting the operator's
-Codex trigger** ("Run generation batch roguex-33-portrait"). The 10 losing candidates stay in
-untracked staging until a sweep.
-**2026-07-18 Menu-inside-Dialog fixed upstream (TCL triple release):** the inspector command bar's
-invisible overflow menu was a three-part TCL composition defect, fixed in the sibling repo and
-published — `tokens 0.2.0` (new `--tcl-z-popover: 1350` layer, above modal 1300), `ui 0.8.1`
-(`.tcl-menu` → popover layer with a `calc(modal+50)` fallback; Dialog outside-press exempts
-`[role="menu"]` so item clicks don't dismiss the dialog; root-menu Escape stops propagating —
-one layer per press), and `game-viz 0.3.1` (rebuild: its `styles.css` bundles a frozen copy of
-ui's CSS which was re-overriding the fix — dedupe spun off as a background task). Locked in by the
-`Components/Menu → InsideDialog` Storybook play test. Consumer side: ui/game-viz bumped, the
-app.css `.tcl-menu` z-override deleted, verified live (z 1350 > 1300), static bundle rebuilt.
-Operational gotchas memorized: game-viz CSS re-bundling; vite dev keeps serving the old `.pnpm`
-path after a dep swap — restart it, a reload isn't enough ([[command-center-consumes-tcl]]).
-**2026-07-20 Roblox upload registration one-shot + ledger reconciled 21/21:** the upload ledger
-(`Assets/_catalog/roblox-upload-registry.jsonl`) got a sanctioned one-liner — a `register <path>
-<asset-id>` subcommand in `Assets/_tools/roblox_asset_metadata.py` that drives the existing review
-machinery internally (atomic apply · snapshots · xattr sync · full audit all free; supersede carries
-history byte-exact and heals same-path checksum drift; Open Cloud auto-verify when
-`ROBLOX_CLOUD_API_KEY` is set, else `--evidence`; sandbox-tested, doc'd in
-`_catalog/roblox-upload-registry.md` § One-shot registration). Exercised for real: wall-order-01
-(97888273125861, via the manual review flow that motivated it), then 12 tileables (robotic +
-fateless) batch-registered from operator hub screenshots with MCP `asset_get_info` evidence —
-ledger 9 → 21 records, Explorer `robloxRegistry` 21/21 exact-path joins, static bundle rebuilt.
-Open: the 9 pre-07-20 records' `inventory_path` (`textures/part-texture`) vs the hub's current
-`textures/surfaces` folder (batch de-drift = owner call); hub asset `Images/texture-cyber-01` has
-no local file → ledger-unregistrable as-is.
-**2026-07-12→18 Roblox textured-UI thread (Codex-led; surfaced in the 2026-07-21 review):** a
-previously-unlogged island — the `roblox-textured-ui-ux` **workflow** (draft; a specialized composite
-under [[0009-workflows-compose-by-call-and-handoff]] that calls `image-generation` for a briefed Roblox
-UI surface: render-strategy → image call → in-Studio proof → upload handoff) and its first instance the
-`roblox-textured-ui-reference-kit` **pipeline** (build). Two ADRs landed with it: **0010** (templates
-split by authorship — authored SVG masters stay in Asset-Studio `templates/<class>/` git-versioned;
-generated exemplars get a new library zone `Assets/templates/<set>/`, one-folder-per-set, registration
-mandatory in `mediums/image` § Template registry; manifest `_catalog/templates-migration-2026-07-18.csv`)
-and **0011** (Explorer asset actions — a dev-only `POST /api/move` mirroring `/api/reveal` hardening,
-`dest` a server-owned `resort|archive` enum, 409-on-collision, respond-first/rebuild-in-background, and
-**warn-don't-write** on the Roblox ledger: moving a joined record knowingly orphans it until
-`_catalog/roblox-upload-registry.jsonl` is hand-fixed; `_resort/` now documented in the library README as
-the flat triage pen). The graphite-cyan reference kit (9-slice · seamless tile · 2×2 atlas) lives at
-`Assets/templates/ui-style/graphite-cyan/`. **The reference-kit pilot is blocked** on a missing Studio
-`content/trembus` symlink after an app update — generation · `_BLK` filing · Studio structure ·
-responsive QA are done; rendered-asset acceptance + `_FNL` promotion are paused pending an interactive
-`sudo` relink (`Trembus-Technologies/tools/rbx-asset-sync.sh link`, Studio quit first).
-**2026-07-21 project-space review + reconcile:** regenerated the drifted planning contracts; fixed 5
-silent dangling `decision/`→`decisions/` frontmatter links; re-pathed `mediums/3d.md` to the ADR-0008
-zones (`models/<collection>/<slug>/` + `runtime/roblox/soul-steel/<cat>/<domain>/`); amended ADR 0005
-(thumbs gitignored/320px); deleted two dead entities — the hollow `background-music-audio` workflow
-scaffold and the self-flagged disposable `example-prop-batch` pipeline.
-**2026-07-22 ancient-tech surface kit + the Trembus-Game-Library surfaces:** a six-tile seamless
-`robotic`-domain texture family (exterior wall ladder `crown · field · plinth` + transit ground set
-`road · sidewalk · plaza`) generated by Codex outside `generation/BATCH.md` — a third unlogged island —
-now on the graph as [[ancient-tech-surface-kit]]. Named off the already-registered `ancient-tech`
-theme token rather than the Codex folder slug (`walkway → plaza` to kill the sidewalk/walkway
-ambiguity); filed to `textures/tileable/robotic/` at **1024** with the 2048 masters in a dated
-`_archive/` (the skybox resize-provenance pattern), six `.trembus.md` sidecars, all six verified
-**4-way seamless** by a wrap-edge delta check before and after downsample. Knowingly breaks the 500 KB
-tileable budget (~1.6 MB) — that line was written for procedural 512 tiles and wants amending.
-**The `rbxasset://trembus/` symlink was relinked 2026-07-22**, which also **clears the blocker**
-[[roblox-textured-ui-reference-kit]] had been parked on since 07-12. Scale was then resolved
-*empirically* in Studio rather than estimated: the Soul Steel place holds a purpose-built
-`Part-Texture-Testing-Lab` Package whose part names encode studs-per-tile, so the family was swept on
-its authored 2/4/8/12 rig — **field 12 · road 12 · sidewalk 8 · plaza 12**, bands at `V =` the face's
-vertical extent. Two corrections came out of it: the band rule is **face-dependent** (`V` maps to part
-Y on Front/Back/Left/Right, to **Z** on Top/Bottom) and the road's lanes run along local **Z**, so a
-road along X needs the *part* rotated — `Texture` has no rotation. 79 slots dressed, 34 → 0 empty.
-That lab turns out to live inside **`Workspace.Trembus-Game-Library`** — the owner's revamped Roblox
-Package serving as the **non-TS delivery path** (Package versioning standing in for git), ~8790
-descendants, three sub-package labs, alongside an empty no-hyphen husk. Its third lab **Beamaract** is
-a VFX *generator*, not an asset (beams are runtime `fx_*`; its outputs are `EFX_BEM`), which argues
-for a fifth **`vfx` medium**. 14 of 16 rigs are off the `[CAT]_[SUB]_[Name]_[Status]` grammar with
-domain-as-prefix instead of domain-as-folder — the concrete proof the two delivery paths can drift.
-Handed to a Fable session via a disposable root-level `FABLE-SESSION-BRIEF.md`. Three further Codex
-artboards (architectural openings · portal mechanisms · portal material study) landed the same day —
-4K concept boards, **not** tileables; unreviewed, unfiled, and recorded as an open thread.
-**2026-07-23 teaching triad + the Blender lookdev lab** ([[2026-07-23-texture-trim-deep-dive-how-trim-sheets-work]]):
-a knowledge-transfer session (trim sheets — strip anatomy, the slide/stretch UV mechanic, and the Roblox
-gate: `Texture`/`Decal` can never sub-rect an image, so trims require MeshPart + `SurfaceAppearance`,
-1024 upload cap; Blender collections — membership-not-location, link-vs-append = the decision-0001
-treaty native in Blender; HDRI/IBL) that turned productive: **`Assets/_tools/blender/lookdev.blend`**
-built headless — rig_cameras/reference/testgeo + three exclude-swapped light rigs + an empty `review`
-link slot, 24-patch color checker, **1 BU = 1 stud** — then `StylizedHuman.blend` reorganized into
-linkable sub-collections (`human` · `rig-helpers` · `_scene-lights`; organizational-only, `.blend1`
-rollback) and its R15 stylized reference (6.43 studs, Rthro-class) **linked** in place of the primitive
-dummy, which immediately exposed a toy-scaled doorframe (rebuilt at a 7×3 opening); its packed cloudy
-HDRI was extracted into a second World `world_sky-cloudy` (flat world stays the saved default — worlds
-aren't collection-swappable and the dark/harsh rigs need the dim one). **Two-lab convention named**:
-Blender lookdev = authoring truth · Part-Texture-Testing-Lab = acceptance — recorded in `mediums/3d`
-§ Scale & lookdev. Operational: the Blender MCP `*_for_cli` variants error without `BLENDER_PATH` in
-the MCP server env — headless = the app binary + `--factory-startup` ([[lookdev-lab]] memory).
-**Open (owner calls):** fetch-vs-inline for the contracts (would dissolve the stale-bundle class — wants
-an ADR); ratify ADR 0012 (two-path delivery, landed `proposed` 2026-07-22; the rig remediation it
-carries was executed the same day — 16/16 conformant, `_FNL` promotions pending); the `vfx` medium
-card (still queued); whether the new artboards are `concept-art/` or ADR-0010 exemplars; the
-tileable size-budget amendment; the ancient-tech **trim-sheet pilot** (proposed 2026-07-23).
-Corpus: 41 entities (12 decision · 2 roadmap · 1 report · 11 session · 6 workflow · 4 medium ·
-5 pipeline), validates 0/0/0. Command Center on `@trembus/ui 0.8.1` + `game-viz 0.3.1`.
-**Deferred:** a portable (non-`sips`) thumbnail baker for non-macOS + baked 3D/audio posters (the 77
-non-glb/gltf 3D exts glyph). `proseStatusEnforcement` still `warn`
-— ratchet to `error` once the corpus settles.
+## Current state
 
-Ports: `:5175` (command-center dev) · `:4317` (previews-static) are claimed in the
-cross-space port registry (`~/Master-Managed/Project-Spaces/Project-System/docs/port-registry.md`) —
-claim there before adding a server.
+Do not maintain a dated project chronology here. Resolve current state from:
+
+1. `_project/pipeline/` and `_project/roadmap/`
+2. `_project/sessions/` and `_project/reports/`
+3. `git status` and `git log`
+4. generated dashboards only after their drift check passes
+
+## Validation
+
+After relevant changes run:
+
+```sh
+node .project-system/tools/validate.mjs --root . --config ./project-system.config.json
+node .project-system/tools/render-hub.mjs --root . --check
+node tools/check-agent-capabilities.mjs
+```
+
+Run only the build or registry generator matching what changed. Never hand-edit emitted dashboard
+JSON or treat memory as current source truth.

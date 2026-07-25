@@ -1,0 +1,167 @@
+{
+  "schemaVersion": "1.0.0",
+  "verifiedAt": "2026-07-24",
+  "pluginBundle": {
+    "id": "asset-production",
+    "version": "0.1.0",
+    "distribution": "local-source",
+    "marketplaceReady": false
+  },
+  "policy": {
+    "memoryAuthority": "evidence-only",
+    "cacheAuthority": "derived-only",
+    "projectOutputPrecedence": "project contract overrides generic vendor defaults",
+    "uiPrecedence": [
+      "explicit design source or approved project brief",
+      "domain production skill",
+      "consumer design system",
+      "generic frontend aesthetic guidance"
+    ]
+  },
+  "capabilities": [
+    {
+      "id": "trembus-image",
+      "kind": "owned-skill",
+      "owner": "Asset-Studio",
+      "version": "0.1.0",
+      "canonicalPath": "agent-assets/plugins/asset-production/skills/trembus-image",
+      "authority": ["raster presets", "prompt construction", "image validation", "macOS metadata"],
+      "delegates": ["roblox-dev:asset-conventions", "asset-studio-batch"],
+      "installs": [
+        {"runtime": "codex", "mode": "symlink", "path": "/Users/nicholasosto/.codex/skills/trembus-image"},
+        {"runtime": "claude", "mode": "symlink", "path": "/Users/nicholasosto/.claude/skills/trembus-image"}
+      ]
+    },
+    {
+      "id": "asset-studio-batch",
+      "kind": "owned-skill",
+      "owner": "Asset-Studio",
+      "version": "0.1.0",
+      "canonicalPath": "agent-assets/plugins/asset-production/skills/asset-studio-batch",
+      "authority": ["immutable contracts", "candidate work paths", "generator stop boundary"],
+      "delegates": ["imagegen", "trembus-image"],
+      "installs": [
+        {"runtime": "codex", "mode": "symlink", "path": "/Users/nicholasosto/.codex/skills/asset-studio-batch"},
+        {"runtime": "claude", "mode": "symlink", "path": "/Users/nicholasosto/.claude/skills/asset-studio-batch"}
+      ]
+    },
+    {
+      "id": "textured-ui-asset-production",
+      "kind": "owned-skill",
+      "owner": "Asset-Studio",
+      "version": "0.1.0",
+      "canonicalPath": "agent-assets/plugins/asset-production/skills/textured-ui-asset-production",
+      "authority": ["image-backed Roblox UI art contracts", "raster preflight", "visual acceptance"],
+      "delegates": ["asset-studio-batch", "roblox-dev:asset-conventions", "roblox-ui-studio"],
+      "installs": [
+        {"runtime": "codex", "mode": "symlink", "path": "/Users/nicholasosto/.codex/skills/textured-ui-asset-production"},
+        {"runtime": "claude", "mode": "symlink", "path": "/Users/nicholasosto/.claude/skills/textured-ui-asset-production"}
+      ]
+    },
+    {
+      "id": "roblox-dev:asset-conventions",
+      "kind": "external-skill",
+      "owner": "roblox-dev",
+      "version": "0.5.0",
+      "sourceCommit": "d18fc382fa0aea198ce471b95f5cf1293e9cadbc",
+      "canonicalPath": "/Users/nicholasosto/Master-Managed/Repositories/Vault-Repositories/roblox-dev/skills/asset-conventions",
+      "authority": ["asset zones", "filename grammar", "status", "registration", "promotion"],
+      "installs": [
+        {"runtime": "claude", "mode": "plugin-source-symlink", "path": "/Users/nicholasosto/.claude/plugins/marketplaces/local-desktop-app-uploads/roblox-dev/skills/asset-conventions", "registry": "/Users/nicholasosto/.claude/plugins/installed_plugins.json", "registryId": "roblox-dev@local-desktop-app-uploads", "pluginVersion": "0.7.0"},
+        {"runtime": "codex", "mode": "generated-plugin-cache", "path": "/Users/nicholasosto/.codex/plugins/cache/assets-repo-local/roblox-dev/0.7.0/skills/asset-conventions"}
+      ]
+    },
+    {
+      "id": "trembus-consumer",
+      "kind": "external-skill",
+      "owner": "Trembus-Component-Library",
+      "canonicalPath": "/Users/nicholasosto/Master-Managed/Repositories/Trembus-Component-Library/skills/trembus-consumer",
+      "authority": ["web UI components", "tokens", "theming", "consumer QA"],
+      "installs": [
+        {"runtime": "claude", "mode": "symlink", "path": "/Users/nicholasosto/.claude/skills/trembus-consumer"},
+        {"runtime": "codex", "mode": "symlink", "path": "/Users/nicholasosto/.codex/skills/trembus-consumer"}
+      ]
+    },
+    {
+      "id": "trembus-template",
+      "kind": "external-skill",
+      "owner": "Trembus-Component-Library",
+      "canonicalPath": "/Users/nicholasosto/Master-Managed/Repositories/Trembus-Component-Library/templates/skill/trembus-template",
+      "authority": ["owned page templates"],
+      "installs": [
+        {"runtime": "claude", "mode": "symlink", "path": "/Users/nicholasosto/.claude/skills/trembus-template"},
+        {"runtime": "codex", "mode": "symlink", "path": "/Users/nicholasosto/.codex/skills/trembus-template"}
+      ]
+    },
+    {
+      "id": "roblox-ui-studio",
+      "kind": "external-skill",
+      "owner": "Roblox-UI-Studio",
+      "availability": "project-local-handoff",
+      "canonicalPath": "/Users/nicholasosto/Master-Managed/Project-Spaces/Roblox-Development/Roblox-UI-Studio/.agents/skills/roblox-ui-studio",
+      "authority": ["runtime-neutral Roblox UI prototypes", "Studio evidence", "device and input QA"],
+      "constraint": "open the owning Roblox-UI-Studio workspace before invoking; this skill is not globally installed",
+      "installs": [
+        {"runtime": "codex", "scope": "project-local", "mode": "project-skill", "path": "/Users/nicholasosto/Master-Managed/Project-Spaces/Roblox-Development/Roblox-UI-Studio/.agents/skills/roblox-ui-studio"},
+        {"runtime": "claude", "scope": "project-local", "mode": "skill-file-symlink", "path": "/Users/nicholasosto/Master-Managed/Project-Spaces/Roblox-Development/Roblox-UI-Studio/.claude/skills/roblox-ui-studio"}
+      ]
+    },
+    {
+      "id": "imagegen",
+      "kind": "vendor-adapter",
+      "owner": "OpenAI",
+      "version": "unversioned",
+      "canonicalPath": "/Users/nicholasosto/.codex/skills/imagegen",
+      "authority": ["image generation and editing execution"],
+      "installs": [
+        {"runtime": "codex", "mode": "vendor-skill", "state": "installed", "path": "/Users/nicholasosto/.codex/skills/imagegen", "lastUpdated": "2026-05-06"},
+        {"runtime": "claude", "mode": "handoff", "state": "not-locally-available", "lastObserved": "2026-07-24"}
+      ]
+    },
+    {
+      "id": "figma",
+      "kind": "vendor-adapter",
+      "owner": "Figma/OpenAI",
+      "version": "2.0.16",
+      "authority": ["authoritative Figma design context and fidelity"],
+      "constraint": "Codex has one current remote plugin; Claude connector availability is unverified and must not be claimed",
+      "installs": [
+        {"runtime": "codex", "mode": "vendor-plugin-cache", "state": "installed-enabled", "path": "/Users/nicholasosto/.codex/plugins/cache/openai-curated-remote/figma/2.0.16", "lastUpdated": "2026-07-18"},
+        {"runtime": "claude", "mode": "remote-connector", "state": "unverified", "lastObserved": "2026-07-24"}
+      ]
+    },
+    {
+      "id": "creative-production",
+      "kind": "vendor-adapter",
+      "owner": "OpenAI",
+      "version": "0.1.25",
+      "authority": ["explicit ideation and creative-board workflows"],
+      "constraint": "never overrides Asset-Studio batch paths or review ownership",
+      "installs": [
+        {"runtime": "codex", "mode": "vendor-plugin-cache", "state": "installed-enabled", "path": "/Users/nicholasosto/.codex/plugins/cache/openai-curated-remote/creative-production/0.1.25", "lastUpdated": "2026-07-18"}
+      ]
+    },
+    {
+      "id": "frontend-design",
+      "kind": "vendor-adapter",
+      "owner": "Anthropic",
+      "authority": ["generic frontend aesthetic guidance"],
+      "constraint": "lowest UI precedence; never overrides a design source, domain skill, or consumer design system",
+      "installs": [
+        {"runtime": "codex", "mode": "vendor-plugin-cache", "state": "installed-enabled", "path": "/Users/nicholasosto/.codex/plugins/cache/claude-plugins-official/frontend-design/local", "versionLabel": "local", "lastUpdated": "2026-07-24"},
+        {"runtime": "claude", "mode": "vendor-plugin-cache", "state": "installed-enabled", "path": "/Users/nicholasosto/.claude/plugins/cache/claude-plugins-official/frontend-design/unknown", "versionLabel": "unknown", "registryLastUpdated": "2026-07-22"}
+      ]
+    },
+    {
+      "id": "game-studio",
+      "kind": "vendor-adapter",
+      "owner": "OpenAI",
+      "version": "0.1.2",
+      "authority": ["browser-game UI, sprite, and web-game asset workflows"],
+      "constraint": "not an authority for Roblox UI, Studio QA, or shared-library promotion",
+      "installs": [
+        {"runtime": "codex", "mode": "vendor-plugin-cache", "state": "installed-enabled", "path": "/Users/nicholasosto/.codex/.tmp/plugins/plugins/game-studio", "lastUpdated": "2026-07-10"}
+      ]
+    }
+  ]
+}

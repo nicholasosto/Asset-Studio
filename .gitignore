@@ -12,17 +12,24 @@ previews/thumbs/
 # Local browser QA captures (Playwright snapshots, screenshots, traces).
 output/playwright/
 
-# Image-gen handoff working areas (same rationale as thumbs): candidates + style-anchor
-# copies are ephemeral by design — only the reviewed winner leaves staging, filed to the
-# lore-brain vault by the Claude side. The rolling contract generation/BATCH.md IS tracked.
+# Local Python bytecode from project-owned validators and recovered run scripts.
+__pycache__/
+*.pyc
+
+# Image-generation working areas. Contracts, ACTIVE.md, BATCH.md, and durable run records are
+# tracked; references, candidates, QA renders, and intermediates are local by design.
 generation/staging/
 generation/refs/
+generation/work/
+generation/candidates/
+generation/qa/
 
-# Codex batch drops (same rationale again). Batches land here as multi-megabyte PNGs —
+# Legacy Codex batch drops (preserved compatibility lane). Batches landed here as multi-megabyte PNGs —
 # the ancient-tech run alone was ~110 MB across five folders — and the reviewed winners
 # leave for the shared library, where the full-resolution masters are kept in a dated
 # textures/.../_archive/. What stays behind is losing candidates + QA repeats + preview
-# sheets: review evidence, cited by the pipeline record, not artifacts worth versioning.
+# sheets. Durable text/manifests/scripts recovered from these runs are tracked under
+# generation/runs/; output/imagegen is never authoritative for new work.
 # NOTE: two pre-existing PNGs at output/imagegen/ root were committed before this rule and
 # stay tracked — .gitignore does not untrack. `git rm --cached` them if you want them out.
 output/imagegen/

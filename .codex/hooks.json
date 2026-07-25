@@ -2,11 +2,24 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "Write|Edit",
+        "matcher": "^apply_patch$",
         "hooks": [
           {
             "type": "command",
-            "command": "node \"$CLAUDE_PROJECT_DIR/.project-system/tools/guard.mjs\""
+            "command": "/usr/bin/env node \"$(git rev-parse --show-toplevel)/.codex/hooks/project-system.mjs\"",
+            "statusMessage": "Protecting the vendored Project-System core"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "^apply_patch$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/usr/bin/env node \"$(git rev-parse --show-toplevel)/.codex/hooks/project-system.mjs\"",
+            "statusMessage": "Validating Project-System after the edit"
           }
         ]
       }
@@ -16,7 +29,27 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"$CLAUDE_PROJECT_DIR/.project-system/tools/validate.mjs\" --summary"
+            "command": "/usr/bin/env node \"$(git rev-parse --show-toplevel)/.codex/hooks/project-system.mjs\"",
+            "statusMessage": "Checking Project-System health"
+          },
+          {
+            "type": "command",
+            "command": "/usr/bin/env node \"$(git rev-parse --show-toplevel)/tools/check-dashboard-drift.mjs\" --quiet"
+          },
+          {
+            "type": "command",
+            "command": "/usr/bin/env node \"$(git rev-parse --show-toplevel)/tools/check-agent-capabilities.mjs\" --quiet"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/usr/bin/env node \"$(git rev-parse --show-toplevel)/.codex/hooks/project-system.mjs\"",
+            "statusMessage": "Confirming Project-System is valid"
           }
         ]
       }

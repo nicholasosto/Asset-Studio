@@ -1,0 +1,86 @@
+{
+  "id": "ancient-tech-ui-p0",
+  "revision": 1,
+  "status": "BLK-local-only",
+  "artworkModel": "neutral-body-plus-white-tintable-signal",
+  "assetRoot": "rbxasset://trembus/ui/",
+  "palettes": {
+    "cyan": {
+      "accent": "#37DEFF",
+      "muted": "#23899E"
+    },
+    "amber": {
+      "accent": "#FFB137",
+      "muted": "#9A6627"
+    },
+    "highContrast": {
+      "accent": "#FFF4AE",
+      "muted": "#ABA576"
+    }
+  },
+  "interactionSignals": {
+    "idle": "#23899E",
+    "hover": "#37DEFF",
+    "pressed": "#1D9DB8",
+    "focused": "#FFF4AE",
+    "selected": "#FFB137",
+    "locked": "#637077",
+    "disabled": "#637077"
+  },
+  "recipes": {
+    "monument": {
+      "sourceSize": [512, 512],
+      "sliceCenter": [96, 96, 416, 416],
+      "sliceScale": 0.55,
+      "minimumValidatedSize": [220, 160],
+      "contentInsets": [34, 34, 34, 34],
+      "body": "rbxasset://trembus/ui/frames/panel-ancient-tech-monument-body_BLK.png",
+      "signal": "rbxasset://trembus/ui/frames/panel-ancient-tech-monument-signal_BLK.png"
+    },
+    "compact": {
+      "sourceSize": [256, 256],
+      "sliceCenter": [48, 48, 208, 208],
+      "sliceScale": 0.55,
+      "minimumValidatedSize": [96, 72],
+      "contentInsets": [18, 18, 18, 18],
+      "body": "rbxasset://trembus/ui/frames/panel-ancient-tech-compact-body_BLK.png",
+      "signal": "rbxasset://trembus/ui/frames/panel-ancient-tech-compact-signal_BLK.png"
+    },
+    "control": {
+      "sourceSize": [256, 96],
+      "sliceCenter": [48, 24, 208, 72],
+      "sliceScale": 0.7,
+      "minimumValidatedSize": [110, 44],
+      "contentInsets": [24, 12, 24, 12],
+      "body": "rbxasset://trembus/ui/frames/panel-ancient-tech-control-body_BLK.png",
+      "signal": "rbxasset://trembus/ui/frames/panel-ancient-tech-control-signal_BLK.png"
+    },
+    "titleRail": {
+      "sourceSize": [512, 96],
+      "sliceCenter": [96, 24, 416, 72],
+      "sliceScale": 0.6,
+      "minimumValidatedSize": [240, 48],
+      "contentInsets": [38, 10, 38, 10],
+      "body": "rbxasset://trembus/ui/frames/titlebar-ancient-tech-rail-body_BLK.png",
+      "signal": "rbxasset://trembus/ui/frames/titlebar-ancient-tech-rail-signal_BLK.png"
+    },
+    "obsidianTile": {
+      "sourceSize": [128, 128],
+      "tileSize": [128, 128],
+      "image": "rbxasset://trembus/ui/backgrounds/tile-ancient-tech-obsidian_BLK.png"
+    }
+  },
+  "productionGates": {
+    "localLibraryStaged": true,
+    "studioLocalLinkVerified": true,
+    "rasterValidation": "PASS",
+    "sliceReview": "PASS",
+    "studioEditReview": "PASS",
+    "studioPlayReview": "PASS",
+    "upload": false,
+    "assetRegistryPromotion": false,
+    "placeSave": false,
+    "placePublish": false,
+    "packageRelease": false
+  }
+}

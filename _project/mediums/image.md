@@ -1,7 +1,7 @@
 ---
 title: "Image"
 status: experimental
-updated: 2026-07-20
+updated: 2026-07-24
 links:
   - { rel: references, target: workflows/image-generation }
   - { rel: references, target: decisions/0010-templates-split-by-authorship-exemplars-get-a-library-templa }
@@ -28,14 +28,28 @@ OpenAI image generation + Figma (the `figma` MCP). Finalize / slice locally.
 
 ## Output convention
 
-Generated via the Codex batch contract into `generation/staging/` (unattended MCP drops use library
-`_inbox/images/`); finalized per the brief's target slot — `ui/<group>/`, `textures/<group>/`, or a
-bound by-reference destination. **Pattern A** (symlink, zero-upload) per
-[[0001-reference-the-shared-asset-library-via-external-locations]].
+Generated via the Codex batch contract into `generation/work/<batch-id>/candidates/`; an existing
+compatibility contract may still bind `generation/staging/` (unattended MCP drops use library
+`_inbox/images/`). Reviewed files land per the brief's target slot — `ui/<group>/`,
+`textures/<group>/`, or a bound by-reference destination — and default to `_BLK`. **Pattern A**
+means a canonical referenced file per
+[[0001-reference-the-shared-asset-library-via-external-locations]]; local resolution is not upload
+or shipping proof.
 
 ## Quality bar
 
-Correct dimensions for the slot; clean alpha where required; registered + passing `validate_asset_ids.py`.
+Correct dimensions for the slot; clean alpha where required; source/metadata checks pass. When a
+separate upload is authorized, record the resulting ID and pass `validate_asset_ids.py`; an `_BLK`
+source does not need or imply one.
+
+## Generation records
+
+`generation/README.md` is the project handoff authority. New batches keep immutable tracked contracts
+under `generation/contracts/`, one active pointer in `generation/ACTIVE.md`, and the compatibility
+copy in `generation/BATCH.md`. References and candidates are local working files; durable briefs,
+manifests, and reproducibility scripts promote to `generation/runs/` and are cited by the owning
+`_project/pipeline/` record. The preserved `output/imagegen/` tree is a legacy scratch lane, never
+the authority for new work or promotion state.
 
 ## Template registry
 

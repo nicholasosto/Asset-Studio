@@ -1,0 +1,203 @@
+{
+  "status": "beta",
+  "supersedes": "alpha-map-manifest.json",
+  "derived_from": "the locked _ALPHA set; artwork, normal, metalness, emissive, and row boundaries unchanged; roughness rebuilt from normal-derived cavity, curvature, broad structure, and fine grain",
+  "note": "The _BLK and _ALPHA sets are retained unmodified. BETA is a complete sibling set. Only the roughness pixels differ from ALPHA.",
+  "resolution": [
+    1024,
+    1024
+  ],
+  "normal_convention": "OpenGL tangent space",
+  "tileable_axis": "x",
+  "maps": {
+    "color": "ancient-tech-trim-color-01_BETA.png",
+    "normal": "ancient-tech-trim-normal-01_BETA.png",
+    "roughness": "ancient-tech-trim-roughness-01_BETA.png",
+    "metalness": "ancient-tech-trim-metalness-01_BETA.png",
+    "emissive": "ancient-tech-trim-emissive-01_BETA.png"
+  },
+  "emissive_note": "CORRECTED. SurfaceAppearance does expose EmissiveMaskContent (grayscale mask) plus EmissiveStrength and EmissiveTint. The Neon conduit overlay is no longer required. The emissive map here is RGB cyan \u2014 convert to grayscale for EmissiveMaskContent and move the cyan into EmissiveTint. Confirm availability in your Studio version.",
+  "row_boundaries_note": "row boundaries re-cut to where the artwork actually transitions. the _BLK contract had them 75px, 69px and 20px off for rows 01-03, which split single features across two material values.",
+  "row_contract": [
+    {
+      "name": "01_obsidian_anchor",
+      "y0": 0,
+      "y1": 336,
+      "was": [
+        0,
+        256
+      ],
+      "roughness": 211,
+      "metalness": 8,
+      "albedo_mean": 52,
+      "roughness_p1": 189,
+      "roughness_p99": 255,
+      "roughness_spread": 66
+    },
+    {
+      "name": "02_stepped_obsidian_cap",
+      "y0": 336,
+      "y1": 512,
+      "was": [
+        256,
+        448
+      ],
+      "roughness": 206,
+      "metalness": 14,
+      "albedo_mean": 49,
+      "roughness_p1": 185,
+      "roughness_p99": 255,
+      "roughness_spread": 70
+    },
+    {
+      "name": "03_recessed_obsidian_groove",
+      "y0": 512,
+      "y1": 592,
+      "was": [
+        448,
+        576
+      ],
+      "roughness": 218,
+      "metalness": 4,
+      "albedo_mean": 47,
+      "roughness_p1": 189,
+      "roughness_p99": 255,
+      "roughness_spread": 66
+    },
+    {
+      "name": "04_iridium_petal_face",
+      "y0": 592,
+      "y1": 800,
+      "was": [
+        576,
+        800
+      ],
+      "roughness": 112,
+      "metalness": 242,
+      "albedo_mean": 152,
+      "roughness_p1": 103,
+      "roughness_p99": 163,
+      "roughness_spread": 60
+    },
+    {
+      "name": "05_polished_contact_rail",
+      "y0": 800,
+      "y1": 928,
+      "was": [
+        800,
+        928
+      ],
+      "roughness": 62,
+      "metalness": 252,
+      "albedo_mean": 175,
+      "roughness_p1": 40,
+      "roughness_p99": 92,
+      "roughness_spread": 52
+    },
+    {
+      "name": "06a_cyan_conduit",
+      "y0": 928,
+      "y1": 976,
+      "was": [
+        928,
+        976
+      ],
+      "roughness": 118,
+      "metalness": 215,
+      "albedo_mean": 118,
+      "roughness_p1": 93,
+      "roughness_p99": 149,
+      "roughness_spread": 56
+    },
+    {
+      "name": "06b_black_gasket",
+      "y0": 976,
+      "y1": 1024,
+      "was": [
+        976,
+        1024
+      ],
+      "roughness": 220,
+      "metalness": 0,
+      "albedo_mean": 42,
+      "roughness_p1": 205,
+      "roughness_p99": 255,
+      "roughness_spread": 50
+    }
+  ],
+  "corrections_applied": [
+    "row boundaries re-cut to the measured art transitions (331/517/596/793/927, snapped to multiples of 16)",
+    "baked ambient occlusion regressed out of the colour map (was corr -0.47..-0.71 against a cavity proxy)",
+    "albedo lifted off the PBR floor: median 32 -> 49 on dielectric rows",
+    "metal rows raised to physically real reflectance: 36 sRGB -> 152/175/118 (metals reflect 50-98%, i.e. sRGB 130-240)",
+    "normal map strengthened 1.6x and renormalised",
+    "roughness rebuilt from ALPHA normal-derived cavity dirt, convex edge wear, broad structure, and fine grain; median row p1-p99 spread raised above the 16% audit gate"
+  ],
+  "known_remaining_limitations": [
+    "the row-01 circuit-elbow motif remains a recognisable landmark at 2x tiling; it was deliberately left unchanged because revision brief 02 makes visual identity preservation the completion gate"
+  ],
+  "verification": {
+    "audit": "11 passed, 0 warned, 0 failed",
+    "tiling_x": "4.8% of rows show a seam step on normal, below the 5% gate; BETA roughness adds no failing X seam",
+    "metalness_binary": "60.9% below 25, 34.4% above 230, 0.0% in the muddy 77-178 middle",
+    "mip_alignment": "every row boundary lands on a multiple of 16, so bands sit on clean texel edges down to mip 4",
+    "studio_test": "PASS in Soul Steel PlaceId 102596975485791, Edit mode. Applied as 256px in-memory EditableImages to white MeshParts in Workspace.AncientAlienPortalMaterialLab; obsidian/iridium separation held under neutral, grazing, and dark-cyan lab lighting. EmissiveMaskContent, EmissiveStrength 2.4, and cyan EmissiveTint verified on UVTrimConduitRing. No upload or publish.",
+    "roughness_detail": {
+      "method": "normal-derived AO proxy + signed curvature + broad structure + fine grain",
+      "rows": [
+        {
+          "name": "01_obsidian_anchor",
+          "median": 211,
+          "p1": 189,
+          "p99": 255,
+          "spread": 66
+        },
+        {
+          "name": "02_stepped_obsidian_cap",
+          "median": 206,
+          "p1": 185,
+          "p99": 255,
+          "spread": 70
+        },
+        {
+          "name": "03_recessed_obsidian_groove",
+          "median": 218,
+          "p1": 189,
+          "p99": 255,
+          "spread": 66
+        },
+        {
+          "name": "04_iridium_petal_face",
+          "median": 112,
+          "p1": 103,
+          "p99": 163,
+          "spread": 60
+        },
+        {
+          "name": "05_polished_contact_rail",
+          "median": 62,
+          "p1": 40,
+          "p99": 92,
+          "spread": 52
+        },
+        {
+          "name": "06a_cyan_conduit",
+          "median": 118,
+          "p1": 93,
+          "p99": 149,
+          "spread": 56
+        },
+        {
+          "name": "06b_black_gasket",
+          "median": 220,
+          "p1": 205,
+          "p99": 255,
+          "spread": 50
+        }
+      ]
+    }
+  },
+  "roblox_asset_ids": {
+    "note": "BETA was not uploaded; Studio validation uses in-memory EditableImages. ALPHA upload IDs are intentionally not reused."
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Trembus Image"
+  short_description: "Generate and auto-tag Trembus raster assets"
+  default_prompt: "Use $trembus-image to generate, save using the active project asset conventions, validate, and macOS-tag a Trembus raster asset with the right preset and metadata."

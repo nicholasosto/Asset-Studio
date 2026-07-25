@@ -37,9 +37,11 @@ shared `ui/` kit—not a Soul Steel-specific asset. No asset payload is written 
    `SliceScale` test range, tile size, atlas cell size/order, tint rules, state list, filename
    grammar, and library target slots. Default draft dimensions: 256×256 panel, 256×256 tile, and
    256×256 atlas with four 128×128 cells; these are provisional until the visual brief is locked.
-3. **Image-generation call** — create an annotated composition reference and a bounded
-   `generation/BATCH.md`; run candidates through the existing image-generation leaf; stop its
-   generation pass in `generation/staging/`, then review against seam/slice/atlas constraints.
+3. **Image-generation call** — create an annotated composition reference and an immutable
+   `generation/contracts/<batch-id>.md`, select it in `generation/ACTIVE.md`, and refresh the
+   checked `generation/BATCH.md` compatibility copy. Run candidates through the image-generation
+   leaf into the contract-bound path (new default:
+   `generation/work/<batch-id>/candidates/`), then review against seam/slice/atlas constraints.
 4. **Preflight + `_BLK` filing** — verify format, dimensions, alpha, file size, seam continuity,
    safe slice borders, atlas cell boundaries, tint behavior, and no baked localizable text. File
    reviewed winners under the correct `~/Master-Managed/Assets/ui/.../*_BLK.png` paths.
@@ -117,7 +119,7 @@ lower-kebab names with `_BLK`; their local proof URIs are `rbxasset://trembus/` 
       { "step": "quality-qa", "status": "blocked" }
     ],
     "outputs": [
-      { "label": "generation/BATCH.md — roblox-textured-ui-reference-kit", "kind": "doc" },
+      { "label": "Historical generation/BATCH.md contract — overwritten before immutable contract archiving; source specification preserved in this pipeline", "kind": "doc" },
       { "label": "Source specification — panel, tile, atlas", "kind": "doc" },
       { "label": "ui/frames/graphite-cyan-reference-panel_BLK.png", "kind": "doc" },
       { "label": "ui/backgrounds/graphite-cyan-reference-tile_BLK.png", "kind": "doc" },

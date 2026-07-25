@@ -1,7 +1,7 @@
 ---
 title: "Roblox textured UI/UX"
 status: draft
-updated: 2026-07-12
+updated: 2026-07-24
 links:
   - { rel: references, target: mediums/image }
   - { rel: references, target: workflows/image-generation }
@@ -42,6 +42,10 @@ atlas, produced by the `roblox-textured-ui-reference-kit` run) lives in the libr
   do not combine atlas sub-rects with `Tile`.
 - For 9-slice art, lock `SliceCenter` in source pixels and test the smallest supported control.
   Tune `SliceScale` when thick borders would consume short chips or buttons.
+- For aligned structural-body + tintable-signal pairs, use one union crop and the same source
+  canvas, `SliceCenter`, and `SliceScale` on both layers. Transparent outer margins, a fixed
+  9-slice border, procedural backing inset, and content padding compound; keep one structural
+  inset and treat semantic content padding separately.
 - Export runtime UI art as PNG when transparency is required; keep each image at or below
   4096×4096 and 20 MB, and match its resolution to expected on-screen pixels rather than the
   platform ceiling. Use white source regions when runtime `ImageColor3` tinting is required.
@@ -70,7 +74,7 @@ atlas, produced by the `roblox-textured-ui-reference-kit` run) lives in the libr
     { "id": "lock-brief", "lane": "owner", "label": "Lock UX + visual brief", "detail": "surface · states · devices · input · locale", "note": "Name the UI surface, visual direction, interaction states, target viewports, input modes, localizable text, and acceptance evidence. Approval authorizes local work through Studio validation; final promotion remains a separate gate.", "status": "pending", "to": ["choose-rendering"] },
     { "id": "choose-rendering", "lane": "lead", "label": "Choose native vs image-backed layers", "detail": "Fit · Crop · Slice · Tile · atlas", "note": "Use native frames/text/layout for structure and semantics. Record why each image-backed layer needs ImageLabel or ImageButton and lock ScaleType, ResampleMode, SliceCenter/SliceScale, TileSize, or atlas cell geometry before generation.", "status": "pending", "to": ["write-art-contract"] },
     { "id": "write-art-contract", "lane": "lead", "label": "Write the art contract", "detail": "dimensions · alpha · seams · safe zones", "note": "Bind the call: composition reference = annotated component/specimen layout; filename grammar = lower-kebab + _BLK.png; destination = shared Assets ui/<slot>/ (or ui/<project>/<bundle>/ when project-specific). Keep text out of pixels and define all hover/pressed/disabled variants.", "status": "pending", "to": ["generate-art"] },
-    { "id": "generate-art", "lane": "art", "label": "Call image-generation", "detail": "candidate set → reviewed winner", "note": "Run image-generation with the bound composition reference, filename grammar, and ui/ target slot. The leaf owns its generation/BATCH.md and staging/review loop; this pipeline tracks the accepted art set as this step's outcome.", "status": "pending", "refs": [{ "rel": "references", "target": "workflows/image-generation" }], "to": ["preflight-images"] },
+    { "id": "generate-art", "lane": "art", "label": "Call image-generation", "detail": "immutable contract → candidates → reviewed winner", "note": "Run image-generation with the bound composition reference, filename grammar, and ui/ target slot. The leaf owns its immutable generation contract, ACTIVE/BATCH compatibility pointer, and candidate/review loop; this pipeline tracks the accepted art set as this step's outcome.", "status": "pending", "refs": [{ "rel": "references", "target": "workflows/image-generation" }], "to": ["preflight-images"] },
     { "id": "preflight-images", "lane": "lead", "label": "Preflight the image set", "detail": "format · size · alpha · borders · atlas", "note": "Verify PNG/alpha where needed, <=4096 per axis, <=20 MB, exact atlas cell geometry, seamless tile edges, 9-slice corner/edge integrity, tint-safe white regions, and absence of embedded localizable text.", "status": "pending", "to": ["file-blockout"] },
     { "id": "file-blockout", "lane": "library", "label": "File the _BLK assets", "detail": "Assets/ui/<slot>/<slug>_BLK.png", "note": "Asset-Studio never stores the payload. Route shared UI art to ui/icons, ui/frames, ui/sprites, ui/backgrounds, or ui/design; route project-presupposing art below ui/<project>/. Generated uncertain drops may pause in _inbox/images, but reviewed work moves into ui/.", "status": "pending", "refs": [{ "rel": "references", "target": "decisions/0001-reference-the-shared-asset-library-via-external-locations" }], "to": ["build-studio-proof"] },
     { "id": "build-studio-proof", "lane": "studio", "label": "Build the Studio proof", "detail": "ReplicatedStorage.UIMockups/<Name>", "note": "In Edit mode, construct a real ScreenGui/component using rbxasset://trembus paths. Preserve the generating Luau or component source and save an .rbxm reference when durability is required.", "status": "pending", "to": ["wire-behavior"] },

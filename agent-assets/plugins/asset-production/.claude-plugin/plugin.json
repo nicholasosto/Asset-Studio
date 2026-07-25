@@ -1,0 +1,17 @@
+{
+  "name": "asset-production",
+  "description": "Asset-Studio-owned raster craft, immutable image batches, and textured Roblox UI production guidance.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Trembus Technologies"
+  },
+  "keywords": [
+    "asset-production",
+    "image-generation",
+    "raster",
+    "roblox-ui",
+    "nine-slice",
+    "texture"
+  ],
+  "skills": "./skills"
+}

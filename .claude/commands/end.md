@@ -1,7 +1,7 @@
 ---
 description: End-of-session sweep — drift check, knowledge-capture opportunities, and a conflict audit across instructions · memory · skills
 argument-hint: "[--report]"
-allowed-tools: Bash(node .project-system/tools/validate.mjs:*), Bash(node .project-system/tools/render-hub.mjs:*), Bash(node .project-system/tools/new-entity.mjs:*), Bash(git status:*), Bash(git log:*), Bash(git diff:*)
+allowed-tools: Bash(node .project-system/tools/validate.mjs:*), Bash(node .project-system/tools/render-hub.mjs:*), Bash(node .project-system/tools/new-entity.mjs:*), Bash(node tools/check-agent-capabilities.mjs:*), Bash(git status:*), Bash(git log:*), Bash(git diff:*)
 ---
 Close out this working session with three passes, then present ONE compact report — **Drift · Capture · Conflicts** — ending in a proposed-actions checklist.
 
@@ -13,6 +13,9 @@ Run and *interpret* (summarize; don't paste raw output):
 
 - `node .project-system/tools/validate.mjs --root . --config ./project-system.config.json` — planning-tree health: errors/warnings, prose↔frontmatter status agreement.
 - `node .project-system/tools/render-hub.mjs --root . --check` — is the emitted JSON contract stale against `_project/` + config? If this project pipes the emitted JSON onward (e.g. an app's bundled snapshot), check that copy is fresh too.
+- `node tools/check-agent-capabilities.mjs` — do canonical skill sources, runtime links,
+  plugin/distribution metadata, the active immutable generation contract, and retired-route checks
+  still agree?
 - `git status` (+ `git log` for context) — work finished but uncommitted? (Skip if this space isn't git-tracked; say so.)
 - **Memory vs. reality**: for each persistent-memory fact this session actually *relied on or contradicted*, re-verify it against the repo. A memory that names files, versions, counts, or statuses is a claim — check the claim, not the vibe.
 - Mirror drift (the vendored `.project-system/` vs. the canonical framework) is asserted from the framework side by its consumer drift check — flag only if you observed the vendored copy being edited in place (it must only ever be re-copied).

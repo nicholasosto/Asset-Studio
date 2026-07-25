@@ -1,0 +1,39 @@
+{
+  "status": "blockout",
+  "asset": "ancient-tech-vertical-service-trim-01_BLK.png",
+  "resolution": [1024, 1024],
+  "tile_axis": "y",
+  "atlas_axis": "x",
+  "intended_target": "Roblox architectural trim UV atlas",
+  "source_role": "visual blueprint, not upload-ready PBR",
+  "materials": [
+    "Obsidian Anchor",
+    "Iridium Petal",
+    "cyan conduit",
+    "black pressure gasket"
+  ],
+  "lanes": [
+    {"id": "01", "x0": 0, "x1": 208, "role": "heavy structural rib"},
+    {"id": "02", "x0": 208, "x1": 320, "role": "protected iridium edge rail"},
+    {"id": "03", "x0": 320, "x1": 432, "role": "recessed service channel"},
+    {"id": "04", "x0": 432, "x1": 592, "role": "panel terminator and corner seam"},
+    {"id": "05", "x0": 592, "x1": 704, "role": "cyan power and data spine"},
+    {"id": "06", "x0": 704, "x1": 816, "role": "pressure gasket and expansion joint"},
+    {"id": "07", "x0": 816, "x1": 1024, "role": "neutral attachment jamb"}
+  ],
+  "repeat_qa": {
+    "wrap_mean_abs_difference": 10.312,
+    "local_adjacent_row_p90": 6.566,
+    "wrap_to_p90_ratio": 1.57,
+    "assessment": "acceptable for BLK visual review; validate again after PBR authoring"
+  },
+  "qa_artifacts": [
+    "qa-vertical-repeat.png",
+    "qa-repeat-grid.png",
+    "qa-wrap-seam.png"
+  ],
+  "references": [
+    "../ancient-alien-architecture-trim-sheet/pbr-prototype/ancient-tech-trim-color-01_BETA.png",
+    "../ancient-alien-portal-material-study/ancient-alien-portal-frame-iris-blade-material-study.png"
+  ]
+}

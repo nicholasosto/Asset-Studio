@@ -1,0 +1,112 @@
+{
+  "family": "ancient-alien-ui-components",
+  "status": "blockout",
+  "resolution": [1024, 1024],
+  "intended_target": "Roblox interface component production reference",
+  "source_role": "concept sheets, not sliced or upload-ready UI assets",
+  "style_contract": {
+    "structural_body": "dense black obsidian ceramic",
+    "edge_lip": "thin cool iridium or gunmetal",
+    "seams": "recessed black pressure gasket",
+    "active_signal": "sparse cyan-blue emissive channels",
+    "idle_signal": "muted blue-grey",
+    "disabled_signal": "desaturated near-black",
+    "shape_language": [
+      "monumental modular frames",
+      "mechanical iris segmentation",
+      "nested rails",
+      "precision-machined alien mechanisms"
+    ],
+    "text_policy": "no baked text, numerals, glyphs, or runes; overlay live Roblox UI"
+  },
+  "sheets": [
+    {
+      "asset": "ancient-tech-ui-foundation-components-01_BLK.png",
+      "role": "foundational chrome and controls",
+      "components": [
+        "large content frame",
+        "compact content frame",
+        "title and divider rails",
+        "button state set",
+        "tab set",
+        "slider and progress rails",
+        "corner caps",
+        "toggle",
+        "compact square control"
+      ],
+      "production_routes": [
+        "ui/frames/panel-*",
+        "ui/frames/titlebar-*",
+        "ui/frames/divider-*",
+        "ui/frames/corner-*",
+        "ui/sprites/atlas-ancient-tech-controls-*"
+      ]
+    },
+    {
+      "asset": "ancient-tech-ui-hud-components-01_BLK.png",
+      "role": "HUD, resource, and combat status",
+      "components": [
+        "unit portrait and resource cluster",
+        "long resource meters",
+        "segmented radial meter",
+        "boss or target bar",
+        "ability slots with active and locked states",
+        "status chips",
+        "target reticle",
+        "objective marker",
+        "toast or objective frame"
+      ],
+      "production_routes": [
+        "ui/sprites/atlas-ancient-tech-hud-*",
+        "ui/sprites/atlas-ancient-tech-abilities-*",
+        "ui/frames/panel-ancient-tech-toast-*"
+      ]
+    },
+    {
+      "asset": "ancient-tech-ui-terminal-components-01_BLK.png",
+      "role": "terminal, navigation, inventory, and system UI",
+      "components": [
+        "terminal modal with navigation rail",
+        "inventory or data card",
+        "tooltip",
+        "five-row state list",
+        "map frame",
+        "six-sector radial menu",
+        "vertical scroll track",
+        "breadcrumb rail",
+        "scanning or progress strip",
+        "confirmation dialog",
+        "key-prompt chips"
+      ],
+      "production_routes": [
+        "ui/frames/panel-ancient-tech-terminal-*",
+        "ui/frames/panel-ancient-tech-tooltip-*",
+        "ui/sprites/atlas-ancient-tech-navigation-*",
+        "ui/sprites/atlas-ancient-tech-prompts-*"
+      ]
+    }
+  ],
+  "production_constraints": [
+    "Redraw or extract individual components before use; the sheets include presentation lighting and are not atlases.",
+    "Preserve generous transparent center regions for live content.",
+    "Author scalable rectangular frames as 9-slice assets and validate slice offsets at multiple aspect ratios.",
+    "Keep active cyan sparse so state changes remain legible.",
+    "Keep labels, values, icons, and localization outside the raster art.",
+    "Test selected, focused, disabled, locked, and controller-navigation states for contrast."
+  ],
+  "recommended_first_slice": {
+    "name": "foundation panel and button kit",
+    "deliverables": [
+      "one large 9-slice panel",
+      "one compact 9-slice panel",
+      "one titlebar or divider",
+      "one button atlas with idle, hover, pressed, selected, and disabled states"
+    ]
+  },
+  "references": [
+    "../ancient-alien-architecture-trim-sheet/pbr-prototype/ancient-tech-trim-color-01_BETA.png",
+    "../ancient-alien-vertical-service-trim-sheet/ancient-tech-vertical-service-trim-01_BLK.png",
+    "../ancient-alien-portal-material-study/ancient-alien-portal-frame-iris-blade-material-study.png",
+    "external-locations/assets/ui/frames/panel-graphite-cyan_BLK.png"
+  ]
+}

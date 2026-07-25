@@ -1,29 +1,47 @@
 # External locations — source map
 
-Asset-Studio plans the **processes** that produce assets; it does **not** store the assets. Per
-[decision 0001](../../_project/decisions/0001-reference-the-shared-asset-library-via-external-locations.md)
-it references the canonical sources through the symlinks in this directory. The links are tracked in
-git; their targets (and the payload beneath them) are not.
+Asset-Studio plans the processes that produce assets; it does not store the payloads. Per
+[decision 0001](../../_project/decisions/0001-reference-the-shared-asset-library-via-external-locations.md),
+it references canonical sources through the symlinks in this directory. Git tracks the links, not
+their target payloads.
 
 ## Symlinks
 
-| Link | Target | What it is |
+| Link | Target | Authority |
 |---|---|---|
-| `external-locations/assets` | `~/Master-Managed/Assets/` | The canonical asset library + `ai-output/` staging + `scripts/` validators + the 193-id registry. |
-| `external-locations/canonical` | `…/Project-Spaces/LLM-Agent-Development/canonical/` | The Trembus visual-grammar kit (`kits/visual-grammar/build.mjs`) + the `render-status-board` / `blender-mcp-craft` skills. |
+| `external-locations/assets` | `~/Master-Managed/Assets/` | Canonical shared asset library, catalog, ingestion zones, and validators |
+| `external-locations/canonical` | `…/Project-Spaces/LLM-Agent-Development/canonical/` | Legacy shared visual-grammar kit and a small set of canonical skills |
 
-## Key paths under `assets/`
+Agent capability ownership and runtime installs are registered separately in
+`agent-assets/capabilities.yaml`.
 
-- `ai-output/{images,audio,sfx,voice-previews,text}/` — staging for freshly generated, un-finalized output.
-- `library/{props,rigs,effects,environment,layouts,accessories}/` — runtime TGL assets (`[CAT]_[SUB]_[PascalName]_[Status].rbxm`).
-- `audio/{ability-combat-fx,ui-fx,world-fx,voice-dialog,bg-music,environment,generic}/` — finalized audio.
-- `ui/`, `textures/`, `3D-asset-art/` — finalized 2D and 3D source art.
-- `scripts/validate_asset_ids.py` — Roblox Economy-API id validation (the 193-id registry).
-- `3D-asset-art/tools/validate-3d-asset-art.mjs` — source-art package validation.
+## Current shared-library zones
 
-## Ingestion patterns (carried forward from SS `inner-doll-1-asset-pipelines.md`)
+| Path under `assets/` | Purpose |
+|---|---|
+| `_inbox/{images,audio,models,character-packages}/` | Unattended or genuinely unclassified incoming work only |
+| `_catalog/` | Upload registry, validated ID tables, migration manifests, and inventory records |
+| `_tools/` | Shared-library validators and metadata tools |
+| `_archive/` | Historical and migration snapshots |
+| `source/{blender,pixelmator,terrain}/` | Editable source files |
+| `runtime/roblox/` | Roblox-ready runtime payloads, including project-specific packages |
+| `ui/{backgrounds,design,frames,icons,sprites}/` | Shared UI art |
+| `ui/<project>/` | Project-presupposing UI bundles |
+| `textures/{particles,skybox,surfaces,tileable}/` | Texture and VFX families |
+| `models/`, `audio/`, `concept-art/`, `templates/` | Medium-specific production libraries |
 
-- **Pattern A — symlink (2D / audio):** finalized files land under `assets/` and are served to Studio
-  via the `rbxasset://trembus/` symlink. Zero upload.
-- **Pattern B — upload (3D):** meshes are imported into `ServerStorage.TrembusGameLibrary` in Studio
-  (requires an upload step), then validated against the id registry.
+Do not route new work to the retired `ai-output/`, `library/`, `scripts/`, or `3D-asset-art/`
+top-level layouts. Invoke `roblox-dev:asset-conventions` for the current exact destination,
+filename grammar, `_BLK/_FNL` status, registry, and promotion rules.
+
+## Delivery patterns
+
+- **Pattern A — referenced file:** reviewed 2D/audio payloads live in their canonical library
+  zones and may be resolved locally through `rbxasset://trembus/` for Studio proof. That local URI
+  is not upload, registry, publish, or shipping evidence.
+- **Pattern B — uploaded runtime asset:** meshes and shipping image/audio assets require the
+  applicable owner/group upload, moderation, recorded asset ID/checksum in `_catalog/`, consumer
+  substitution to `rbxassetid://`, and post-upload regression evidence.
+
+The owning pipeline must record each gate separately. File presence, an Asset Manager row, or a
+local Studio import never implies a later gate.

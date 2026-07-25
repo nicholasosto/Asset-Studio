@@ -1,0 +1,113 @@
+{
+  "id": "ancient-tech-ui-p1-tight",
+  "revision": 2,
+  "status": "BLK-local-only",
+  "supersedesForLocalTesting": "ancient-tech-ui-p0",
+  "artworkModel": "union-cropped-neutral-body-plus-white-tintable-signal",
+  "assetRoot": "rbxasset://trembus/ui/frames/",
+  "invariants": {
+    "bodyAndSignalUseSameCanvas": true,
+    "bodyAndSignalUseSameSliceCenter": true,
+    "bodyAndSignalUseSameSliceScale": true,
+    "oneContentInsetLayer": true
+  },
+  "recipes": {
+    "monument": {
+      "sourceCrop": [6, 12, 506, 499],
+      "sourceSize": [500, 487],
+      "sliceCenter": [90, 84, 410, 404],
+      "sliceScale": 0.55,
+      "contentInsets": [28, 28, 28, 28],
+      "body": "rbxasset://trembus/ui/frames/panel-ancient-tech-monument-tight-body_BLK.png",
+      "signal": "rbxasset://trembus/ui/frames/panel-ancient-tech-monument-tight-signal_BLK.png"
+    },
+    "compact": {
+      "sourceCrop": [3, 12, 253, 243],
+      "sourceSize": [250, 231],
+      "sliceCenter": [45, 36, 205, 196],
+      "sliceScale": 0.55,
+      "contentInsets": [16, 14, 16, 14],
+      "slotInsets": [10, 10, 10, 10],
+      "body": "rbxasset://trembus/ui/frames/panel-ancient-tech-compact-tight-body_BLK.png",
+      "signal": "rbxasset://trembus/ui/frames/panel-ancient-tech-compact-tight-signal_BLK.png"
+    },
+    "control": {
+      "sourceCrop": [40, 16, 215, 80],
+      "sourceSize": [175, 64],
+      "sliceCenter": [32, 18, 144, 46],
+      "sliceScale": 1,
+      "contentInsets": [12, 8, 12, 8],
+      "body": "rbxasset://trembus/ui/frames/panel-ancient-tech-control-tight-body_BLK.png",
+      "signal": "rbxasset://trembus/ui/frames/panel-ancient-tech-control-tight-signal_BLK.png"
+    },
+    "titleRail": {
+      "sourceCrop": [68, 3, 443, 93],
+      "sourceSize": [375, 90],
+      "sliceCenter": [88, 28, 287, 65],
+      "sliceScale": 0.65,
+      "contentInsets": [40, 8, 40, 8],
+      "body": "rbxasset://trembus/ui/frames/titlebar-ancient-tech-rail-tight-body_BLK.png",
+      "signal": "rbxasset://trembus/ui/frames/titlebar-ancient-tech-rail-tight-signal_BLK.png"
+    }
+  },
+  "layoutPolish": {
+    "revision": 2,
+    "header": {
+      "copyParent": "StarterGui.AncientTechUIThemeLab.Backdrop.SpecimenCanvas",
+      "titlePosition": [76, 28],
+      "subtitlePosition": [76, 54],
+      "runtimeGapFromRailPixels": 16,
+      "runtimeBottomGapPixels": 12
+    },
+    "paletteCards": {
+      "targets": ["Palette1", "Palette2", "Palette3"],
+      "clipsDescendants": true,
+      "bodySignalYOffset": -2,
+      "bodySignalHeightDelta": 4
+    },
+    "selectedAbilitySocket": {
+      "target": "CompactSystemPanel.Slot3",
+      "layoutCellSize": [84, 84],
+      "highlightInset": [8, 8, 8, 8],
+      "runtimeHighlightSize": [68, 68]
+    },
+    "monumentBodyCopy": {
+      "target": "MonumentPanel.BodyB",
+      "textWrapped": true,
+      "runtimeTextBounds": [427, 26],
+      "runtimeTextBoxSize": [492, 44]
+    }
+  },
+  "studioEvidence": {
+    "repairedRoot": "StarterGui.AncientTechUIThemeLab",
+    "comparisonRoot": "StarterGui.AncientTechUISliceRepairLab",
+    "comparisonEnabled": false,
+    "backupRoot": "ReplicatedStorage.AncientTechUIRepairBackups.AncientTechUIThemeLab_PreTightRepair_20260724",
+    "layoutPolishBackupRoot": "ReplicatedStorage.AncientTechUIRepairBackups.AncientTechUIThemeLab_PreLayoutPolish_20260724",
+    "changedLayerPairs": 23,
+    "changedImageLayers": 46,
+    "runtimeImageInstances": 47,
+    "runtimeLoadedImageInstances": 47,
+    "runtimeSliceMismatchPairs": 0,
+    "runtimeVisibleTextLabels": 37,
+    "runtimeTextOverflowInstances": 0,
+    "runtimePaletteChecksPassed": 3,
+    "runtimeHeaderCheckPassed": true,
+    "runtimeSelectionCheckPassed": true,
+    "consoleErrorsObserved": 0,
+    "playQA": "PASS-P2-layout"
+  },
+  "productionGates": {
+    "localLibraryStaged": true,
+    "studioLocalLinkVerified": true,
+    "rasterValidation": "PASS",
+    "sliceReview": "PASS",
+    "studioComparisonReview": "PASS",
+    "studioPlayReview": "PASS",
+    "upload": false,
+    "assetRegistryPromotion": false,
+    "placeSave": false,
+    "placePublish": false,
+    "packageRelease": false
+  }
+}

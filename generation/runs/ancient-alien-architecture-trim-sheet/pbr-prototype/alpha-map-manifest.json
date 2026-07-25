@@ -1,0 +1,51 @@
+{
+  "status": "alpha",
+  "supersedes": "prototype-map-manifest.json",
+  "derived_from": "the _BLK prototype set, corrected — art unchanged, material data rebuilt",
+  "note": "the _BLK set is retained unmodified alongside this one. output/imagegen/ is gitignored, so neither set is under version control.",
+  "resolution": [1024, 1024],
+  "normal_convention": "OpenGL tangent space",
+  "tileable_axis": "x",
+  "maps": {
+    "color": "ancient-tech-trim-color-01_ALPHA.png",
+    "normal": "ancient-tech-trim-normal-01_ALPHA.png",
+    "roughness": "ancient-tech-trim-roughness-01_ALPHA.png",
+    "metalness": "ancient-tech-trim-metalness-01_ALPHA.png",
+    "emissive": "ancient-tech-trim-emissive-01_ALPHA.png"
+  },
+  "emissive_note": "CORRECTED. SurfaceAppearance does expose EmissiveMaskContent (grayscale mask) plus EmissiveStrength and EmissiveTint. The Neon conduit overlay is no longer required. The emissive map here is RGB cyan — convert to grayscale for EmissiveMaskContent and move the cyan into EmissiveTint. Confirm availability in your Studio version.",
+  "row_boundaries_note": "row boundaries re-cut to where the artwork actually transitions. the _BLK contract had them 75px, 69px and 20px off for rows 01-03, which split single features across two material values.",
+  "row_contract": [
+    { "name": "01_obsidian_anchor",          "y0": 0,   "y1": 336,  "was": [0, 256],   "roughness": 222, "metalness": 8,   "albedo_mean": 52 },
+    { "name": "02_stepped_obsidian_cap",     "y0": 336, "y1": 512,  "was": [256, 448], "roughness": 210, "metalness": 14,  "albedo_mean": 49 },
+    { "name": "03_recessed_obsidian_groove", "y0": 512, "y1": 592,  "was": [448, 576], "roughness": 232, "metalness": 4,   "albedo_mean": 47 },
+    { "name": "04_iridium_petal_face",       "y0": 592, "y1": 800,  "was": [576, 800], "roughness": 112, "metalness": 242, "albedo_mean": 152 },
+    { "name": "05_polished_contact_rail",    "y0": 800, "y1": 928,  "was": [800, 928], "roughness": 62,  "metalness": 252, "albedo_mean": 175 },
+    { "name": "06a_cyan_conduit",            "y0": 928, "y1": 976,  "was": [928, 976], "roughness": 118, "metalness": 215, "albedo_mean": 118 },
+    { "name": "06b_black_gasket",            "y0": 976, "y1": 1024, "was": [976, 1024],"roughness": 245, "metalness": 0,   "albedo_mean": 42 }
+  ],
+  "corrections_applied": [
+    "row boundaries re-cut to the measured art transitions (331/517/596/793/927, snapped to multiples of 16)",
+    "baked ambient occlusion regressed out of the colour map (was corr -0.47..-0.71 against a cavity proxy)",
+    "albedo lifted off the PBR floor: median 32 -> 49 on dielectric rows",
+    "metal rows raised to physically real reflectance: 36 sRGB -> 152/175/118 (metals reflect 50-98%, i.e. sRGB 130-240)",
+    "normal map strengthened 1.6x and renormalised"
+  ],
+  "known_remaining_limitations": [
+    "roughness still carries only 5-10% of scale of variation within each row. it is effectively a per-row constant plus a whisper of relief detail, and adds little a flat material value would not. fixing this needs wear/cavity data that was never authored — an AO+curvature bake against the existing art, or a re-author.",
+    "the row-01 circuit-elbow motif is a recognisable landmark that repeats visibly at 2x tiling. minor, but it is the 'no contextual details' rule from the Roblox trim-sheet guidance."
+  ],
+  "verification": {
+    "tiling_x": "seam gap indistinguishable from local neighbour gaps; 0.9% of rows flagged on colour, 3.2% on normal",
+    "metalness_binary": "60.9% below 25, 34.4% above 230, 0.0% in the muddy 77-178 middle",
+    "mip_alignment": "every row boundary lands on a multiple of 16, so bands sit on clean texel edges down to mip 4",
+    "studio_test": "MaterialVariant on 10x10 parts, StudsPerTile 10, part Color white, place lighting untouched (ClockTime 14.5, Brightness 3). metal rows read as metal; the _BLK set renders them as a black void at every camera angle."
+  },
+  "roblox_asset_ids": {
+    "note": "uploaded from the ALPHA set for the Studio comparison",
+    "color": "rbxassetid://117011115479365",
+    "normal": "rbxassetid://81665243444451",
+    "roughness": "rbxassetid://137121642523708",
+    "metalness": "rbxassetid://131691853779789"
+  }
+}

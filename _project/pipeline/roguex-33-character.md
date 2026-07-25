@@ -93,7 +93,7 @@ constant vocoder patter, hidden lethality, one soft tell.
     "outputs": [
       { "label": "Roguex-33_concept-v1.png (lore-brain Media/visual)", "kind": "doc" },
       { "label": "Roguex-33_concept-v2.png (lore-brain Media/visual)", "kind": "doc" },
-      { "label": "generation/BATCH.md — roguex-33-portrait", "kind": "doc" }
+      { "label": "generation/contracts/roguex-33-portrait.md", "kind": "doc" }
     ]
   }
 ]

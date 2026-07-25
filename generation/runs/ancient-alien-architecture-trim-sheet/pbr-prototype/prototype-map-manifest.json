@@ -1,0 +1,69 @@
+{
+  "status": "prototype",
+  "source": "output/imagegen/ancient-alien-architecture-trim-sheet/ancient-alien-architecture-trim-sheet-01-blueprint.png",
+  "resolution": [
+    1024,
+    1024
+  ],
+  "normal_convention": "OpenGL tangent space",
+  "tileable_axis": "x",
+  "maps": {
+    "color": "output/imagegen/ancient-alien-architecture-trim-sheet/pbr-prototype/ancient-tech-trim-color-01_BLK.png",
+    "normal": "output/imagegen/ancient-alien-architecture-trim-sheet/pbr-prototype/ancient-tech-trim-normal-01_BLK.png",
+    "roughness": "output/imagegen/ancient-alien-architecture-trim-sheet/pbr-prototype/ancient-tech-trim-roughness-01_BLK.png",
+    "metalness": "output/imagegen/ancient-alien-architecture-trim-sheet/pbr-prototype/ancient-tech-trim-metalness-01_BLK.png",
+    "emissive": "output/imagegen/ancient-alien-architecture-trim-sheet/pbr-prototype/ancient-tech-trim-emissive-01_BLK.png"
+  },
+  "emissive_note": "SurfaceAppearance has no emissive-map slot; Studio lab uses a Neon conduit overlay.",
+  "row_contract": [
+    {
+      "name": "01_obsidian_anchor",
+      "y0": 0,
+      "y1": 256,
+      "roughness": 222,
+      "metalness": 8
+    },
+    {
+      "name": "02_stepped_obsidian_cap",
+      "y0": 256,
+      "y1": 448,
+      "roughness": 210,
+      "metalness": 14
+    },
+    {
+      "name": "03_recessed_obsidian_groove",
+      "y0": 448,
+      "y1": 576,
+      "roughness": 232,
+      "metalness": 4
+    },
+    {
+      "name": "04_iridium_petal_face",
+      "y0": 576,
+      "y1": 800,
+      "roughness": 112,
+      "metalness": 242
+    },
+    {
+      "name": "05_polished_contact_rail",
+      "y0": 800,
+      "y1": 928,
+      "roughness": 62,
+      "metalness": 252
+    },
+    {
+      "name": "06a_cyan_conduit",
+      "y0": 928,
+      "y1": 976,
+      "roughness": 118,
+      "metalness": 215
+    },
+    {
+      "name": "06b_black_gasket",
+      "y0": 976,
+      "y1": 1024,
+      "roughness": 245,
+      "metalness": 0
+    }
+  ]
+}

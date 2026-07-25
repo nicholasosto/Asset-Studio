@@ -1,0 +1,374 @@
+version: "1"
+
+style_resolution_order:
+  - explicit-user-style
+  - named-style-preset
+  - default-house
+
+asset_presets:
+  icon:
+    triggers:
+      - icon
+      - ability icon
+      - ui icon
+      - overlay icon
+      - transparent cutout
+      - square png
+    output_contract:
+      mode: raster
+      final_format: png
+      require_transparent_background: true
+      require_square_output: true
+      composition: centered single subject with generous padding
+      silhouette: clear and readable at small sizes
+      text_policy: omit text unless explicitly requested
+    prompt_additions:
+      - transparent background
+      - clear silhouette
+      - centered subject
+      - generous padding inside a 1:1 frame
+      - polished game-ready icon finish
+    validation_profile: icon-png-alpha-square
+  menu-icon:
+    triggers:
+      - menu icon
+      - navigation icon
+      - settings icon
+      - social icon
+      - map icon
+    output_contract:
+      mode: raster
+      final_format: png
+      require_transparent_background: true
+      require_square_output: true
+      composition: centered emblem with generous padding and high small-size legibility
+      silhouette: bold and instantly readable in nav bars and menu grids
+      text_policy: omit text unless explicitly requested
+    prompt_additions:
+      - utility-first menu readability
+      - crisp outline
+      - refined internal detail without clutter
+      - clear silhouette at small sizes
+    validation_profile: icon-png-alpha-square
+  badge-emblem:
+    triggers:
+      - badge
+      - emblem
+      - achievement badge
+      - rank emblem
+    output_contract:
+      mode: raster
+      final_format: png
+      require_transparent_background: true
+      require_square_output: true
+      composition: centered badge or crest with clean outer shape
+      silhouette: premium emblem readability
+      text_policy: omit text unless explicitly requested
+    prompt_additions:
+      - badge-like framing
+      - premium emblem finish
+      - layered detail contained inside a clean outer contour
+  map-marker:
+    triggers:
+      - map marker
+      - waypoint
+      - destination pin
+      - quest pin
+    output_contract:
+      mode: raster
+      final_format: png
+      require_transparent_background: true
+      require_square_output: true
+      composition: centered marker or pin with strong internal symbol
+      silhouette: clear at small sizes and on top of busy map backgrounds
+      text_policy: omit text unless explicitly requested
+    prompt_additions:
+      - waypoint-style readability
+      - strong pin or marker shape
+      - minimal internal route or symbol detail
+  tab-icon:
+    triggers:
+      - tab icon
+      - navigation tab
+      - hud tab
+    output_contract:
+      mode: raster
+      final_format: png
+      require_transparent_background: true
+      require_square_output: true
+      composition: simplified centered symbol optimized for repeated UI use
+      silhouette: extra clean and compact
+      text_policy: omit text unless explicitly requested
+    prompt_additions:
+      - reduced detail load
+      - tidy compact silhouette
+      - strong repeat-use consistency
+  status-effect-icon:
+    triggers:
+      - status effect icon
+      - buff icon
+      - debuff icon
+      - condition icon
+    output_contract:
+      mode: raster
+      final_format: png
+      require_transparent_background: true
+      require_square_output: true
+      composition: centered symbolic icon with fast readability
+      silhouette: clear symbolic state communication
+      text_policy: omit text unless explicitly requested
+    prompt_additions:
+      - symbolic clarity
+      - compact readable motif
+      - punchy focal contrast
+  tileable-part-texture:
+    triggers:
+      - seamless texture
+      - tileable texture
+      - repeatable texture
+      - repeating texture
+      - surface texture
+      - part texture
+      - roblox texture
+      - texture decal
+    output_contract:
+      mode: raster
+      final_format: png
+      require_square_output: true
+      background: fully filled texture sample, not transparent unless requested
+      composition: flat repeatable surface sample with no framing device
+      tiling_behavior: seamless on all four edges for Roblox Texture tiling on parts
+      text_policy: omit text unless explicitly requested
+    prompt_additions:
+      - seamless wrap on all edges
+      - flat orthographic material sample
+      - no directional lighting baked into the texture
+      - no single centered emblem unless explicitly requested
+      - repeat-safe variation with even texel density
+  particle-flipbook-texture:
+    triggers:
+      - particle texture
+      - particle flipbook
+      - particle sheet
+      - particle emitter texture
+      - vfx flipbook
+      - sprite sheet
+    output_contract:
+      mode: raster
+      final_format: png
+      require_square_output: true
+      require_transparent_background: true
+      composition: evenly spaced multi-frame flipbook sheet for Roblox ParticleEmitter use
+      animation_layout: 2x2, 4x4, 8x8, or custom grid based on request
+      text_policy: omit text unless explicitly requested
+    prompt_additions:
+      - transparent background
+      - consistent frame grid
+      - frame-safe padding to reduce filtering bleed
+      - silhouette readability at small sizes
+      - no decorative border or sheet framing outside the flipbook grid
+  beam-strip-texture:
+    triggers:
+      - beam texture
+      - beam strip
+      - beam trail texture
+      - roblox beam texture
+      - scrolling beam texture
+      - effect strip
+    output_contract:
+      mode: raster
+      final_format: png
+      require_square_output: false
+      preferred_aspect_ratio: wide by default
+      require_transparent_background: true
+      composition: horizontally oriented strip texture for Roblox Beam use
+      tiling_behavior: clean repeat or scroll along the horizontal axis
+      text_policy: omit text unless explicitly requested
+    prompt_additions:
+      - transparent background
+      - horizontally tileable or scroll-safe strip
+      - alpha-shaped top and bottom beam profile
+      - no perspective
+      - no centered emblem that breaks repetition
+  item-card-art:
+    triggers:
+      - item card
+      - card art
+      - item artwork
+      - portrait card
+    output_contract:
+      mode: raster
+      final_format: png
+      require_square_output: false
+      preferred_aspect_ratio: portrait or square based on request
+      composition: controlled single-subject framing with breathing room for UI crop
+      background: transparent or simple backdrop based on request
+    prompt_additions:
+      - clean subject framing
+      - readable focal hierarchy
+      - detail concentrated on the item or featured subject
+  portrait-bust:
+    triggers:
+      - portrait
+      - bust
+      - character bust
+      - npc portrait
+    output_contract:
+      mode: raster
+      final_format: png
+      require_square_output: false
+      preferred_aspect_ratio: portrait by default
+      composition: chest-up or head-and-shoulders framing
+      background: transparent or minimal backdrop based on request
+    prompt_additions:
+      - expressive face or focal features
+      - portrait-ready framing
+      - controlled background distraction
+  journal-illustration:
+    triggers:
+      - journal illustration
+      - codex art
+      - lore panel
+      - quest log art
+    output_contract:
+      mode: raster
+      final_format: png
+      require_square_output: false
+      preferred_aspect_ratio: follow panel layout
+      composition: illustrative scene or object study suited for UI panels
+      background: simple or thematic backdrop based on request
+    prompt_additions:
+      - illustrative readability
+      - panel-friendly composition
+      - controlled edge complexity
+  banner-key-art:
+    triggers:
+      - banner
+      - key art
+      - header art
+      - featured panel art
+    output_contract:
+      mode: raster
+      final_format: png
+      require_square_output: false
+      preferred_aspect_ratio: wide by default
+      composition: wide composition with safe negative space for UI overlays
+      background: thematic background allowed
+    prompt_additions:
+      - wide composition
+      - strong focal anchoring
+      - reserved negative space for interface copy or buttons
+  transparent-cutout:
+    triggers:
+      - transparent cutout
+      - object cutout
+      - overlay cutout
+      - isolated subject
+    output_contract:
+      mode: raster
+      final_format: png
+      require_transparent_background: true
+      require_square_output: false
+      composition: isolated subject with clean edges
+      silhouette: crisp extraction with no halo
+      text_policy: omit text unless explicitly requested
+    prompt_additions:
+      - isolated subject only
+      - transparent background
+      - clean edge separation
+  raster-default:
+    triggers:
+      - raster asset
+      - overlay
+      - cutout
+      - png
+    output_contract:
+      mode: raster
+      final_format: follow request, prefer png when transparency is needed
+      background: follow request
+      composition: fit the requested asset type
+    prompt_additions:
+      - raster deliverable
+      - clean edges
+      - production-ready finish
+
+style_presets:
+  default-house:
+    description: readable, polished default for Trembus raster assets
+    prompt_additions:
+      - crisp silhouette
+      - strong subject separation
+      - restrained detail outside the focal form
+      - polished game-ready finish
+  flat-glyph:
+    description: minimal flat-shaded icon treatment
+    prompt_additions:
+      - flat graphic shapes
+      - simplified forms
+      - minimal shading
+      - strong contrast
+  painted-fantasy:
+    description: painterly fantasy icon treatment
+    prompt_additions:
+      - painterly fantasy rendering
+      - rich material cues
+      - subtle magical accents when appropriate
+      - readable silhouette
+  clean-ui:
+    description: modern clean UI treatment
+    prompt_additions:
+      - clean UI illustration style
+      - restrained gradients
+      - tidy edges
+      - high legibility at small sizes
+  clean-sci-fi:
+    description: sharp futuristic UI treatment with restrained energy accents
+    prompt_additions:
+      - clean sci-fi interface styling
+      - sharper geometry
+      - cool luminous accents used sparingly
+      - polished technical finish
+  cozy-flat:
+    description: warm, approachable flat-shape treatment for friendly interfaces
+    prompt_additions:
+      - cozy flat illustration style
+      - softened forms
+      - warm approachable material cues
+      - clean readable contrast
+  heroic-ornate:
+    description: premium embellished treatment for special actions, ranks, and rewards
+    prompt_additions:
+      - ornate heroic detailing
+      - premium trim or engraved accents
+      - rich focal materials
+      - silhouette clarity preserved over decoration
+  parchment-adventure:
+    description: tactile map or journal style with parchment and ink cues
+    prompt_additions:
+      - parchment adventure styling
+      - inked line accents
+      - tactile paper or cartographic cues
+      - readable aged detail without muddying the silhouette
+  neon-arcade:
+    description: bold high-contrast treatment with bright luminous accents
+    prompt_additions:
+      - neon arcade styling
+      - bold contrast
+      - vivid accent lighting
+      - punchy retro-futurist energy
+  tactical-mono:
+    description: mostly monochrome treatment with selective accent color for strategy-heavy UI
+    prompt_additions:
+      - tactical monochrome styling
+      - limited accent color
+      - information-dense clarity
+      - disciplined visual hierarchy
+  robloxify:
+    description: Roblox-like modular shape language with a more mature, grounded finish
+    prompt_additions:
+      - Roblox-like character and item design language
+      - cleaner modular forms
+      - readable simplified shape language
+      - mature grounded presentation
+      - not childish and not toy-like
+      - polished game-ready finish

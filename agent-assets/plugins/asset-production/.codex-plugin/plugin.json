@@ -1,0 +1,35 @@
+{
+  "name": "asset-production",
+  "version": "0.1.0",
+  "description": "Asset-Studio-owned raster craft, immutable image batches, and textured Roblox UI production guidance.",
+  "author": {
+    "name": "Trembus Technologies"
+  },
+  "keywords": [
+    "asset-production",
+    "image-generation",
+    "raster",
+    "roblox-ui",
+    "nine-slice",
+    "texture"
+  ],
+  "skills": "./skills",
+  "interface": {
+    "displayName": "Asset Production",
+    "shortDescription": "Raster assets, immutable batches, and textured Roblox UI",
+    "longDescription": "Versioned Trembus raster craft, Asset-Studio generation handoffs, and image-backed Roblox UI production and acceptance.",
+    "developerName": "Trembus Technologies",
+    "category": "Design",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Create a Trembus raster asset with the right production preset.",
+      "Run the active Asset-Studio generation batch.",
+      "Design and validate a textured Roblox UI asset set."
+    ],
+    "screenshots": []
+  }
+}
