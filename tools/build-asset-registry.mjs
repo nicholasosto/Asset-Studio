@@ -33,13 +33,22 @@
 //     Explorer has no published-view requirement; previews only need to work where a bake ran)
 //   a served /_assets/<p> `src` baked onto every real record (image/audio/3d)
 //   an `assetsRootAbs` payload field + the self-healed previews/_assets symlink
+//   GENERATION METADATA (rec.gen) — the four com.trembus.* xattrs written at generation time
+//     by trembus-image's write_asset_metadata.py. Until this pass existed these were written
+//     to disk and read by NOTHING: the intent behind an asset (which preset produced it, in
+//     what style, whether transparency was deliberate) never reached a consumer. Coverage is
+//     now a first-class number in counts.generation, so the gap is measurable instead of silent.
+//     Distinct from rec.roblox (com.trembus.roblox.* — the UPLOAD layer, joined from the JSONL
+//     ledger); the two namespaces are written by different tools at different pipeline stages.
 //
 // Still DEFERRED (kept as pure helpers / absent fields):
 //   image dimension measurement (w/h/dims/res stay ABSENT; spec => 'n/a')
 //   a portable (non-sips) thumbnail baker for non-macOS contributors
+//   joining a *.trembus.md sidecar to the asset it describes (today each sidecar is indexed
+//     as its own kind:'doc' record, beside rather than attached to its subject)
 //
 // FIELD-PRESENCE CONTRACT (preserved from reference): w, h, dims, res,
-// specIssue, reg, thumb, src are OPTIONAL — they are absent (not null) when N/A.
+// specIssue, reg, gen, thumb, src are OPTIONAL — they are absent (not null) when N/A.
 // medium is null (explicit) for non-asset kinds; mediumType is null iff
 // medium is null; mediumType 'unknown' is only a defensive terminal.
 //
@@ -52,6 +61,9 @@
 // Usage:
 //   node tools/build-asset-registry.mjs               # write asset-registry.json (+ bake thumbs)
 //   node tools/build-asset-registry.mjs --no-thumbs   # skip sips; REUSES already-baked thumbs (non-macOS safe)
+//   node tools/build-asset-registry.mjs --no-xattrs   # skip the xattr read (non-macOS safe); see the
+//                                                     #   warning it prints — unlike --no-thumbs there is
+//                                                     #   no reuse path, so rec.gen goes ABSENT everywhere
 //   node tools/build-asset-registry.mjs --print-json  # dump metadata payload to stdout (no disk writes)
 // ============================================================================
 
@@ -121,9 +133,23 @@ const RE_VOICE_TOKEN = /\b(voice|dialog|dialogue|-vo|_vo|tts|line|taunt|catchphr
 // music stem tokens: theme|lobby|jingle|stinger|soundtrack|score, prefix td-, or contains battle
 const RE_MUSIC_TOKEN = /\b(theme|lobby|jingle|stinger|soundtrack|score)\b|^td-|battle/;
 
+// GENERATION-TIME xattrs, written by trembus-image's write_asset_metadata.py. Mapped to the
+// camelCase record field they land on under rec.gen. Deliberately NOT the com.trembus.roblox.*
+// keys — those are the upload layer and arrive via the JSONL ledger join instead.
+const GEN_XATTRS = {
+  "com.trembus.asset-preset": "preset",
+  "com.trembus.style-pack": "stylePack",
+  "com.trembus.transparent": "transparent",
+  "com.trembus.aspect-ratio": "aspectRatio",
+};
+// One `xattr -l` per chunk instead of per file (313 images would otherwise double the build's
+// subprocess count). 150 paths ≈ 15 KB of argv — an order of magnitude under macOS ARG_MAX.
+const XATTR_CHUNK = 150;
+
 const args = new Set(process.argv.slice(2));
 const PRINT_JSON = args.has("--print-json");
 const WANT_THUMBS = !args.has("--no-thumbs");
+const WANT_XATTRS = !args.has("--no-xattrs");
 
 // readdir/stat failures during the scan — surfaced at the end, so a permission-broken
 // or half-mounted subtree can't silently vanish from the committed registry.
@@ -516,6 +542,67 @@ function buildThumbs(records) {
   return { made, failed, pruned };
 }
 
+// ── generation metadata (rec.gen) ──────────────────────────────────────────
+// Reads the four com.trembus.* xattrs off every real-medium record and attaches them as
+// rec.gen. This is a READ, so unlike the thumb bake it also runs under --print-json.
+//
+// Parsing note: `xattr -l a b c` emits "<path>: <key>: <value>" per line, and BOTH the key and
+// the value may legitimately contain ": " (com.apple.metadata:kMDItemFinderComment does, and
+// binary values can even contain newlines). Rather than trust a greedy split, every line is
+// matched against the exact set of paths this chunk asked about — anything else is discarded.
+// That makes a stray byte inside an unrelated binary attribute unable to forge a record.
+function readGenerationXattrs(records) {
+  const eligible = records.filter((r) => r.medium); // image | audio | 3d — never docs/data/source
+  if (eligible.length === 0) return { tagged: 0, eligible: 0, failed: 0 };
+
+  const keyAlternation = Object.keys(GEN_XATTRS)
+    .map((k) => k.replace(/\./g, "\\."))
+    .join("|");
+  const LINE_RE = new RegExp(`^(.*): (${keyAlternation}): (.*)$`);
+
+  let tagged = 0;
+  let failed = 0;
+
+  for (let i = 0; i < eligible.length; i += XATTR_CHUNK) {
+    const chunk = eligible.slice(i, i + XATTR_CHUNK);
+    const byAbs = new Map(chunk.map((rec) => [join(ASSETS_ROOT, rec.p), rec]));
+    const paths = [...byAbs.keys()];
+
+    let out = "";
+    try {
+      out = execFileSync("xattr", ["-l", ...paths], { encoding: "utf8", maxBuffer: 32 * 1024 * 1024 });
+    } catch (e) {
+      // ENOENT means the BINARY is missing (non-macOS) — that is fatal and handled by the
+      // caller's probe, so re-throw. Any other failure is per-file (a file vanished mid-run,
+      // a permission error): xattr still writes the good files to stdout before exiting
+      // non-zero, so salvage what it did emit rather than dropping the whole chunk.
+      if (e.code === "ENOENT") throw e;
+      out = typeof e.stdout === "string" ? e.stdout : "";
+      failed++;
+    }
+
+    for (const line of out.split("\n")) {
+      const m = LINE_RE.exec(line);
+      if (!m) continue;
+      const rec = byAbs.get(m[1]);
+      if (!rec) continue; // not a path we asked about — a colon inside some other attribute
+      const field = GEN_XATTRS[m[2]];
+      const raw = m[3].trim();
+      if (!raw) continue;
+      if (!rec.gen) {
+        rec.gen = {};
+        tagged++;
+      }
+      // 'transparent' is the one boolean. Anything other than true/false is kept VERBATIM so a
+      // malformed write shows up in the contract instead of being silently coerced to false.
+      rec.gen[field] =
+        field === "transparent" && (raw === "true" || raw === "false") ? raw === "true" : raw;
+    }
+  }
+
+  return { tagged, eligible: eligible.length, failed };
+}
+
 // Idempotent self-heal of the previews/_assets symlink → the shared library realpath.
 // The link is also committed (per the .project-system convention of tracking the link, not
 // the payload); this repairs a missing/dangling/wrong one so a fresh scan (and the static
@@ -576,6 +663,24 @@ function main() {
     assetsRoot: ASSETS_ROOT,
   });
 
+  // Generation metadata — after derive() (needs rec.medium), before the payload is assembled.
+  // Runs under --print-json too: reading xattrs writes nothing.
+  let genStats = { tagged: 0, eligible: 0, failed: 0, skipped: !WANT_XATTRS };
+  if (WANT_XATTRS) {
+    try {
+      genStats = { ...genStats, ...readGenerationXattrs(records) };
+    } catch (e) {
+      if (e.code === "ENOENT") {
+        // Same reasoning as the all-thumbs-failed guard: proceeding would quietly strip rec.gen
+        // from every record in the committed registry and still exit 0.
+        console.error("asset-registry: `xattr` not found — generation metadata cannot be read on this machine.");
+        console.error("  nothing written. Re-run with --no-xattrs to build without it (rec.gen will be absent).");
+        process.exit(1);
+      }
+      throw e;
+    }
+  }
+
   // Bake the served-media side effects BEFORE building the payload so `thumb`/`src`
   // flow into the JSON — but SKIP them under --print-json so that stays a pure,
   // side-effect-free metadata dump (no symlink, no PNGs, no src/thumb fields).
@@ -625,6 +730,25 @@ function main() {
       byStatus: tally(records, (r) => r.status ?? "(none)"),
       byKind: tally(records, (r) => r.kind),
       unknown: records.filter((r) => r.mediumType === "unknown").length,
+      // Generation-metadata coverage. ELIGIBILITY IS IMAGES ONLY: trembus-image is a raster
+      // pipeline, so measuring against every real medium would dilute the gap with models and
+      // audio that were never in scope (and would make an "untagged" worklist useless). The xattr
+      // READ still covers every real medium so a tagged model can't hide — it surfaces as
+      // taggedOffMedium, which is expected to be 0 and is an anomaly if it isn't.
+      generation: (() => {
+        const eligibleRecs = records.filter((r) => r.medium === "image");
+        const taggedRecs = eligibleRecs.filter((r) => r.gen);
+        return {
+          tagged: taggedRecs.length,
+          eligible: eligibleRecs.length,
+          untagged: eligibleRecs.length - taggedRecs.length,
+          scanned: genStats.eligible, // every real-medium record actually probed
+          taggedOffMedium: records.filter((r) => r.gen && r.medium !== "image").length,
+          skipped: genStats.skipped,
+          byPreset: tally(taggedRecs, (r) => r.gen.preset ?? "(unset)"),
+          byStylePack: tally(taggedRecs, (r) => r.gen.stylePack ?? "(unset)"),
+        };
+      })(),
     },
     // strip the transient `segs` field; guarantee mtimeMs is present & last.
     records: records.map(({ mtimeMs, segs, ...r }) => ({ ...r, mtimeMs })),
@@ -665,6 +789,17 @@ function main() {
   );
   if (WANT_THUMBS) console.log(`  thumbs: ${thumbStats.made} baked, ${thumbStats.failed} failed, ${thumbStats.pruned} orphans pruned`);
   else console.log(`  thumbs: bake skipped (--no-thumbs); ${thumbStats.reused} already-baked thumbs reused`);
+  if (WANT_XATTRS) {
+    const g = payload.counts.generation;
+    const pct = g.eligible ? Math.round((g.tagged / g.eligible) * 100) : 0;
+    console.log(
+      `  generation metadata: ${g.tagged}/${g.eligible} images tagged (${pct}%), ${g.scanned} scanned` +
+        `${g.taggedOffMedium ? `, ${g.taggedOffMedium} tagged NON-image` : ""}` +
+        `${genStats.failed ? `, ${genStats.failed} chunk(s) partially failed` : ""}`,
+    );
+  } else {
+    console.warn("  WARN: generation metadata skipped (--no-xattrs) — rec.gen is ABSENT on every record; do not commit this registry");
+  }
   if (scanErrors) console.warn(`  WARN: ${scanErrors} unreadable entries skipped during the scan — the registry may be missing records`);
   console.log(`  wrote ${OUT}`);
 }

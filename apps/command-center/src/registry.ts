@@ -80,6 +80,29 @@ export type MediumType =
   | 'unknown';
 export type RobloxStatus = 'BLK' | 'ALPHA' | 'BETA' | 'FNL';
 
+/**
+ * The generation-time xattr block. Every field is independently optional — the builder attaches
+ * whichever of the four attributes it actually found, so a partially-tagged asset is represented
+ * honestly rather than backfilled with defaults. `transparent` is a boolean when the attribute
+ * held exactly "true"/"false", and the raw string otherwise, so a malformed write stays visible.
+ */
+export interface GenerationRef {
+  preset?: string;
+  stylePack?: string;
+  transparent?: boolean | string;
+  aspectRatio?: string;
+}
+
+/** Whether an asset carries generation-time intent. */
+export type GenerationState = 'tagged' | 'untagged';
+/**
+ * Only images can be tagged — `trembus-image` is a raster pipeline — so models, audio and source
+ * files return null and are excluded from the facet entirely rather than padding the untagged
+ * worklist with assets that were never in scope.
+ */
+export const generationState = (r: AssetRecord): GenerationState | null =>
+  r.medium === 'image' ? (r.gen ? 'tagged' : 'untagged') : null;
+
 export interface AssetRecord {
   /** Library-relative path (the stable, unique key). */
   p: string;
@@ -111,6 +134,13 @@ export interface AssetRecord {
   dims?: string;
   res?: string;
   specIssue?: string | null;
+  /**
+   * Generation-time intent, read from the four `com.trembus.*` xattrs the image pipeline
+   * writes. Present only on assets that were actually tagged — absence means the asset
+   * predates the tagging, or was produced outside `trembus-image`. Distinct from `roblox`,
+   * which is the later UPLOAD layer.
+   */
+  gen?: GenerationRef;
   /** Exact local_path join from the canonical Roblox upload JSONL ledger. */
   roblox?: RobloxAssetRef;
   /** Legacy master CSV match by normalized display name; never authoritative. */
@@ -121,6 +151,23 @@ export interface AssetRecord {
   src?: string;
 }
 
+/** Generation-metadata coverage over real-medium records. `tagged/eligible` is the write-only gap. */
+export interface GenerationCounts {
+  /** Images carrying `gen`. */
+  tagged: number;
+  /** Image records — the only tag-eligible medium. */
+  eligible: number;
+  untagged: number;
+  /** Real-medium records the builder actually probed (wider than `eligible`, by design). */
+  scanned: number;
+  /** Tagged records that aren't images. Expected 0; non-zero means something tagged off-pipeline. */
+  taggedOffMedium: number;
+  /** True when the build ran with --no-xattrs, so every `gen` is absent by choice, not by fact. */
+  skipped: boolean;
+  byPreset: Record<string, number>;
+  byStylePack: Record<string, number>;
+}
+
 interface RegistryCounts {
   total: number;
   byMedium: Record<string, number>;
@@ -128,6 +175,8 @@ interface RegistryCounts {
   byStatus: Record<string, number>;
   byKind: Record<string, number>;
   unknown: number;
+  /** Optional: absent in registries emitted before the xattr read existed. */
+  generation?: GenerationCounts;
 }
 interface RegistryFile {
   built: string;
@@ -161,6 +210,20 @@ const EMPTY_ROBLOX_REGISTRY: RobloxRegistrySummary = {
 // ── Typed exports ──
 export const records: AssetRecord[] = Array.isArray(file.records) ? file.records : [];
 export const counts: RegistryCounts = file.counts ?? EMPTY_COUNTS;
+/**
+ * Coverage summary, with a zeroed fallback so a registry emitted before the xattr read (or with
+ * --no-xattrs) degrades to "nothing tagged" rather than crashing the toolbar's count labels.
+ */
+export const generationCounts: GenerationCounts = counts.generation ?? {
+  tagged: 0,
+  eligible: 0,
+  untagged: 0,
+  scanned: 0,
+  taggedOffMedium: 0,
+  skipped: true,
+  byPreset: {},
+  byStylePack: {},
+};
 export const robloxRegistry: RobloxRegistrySummary = file.robloxRegistry ?? EMPTY_ROBLOX_REGISTRY;
 export const taxonomy = file.taxonomy ?? { version: 0, axis: 'medium/mediumType', statusVocab: [] as RobloxStatus[] };
 /** The Roblox grade vocab, in order (BLK → FNL) — the status Select's real options. */

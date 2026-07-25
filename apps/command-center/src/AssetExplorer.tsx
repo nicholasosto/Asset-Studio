@@ -61,6 +61,8 @@ import {
   absPathOf,
   assetTree,
   counts,
+  generationCounts,
+  generationState,
   humanBytes,
   mediumKey,
   records,
@@ -74,7 +76,7 @@ import {
   thumbUrl,
   underFolder,
 } from './registry';
-import type { AssetRecord, Medium, MediumType, RobloxUploadState } from './registry';
+import type { AssetRecord, GenerationState, Medium, MediumType, RobloxUploadState } from './registry';
 import { MediaFrame } from '@trembus/game-viz';
 import type { MediaFrameData } from '@trembus/game-viz';
 
@@ -128,6 +130,7 @@ interface Filters {
   mediumType: '' | MediumType;
   status: string; // '' | BLK | ALPHA | BETA | FNL | none
   roblox: '' | RobloxUploadState;
+  gen: '' | GenerationState;
   ext: string;
   q: string;
   selectedPath: string; // '' = whole library; else a folder path prefix from the FolderTree
@@ -138,6 +141,7 @@ const EMPTY: Filters = {
   mediumType: '',
   status: '',
   roblox: '',
+  gen: '',
   ext: '',
   q: '',
   selectedPath: '',
@@ -194,7 +198,7 @@ export function AssetExplorer() {
   //    list, the ext-Select options (count-labeled, over the source-gated set), the mediumType
   //    group buckets, AND the tree's filtered tallies — never re-filtering per card. ──
   const { visible, extOptions, sourceOnlyHidden, treeCounts } = useMemo(() => {
-    const { showSource, medium, mediumType, status, roblox, ext, q, selectedPath } = filters;
+    const { showSource, medium, mediumType, status, roblox, gen, ext, q, selectedPath } = filters;
     const needle = q.trim().toLowerCase();
 
     // Ext options come from the source-gated set (before the other facets narrow it), count-labeled.
@@ -216,6 +220,9 @@ export function AssetExplorer() {
       (!mediumType || r.mediumType === mediumType) &&
       (!status || r.status === (status === 'none' ? null : status)) &&
       (!roblox || (r.medium !== null && robloxUploadState(r) === roblox)) &&
+      // generationState() returns null for every non-image, so models, audio and source files
+      // match neither value — the untagged worklist stays a real backfill list.
+      (!gen || generationState(r) === gen) &&
       (!ext || r.ext === ext) &&
       (!needle || `${r.stem} ${r.p}`.toLowerCase().includes(needle));
 
@@ -228,7 +235,7 @@ export function AssetExplorer() {
     // keeps the stable full spine. `showSource` counts as a facet: the spine totals include
     // source files, so a facet+source-off combination must recount to exclude them.
     const hasNonPathFacet =
-      Boolean(medium || mediumType || status || roblox || ext || needle) || showSource;
+      Boolean(medium || mediumType || status || roblox || gen || ext || needle) || showSource;
     const treeCounts = hasNonPathFacet ? tallyByDir(records.filter(facetMatch)) : null;
 
     // Would turning on "show source" reveal matches? True when the current (non-source-gated)
@@ -237,7 +244,7 @@ export function AssetExplorer() {
     // a source record (both are null on source), so the hint would otherwise promise a reveal
     // the toggle can't deliver.
     let sourceOnlyHidden = false;
-    if (!showSource && visible.length === 0 && !medium && !mediumType && !roblox) {
+    if (!showSource && visible.length === 0 && !medium && !mediumType && !roblox && !gen) {
       sourceOnlyHidden = records.some(
         (r) =>
           isSource(r) &&
@@ -269,6 +276,7 @@ export function AssetExplorer() {
     filters.mediumType ||
     filters.status ||
     filters.roblox ||
+    filters.gen ||
     filters.ext ||
     filters.q.trim() ||
     filters.selectedPath;
@@ -292,6 +300,14 @@ export function AssetExplorer() {
       unregistered: 'Not registered',
     };
     chips.push({ id: 'roblox', label: 'Roblox', value: labels[filters.roblox], tone: 'accent' });
+  }
+  if (filters.gen) {
+    chips.push({
+      id: 'gen',
+      label: 'Generation',
+      value: filters.gen === 'tagged' ? 'Tagged' : 'Untagged',
+      tone: 'accent',
+    });
   }
   if (filters.ext) chips.push({ id: 'ext', label: 'Ext', value: filters.ext.toUpperCase() });
   if (filters.q.trim()) chips.push({ id: 'q', label: 'Search', value: filters.q.trim() });
@@ -464,6 +480,16 @@ export function AssetExplorer() {
               <option value="uploaded">Uploaded ({robloxRegistry.byState.uploaded})</option>
               <option value="needsReview">Needs review ({robloxRegistry.byState.needsReview})</option>
               <option value="unregistered">Not registered ({robloxRegistry.byState.unregistered})</option>
+            </Select>
+            <Select
+              label="Generation"
+              placeholder="Any"
+              value={filters.gen}
+              onChange={(e) => set('gen', e.currentTarget.value as '' | GenerationState)}
+            >
+              <option value="">Any generation data</option>
+              <option value="tagged">Tagged ({generationCounts.tagged})</option>
+              <option value="untagged">Untagged ({generationCounts.untagged})</option>
             </Select>
             <Switch
               label="Show source files"
@@ -1026,6 +1052,23 @@ function Inspector({
             <Row label="Dimensions" value={record.dims ?? (record.w && record.h ? `${record.w}×${record.h}` : null)} />
             <Row label="Resolution" value={record.res} />
             <Row label="Spec issue" value={record.specIssue} />
+            {record.gen && (
+              <>
+                <Row label="Generation preset" value={record.gen.preset} />
+                <Row label="Generation style pack" value={record.gen.stylePack} />
+                <Row
+                  label="Generation transparency"
+                  value={
+                    typeof record.gen.transparent === 'boolean'
+                      ? record.gen.transparent
+                        ? 'Transparent'
+                        : 'Opaque'
+                      : record.gen.transparent
+                  }
+                />
+                <Row label="Generation aspect" value={record.gen.aspectRatio} />
+              </>
+            )}
             {record.reg && (
               <>
                 <Row label="Catalog ID — name matched" value={record.reg.id} />

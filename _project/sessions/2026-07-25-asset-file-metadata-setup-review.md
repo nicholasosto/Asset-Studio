@@ -35,11 +35,40 @@ registry), which tool owns each layer, and where the layers disagree.
 
 ## Decisions
 
-- <decision made this session>
+- **Six metadata layers, one closed loop** — filename + folder path (derived, drive the whole
+  Explorer), generation xattrs, Finder comment, `.trembus.json` / `.trembus.md` sidecars, and the
+  Roblox upload ledger. Only the upload layer had a write→validate→read loop; that is exactly why
+  it sat at 36/36 while the generation layer drifted to 14%.
+- **Read the xattrs rather than retire them** (the cheap option of the two) —
+  `build-asset-registry.mjs` now attaches `rec.gen` (preset · stylePack · transparent ·
+  aspectRatio) and a `counts.generation` coverage block. Chose measurement before schema work:
+  the coverage number tells us whether the metadata earns a bigger investment.
+- **Eligibility is images, the read is wider** — `trembus-image` is a raster pipeline, so coverage
+  is measured against the 331 image records (47 tagged, 14%). The xattr read still probes all 490
+  real-medium records so a tagged model can't hide; it would surface as `taggedOffMedium`
+  (currently 0). Measuring against 490 would have diluted the gap to 10% and made the Explorer's
+  untagged worklist useless by padding it with 159 models and audio files.
+- **`--no-xattrs` warns, a missing `xattr` binary aborts** — mirrors the existing all-thumbs-failed
+  guard. Silently emitting a registry with `rec.gen` stripped everywhere would regress the
+  committed contract at exit 0; the abort fires before the thumb bake, so it fails fast.
+- **Malformed values survive verbatim** — `transparent` becomes a boolean only for exactly
+  `"true"`/`"false"`, otherwise the raw string is kept, so a bad write is visible in the contract
+  rather than silently coerced to `false`.
 
 ## First-Principles Candidates
 
-<…>
+- A metadata layer without a validator will drift to near-zero coverage; the layer that had one sat
+  at 36/36 while four that didn't sat at 0–14%. "Who reads this back?" is the question that decides
+  whether a write is a feature or a no-op → memory (asset-registry / pipeline craft)
+- Coverage denominators are a design decision, not a detail: the same 47 tagged files read as 14%
+  (of eligible images) or 10% (of all real mediums), and only the first produces a usable worklist.
+  Scope the denominator to what was actually in scope for the writer → memory
+- Reading N files' xattrs is one chunked `xattr -l` call, not N — but multi-file output is
+  `path: key: value` where both key and value may contain `": "`, so parse against the exact set of
+  paths you asked about instead of splitting greedily → memory (shell/tooling craft)
+- A CSS grid child with a definite `grid-row` and an auto column is placed BEFORE auto-placed
+  siblings, so it claims column 1 and shoves them right; pin both axes when you mean "top right"
+  → memory (frontend craft; cost a real layout bug in the artifact)
 
 ## Outputs
 

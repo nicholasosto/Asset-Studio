@@ -1,6 +1,6 @@
 {
-  "built": "2026-07-25 12:41",
-  "builtMs": 1784983317537,
+  "built": "2026-07-25 14:23",
+  "builtMs": 1784989418330,
   "assetsRootHint": "external-locations/assets",
   "assetsRootAbs": "/Users/nicholasosto/Master-Managed/Assets",
   "taxonomy": {
@@ -68,7 +68,32 @@
       "script": 1,
       "audio": 59
     },
-    "unknown": 0
+    "unknown": 0,
+    "generation": {
+      "tagged": 47,
+      "eligible": 331,
+      "untagged": 284,
+      "scanned": 490,
+      "taggedOffMedium": 0,
+      "skipped": false,
+      "byPreset": {
+        "raster-default": 21,
+        "tileable-part-texture": 10,
+        "banner-key-art": 5,
+        "transparent-cutout": 5,
+        "icon": 6
+      },
+      "byStylePack": {
+        "custom-ancient-alien-obsidian-iridium-tight-crop": 8,
+        "custom-ancient-alien-quiet-obsidian-ceramic-ui-m": 1,
+        "custom-ancient-alien-obsidian-iridium-tintable-e": 6,
+        "custom-cyber-gothic-industrial-noir": 2,
+        "general": 6,
+        "clean-sci-fi": 13,
+        "robloxify": 10,
+        "custom-old-school-boxing-promotion-character-pos": 1
+      }
+    }
   },
   "records": [
     {
@@ -113,6 +138,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "wide",
+        "preset": "raster-default",
+        "stylePack": "custom-ancient-alien-obsidian-iridium-tight-crop",
+        "transparent": true
+      },
       "thumb": "0f4d691a4c0b.png",
       "src": "/_assets/ui/frames/titlebar-ancient-tech-rail-tight-signal_BLK.png",
       "mtimeMs": 1784894218811
@@ -136,6 +167,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "wide",
+        "preset": "raster-default",
+        "stylePack": "custom-ancient-alien-obsidian-iridium-tight-crop",
+        "transparent": true
+      },
       "thumb": "22a386ecf6fd.png",
       "src": "/_assets/ui/frames/titlebar-ancient-tech-rail-tight-body_BLK.png",
       "mtimeMs": 1784894218809
@@ -159,6 +196,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "wide",
+        "preset": "raster-default",
+        "stylePack": "custom-ancient-alien-obsidian-iridium-tight-crop",
+        "transparent": true
+      },
       "thumb": "bc0500796220.png",
       "src": "/_assets/ui/frames/panel-ancient-tech-control-tight-signal_BLK.png",
       "mtimeMs": 1784894218806
@@ -182,6 +225,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "wide",
+        "preset": "raster-default",
+        "stylePack": "custom-ancient-alien-obsidian-iridium-tight-crop",
+        "transparent": true
+      },
       "thumb": "21faad15440d.png",
       "src": "/_assets/ui/frames/panel-ancient-tech-control-tight-body_BLK.png",
       "mtimeMs": 1784894218804
@@ -205,6 +254,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "custom",
+        "preset": "raster-default",
+        "stylePack": "custom-ancient-alien-obsidian-iridium-tight-crop",
+        "transparent": true
+      },
       "thumb": "31ba0dcb89d7.png",
       "src": "/_assets/ui/frames/panel-ancient-tech-compact-tight-signal_BLK.png",
       "mtimeMs": 1784894218802
@@ -228,6 +283,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "custom",
+        "preset": "raster-default",
+        "stylePack": "custom-ancient-alien-obsidian-iridium-tight-crop",
+        "transparent": true
+      },
       "thumb": "c7b511eb80d2.png",
       "src": "/_assets/ui/frames/panel-ancient-tech-compact-tight-body_BLK.png",
       "mtimeMs": 1784894218798
@@ -251,6 +312,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "custom",
+        "preset": "raster-default",
+        "stylePack": "custom-ancient-alien-obsidian-iridium-tight-crop",
+        "transparent": true
+      },
       "thumb": "1a82064fe475.png",
       "src": "/_assets/ui/frames/panel-ancient-tech-monument-tight-signal_BLK.png",
       "mtimeMs": 1784894218791
@@ -274,6 +341,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "custom",
+        "preset": "raster-default",
+        "stylePack": "custom-ancient-alien-obsidian-iridium-tight-crop",
+        "transparent": true
+      },
       "thumb": "017455a38a7c.png",
       "src": "/_assets/ui/frames/panel-ancient-tech-monument-tight-body_BLK.png",
       "mtimeMs": 1784894218778
@@ -343,6 +416,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "tileable-part-texture",
+        "stylePack": "custom-ancient-alien-quiet-obsidian-ceramic-ui-m",
+        "transparent": false
+      },
       "thumb": "c82fec7ebc22.png",
       "src": "/_assets/ui/backgrounds/tile-ancient-tech-obsidian_BLK.png",
       "mtimeMs": 1784836646833
@@ -366,6 +445,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "wide",
+        "preset": "raster-default",
+        "stylePack": "custom-ancient-alien-obsidian-iridium-tintable-e",
+        "transparent": true
+      },
       "thumb": "1cfa79cafbc1.png",
       "src": "/_assets/ui/frames/titlebar-ancient-tech-rail-signal_BLK.png",
       "mtimeMs": 1784836646801
@@ -389,6 +474,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "wide",
+        "preset": "raster-default",
+        "stylePack": "custom-ancient-alien-obsidian-iridium-tintable-e",
+        "transparent": true
+      },
       "thumb": "b57721a91f20.png",
       "src": "/_assets/ui/frames/titlebar-ancient-tech-rail-body_BLK.png",
       "mtimeMs": 1784836646799
@@ -412,6 +503,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "raster-default",
+        "stylePack": "custom-ancient-alien-obsidian-iridium-tintable-e",
+        "transparent": true
+      },
       "thumb": "dd4001252db2.png",
       "src": "/_assets/ui/frames/panel-ancient-tech-compact-signal_BLK.png",
       "mtimeMs": 1784836645673
@@ -435,6 +532,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "raster-default",
+        "stylePack": "custom-ancient-alien-obsidian-iridium-tintable-e",
+        "transparent": true
+      },
       "thumb": "4d43213ab69e.png",
       "src": "/_assets/ui/frames/panel-ancient-tech-compact-body_BLK.png",
       "mtimeMs": 1784836645669
@@ -458,6 +561,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "raster-default",
+        "stylePack": "custom-ancient-alien-obsidian-iridium-tintable-e",
+        "transparent": true
+      },
       "thumb": "15802f281c49.png",
       "src": "/_assets/ui/frames/panel-ancient-tech-monument-signal_BLK.png",
       "mtimeMs": 1784836645116
@@ -481,6 +590,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "raster-default",
+        "stylePack": "custom-ancient-alien-obsidian-iridium-tintable-e",
+        "transparent": true
+      },
       "thumb": "13f3f0113682.png",
       "src": "/_assets/ui/frames/panel-ancient-tech-monument-body_BLK.png",
       "mtimeMs": 1784836645105
@@ -1650,6 +1765,12 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "wide",
+        "preset": "raster-default",
+        "stylePack": "custom-cyber-gothic-industrial-noir",
+        "transparent": false
+      },
       "thumb": "52fc45dc317f.png",
       "src": "/_assets/templates/roguex-depot/roguex-depot-supply-encounter-environment-v1.png",
       "mtimeMs": 1784545784341
@@ -1673,6 +1794,12 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "wide",
+        "preset": "raster-default",
+        "stylePack": "custom-cyber-gothic-industrial-noir",
+        "transparent": false
+      },
       "thumb": "28ffd349c181.png",
       "src": "/_assets/templates/roguex-depot/roguex-depot-supply-prop-family-v1.png",
       "mtimeMs": 1784545784338
@@ -2845,6 +2972,12 @@
           "verificationMethod": "open-cloud assets.get via roblox-cloud MCP (asset_get_info); match evidence: asset_type derived from the .png extension; displayName interior-void-inlay-wall-01_BLK matches filename stem; assetType Image; creator userId 3394700055 (TrembusTech); moderationState Approved; revisionCreateTime 2026-07-14T20:24:24.639Z; inventory textures/surfaces per operator screenshot 2026-07-20"
         }
       },
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "tileable-part-texture",
+        "stylePack": "general",
+        "transparent": false
+      },
       "thumb": "af7e4b31dd84.png",
       "src": "/_assets/textures/tileable/fateless/interior-void-inlay-wall-01_BLK.png",
       "mtimeMs": 1781183900292
@@ -2891,6 +3024,12 @@
           "verificationMethod": "open-cloud assets.get via roblox-cloud MCP (asset_get_info); match evidence: asset_type derived from the .png extension; displayName exterior-null-stone-wall-01_BLK matches filename stem; assetType Image; creator userId 3394700055 (TrembusTech); moderationState Approved; revisionCreateTime 2026-07-14T20:24:25.407Z; inventory textures/surfaces per operator screenshot 2026-07-20"
         }
       },
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "tileable-part-texture",
+        "stylePack": "general",
+        "transparent": false
+      },
       "thumb": "3dd672f1a695.png",
       "src": "/_assets/textures/tileable/fateless/exterior-null-stone-wall-01_BLK.png",
       "mtimeMs": 1781183900093
@@ -2936,6 +3075,12 @@
           "verifiedAt": "2026-07-20",
           "verificationMethod": "open-cloud assets.get via roblox-cloud MCP (asset_get_info); match evidence: asset_type derived from the .png extension; displayName exterior-industrial-armor-wall-01_BLK matches filename stem; assetType Image; creator userId 3394700055 (TrembusTech); moderationState Approved; revisionCreateTime 2026-07-14T20:26:26.518Z; inventory textures/surfaces per operator screenshot 2026-07-20"
         }
+      },
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "tileable-part-texture",
+        "stylePack": "general",
+        "transparent": false
       },
       "thumb": "87df74ab8826.png",
       "src": "/_assets/textures/tileable/robotic/exterior-industrial-armor-wall-01_BLK.png",
@@ -3067,6 +3212,12 @@
           "verificationMethod": "open-cloud assets.get via roblox-cloud MCP (asset_get_info); match evidence: asset_type derived from the .png extension; displayName null-slate-floor-01_BLK matches filename stem; assetType Image; creator userId 3394700055 (TrembusTech); moderationState Approved; revisionCreateTime 2026-07-14T20:24:25.355Z; inventory textures/surfaces per operator screenshot 2026-07-20"
         }
       },
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "tileable-part-texture",
+        "stylePack": "general",
+        "transparent": false
+      },
       "thumb": "766e113d11e7.png",
       "src": "/_assets/textures/tileable/fateless/null-slate-floor-01_BLK.png",
       "mtimeMs": 1781182863920
@@ -3112,6 +3263,12 @@
           "verifiedAt": "2026-07-20",
           "verificationMethod": "open-cloud assets.get via roblox-cloud MCP (asset_get_info); match evidence: asset_type derived from the .png extension; displayName depot-grate-floor-02_BLK matches filename stem; assetType Image; creator userId 3394700055 (TrembusTech); moderationState Approved; revisionCreateTime 2026-07-14T20:26:24.230Z; inventory textures/surfaces per operator screenshot 2026-07-20"
         }
+      },
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "tileable-part-texture",
+        "stylePack": "general",
+        "transparent": false
       },
       "thumb": "5fad9aa22542.png",
       "src": "/_assets/textures/tileable/robotic/depot-grate-floor-02_BLK.png",
@@ -3179,6 +3336,12 @@
           "verifiedAt": "2026-07-20",
           "verificationMethod": "open-cloud assets.get via roblox-cloud MCP (asset_get_info); match evidence: asset_type derived from the .png extension; displayName generic-panel-01-normal_BLK matches filename stem; assetType Image; creator userId 3394700055 (TrembusTech); moderationState Approved; revisionCreateTime 2026-07-14T20:26:26.560Z; inventory textures/surfaces per operator screenshot 2026-07-20"
         }
+      },
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "tileable-part-texture",
+        "stylePack": "general",
+        "transparent": false
       },
       "thumb": "89fed396e6fd.png",
       "src": "/_assets/textures/tileable/robotic/generic-panel-01-normal_BLK.png",
@@ -4027,6 +4190,12 @@
           "verificationMethod": "open-cloud assets.get via roblox-cloud MCP (asset_get_info); match evidence: asset_type derived from the .png extension; open-cloud assets.get via roblox-cloud MCP (asset_get_info): displayName=dn_BLK matches file stem; assetType=Image; state=Active; creator userId=3394700055 (TrembusTech)"
         }
       },
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "raster-default",
+        "stylePack": "clean-sci-fi",
+        "transparent": false
+      },
       "thumb": "87a18c1cc42a.png",
       "src": "/_assets/textures/skybox/soul-steel-01/dn_BLK.png",
       "mtimeMs": 1780071739736
@@ -4092,6 +4261,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "wide",
+        "preset": "raster-default",
+        "stylePack": "clean-sci-fi",
+        "transparent": true
+      },
       "thumb": "5d4481707bbd.png",
       "src": "/_assets/ui/frames/frame-robot-title-bar-2_BLK.png",
       "mtimeMs": 1780055979713
@@ -5421,6 +5596,12 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "wide",
+        "preset": "banner-key-art",
+        "stylePack": "clean-sci-fi",
+        "transparent": false
+      },
       "thumb": "c25afcde8970.png",
       "src": "/_assets/_resort/steel-city-splash-key-art_BLK.png",
       "mtimeMs": 1779100510040
@@ -5444,6 +5625,12 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "wide",
+        "preset": "banner-key-art",
+        "stylePack": "clean-sci-fi",
+        "transparent": false
+      },
       "thumb": "340655e5ad00.png",
       "src": "/_assets/_resort/steel-city-boss-thumbnail_BLK.png",
       "mtimeMs": 1779100509835
@@ -5467,6 +5654,12 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "wide",
+        "preset": "banner-key-art",
+        "stylePack": "clean-sci-fi",
+        "transparent": false
+      },
       "thumb": "ca8b68ff647b.png",
       "src": "/_assets/_resort/steel-city-hub-thumbnail_BLK.png",
       "mtimeMs": 1779100509630
@@ -5490,6 +5683,12 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "wide",
+        "preset": "banner-key-art",
+        "stylePack": "clean-sci-fi",
+        "transparent": false
+      },
       "thumb": "92b20fed44ad.png",
       "src": "/_assets/_resort/steel-city-primary-thumbnail_BLK.png",
       "mtimeMs": 1779100509425
@@ -5513,6 +5712,12 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "raster-default",
+        "stylePack": "clean-sci-fi",
+        "transparent": false
+      },
       "thumb": "c1d0386f3824.png",
       "src": "/_assets/_resort/steel-city-place-icon_BLK.png",
       "mtimeMs": 1779100388203
@@ -5644,6 +5849,12 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "custom",
+        "preset": "raster-default",
+        "stylePack": "robloxify",
+        "transparent": false
+      },
       "thumb": "18467bca2c46.png",
       "src": "/_assets/concept-art/soul-steel/characters/Stick-Shadow/StickShadow-Turnaround_BLK.png",
       "mtimeMs": 1779026527738
@@ -5843,6 +6054,12 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "portrait",
+        "preset": "raster-default",
+        "stylePack": "custom-old-school-boxing-promotion-character-pos",
+        "transparent": false
+      },
       "thumb": "1aa695b6e4ab.png",
       "src": "/_assets/templates/key-art/character-promo-boxing-theme.png",
       "mtimeMs": 1779020032738
@@ -6574,6 +6791,12 @@
       "medium": "image",
       "mediumType": "image",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "wide",
+        "preset": "banner-key-art",
+        "stylePack": "clean-sci-fi",
+        "transparent": true
+      },
       "thumb": "99366d6c8b59.png",
       "src": "/_assets/concept-art/soul-steel/artboards/2026-05-14-vision/assets/roguex-depot-silhouette.png",
       "mtimeMs": 1778761887856
@@ -6873,6 +7096,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "wide",
+        "preset": "transparent-cutout",
+        "stylePack": "clean-sci-fi",
+        "transparent": true
+      },
       "thumb": "11833340a939.png",
       "src": "/_assets/ui/frames/loading-rail-frame_BLK.png",
       "mtimeMs": 1778693243791
@@ -6896,6 +7125,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "wide",
+        "preset": "transparent-cutout",
+        "stylePack": "clean-sci-fi",
+        "transparent": true
+      },
       "thumb": "2108b28a3f31.png",
       "src": "/_assets/ui/frames/divider-circuit-horizontal_BLK.png",
       "mtimeMs": 1778693243758
@@ -6924,6 +7159,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "transparent-cutout",
+        "stylePack": "clean-sci-fi",
+        "transparent": true
+      },
       "thumb": "3e0dc349303a.png",
       "src": "/_assets/ui/frames/panel-ornate-gold_BLK.png",
       "mtimeMs": 1778693243753
@@ -6947,6 +7188,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "transparent-cutout",
+        "stylePack": "clean-sci-fi",
+        "transparent": true
+      },
       "thumb": "8184e361afc0.png",
       "src": "/_assets/ui/frames/panel-ornate-crimson_BLK.png",
       "mtimeMs": 1778693243739
@@ -6970,6 +7217,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "transparent-cutout",
+        "stylePack": "clean-sci-fi",
+        "transparent": true
+      },
       "thumb": "6271153246b6.png",
       "src": "/_assets/ui/frames/panel-ornate-cyan_BLK.png",
       "mtimeMs": 1778693243725
@@ -7914,6 +8167,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "icon",
+        "stylePack": "robloxify",
+        "transparent": true
+      },
       "thumb": "1e83b6373589.png",
       "src": "/_assets/ui/icons/glyph-void-star_BLK.png",
       "mtimeMs": 1777143561452
@@ -7937,6 +8196,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "icon",
+        "stylePack": "robloxify",
+        "transparent": true
+      },
       "thumb": "bf8411c0a6cb.png",
       "src": "/_assets/ui/icons/glyph-soul-flame_BLK.png",
       "mtimeMs": 1777143559855
@@ -7960,6 +8225,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "icon",
+        "stylePack": "robloxify",
+        "transparent": true
+      },
       "thumb": "d8ded893858a.png",
       "src": "/_assets/ui/icons/glyph-crystal-eye_BLK.png",
       "mtimeMs": 1777143558354
@@ -7983,6 +8254,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "icon",
+        "stylePack": "robloxify",
+        "transparent": true
+      },
       "thumb": "a73a1c2733a7.png",
       "src": "/_assets/ui/icons/glyph-warded-shield_BLK.png",
       "mtimeMs": 1777143556709
@@ -8006,6 +8283,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "icon",
+        "stylePack": "robloxify",
+        "transparent": true
+      },
       "thumb": "6e2da3b16e15.png",
       "src": "/_assets/ui/icons/glyph-swift-boot_BLK.png",
       "mtimeMs": 1777143555183
@@ -8029,6 +8312,12 @@
       "medium": "image",
       "mediumType": "ui",
       "spec": "n/a",
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "icon",
+        "stylePack": "robloxify",
+        "transparent": true
+      },
       "thumb": "696fc5bacbf8.png",
       "src": "/_assets/ui/icons/glyph-forged-fist_BLK.png",
       "mtimeMs": 1777143552515
@@ -8074,6 +8363,12 @@
           "verifiedAt": "2026-07-20",
           "verificationMethod": "open-cloud assets.get via roblox-cloud MCP (asset_get_info); match evidence: asset_type derived from the .png extension; displayName void-ash-soil_BLK matches filename stem; assetType Image; creator userId 3394700055 (TrembusTech); moderationState Approved; revisionCreateTime 2026-07-14T20:24:27.430Z; inventory textures/surfaces per operator screenshot 2026-07-20"
         }
+      },
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "tileable-part-texture",
+        "stylePack": "robloxify",
+        "transparent": false
       },
       "thumb": "0f64965cb97d.png",
       "src": "/_assets/textures/tileable/fateless/void-ash-soil_BLK.png",
@@ -8121,6 +8416,12 @@
           "verificationMethod": "open-cloud assets.get via roblox-cloud MCP (asset_get_info); match evidence: asset_type derived from the .png extension; displayName cursed-slate-ground_BLK matches filename stem; assetType Image; creator userId 3394700055 (TrembusTech); moderationState Approved; revisionCreateTime 2026-07-14T20:24:27.856Z; inventory textures/surfaces per operator screenshot 2026-07-20"
         }
       },
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "tileable-part-texture",
+        "stylePack": "robloxify",
+        "transparent": false
+      },
       "thumb": "96f514900745.png",
       "src": "/_assets/textures/tileable/fateless/cursed-slate-ground_BLK.png",
       "mtimeMs": 1777140182020
@@ -8166,6 +8467,12 @@
           "verifiedAt": "2026-07-20",
           "verificationMethod": "open-cloud assets.get via roblox-cloud MCP (asset_get_info); match evidence: asset_type derived from the .png extension; displayName void-asteroid-basalt_BLK matches filename stem; assetType Image; creator userId 3394700055 (TrembusTech); moderationState Approved; revisionCreateTime 2026-07-14T20:24:28.400Z; inventory textures/surfaces per operator screenshot 2026-07-20"
         }
+      },
+      "gen": {
+        "aspectRatio": "square",
+        "preset": "tileable-part-texture",
+        "stylePack": "robloxify",
+        "transparent": false
       },
       "thumb": "bfe3dca6f81d.png",
       "src": "/_assets/textures/tileable/fateless/void-asteroid-basalt_BLK.png",
