@@ -10,8 +10,8 @@
     "workflow": "workflows",
     "medium": "mediums"
   },
-  "entities": 42,
-  "migrated": 42,
+  "entities": 45,
+  "migrated": 45,
   "counts": {
     "error": 0,
     "warning": 0,
@@ -136,6 +136,15 @@
       "excerpt": "What shipped (commits c8a475b … d28dc36, all on origin/main)"
     },
     {
+      "id": "2026-07-24-agent-capability-and-generation-authority-restructure",
+      "kind": "report",
+      "title": "Agent capability and generation authority restructure",
+      "status": "draft",
+      "updated": "2026-07-24",
+      "file": "_project/reports/2026-07-24-agent-capability-and-generation-authority-restructure.md",
+      "excerpt": "What was implemented"
+    },
+    {
       "id": "ancient-tech-surface-kit",
       "kind": "pipeline",
       "title": "Ancient-tech surface kit",
@@ -143,6 +152,15 @@
       "updated": "2026-07-22",
       "file": "_project/pipeline/ancient-tech-surface-kit.md",
       "excerpt": "A six-tile seamless environment-texture family for the robotic domain's ancient-tech flavour — the monumental cyan-on-graphite precursor architecture, as distinct from the domain's existing industrial-armour lane (exter…"
+    },
+    {
+      "id": "ancient-tech-ui-theme",
+      "kind": "pipeline",
+      "title": "Ancient-tech UI theme",
+      "status": "build",
+      "updated": "2026-07-24",
+      "file": "_project/pipeline/ancient-tech-ui-theme.md",
+      "excerpt": "The first production application of the ancient-tech UI component language: generated concept sheets were converted into a local _BLK theme with neutral structural body layers plus aligned, white runtime-tintable signal…"
     },
     {
       "id": "roblox-textured-ui-reference-kit",
@@ -309,14 +327,27 @@
       "id": "2026-07-23-wall-with-mechanical-iris-test-in-blender",
       "kind": "session",
       "title": "Wall with mechanical iris test in Blender",
-      "status": "active",
-      "updated": "2026-07-23",
+      "status": "completed",
+      "updated": "2026-07-25",
       "file": "_project/sessions/2026-07-23-wall-with-mechanical-iris-test-in-blender.md",
       "tags": {
         "last-active": "2026-07-23T13:02",
         "kos": "blender, roblox-brain, memory, assets-library, explorer"
       },
       "excerpt": "Build a test asset in Blender: a wall section with a working mechanical iris (aperture-style portal that opens/closes) — exercising the new lookdev lab on its first real review piece."
+    },
+    {
+      "id": "2026-07-25-asset-file-metadata-setup-review",
+      "kind": "session",
+      "title": "Asset file metadata setup review",
+      "status": "active",
+      "updated": "2026-07-25",
+      "file": "_project/sessions/2026-07-25-asset-file-metadata-setup-review.md",
+      "tags": {
+        "last-active": "2026-07-25T08:38",
+        "kos": "assets-library, explorer, mediums"
+      },
+      "excerpt": "Answer \"what is our asset file metadata setup like?\" — trace the end-to-end metadata story for a produced asset file: what metadata is written, where it lives (in-file · sidecar · xattr · ledger · registry), which tool…"
     },
     {
       "id": "3d-asset",
@@ -350,9 +381,9 @@
       "kind": "workflow",
       "title": "Image generation",
       "status": "active",
-      "updated": "2026-07-20",
+      "updated": "2026-07-24",
       "file": "_project/workflows/image-generation.md",
-      "excerpt": "A briefed 2D image — UI icon, sprite, portrait, or texture — taken from prompt to a finalized file in its target slot, with a review gate and a revise loop. Generation runs through the Codex batch contract (generation/B…"
+      "excerpt": "A briefed 2D image — UI icon, sprite, portrait, or texture — taken from prompt to a reviewed, validated file in its target slot, with a revise loop. New shared-library outputs remain _BLK by default; the calling domain…"
     },
     {
       "id": "lore-creation",
@@ -368,7 +399,7 @@
       "kind": "workflow",
       "title": "Roblox textured UI/UX",
       "status": "draft",
-      "updated": "2026-07-12",
+      "updated": "2026-07-24",
       "file": "_project/workflows/roblox-textured-ui-ux.md",
       "excerpt": "A responsive Roblox UI component or screen whose image-backed material, ornament, icons, and interaction states retain their intended texture without sacrificing localization, input behavior, loading resilience, or devi…"
     },
@@ -405,7 +436,7 @@
       "kind": "medium",
       "title": "Image",
       "status": "experimental",
-      "updated": "2026-07-20",
+      "updated": "2026-07-24",
       "file": "_project/mediums/image.md",
       "tags": {
         "mediumType": "image",
@@ -458,12 +489,14 @@
       ]
     },
     "report": {
-      "total": 1,
+      "total": 2,
       "byStatus": {
-        "complete": 1
+        "complete": 1,
+        "draft": 1
       },
       "ids": [
-        "2026-07-01-session-review-explorer-migration-and-tcl-round-trip"
+        "2026-07-01-session-review-explorer-migration-and-tcl-round-trip",
+        "2026-07-24-agent-capability-and-generation-authority-restructure"
       ],
       "tone": "warning",
       "statusOrder": [
@@ -472,13 +505,14 @@
       ]
     },
     "pipeline": {
-      "total": 5,
+      "total": 6,
       "byStatus": {
-        "build": 3,
+        "build": 4,
         "ship": 2
       },
       "ids": [
         "ancient-tech-surface-kit",
+        "ancient-tech-ui-theme",
         "roblox-textured-ui-reference-kit",
         "roguex-33-character",
         "soul-steel-introduction-narrated",
@@ -513,9 +547,9 @@
       ]
     },
     "session": {
-      "total": 12,
+      "total": 13,
       "byStatus": {
-        "completed": 11,
+        "completed": 12,
         "active": 1
       },
       "ids": [
@@ -530,7 +564,8 @@
         "2026-07-11-add-a-foldertree-side-nav-and-virtualassetgrid-to-the-asset-",
         "2026-07-21-overall-review-of-the-project-space",
         "2026-07-23-texture-trim-deep-dive-how-trim-sheets-work",
-        "2026-07-23-wall-with-mechanical-iris-test-in-blender"
+        "2026-07-23-wall-with-mechanical-iris-test-in-blender",
+        "2026-07-25-asset-file-metadata-setup-review"
       ],
       "tone": "warning",
       "statusOrder": [
@@ -685,6 +720,30 @@
       "target": "roadmap/migrate-asset-explorer-into-the-command-center"
     },
     {
+      "from": "2026-07-24-agent-capability-and-generation-authority-restructure",
+      "fromKind": "report",
+      "rel": "references",
+      "target": "mediums/image"
+    },
+    {
+      "from": "2026-07-24-agent-capability-and-generation-authority-restructure",
+      "fromKind": "report",
+      "rel": "references",
+      "target": "workflows/image-generation"
+    },
+    {
+      "from": "2026-07-24-agent-capability-and-generation-authority-restructure",
+      "fromKind": "report",
+      "rel": "references",
+      "target": "workflows/roblox-textured-ui-ux"
+    },
+    {
+      "from": "2026-07-24-agent-capability-and-generation-authority-restructure",
+      "fromKind": "report",
+      "rel": "references",
+      "target": "pipeline/ancient-tech-ui-theme"
+    },
+    {
       "from": "ancient-tech-surface-kit",
       "fromKind": "pipeline",
       "rel": "references",
@@ -701,6 +760,24 @@
       "fromKind": "pipeline",
       "rel": "references",
       "target": "pipeline/roblox-textured-ui-reference-kit"
+    },
+    {
+      "from": "ancient-tech-ui-theme",
+      "fromKind": "pipeline",
+      "rel": "references",
+      "target": "workflows/roblox-textured-ui-ux"
+    },
+    {
+      "from": "ancient-tech-ui-theme",
+      "fromKind": "pipeline",
+      "rel": "references",
+      "target": "workflows/image-generation"
+    },
+    {
+      "from": "ancient-tech-ui-theme",
+      "fromKind": "pipeline",
+      "rel": "references",
+      "target": "mediums/image"
     },
     {
       "from": "roblox-textured-ui-reference-kit",
@@ -968,7 +1045,7 @@
     }
   ],
   "edgesByRel": {
-    "references": 63,
+    "references": 70,
     "decided-in": 1
   },
   "workflows": {
@@ -1449,7 +1526,7 @@
       "view": "swimlane",
       "title": "Image generation",
       "code": "workflow.image-generation",
-      "caption": "A briefed 2D image: batch-generated by Codex → reviewed → finalized into its target slot (Pattern A).",
+      "caption": "A briefed 2D image: batch-generated by Codex → reviewed → validated _BLK output in its target slot.",
       "lanes": [
         {
           "id": "brief",
@@ -1492,9 +1569,9 @@
         {
           "id": "write-batch",
           "lane": "claude",
-          "label": "Write generation/BATCH.md",
-          "detail": "one rolling batch · variants + negatives",
-          "note": "One rolling contract, rewritten per batch. Composition refs (e.g. templates/character/ or templates/environment/ PNG twins) named in the batch or staged under generation/refs/; if the tool can't take image inputs, the template's constraints are encoded textually in every prompt.",
+          "label": "Write immutable contract + activate",
+          "detail": "contracts/<batch-id>.md · ACTIVE.md · BATCH.md",
+          "note": "The immutable contract carries variants, negatives, output grammar, and stop boundary; ACTIVE.md selects it and BATCH.md remains the operator-trigger compatibility copy. Composition refs (e.g. templates/character/ or templates/environment/ PNG twins) are named in the contract and may be copied under generation/refs/<batch-id>/; if the tool can't take image inputs, encode the template constraints textually in every prompt.",
           "status": "pending",
           "to": [
             "run-batch"
@@ -1514,9 +1591,9 @@
         {
           "id": "generate",
           "lane": "codex",
-          "label": "Generate into generation/staging/",
-          "detail": "<batch-id>_v<variant>c<n>.png",
-          "note": "Codex generates candidates only — no review, rename, or filing on the Codex side. Staging is untracked; candidates are ephemeral by design.",
+          "label": "Generate into the bound work path",
+          "detail": "work/<batch-id>/candidates/ · legacy staging/",
+          "note": "Codex generates candidates only — no review, rename, or filing on the Codex side. New contracts default to generation/work/<batch-id>/candidates/; an existing compatibility contract may bind generation/staging/. Both are untracked and ephemeral by design.",
           "status": "pending",
           "to": [
             "review-cand"
@@ -1536,8 +1613,8 @@
         {
           "id": "revise",
           "lane": "brief",
-          "label": "Refine the brief · rewrite the batch",
-          "note": "Tighten the prompt and regenerate.",
+          "label": "Refine the brief · mint a revision contract",
+          "note": "Tighten the prompt, mint a new batch or revision ID, and update ACTIVE.md plus the BATCH.md compatibility copy. Never overwrite a contract that has started generation.",
           "status": "pending",
           "to": [
             "write-batch"
@@ -1546,8 +1623,9 @@
         {
           "id": "finalize",
           "lane": "claude",
-          "label": "Finalize (_BLK → _FNL)",
-          "detail": "name + status suffix",
+          "label": "Prepare reviewed output (_BLK default)",
+          "detail": "project filename + declared status",
+          "note": "Apply the owning asset convention and default new shared-library work to _BLK. This leaf never implies _FNL; a calling domain workflow or owning pipeline performs its later acceptance and promotion gate.",
           "status": "pending",
           "to": [
             "place-asset"
@@ -1574,8 +1652,9 @@
         {
           "id": "validate-ids",
           "lane": "place",
-          "label": "_tools/validate_asset_ids.py",
-          "detail": "registry check",
+          "label": "Validate the filed source",
+          "detail": "dimensions · alpha · sidecars · registry only when present",
+          "note": "Run the source and metadata checks required by the brief. Run _tools/validate_asset_ids.py only when an upload/registry ID actually exists; local _BLK files do not acquire an ID by implication.",
           "status": "pending",
           "to": []
         }
@@ -1773,8 +1852,8 @@
           "id": "generate-art",
           "lane": "art",
           "label": "Call image-generation",
-          "detail": "candidate set → reviewed winner",
-          "note": "Run image-generation with the bound composition reference, filename grammar, and ui/ target slot. The leaf owns its generation/BATCH.md and staging/review loop; this pipeline tracks the accepted art set as this step's outcome.",
+          "detail": "immutable contract → candidates → reviewed winner",
+          "note": "Run image-generation with the bound composition reference, filename grammar, and ui/ target slot. The leaf owns its immutable generation contract, ACTIVE/BATCH compatibility pointer, and candidate/review loop; this pipeline tracks the accepted art set as this step's outcome.",
           "status": "pending",
           "to": [
             "preflight-images"
@@ -2024,6 +2103,140 @@
         }
       ]
     },
+    "ancient-tech-ui-theme": {
+      "total": 2,
+      "rollup": {
+        "byStatus": {
+          "partial": 2
+        }
+      },
+      "runs": [
+        {
+          "id": "run-p1-tight",
+          "label": "Tight-crop repair + P2 layout polish",
+          "status": "partial",
+          "startedAt": "2026-07-24",
+          "trigger": "owner review found body/signal separation and excess transparent inset",
+          "note": "Eight new _BLK frame layers added without overwriting P0. Twenty-three body/signal pairs repaired in the specimen; 47/47 images loaded, zero slice mismatches, zero live-text overflow, three requested layout corrections verified, zero relevant console errors observed. Owner promotion gate remains open.",
+          "stepOutcomes": [
+            {
+              "step": "write-art-contract",
+              "status": "done"
+            },
+            {
+              "step": "generate-art",
+              "status": "done"
+            },
+            {
+              "step": "preflight-images",
+              "status": "done"
+            },
+            {
+              "step": "file-blockout",
+              "status": "done"
+            },
+            {
+              "step": "build-studio-proof",
+              "status": "done"
+            },
+            {
+              "step": "device-qa",
+              "status": "done"
+            },
+            {
+              "step": "quality-qa",
+              "status": "done"
+            },
+            {
+              "step": "accept",
+              "status": "pending"
+            }
+          ],
+          "outputs": [
+            {
+              "label": "generation/runs/ancient-tech-ui-theme-p1-tight/",
+              "kind": "doc"
+            },
+            {
+              "label": "StarterGui.AncientTechUIThemeLab — repaired local proof",
+              "kind": "doc"
+            },
+            {
+              "label": "ReplicatedStorage.AncientTechUIRepairBackups — local rollback snapshots",
+              "kind": "doc"
+            }
+          ]
+        },
+        {
+          "id": "run-p0",
+          "label": "P0 local body/signal theme slice",
+          "status": "partial",
+          "startedAt": "2026-07-23",
+          "trigger": "interactive Codex production pass from the ancient-tech component concept family",
+          "note": "Legacy out-of-contract run recovered into tracked generation records. Nine local _BLK rasters validated; opt-in package theme and owned Studio specimen passed Edit + disposable Play review. No upload, registry promotion, package release, save, or publish.",
+          "stepOutcomes": [
+            {
+              "step": "lock-brief",
+              "status": "done"
+            },
+            {
+              "step": "choose-rendering",
+              "status": "done"
+            },
+            {
+              "step": "write-art-contract",
+              "status": "done"
+            },
+            {
+              "step": "generate-art",
+              "status": "done"
+            },
+            {
+              "step": "preflight-images",
+              "status": "done"
+            },
+            {
+              "step": "file-blockout",
+              "status": "done"
+            },
+            {
+              "step": "build-studio-proof",
+              "status": "done"
+            },
+            {
+              "step": "wire-behavior",
+              "status": "done"
+            },
+            {
+              "step": "device-qa",
+              "status": "done"
+            },
+            {
+              "step": "quality-qa",
+              "status": "done"
+            },
+            {
+              "step": "accept",
+              "status": "pending"
+            }
+          ],
+          "outputs": [
+            {
+              "label": "generation/runs/ancient-alien-ui-component-concepts/",
+              "kind": "doc"
+            },
+            {
+              "label": "generation/runs/ancient-tech-ui-theme-p0/",
+              "kind": "doc"
+            },
+            {
+              "label": "StarterGui.AncientTechUIThemeLab — local Studio proof",
+              "kind": "doc"
+            }
+          ]
+        }
+      ]
+    },
     "roblox-textured-ui-reference-kit": {
       "total": 1,
       "rollup": {
@@ -2083,7 +2296,7 @@
           ],
           "outputs": [
             {
-              "label": "generation/BATCH.md — roblox-textured-ui-reference-kit",
+              "label": "Historical generation/BATCH.md contract — overwritten before immutable contract archiving; source specification preserved in this pipeline",
               "kind": "doc"
             },
             {
@@ -2145,7 +2358,7 @@
               "kind": "doc"
             },
             {
-              "label": "generation/BATCH.md — roguex-33-portrait",
+              "label": "generation/contracts/roguex-33-portrait.md",
               "kind": "doc"
             }
           ]

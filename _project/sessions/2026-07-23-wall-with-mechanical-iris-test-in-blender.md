@@ -1,13 +1,13 @@
 ---
 title: "Wall with mechanical iris test in Blender"
-status: active
-updated: 2026-07-23
+status: completed
+updated: 2026-07-25
 tags: { last-active: 2026-07-23T13:02, kos: "blender, roblox-brain, memory, assets-library, explorer" }
 ---
 
 # Wall with mechanical iris test in Blender
 
-> **Status:** active (2026-07-23)
+> **Status:** completed (2026-07-25)
 
 ## Goal
 
@@ -107,16 +107,51 @@ portal that opens/closes) — exercising the new lookdev lab on its first real r
 
 ## Outputs
 
-- <artifact produced>
+_(reconstructed at close-out, 2026-07-25)_
+
+- `Assets/source/blender/wall-iris/WallIris.blend` — 12-stud wall module + Ø5-bore mechanical iris:
+  10 camera-leaf blades (one object each, origin at hinge pivot, shared 216-tri mesh, thickness
+  0.18, z-stagger 0.045), lathe housing with bosses, keyframed 40° unison open ↔ closed swing.
+- `Assets/_tools/blender/lookdev.blend` — saved with the `wall-iris` collection linked into the
+  `review` slot; the lab's first real review subject.
+- `textures/tileable/robotic/ancient-tech-vert-trim-01_BLK.png` + sidecar — first trim sheet, with
+  the 7-strip U-map table (conduit line at u 0.664) and the MeshPart + SurfaceAppearance-only
+  consumption gate; 1254² master preserved in `_archive/2026-07-23/`.
+- Material set on the test mesh: per-region trim assignment (plate pilasters · floor conduit run ·
+  clamp lintel · panel-A radial collar field), housing strip-assigned, `mat_iris-blade-edge`
+  emissive leading-edge band on brushed-steel blades.
+- Asset registry + static Command Center bundle rebuilt to pick up the new texture.
+- Memory: `iris-mechanism-craft` (new), `trim-sheet-craft` (new), `lookdev-lab` (extended with the
+  GUI-race scar).
 
 ## Blockers
 
-- <blocker, or “none”>
+- none
 
 ## Next Action
 
-<the single next concrete action>
+_(reconstructed at close-out, 2026-07-25)_
+
+Promote the numeric param-solver-in-bpy pattern via `/create-learn` — grid-search the mechanism,
+assert coverage + containment, then build the winner. It worked first-try here and is the one
+insight from this session with no durable home yet.
 
 ## Handoff Notes
 
-<what the next session needs to know>
+_(reconstructed at close-out, 2026-07-25)_
+
+- **All three success criteria met.** Blades articulate (keyframed open ↔ closed), reviewed in
+  `lookdev.blend` against StylizedHuman, verdict recorded: **stays lab test geometry** — the glb /
+  MeshPart promotion path is documented in Decisions but deliberately not pursued.
+- **The Ø7 walk-through door is not available at 12 studs.** Full-retract iris ⇒ housing ≈ 2× bore,
+  so a door-class opening needs either a 14+ wall module or the assembly buried ~2.5 studs. This
+  test reads vault-porthole, by design.
+- **Standing owner call, now open again:** a dedicated trim preset/category in the
+  asset-conventions chain — deferred until trims multiply. `ancient-tech-vert-trim-01_BLK` is
+  currently filed under the registered `textures/tileable/robotic/` zone with the trim semantics
+  carried in the slug only.
+- **Available dials on the iris:** re-add a soft outer-arc glow if the *open* state should also
+  read energized (currently only closed reads energized — "glow = locked"); the wrap-seam canyon
+  between leaf 10 and leaf 1 is kept as the stack's physical signature, not a defect.
+- **Closed the trim-sheet pilot** carried forward from the 2026-07-23 texture-trim session (sheet +
+  doorway-class test mesh, both delivered).
