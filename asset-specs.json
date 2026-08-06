@@ -1,0 +1,1852 @@
+{
+  "readOn": "2026-07-25",
+  "specs": [
+    {
+      "id": "trim-sheet",
+      "name": "Trim sheet",
+      "cls": "texture",
+      "v": "1.2.0",
+      "state": "draft",
+      "platform": "Blender → Roblox",
+      "guarantee": "One measured sheet can dress a whole part class without turning the sheet into wallpaper.",
+      "failureMode": "The whole sheet repeats across U, so every strip appears on every surface.",
+      "produces": "a _BLK trim texture plus a measured strip-table sidecar",
+      "jump": "textures/tileable",
+      "requirements": [
+        {
+          "label": "Runtime sheet budget",
+          "value": "1024×1024 px",
+          "kind": "budget",
+          "limitValue": "4096×4096 px",
+          "source": "https://create.roblox.com/docs/art/modeling/texture-specifications",
+          "why": "Matches both real trim pilots, leaves useful strip resolution, and stays below the platform texture ceiling."
+        },
+        {
+          "label": "UV sets per mesh component",
+          "value": "1",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/art/modeling/texture-specifications",
+          "why": null
+        },
+        {
+          "label": "UV coordinate space",
+          "value": "0–1",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/art/modeling/texture-specifications",
+          "why": null
+        },
+        {
+          "label": "Vertical pilot lane count",
+          "value": "7 measured lanes",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "This is the proven ancient-tech vertical service trim API, not a platform-wide strip count."
+        },
+        {
+          "label": "Lane inset",
+          "value": "8–12 px",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "Keeps UVs away from neighboring lane color during filtering and mip reduction."
+        },
+        {
+          "label": "Band boundary cadence",
+          "value": "multiples of 16 px",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "The BETA trim audit proved clean band edges through mip 4 with this cadence."
+        },
+        {
+          "label": "Repeat-axis seam outliers",
+          "value": "< 5% of scan lines",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "This is the current deterministic BETA audit gate for anomalous edge steps."
+        }
+      ],
+      "steps": [
+        {
+          "l": "Declare the strip API",
+          "d": "Name every lane or band, its normalized UV range, repeat axis, and whether it may stretch across its width."
+        },
+        {
+          "l": "Author the neutral maps",
+          "d": "Keep lighting out of the color map and preserve enough padding for filtering around every strip boundary."
+        },
+        {
+          "l": "Map one region at a time",
+          "d": "Place each mesh region inside exactly one strip; rotate UV islands when the strip must run in another world direction."
+        },
+        {
+          "l": "Audit maps and seams",
+          "d": "Run the trim audit for map construction, band alignment, mip cadence, and repeat-axis edge continuity."
+        },
+        {
+          "l": "Review in Blender",
+          "d": "Use the linked lookdev lab to inspect scale, stretching, seams, and material response without treating that render as Roblox acceptance."
+        },
+        {
+          "l": "Accept in Studio",
+          "d": "Consume authored UVs through MeshPart and SurfaceAppearance, inspect under multiple lighting conditions, and keep upload and promotion as later gates."
+        }
+      ],
+      "gates": [
+        {
+          "t": "PBR map construction and repeat-axis seams",
+          "how": "generation/runs/ancient-alien-architecture-trim-sheet/audit-trim-sheet.py",
+          "mode": "auto"
+        },
+        {
+          "t": "Strip table matches visible lanes",
+          "how": "sidecar review against the source raster and UV overlay",
+          "mode": "manual"
+        },
+        {
+          "t": "No whole-sheet wallpaper mapping",
+          "how": "Blender lookdev review plus in-Studio acceptance on a UV-mapped MeshPart",
+          "mode": "manual"
+        },
+        {
+          "t": "General trim audit no longer treats 1024 as a Roblox hard ceiling",
+          "how": "validator needs its resolution gate relabeled from platform ceiling to project budget",
+          "mode": "todo"
+        }
+      ],
+      "shape": [
+        "asset: ancient-tech-vert-trim-01_BLK.png",
+        "status: _BLK",
+        "repeatAxis: V",
+        "wholeSheetTilesAcrossU: false",
+        "strips:",
+        "  - { id: panel-a, u: [0.010, 0.220], acrossStretch: allowed }",
+        "  - { id: glow-conduit, u: [0.625, 0.728], emissiveLineU: 0.664 }",
+        "consumer: MeshPart + SurfaceAppearance",
+        "upload: false"
+      ],
+      "shapeLang": "sidecar · yaml",
+      "examples": [
+        {
+          "name": "Ancient-tech vertical service trim 01",
+          "path": "/Users/nicholasosto/Master-Managed/Assets/textures/tileable/robotic/ancient-tech-vert-trim-01_BLK.png",
+          "status": "_BLK",
+          "dimensions": "1024×1024",
+          "bytes": 1846145,
+          "sidecar": "/Users/nicholasosto/Master-Managed/Assets/textures/tileable/robotic/ancient-tech-vert-trim-01_BLK.trembus.md",
+          "validator": null,
+          "studioEvidence": "First consumed by the Blender WallIris specimen; no Roblox upload or publish proof.",
+          "assetExplorerRegistered": true,
+          "robloxUploaded": false,
+          "notes": "Seven measured U lanes; albedo-only; the sidecar is the lane API."
+        },
+        {
+          "name": "Ancient alien architecture trim BETA map family",
+          "path": "/Users/nicholasosto/Master-Managed/Project-Spaces/Asset-Studio/generation/runs/ancient-alien-architecture-trim-sheet/pbr-prototype/beta-map-manifest.json",
+          "status": "_BETA",
+          "dimensions": "1024×1024 per map",
+          "bytes": null,
+          "sidecar": null,
+          "validator": "/Users/nicholasosto/Master-Managed/Project-Spaces/Asset-Studio/generation/runs/ancient-alien-architecture-trim-sheet/audit-trim-sheet.py",
+          "studioEvidence": "PASS with 256 px in-memory EditableImages in AncientAlienPortalMaterialLab; no upload or publish.",
+          "assetExplorerRegistered": false,
+          "robloxUploaded": false,
+          "notes": "Color, OpenGL normal, roughness, metalness, and emissive rasters; 11 passed, 0 warned, 0 failed."
+        }
+      ]
+    },
+    {
+      "id": "tileable-part-texture",
+      "name": "Tileable part texture",
+      "cls": "texture",
+      "v": "1.1.0",
+      "state": "draft",
+      "platform": "Roblox Texture on BasePart",
+      "guarantee": "A scalable Part keeps consistent material density and hides all four image edges.",
+      "failureMode": "A stretched Decal, visible repeat seam, or wrong face axis turns the surface into a poster or stripe.",
+      "produces": "a _BLK seamless raster plus density, direction, and QA metadata",
+      "jump": "textures/tileable",
+      "requirements": [
+        {
+          "label": "Roblox texture dimension",
+          "value": "≤ 4096×4096 px",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/art/modeling/texture-specifications",
+          "why": null
+        },
+        {
+          "label": "Runtime copy",
+          "value": "1024×1024 px",
+          "kind": "budget",
+          "limitValue": "4096×4096 px",
+          "source": "https://create.roblox.com/docs/art/modeling/texture-specifications",
+          "why": "Matches the proven ancient-tech 20-stud-class surfaces while bounding memory below the platform ceiling."
+        },
+        {
+          "label": "Separately uploaded texture formats",
+          "value": ".png · .jpg · .tga · .bmp",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/art/modeling/texture-specifications",
+          "why": null
+        },
+        {
+          "label": "Open Cloud upload file size",
+          "value": "≤ 20 MB per call",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/cloud/guides/usage-assets",
+          "why": null
+        },
+        {
+          "label": "Road, field, and plaza density",
+          "value": "12 studs per tile",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "Won the real 2, 4, 8, and 12 stud Studio sweep for the ancient-tech family."
+        },
+        {
+          "label": "Sidewalk density",
+          "value": "8 studs per tile",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "Keeps the narrower sidewalk module legible while preserving family scale."
+        },
+        {
+          "label": "Seam directions",
+          "value": "4-way",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "Parts may expose either image axis depending on face and orientation."
+        },
+        {
+          "label": "Power-of-two requirement",
+          "value": null,
+          "kind": "limit",
+          "limitValue": null,
+          "source": null,
+          "why": null
+        }
+      ],
+      "steps": [
+        {
+          "l": "Declare the surface role",
+          "d": "Name the material family, BasePart face, intended world direction, and whether the pattern is directional."
+        },
+        {
+          "l": "Author a flat sample",
+          "d": "Fill the frame without perspective, one-off focal objects, or baked directional shadows that reveal repetition."
+        },
+        {
+          "l": "Close all four edges",
+          "d": "Make left/right and top/bottom continuous before resizing the reviewed master into its runtime derivative."
+        },
+        {
+          "l": "Write density metadata",
+          "d": "Record StudsPerTileU/V, face-axis mapping, and the part rotation needed for directional grain."
+        },
+        {
+          "l": "Generate repeat proofs",
+          "d": "Inspect a 2×2 repeat and numeric edge deltas at both master and runtime resolutions."
+        },
+        {
+          "l": "Sweep in Studio",
+          "d": "Apply a Texture instance at candidate stud densities and record the accepted scale without promoting the file."
+        }
+      ],
+      "gates": [
+        {
+          "t": "Dimensions, filename, and four-edge continuity",
+          "how": "tools/file-ancient-tech-surface-kit.sh for the current ancient-tech family",
+          "mode": "auto"
+        },
+        {
+          "t": "2×2 repeat has no visible grid",
+          "how": "repeat-proof review at native and reduced sizes",
+          "mode": "manual"
+        },
+        {
+          "t": "Stud density and direction",
+          "how": "Part-Texture-Testing-Lab sweep using Texture.StudsPerTileU/V",
+          "mode": "manual"
+        },
+        {
+          "t": "Generic tileable validator",
+          "how": "seam and metadata checks are still family-specific instead of one reusable command",
+          "mode": "todo"
+        }
+      ],
+      "shape": [
+        "asset: ancient-tech-road-01_BLK.png",
+        "preset: tileable-part-texture",
+        "status: _BLK",
+        "directional: true",
+        "seam: four-way",
+        "roblox:",
+        "  class: Texture",
+        "  face: Top",
+        "  studsPerTile: [12, 12]",
+        "  localFlowAxis: Z",
+        "uploaded: false"
+      ],
+      "shapeLang": "sidecar · yaml",
+      "examples": [
+        {
+          "name": "Ancient-tech road 01",
+          "path": "/Users/nicholasosto/Master-Managed/Assets/textures/tileable/robotic/ancient-tech-road-01_BLK.png",
+          "status": "_BLK",
+          "dimensions": "1024×1024 runtime; 2048×2048 archived master",
+          "bytes": 1577153,
+          "sidecar": "/Users/nicholasosto/Master-Managed/Assets/textures/tileable/robotic/ancient-tech-road-01_BLK.trembus.md",
+          "validator": "/Users/nicholasosto/Master-Managed/Project-Spaces/Asset-Studio/tools/file-ancient-tech-surface-kit.sh",
+          "studioEvidence": "Four-way seam check and 2/4/8/12-stud Texture sweep passed in Part-Texture-Testing-Lab.",
+          "assetExplorerRegistered": true,
+          "robloxUploaded": false,
+          "notes": "Directional lanes run along local Z on a Top face; rotate the part for an X-running road."
+        }
+      ]
+    },
+    {
+      "id": "surface-appearance-map-set",
+      "name": "SurfaceAppearance map set",
+      "cls": "texture",
+      "v": "0.1.0",
+      "state": "proposed",
+      "platform": "Blender → Roblox MeshPart",
+      "guarantee": "One UV-mapped MeshPart receives a coherent, physically interpretable material family.",
+      "failureMode": "A wrong normal convention, muddy metalness, baked lighting, or mismatched maps produces unstable material response.",
+      "produces": "a named PBR map family and SurfaceAppearance binding manifest",
+      "jump": "textures",
+      "requirements": [
+        {
+          "label": "Standard PBR map slots",
+          "value": "Color · Normal · Roughness · Metalness",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/art/modeling/surface-appearance",
+          "why": null
+        },
+        {
+          "label": "Optional current emissive slot",
+          "value": "EmissiveMaskContent",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/reference/engine/classes/SurfaceAppearance",
+          "why": null
+        },
+        {
+          "label": "Separately uploaded texture dimension",
+          "value": "≤ 4096×4096 px",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/art/modeling/texture-specifications",
+          "why": null
+        },
+        {
+          "label": "Imported-mesh UV texture space",
+          "value": "≤ 1024×1024 px",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/art/modeling/texture-specifications",
+          "why": null
+        },
+        {
+          "label": "Tested map budget",
+          "value": "1024×1024 px per map",
+          "kind": "budget",
+          "limitValue": "1024×1024 imported-mesh UV texture space",
+          "source": "https://create.roblox.com/docs/art/modeling/texture-specifications",
+          "why": "Matches the tested BETA family and the imported-mesh UV-map ceiling while keeping the multi-map material bounded."
+        },
+        {
+          "label": "Color map encoding",
+          "value": "RGB, 24-bit",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/art/modeling/texture-specifications",
+          "why": null
+        },
+        {
+          "label": "Normal map convention",
+          "value": "OpenGL tangent space, RGB 24-bit",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/art/modeling/texture-specifications",
+          "why": null
+        },
+        {
+          "label": "Roughness and metalness encoding",
+          "value": "single-channel grayscale, 8-bit",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/art/modeling/texture-specifications",
+          "why": null
+        },
+        {
+          "label": "AlphaMode options",
+          "value": "Overlay · Transparency · TintMask · Opaque",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/reference/engine/enums/AlphaMode",
+          "why": null
+        },
+        {
+          "label": "Roblox ingest color space per slot",
+          "value": null,
+          "kind": "limit",
+          "limitValue": null,
+          "source": null,
+          "why": null
+        }
+      ],
+      "steps": [
+        {
+          "l": "Lock one UV contract",
+          "d": "All maps must share dimensions, UV alignment, naming, and the same single UV set."
+        },
+        {
+          "l": "Author physical channels",
+          "d": "Keep lighting out of albedo, use OpenGL tangent normals, and reserve metalness values for actual conductor versus dielectric intent."
+        },
+        {
+          "l": "Choose alpha behavior",
+          "d": "Select Overlay, Transparency, TintMask, or Opaque intentionally and record the MeshPart.Transparency interaction."
+        },
+        {
+          "l": "Audit the map family",
+          "d": "Check bit depth, normal construction, roughness spread, binary metalness, alignment, seams, and mip-safe boundaries."
+        },
+        {
+          "l": "Review in neutral light",
+          "d": "Use Blender lookdev to catch authoring defects without baking that renderer's lighting into approval."
+        },
+        {
+          "l": "Accept across Studio quality",
+          "d": "Inspect multiple lighting rigs and quality levels, then record upload, registry, and publish gates separately."
+        }
+      ],
+      "gates": [
+        {
+          "t": "Normal, albedo, roughness, metalness, alignment, and seam construction",
+          "how": "generation/runs/ancient-alien-architecture-trim-sheet/audit-trim-sheet.py",
+          "mode": "auto"
+        },
+        {
+          "t": "AlphaMode matches visual intent",
+          "how": "SurfaceAppearance review on the target MeshPart",
+          "mode": "manual"
+        },
+        {
+          "t": "Material survives lighting and quality changes",
+          "how": "in-Studio acceptance under neutral, grazing, dark, low-quality, and high-quality views",
+          "mode": "manual"
+        },
+        {
+          "t": "Per-slot color-space validator",
+          "how": "blocked on an explicit current Roblox ingest contract for every map slot",
+          "mode": "todo"
+        }
+      ],
+      "shape": [
+        "family: ancient-tech-trim-01",
+        "status: _BETA",
+        "size: [1024, 1024]",
+        "maps:",
+        "  color: ancient-tech-trim-color-01_BETA.png",
+        "  normal: ancient-tech-trim-normal-01_BETA.png",
+        "  roughness: ancient-tech-trim-roughness-01_BETA.png",
+        "  metalness: ancient-tech-trim-metalness-01_BETA.png",
+        "  emissiveMask: ancient-tech-trim-emissive-01_BETA.png",
+        "alphaMode: Opaque",
+        "uploaded: false"
+      ],
+      "shapeLang": "sidecar · yaml",
+      "examples": [
+        {
+          "name": "Ancient alien architecture trim BETA PBR family",
+          "path": "/Users/nicholasosto/Master-Managed/Project-Spaces/Asset-Studio/generation/runs/ancient-alien-architecture-trim-sheet/pbr-prototype/beta-map-manifest.json",
+          "status": "_BETA",
+          "dimensions": "1024×1024 per map",
+          "bytes": null,
+          "sidecar": null,
+          "validator": "/Users/nicholasosto/Master-Managed/Project-Spaces/Asset-Studio/generation/runs/ancient-alien-architecture-trim-sheet/audit-trim-sheet.py",
+          "studioEvidence": "11/11 audit gates passed; in-memory Studio material lab passed; no upload, registry, or publish.",
+          "assetExplorerRegistered": false,
+          "robloxUploaded": false,
+          "notes": "The tracked manifest is durable; the BETA raster payloads remain ignored work products."
+        }
+      ]
+    },
+    {
+      "id": "textured-ui-image-set",
+      "name": "Textured UI image set",
+      "cls": "texture",
+      "v": "0.1.0",
+      "state": "proposed",
+      "platform": "Roblox ImageLabel and ImageButton",
+      "guarantee": "Resizable frames, seamless fills, and state atlases remain sharp, legible, and semantically separate from live UI content.",
+      "failureMode": "Borders collapse, atlas cells bleed, localizable text is baked into pixels, or Studio-only URIs are mistaken for shipped assets.",
+      "produces": "a _BLK UI image set plus slice, tile, atlas, and lifecycle manifest",
+      "jump": "ui",
+      "requirements": [
+        {
+          "label": "Roblox texture dimension",
+          "value": "≤ 4096×4096 px",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/art/modeling/texture-specifications",
+          "why": null
+        },
+        {
+          "label": "Open Cloud upload file size",
+          "value": "≤ 20 MB per call",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/cloud/guides/usage-assets",
+          "why": null
+        },
+        {
+          "label": "P1 compact frame source",
+          "value": "250×231 px",
+          "kind": "budget",
+          "limitValue": "4096×4096 px",
+          "source": "https://create.roblox.com/docs/art/modeling/texture-specifications",
+          "why": "This is the cropped, tested compact-body specimen rather than an arbitrary universal UI size."
+        },
+        {
+          "label": "P1 compact SliceCenter",
+          "value": "Rect(45, 36, 205, 196)",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "The body and signal layers share this exact slice contract and produced zero runtime mismatch pairs."
+        },
+        {
+          "label": "P1 compact SliceScale",
+          "value": "0.55",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "Passed the real compact-panel Studio comparison and Play review."
+        },
+        {
+          "label": "Seamless UI tile specimen",
+          "value": "128×128 px",
+          "kind": "budget",
+          "limitValue": "4096×4096 px",
+          "source": "https://create.roblox.com/docs/art/modeling/texture-specifications",
+          "why": "Matches the pixel-exact four-edge ancient-tech obsidian tile."
+        },
+        {
+          "label": "State atlas specimen",
+          "value": "256×256 px · four 128×128 cells",
+          "kind": "budget",
+          "limitValue": "4096×4096 px",
+          "source": "https://create.roblox.com/docs/art/modeling/texture-specifications",
+          "why": "Matches the proven idle, hover, pressed, and disabled reference atlas."
+        }
+      ],
+      "steps": [
+        {
+          "l": "Choose the render strategy",
+          "d": "Declare each layer as Slice, Tile, atlas crop, Fit, Crop, or native Roblox UI before making art."
+        },
+        {
+          "l": "Lock image geometry",
+          "d": "Record source size, transparency, SliceCenter and SliceScale, tile size, atlas cell order, tint rules, and content insets."
+        },
+        {
+          "l": "Keep semantics live",
+          "d": "Leave text, values, localization, focus, and interaction behavior in Roblox UI rather than baking them into the raster."
+        },
+        {
+          "l": "Validate each raster role",
+          "d": "Check exact size, alpha, edge wrapping, slice-layer pairing, atlas boundaries, and tint-safe white regions."
+        },
+        {
+          "l": "File as _BLK",
+          "d": "Route frames, backgrounds, and sprites into their registered shared-library folders without implying upload."
+        },
+        {
+          "l": "Build the Studio proof",
+          "d": "Exercise smallest and largest sizes, all states, load failure, device layouts, controller focus, and native versus scaled filtering."
+        },
+        {
+          "l": "Promote through separate gates",
+          "d": "Owner acceptance, _FNL rename, upload, moderation, runtime ID swap, place save, publish, and package release remain independent."
+        }
+      ],
+      "gates": [
+        {
+          "t": "P0 frame and tile raster invariants",
+          "how": "generation/runs/ancient-tech-ui-theme-p0/validate_p0_assets.py",
+          "mode": "auto"
+        },
+        {
+          "t": "P1 body and signal size and slice parity",
+          "how": "generation/runs/ancient-tech-ui-theme-p1-tight/validate_tight_assets.py",
+          "mode": "auto"
+        },
+        {
+          "t": "Smallest controls, all atlas states, loading, input, and localization",
+          "how": "in-Studio textured UI acceptance matrix",
+          "mode": "manual"
+        },
+        {
+          "t": "Cloud asset regression",
+          "how": "not run until owner approves _FNL promotion and upload",
+          "mode": "todo"
+        }
+      ],
+      "shape": [
+        "id: ancient-tech-ui-p1-tight",
+        "status: BLK-local-only",
+        "recipe: compact",
+        "sourceSize: [250, 231]",
+        "sliceCenter: [45, 36, 205, 196]",
+        "sliceScale: 0.55",
+        "contentInsets: [16, 14, 16, 14]",
+        "body: rbxasset://trembus/ui/frames/panel-ancient-tech-compact-tight-body_BLK.png",
+        "signal: rbxasset://trembus/ui/frames/panel-ancient-tech-compact-tight-signal_BLK.png",
+        "upload: false",
+        "placePublish: false"
+      ],
+      "shapeLang": "sidecar · yaml",
+      "examples": [
+        {
+          "name": "Ancient-tech compact tight body and signal",
+          "path": "/Users/nicholasosto/Master-Managed/Project-Spaces/Asset-Studio/generation/runs/ancient-tech-ui-theme-p1-tight/theme-manifest.json",
+          "status": "_BLK local only",
+          "dimensions": "250×231 per compact layer",
+          "bytes": null,
+          "sidecar": "/Users/nicholasosto/Master-Managed/Project-Spaces/Asset-Studio/generation/runs/ancient-tech-ui-theme-p1-tight/theme-manifest.json",
+          "validator": "/Users/nicholasosto/Master-Managed/Project-Spaces/Asset-Studio/generation/runs/ancient-tech-ui-theme-p1-tight/validate_tight_assets.py",
+          "studioEvidence": "47/47 runtime image instances loaded, zero slice mismatch pairs, Play QA passed, zero console errors.",
+          "assetExplorerRegistered": false,
+          "robloxUploaded": false,
+          "notes": "Local Studio proof passed; upload, place save, place publish, and package release remain false."
+        },
+        {
+          "name": "Graphite-cyan textured UI reference kit",
+          "path": "/Users/nicholasosto/Master-Managed/Project-Spaces/Asset-Studio/_project/pipeline/roblox-textured-ui-reference-kit.md",
+          "status": "_BLK",
+          "dimensions": "256×256 panel · 256×256 tile · 256×256 atlas",
+          "bytes": null,
+          "sidecar": null,
+          "validator": null,
+          "studioEvidence": "Responsive matrix and interaction wiring passed; rendered owner acceptance and cloud upload remain open.",
+          "assetExplorerRegistered": true,
+          "robloxUploaded": false,
+          "notes": "The atlas contains four 128×128 cells; local URIs are Studio-only."
+        }
+      ]
+    },
+    {
+      "id": "blender-export",
+      "name": "Blender → Roblox export",
+      "cls": "pipeline",
+      "v": "1.0.0",
+      "state": "draft",
+      "platform": "Blender → Roblox Studio",
+      "guarantee": "A selected Blender asset reaches Studio at the intended scale, orientation, hierarchy, and transform state.",
+      "failureMode": "Default FBX scaling or axis assumptions produce a giant, rotated, duplicated, or leaf-bone-polluted import.",
+      "produces": "an FBX or glTF-family export plus a recorded import manifest",
+      "jump": "source/blender",
+      "requirements": [
+        {
+          "label": "Studio importer mesh formats",
+          "value": ".fbx · .obj · .gltf",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/studio/importer",
+          "why": null
+        },
+        {
+          "label": "Blender unit system",
+          "value": "None",
+          "kind": "budget",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/art/blender",
+          "why": "Roblox's Blender setup uses unitless scene units so authored dimensions can map directly to studs."
+        },
+        {
+          "label": "Project scale agreement",
+          "value": "1 Blender unit = 1 stud",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "This is the tested Asset-Studio lookdev contract, not an official stud-to-meter conversion."
+        },
+        {
+          "label": "FBX Apply Scalings",
+          "value": "FBX Unit Scale",
+          "kind": "budget",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/art/modeling/export-requirements",
+          "why": "Roblox documents this as the recommended Blender FBX scaling path."
+        },
+        {
+          "label": "Export axes",
+          "value": "Forward Z Forward · Up Y Up",
+          "kind": "budget",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/art/blender",
+          "why": "This is Roblox's documented Blender export recipe for preserving intended orientation."
+        },
+        {
+          "label": "Rig bone transforms",
+          "value": "scale 1,1,1 · rotation 0,0,0",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/art/modeling/specifications",
+          "why": null
+        },
+        {
+          "label": "Bone influences per vertex",
+          "value": "≤ 4",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/art/modeling/specifications",
+          "why": null
+        }
+      ],
+      "steps": [
+        {
+          "l": "Set scene units",
+          "d": "Use Unit System None and record the project's 1-unit-to-1-stud agreement before modeling."
+        },
+        {
+          "l": "Name exportable objects",
+          "d": "Keep stable object and hierarchy names because Studio reimport matches source paths and names."
+        },
+        {
+          "l": "Apply intended transforms",
+          "d": "Freeze object scale and rotation where the asset contract requires it, and keep rig bone transforms within Roblox requirements."
+        },
+        {
+          "l": "Export selected content",
+          "d": "Use FBX Unit Scale, Z Forward, Y Up, no leaf bones, and disable baked animation when the asset has no keyed motion."
+        },
+        {
+          "l": "Inspect the importer preview",
+          "d": "Check hierarchy, materials, rigs, cages, attachments, orientation, and dimensions before creating or uploading anything."
+        },
+        {
+          "l": "Measure in Studio",
+          "d": "Compare imported extents to the reference stud cube and record whether the import was local, uploaded, saved, or only reviewed."
+        }
+      ],
+      "gates": [
+        {
+          "t": "Scene scale and export settings",
+          "how": "Blender export manifest review",
+          "mode": "manual"
+        },
+        {
+          "t": "Internal names and unit object scales",
+          "how": "/Users/nicholasosto/.codex/skills/blender-mcp/scripts/validate_internal_naming.py",
+          "mode": "auto"
+        },
+        {
+          "t": "Triangle count, transforms, UV set, and rig influences",
+          "how": "blend_summary.py reports counts, but no reusable exporter gate enforces the full Roblox contract yet",
+          "mode": "todo"
+        },
+        {
+          "t": "Imported dimensions and orientation",
+          "how": "Studio importer preview plus measured reference Part",
+          "mode": "manual"
+        },
+        {
+          "t": "Reimport preserves stable object matching",
+          "how": "Studio Reimport check against unchanged source object paths and names",
+          "mode": "manual"
+        }
+      ],
+      "shape": [
+        "{",
+        "  \"profile\": \"roblox_avatar_setup_fbx_unit_scale\",",
+        "  \"fbx_settings\": {",
+        "    \"use_selection\": true,",
+        "    \"object_types\": [\"MESH\", \"ARMATURE\", \"EMPTY\"],",
+        "    \"global_scale\": 1.0,",
+        "    \"apply_unit_scale\": true,",
+        "    \"apply_scale_options\": \"FBX_SCALE_UNITS\",",
+        "    \"axis_forward\": \"Z\",",
+        "    \"axis_up\": \"Y\",",
+        "    \"path_mode\": \"COPY\",",
+        "    \"embed_textures\": true,",
+        "    \"add_leaf_bones\": false,",
+        "    \"bake_anim\": false",
+        "  },",
+        "  \"scene_unit_policy\": { \"system\": \"NONE\", \"rotation\": \"DEGREES\", \"scale_length\": 1.0 }",
+        "}"
+      ],
+      "shapeLang": "json",
+      "examples": [
+        {
+          "name": "Roblox avatar setup FBX profile",
+          "path": "/Users/nicholasosto/Master-Managed/Assets/source/blender/soul-steel/autorig-fix-20260517/roblox_fbx_export_config.json",
+          "status": "real machine-readable export profile",
+          "dimensions": null,
+          "bytes": 1808,
+          "artifact": "/Users/nicholasosto/Master-Managed/Assets/source/blender/soul-steel/autorig-fix-20260517/roblox_avatar_hierarchy_avatar_setup.fbx",
+          "artifactBytes": 2757596,
+          "sidecar": "/Users/nicholasosto/Master-Managed/Assets/source/blender/soul-steel/autorig-fix-20260517/roblox_fbx_export_config.json",
+          "validator": "/Users/nicholasosto/Master-Managed/Assets/source/blender/soul-steel/autorig-fix-20260517/export_body_geom_for_roblox.py",
+          "studioEvidence": "The profile produced roblox_avatar_hierarchy_avatar_setup.fbx; this evidence is avatar/autorig-specific, not yet a generic export authority.",
+          "assetExplorerRegistered": false,
+          "robloxUploaded": false,
+          "notes": "The profile uses Unit System NONE and FBX Unit Scale and explicitly forbids combining that path with legacy 0.01 scaling."
+        },
+        {
+          "name": "WallIris measured lookdev specimen",
+          "path": "/Users/nicholasosto/Master-Managed/Assets/source/blender/wall-iris/WallIris.blend",
+          "status": "lab test geometry",
+          "dimensions": "12-stud module · 3528 triangulated faces total",
+          "bytes": null,
+          "sidecar": "/Users/nicholasosto/Master-Managed/Project-Spaces/Asset-Studio/_project/sessions/2026-07-23-wall-with-mechanical-iris-test-in-blender.md",
+          "validator": "/Users/nicholasosto/.codex/skills/blender-mcp/scripts/validate_internal_naming.py",
+          "studioEvidence": "Reviewed by link in lookdev.blend; no Studio import or upload was performed.",
+          "assetExplorerRegistered": false,
+          "robloxUploaded": false,
+          "notes": "Useful geometry evidence, not green export proof: the current file reports METRIC/METERS and fails the current internal naming validator."
+        }
+      ]
+    },
+    {
+      "id": "mesh-budget",
+      "name": "Mesh part budget",
+      "cls": "mesh",
+      "v": "1.0.0",
+      "state": "draft",
+      "platform": "Roblox MeshPart",
+      "guarantee": "Each imported mesh clears platform geometry constraints while project budgets remain explicit and revisable.",
+      "failureMode": "A remembered cap or invented tier budget becomes production law without evidence.",
+      "produces": "a preflighted mesh plus geometry, collision, and render-fidelity evidence",
+      "jump": "models",
+      "requirements": [
+        {
+          "label": "Triangles per individual mesh",
+          "value": "≤ 20,000",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/art/modeling/specifications",
+          "why": null
+        },
+        {
+          "label": "Bone influences per vertex",
+          "value": "≤ 4",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/art/modeling/specifications",
+          "why": null
+        },
+        {
+          "label": "Runtime BasePart size per axis",
+          "value": "0.001–2048 studs",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/reference/engine/classes/BasePart",
+          "why": null
+        },
+        {
+          "label": "WallIris repeated leaf specimen",
+          "value": "216 triangles per leaf",
+          "kind": "budget",
+          "limitValue": "20,000 triangles",
+          "source": "https://create.roblox.com/docs/art/modeling/specifications",
+          "why": "This is a proven repeated moving module, not a general environment tier."
+        },
+        {
+          "label": "Default render fidelity",
+          "value": "Automatic",
+          "kind": "budget",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/reference/engine/enums/RenderFidelity",
+          "why": "Allows distance-based mesh detail reduction unless a reviewed silhouette requires Precise."
+        },
+        {
+          "label": "Default collision strategy",
+          "value": "Box or Hull before PreciseConvexDecomposition",
+          "kind": "budget",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/reference/engine/enums/CollisionFidelity",
+          "why": "Uses the cheapest collision representation that preserves gameplay."
+        },
+        {
+          "label": "Trembus mesh tiers",
+          "value": null,
+          "kind": "budget",
+          "limitValue": "20,000 triangles",
+          "source": "https://create.roblox.com/docs/art/modeling/specifications",
+          "why": "The 4k, 12k, and 20k screen values were placeholders; no tier table has been ratified."
+        },
+        {
+          "label": "Vertices per MeshPart",
+          "value": null,
+          "kind": "limit",
+          "limitValue": null,
+          "source": null,
+          "why": null
+        },
+        {
+          "label": "Bones or joints per rigged mesh",
+          "value": null,
+          "kind": "limit",
+          "limitValue": null,
+          "source": null,
+          "why": null
+        }
+      ],
+      "steps": [
+        {
+          "l": "Name the asset tier",
+          "d": "Describe screen size, repetition count, motion, collision role, and target devices before assigning any project budget."
+        },
+        {
+          "l": "Measure source geometry",
+          "d": "Record triangles, vertices, objects, UV sets, bones, and per-vertex influences from the actual export selection."
+        },
+        {
+          "l": "Reduce repeated cost",
+          "d": "Spend geometry on silhouette and deformation, then share meshes and remove hidden or duplicate detail."
+        },
+        {
+          "l": "Choose collision separately",
+          "d": "Use a simple collision representation or proxy rather than paying visual-mesh complexity in physics by default."
+        },
+        {
+          "l": "Import with Automatic fidelity",
+          "d": "Start with Automatic render fidelity and opt into Precise only when a measured visual defect justifies it."
+        },
+        {
+          "l": "Record scene cost",
+          "d": "Validate the asset in its intended repetition count; per-mesh compliance alone does not establish room or place performance."
+        }
+      ],
+      "gates": [
+        {
+          "t": "Per-mesh triangle ceiling",
+          "how": "Blender statistics or export preflight against 20,000 triangles",
+          "mode": "manual"
+        },
+        {
+          "t": "Vertex influence count",
+          "how": "Blender weight audit against four influences per vertex",
+          "mode": "manual"
+        },
+        {
+          "t": "Collision shape preserves traversal",
+          "how": "Studio collision visualization and Play traversal test",
+          "mode": "manual"
+        },
+        {
+          "t": "Reusable mesh-budget validator and ratified tier table",
+          "how": "no canonical tool or accepted tier decision exists yet",
+          "mode": "todo"
+        }
+      ],
+      "shape": [
+        "asset: WallIrisLeaf",
+        "status: lab-test",
+        "geometry:",
+        "  trianglesPerLeaf: 216",
+        "  instances: 10",
+        "  platformTriangleLimit: 20000",
+        "collisionFidelity: Hull",
+        "renderFidelity: Automatic",
+        "uploaded: false"
+      ],
+      "shapeLang": "sidecar · yaml",
+      "examples": [
+        {
+          "name": "WallIris shared leaf mesh",
+          "path": "/Users/nicholasosto/Master-Managed/Assets/source/blender/wall-iris/WallIris.blend",
+          "status": "lab test geometry",
+          "dimensions": "10 repeated articulated leaves",
+          "bytes": null,
+          "sidecar": "/Users/nicholasosto/Master-Managed/Project-Spaces/Asset-Studio/_project/sessions/2026-07-23-wall-with-mechanical-iris-test-in-blender.md",
+          "validator": null,
+          "studioEvidence": "No MeshPart import or performance acceptance was performed.",
+          "assetExplorerRegistered": false,
+          "robloxUploaded": false,
+          "notes": "216 triangles per leaf is specimen evidence only; it is not a Trembus mesh tier."
+        }
+      ]
+    },
+    {
+      "id": "particle-effect",
+      "name": "Particle effect",
+      "cls": "effect",
+      "v": "0.3.0",
+      "state": "draft",
+      "platform": "Roblox ParticleEmitter",
+      "guarantee": "Texture animation and emitter behavior are reproducible without presenting one lab effect as a global performance budget.",
+      "failureMode": "Frame bleed, unreadable sprites, or unsourced rate and live-particle caps get copied into every effect.",
+      "produces": "a particle texture sidecar plus a reviewed ParticleEmitter property profile",
+      "jump": "textures/particles",
+      "requirements": [
+        {
+          "label": "Roblox texture dimension",
+          "value": "≤ 4096×4096 px",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/art/modeling/texture-specifications",
+          "why": null
+        },
+        {
+          "label": "Trembus particle texture budget",
+          "value": "≤ 1024×1024 px",
+          "kind": "budget",
+          "limitValue": "4096×4096 px",
+          "source": "https://create.roblox.com/docs/art/modeling/texture-specifications",
+          "why": "Bounds a single effect sheet below the platform ceiling and matches Roblox's documented 8×8 example size."
+        },
+        {
+          "label": "Built-in flipbook layouts",
+          "value": "2×2 · 4×4 · 8×8 · Custom",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/reference/engine/classes/ParticleEmitter",
+          "why": null
+        },
+        {
+          "label": "Starting flipbook profile",
+          "value": "4×4 · Loop · 12 fps · blend on",
+          "kind": "budget",
+          "limitValue": "30 fps",
+          "source": "https://create.roblox.com/docs/effects/particle-emitters",
+          "why": "This is the Trembus metadata helper's explicit starting default, not a required layout for every effect."
+        },
+        {
+          "label": "Flipbook frame rate",
+          "value": "≤ 30 fps",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/effects/particle-emitters",
+          "why": null
+        },
+        {
+          "label": "ParticleEmitter.Rate ceiling",
+          "value": null,
+          "kind": "limit",
+          "limitValue": null,
+          "source": null,
+          "why": null
+        },
+        {
+          "label": "Simultaneous particles per emitter or place",
+          "value": null,
+          "kind": "limit",
+          "limitValue": null,
+          "source": null,
+          "why": null
+        }
+      ],
+      "steps": [
+        {
+          "l": "Separate raster from runtime",
+          "d": "Specify whether the image is a static sprite or flipbook before choosing Rate, Lifetime, Speed, Size, and emission shape."
+        },
+        {
+          "l": "Lay out readable frames",
+          "d": "Use a supported grid, exact cell divisibility, transparent frame padding, and silhouettes that survive small on-screen sizes."
+        },
+        {
+          "l": "Write the sidecar",
+          "d": "Record target class, texture property, layout, mode, frame rate, blend behavior, and that all values are starting defaults."
+        },
+        {
+          "l": "Build one runtime profile",
+          "d": "Tune Rate, Lifetime, Speed, Size, transparency, lighting, and orientation for the named effect rather than a universal emitter."
+        },
+        {
+          "l": "Inspect quality levels",
+          "d": "Review the effect at low and high graphics quality because flipbooks may be disabled under memory pressure."
+        },
+        {
+          "l": "Measure the real scene",
+          "d": "Test expected concurrent emitters and camera distances on target devices before adopting any house performance budget."
+        },
+        {
+          "l": "Record lifecycle gates",
+          "d": "Keep the raster, sidecar, Studio prototype, upload record, and production consumer as separate evidence."
+        }
+      ],
+      "gates": [
+        {
+          "t": "Metadata and starter configuration shape",
+          "how": "agent-assets/plugins/asset-production/skills/trembus-image/scripts/write_asset_metadata.py --preset particle-flipbook-texture --sidecar both",
+          "mode": "auto"
+        },
+        {
+          "t": "Grid divisibility, actual alpha, and frame bleed",
+          "how": "no dedicated particle texture validator exists yet",
+          "mode": "todo"
+        },
+        {
+          "t": "Runtime motion and readability",
+          "how": "in-Studio effect review at low and high quality",
+          "mode": "manual"
+        },
+        {
+          "t": "Concurrent scene performance",
+          "how": "target-device profiler pass with the intended number of emitters",
+          "mode": "manual"
+        }
+      ],
+      "shape": [
+        "{",
+        "  \"asset_preset\": \"particle-flipbook-texture\",",
+        "  \"roblox_recommendations\": {",
+        "    \"target_class\": \"ParticleEmitter\",",
+        "    \"texture_property\": \"Texture\",",
+        "    \"recommended_configuration\": {",
+        "      \"FlipbookLayout\": \"Grid4x4\",",
+        "      \"FlipbookMode\": \"Loop\",",
+        "      \"FlipbookFramerate\": { \"min\": 12, \"max\": 12, \"units\": \"fps\" },",
+        "      \"FlipbookBlendFrames\": true",
+        "    }",
+        "  }",
+        "}"
+      ],
+      "shapeLang": "json",
+      "examples": [
+        {
+          "name": "Particle blood droplet",
+          "path": "/Users/nicholasosto/Master-Managed/Assets/textures/particles/particle-blood-droplet_BLK.png",
+          "status": "legacy _BLK",
+          "dimensions": "619×820",
+          "bytes": 277704,
+          "sidecar": null,
+          "validator": null,
+          "studioEvidence": null,
+          "assetExplorerRegistered": true,
+          "robloxUploaded": false,
+          "notes": "Static alpha sprite, not a flipbook. Useful as a gap example because no modern sidecar or validator evidence exists."
+        },
+        {
+          "name": "RainVisual Part Texture lab profile",
+          "path": "/Users/nicholasosto/Master-Managed/Project-Spaces/Roblox-Development/Roblox-UI-Studio/prototypes/studio/part-texture-test-lab/build-hierarchy.luau",
+          "status": "validated prototype",
+          "dimensions": null,
+          "bytes": null,
+          "sidecar": null,
+          "validator": null,
+          "studioEvidence": "Edit-mode capture and inspection passed for the weather-effects cell.",
+          "assetExplorerRegistered": false,
+          "robloxUploaded": false,
+          "notes": "Uses a built-in sparkles texture with Rate 210, Lifetime 1.35–1.7, and Speed 26–32. These are specimen parameters, not budgets."
+        }
+      ]
+    },
+    {
+      "id": "beam-effect",
+      "name": "Beam effect",
+      "cls": "effect",
+      "v": "0.2.0",
+      "state": "draft",
+      "platform": "Roblox Beam",
+      "guarantee": "A two-endpoint strip curves, repeats, and scrolls in the intended direction without invented segment caps.",
+      "failureMode": "The source strip is oriented incorrectly, fake transparency is baked into pixels, or one specimen's Segments value becomes a ceiling.",
+      "produces": "a repeat-safe beam strip sidecar plus a reviewed Beam instance profile",
+      "jump": "textures/particles",
+      "requirements": [
+        {
+          "label": "Endpoint attachments",
+          "value": "2",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/reference/engine/classes/Beam",
+          "why": null
+        },
+        {
+          "label": "Trembus starting profile",
+          "value": "Wrap · TextureLength 1 · TextureSpeed 1 · Segments 10",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "These are explicit starter values in the metadata helper and are meant to be tuned per effect."
+        },
+        {
+          "label": "AirStream curved specimen",
+          "value": "Segments 16 · curves ±3/∓2",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "This is the real five-beam lab configuration, not a platform cap."
+        },
+        {
+          "label": "Frost-chain motion specimen",
+          "value": "12 phased segments · TextureSpeed −1.5",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "This produced the tested target-to-source pullback and remains a named effect choice."
+        },
+        {
+          "label": "Roblox texture dimension",
+          "value": "≤ 4096×4096 px",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/art/modeling/texture-specifications",
+          "why": null
+        },
+        {
+          "label": "Beam.Segments ceiling",
+          "value": null,
+          "kind": "limit",
+          "limitValue": null,
+          "source": null,
+          "why": null
+        }
+      ],
+      "steps": [
+        {
+          "l": "Declare the beam motion",
+          "d": "Name Attachment0 and Attachment1, desired travel direction, curve, widths, face-camera behavior, and texture repetition."
+        },
+        {
+          "l": "Author a true alpha strip",
+          "d": "Use a wide transparent image whose left and right edges loop cleanly; never bake a checkerboard into the pixels."
+        },
+        {
+          "l": "Write the sidecar",
+          "d": "Record TextureMode, TextureLength, TextureSpeed, Segments, widths, curves, and which values are starter defaults."
+        },
+        {
+          "l": "Bind both attachments",
+          "d": "Confirm endpoint order before tuning scroll direction because positive TextureSpeed moves from Attachment0 to Attachment1."
+        },
+        {
+          "l": "Tune curve resolution",
+          "d": "Increase Segments only as needed for the intended curvature and sequence detail, then inspect the actual silhouette."
+        },
+        {
+          "l": "Review in motion",
+          "d": "Inspect looping, alpha edges, camera-facing behavior, phase offsets, and target-device cost in Studio."
+        }
+      ],
+      "gates": [
+        {
+          "t": "Metadata and starter configuration shape",
+          "how": "agent-assets/plugins/asset-production/skills/trembus-image/scripts/write_asset_metadata.py --preset beam-strip-texture --sidecar both",
+          "mode": "auto"
+        },
+        {
+          "t": "Alpha and left/right loop continuity",
+          "how": "no dedicated beam-strip validator exists yet",
+          "mode": "todo"
+        },
+        {
+          "t": "Attachment order, curve, widths, and scroll direction",
+          "how": "in-Studio animated beam review",
+          "mode": "manual"
+        },
+        {
+          "t": "Segment count justified by the visible curve",
+          "how": "compare lower and higher Segments values in the target effect",
+          "mode": "manual"
+        }
+      ],
+      "shape": [
+        "{",
+        "  \"asset_preset\": \"beam-strip-texture\",",
+        "  \"roblox_recommendations\": {",
+        "    \"target_class\": \"Beam\",",
+        "    \"texture_property\": \"Texture\",",
+        "    \"recommended_configuration\": {",
+        "      \"TextureMode\": \"Wrap\",",
+        "      \"TextureLength\": 1,",
+        "      \"TextureSpeed\": 1,",
+        "      \"Segments\": 10",
+        "    }",
+        "  }",
+        "}"
+      ],
+      "shapeLang": "json",
+      "examples": [
+        {
+          "name": "Straight chain beam strip",
+          "path": "/Users/nicholasosto/Master-Managed/Assets/textures/particles/beam-straight-chain_BLK.png",
+          "status": "legacy _BLK",
+          "dimensions": "384×256",
+          "bytes": 29659,
+          "sidecar": null,
+          "validator": null,
+          "studioEvidence": null,
+          "assetExplorerRegistered": true,
+          "robloxUploaded": false,
+          "notes": "Alpha strip reaches both horizontal edges, but has no measured loop gate or modern sidecar. Asset Explorer currently misclassifies it as ParticleEmitter."
+        },
+        {
+          "name": "AirStream five-beam lab profile",
+          "path": "/Users/nicholasosto/Master-Managed/Project-Spaces/Roblox-Development/Roblox-UI-Studio/prototypes/studio/part-texture-test-lab/build-hierarchy.luau",
+          "status": "validated prototype",
+          "dimensions": "five Beam instances",
+          "bytes": null,
+          "sidecar": null,
+          "validator": null,
+          "studioEvidence": "Five curved beams were visually inspected in the Part Texture lab.",
+          "assetExplorerRegistered": false,
+          "robloxUploaded": false,
+          "notes": "Two attachments, Width0 0.16, Width1 0.05, curves ±3/∓2, FaceCamera true, LightEmission 0.35, Segments 16; untextured."
+        }
+      ]
+    },
+    {
+      "id": "trail-effect",
+      "name": "Trail effect",
+      "cls": "effect",
+      "v": "0.1.0",
+      "state": "proposed",
+      "platform": "Roblox Trail",
+      "guarantee": "A motion trail has explicit endpoint, lifetime, width, texture, and fading behavior.",
+      "failureMode": "An unbounded lifetime or unrecorded attachment plane leaves excessive or invisible trail geometry.",
+      "produces": "a trail texture sidecar plus a reviewed Trail instance profile",
+      "jump": "textures/particles",
+      "requirements": [
+        {
+          "label": "Endpoint attachments",
+          "value": "2",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/reference/engine/classes/Trail",
+          "why": null
+        },
+        {
+          "label": "Trail.Lifetime",
+          "value": "0.01–20 s",
+          "kind": "limit",
+          "limitValue": null,
+          "source": "https://create.roblox.com/docs/reference/engine/classes/Trail",
+          "why": null
+        },
+        {
+          "label": "Trembus trail lifetime budget",
+          "value": null,
+          "kind": "budget",
+          "limitValue": "20 s",
+          "source": "https://create.roblox.com/docs/reference/engine/classes/Trail",
+          "why": "No house profile or golden specimen exists yet."
+        },
+        {
+          "label": "Trail texture budget",
+          "value": null,
+          "kind": "budget",
+          "limitValue": "4096×4096 px",
+          "source": "https://create.roblox.com/docs/art/modeling/texture-specifications",
+          "why": "No Trail-specific raster budget has been ratified."
+        }
+      ],
+      "steps": [
+        {
+          "l": "Place the attachment plane",
+          "d": "Bind Attachment0 and Attachment1 so the ribbon has the intended width and remains visible from expected camera angles."
+        },
+        {
+          "l": "Author the strip",
+          "d": "Use real alpha and repeat-safe texture edges when the trail texture will wrap or scroll."
+        },
+        {
+          "l": "Choose lifetime",
+          "d": "Set Lifetime from the desired motion length and actual object speed rather than accepting the engine default blindly."
+        },
+        {
+          "l": "Shape width and fade",
+          "d": "Define WidthScale, Color, and Transparency sequences over the segment lifetime."
+        },
+        {
+          "l": "Review movement",
+          "d": "Test sudden acceleration, stopping, camera angles, clearing, and the intended maximum trail population."
+        },
+        {
+          "l": "Capture the first golden specimen",
+          "d": "Promote a proven texture, instance profile, and validator contract before changing this spec from proposed."
+        }
+      ],
+      "gates": [
+        {
+          "t": "Lifetime is inside the engine range",
+          "how": "property-manifest check against 0.01–20 seconds",
+          "mode": "todo"
+        },
+        {
+          "t": "Attachment plane and camera visibility",
+          "how": "in-Studio motion review",
+          "mode": "manual"
+        },
+        {
+          "t": "Texture alpha and repeat behavior",
+          "how": "no Trail-specific texture validator exists",
+          "mode": "todo"
+        },
+        {
+          "t": "Golden Trembus specimen",
+          "how": "blocked until one Trail asset is authored and accepted",
+          "mode": "todo"
+        }
+      ],
+      "shape": [
+        "targetClass: Trail",
+        "attachment0: <Attachment>",
+        "attachment1: <Attachment>",
+        "lifetimeSeconds: null",
+        "textureMode: null",
+        "textureLengthStuds: null",
+        "widthScale: []",
+        "status: proposed"
+      ],
+      "shapeLang": "sidecar · yaml",
+      "examples": []
+    },
+    {
+      "id": "map-maker-file",
+      "name": "Map maker file",
+      "cls": "tooling",
+      "v": "0.1.0",
+      "state": "draft",
+      "platform": "Trembus Command Center → Roblox Studio",
+      "guarantee": "One measured X/Z contract drives the 2D reference, Spatial preview, and reversible Studio whitebox.",
+      "failureMode": "Dimensions are sampled from concept pixels or drift independently between JSON, images, and Studio geometry.",
+      "produces": "a validated measured-draft JSON file with explicit promotion gates",
+      "jump": "Roblox-Development-Studio/apps/command-center/src/spatial/fixtures",
+      "requirements": [
+        {
+          "label": "Map file size",
+          "value": "≤ 2 MiB",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "The gridSpec.ts parser guard bounds local file reads; this is our tooling ceiling, not a Roblox platform limit."
+        },
+        {
+          "label": "Texture asset references",
+          "value": "≤ 16",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "The gridSpec.ts parser bounds one Spatial contract's texture lookup and validation surface."
+        },
+        {
+          "label": "Surface definitions",
+          "value": "≤ 32",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "The gridSpec.ts parser bounds the current preview renderer and keeps one map definition inspectable."
+        },
+        {
+          "label": "Surface bindings",
+          "value": "≤ 16",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "The gridSpec.ts parser bounds role-to-surface indirection in the current appearance schema."
+        },
+        {
+          "label": "Appearance coordinate magnitude",
+          "value": "≤ 8192 studs",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "The gridSpec.ts parser rejects accidental extreme preview coordinates before they reach the renderer."
+        },
+        {
+          "label": "Tile dimension",
+          "value": "0.125–8192 studs",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "The gridSpec.ts parser prevents zero, negative, sub-display, and accidental extreme texture mapping values."
+        },
+        {
+          "label": "Appearance schema",
+          "value": "trembus.spatial-appearance/v1",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "The gridSpec.ts parser pins the renderer to the only currently supported Trembus appearance contract."
+        },
+        {
+          "label": "Estimated grid lines",
+          "value": "≤ 1200",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "The gridSpec.ts parser protects the interactive preview from an accidentally dense grid."
+        },
+        {
+          "label": "Surface rotation",
+          "value": "0°",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "The current gridSpec.ts v1 renderer only supports world-aligned X/Z texture mapping."
+        },
+        {
+          "label": "Hex City grid cadence",
+          "value": "4 · 16 · 64 studs",
+          "kind": "budget",
+          "limitValue": null,
+          "source": null,
+          "why": "This is the accepted measured-draft minor, major, and super-grid specimen, not a universal map rule."
+        }
+      ],
+      "steps": [
+        {
+          "l": "State spatial intent",
+          "d": "Name the layout, player scale, known dimensions, coordinate plane, north, and which visual references remain non-dimensional."
+        },
+        {
+          "l": "Author one JSON authority",
+          "d": "Put bounds, origin, grid cadence, geometry, approaches, appearance, implementation notes, and lifecycle gates in the canonical file."
+        },
+        {
+          "l": "Validate atomically",
+          "d": "Reject unsupported keys, malformed IDs, non-finite numbers, inconsistent dimensions, unsafe counts, and invalid surface references."
+        },
+        {
+          "l": "Render derived views",
+          "d": "Generate the measured SVG/PNG and Spatial scene from the same accepted JSON rather than redrawing their numbers."
+        },
+        {
+          "l": "Review scale and circulation",
+          "d": "Inspect dimensions, band widths, player scale, approach alignment, and sightlines before touching Studio."
+        },
+        {
+          "l": "Build a reversible whitebox",
+          "d": "Only after owner and target-place selection, construct measured Parts under a uniquely named Edit-mode root."
+        },
+        {
+          "l": "Advance gates explicitly",
+          "d": "Play QA, save, publish, upload, registry, syncback, promotion, and commit each remain false until actually performed."
+        }
+      ],
+      "gates": [
+        {
+          "t": "Schema, counts, dimensions, IDs, and appearance references",
+          "how": "apps/command-center/src/spatial/gridSpec.ts runtime parser",
+          "mode": "auto"
+        },
+        {
+          "t": "Command Center consumes the fixture",
+          "how": "pnpm --dir apps/command-center build in Roblox-Development-Studio",
+          "mode": "auto"
+        },
+        {
+          "t": "2D and 3D views agree with the same JSON",
+          "how": "measured reference and Spatial lens review",
+          "mode": "manual"
+        },
+        {
+          "t": "Studio hierarchy matches measured geometry",
+          "how": "Edit-mode hierarchy and dimension inspection; Play is disposable QA only",
+          "mode": "manual"
+        }
+      ],
+      "shape": [
+        "{",
+        "  \"status\": \"measured-draft\",",
+        "  \"revision\": 1,",
+        "  \"coordinateSystem\": { \"plane\": \"X/Z\", \"origin\": [0, 0], \"north\": \"-Z\" },",
+        "  \"view\": { \"boundsStuds\": { \"x\": [-256, 256], \"z\": [-256, 256] } },",
+        "  \"grid\": { \"minorStuds\": 4, \"majorStuds\": 16, \"superStuds\": 64 },",
+        "  \"appearance\": { \"schema\": \"trembus.spatial-appearance/v1\" },",
+        "  \"promotionGates\": {",
+        "    \"studioImported\": true,",
+        "    \"studioSaved\": false,",
+        "    \"playQaCompleted\": false,",
+        "    \"published\": false,",
+        "    \"promoted\": false,",
+        "    \"committed\": false",
+        "  }",
+        "}"
+      ],
+      "shapeLang": "json",
+      "examples": [
+        {
+          "name": "Hex City Center grid revision 1",
+          "path": "/Users/nicholasosto/Master-Managed/Project-Spaces/Roblox-Development/Roblox-Development-Studio/apps/command-center/src/spatial/fixtures/hex-city-center-grid-spec.json",
+          "status": "measured-draft",
+          "dimensions": "512×512 stud view · 2048×2048 derived PNG",
+          "bytes": null,
+          "sidecar": null,
+          "validator": "/Users/nicholasosto/Master-Managed/Project-Spaces/Roblox-Development/Roblox-Development-Studio/apps/command-center/src/spatial/gridSpec.ts",
+          "studioEvidence": "A reversible Studio whitebox was created; save, Play QA, publish, upload, registry, syncback, promotion, and commit gates remain false.",
+          "assetExplorerRegistered": false,
+          "robloxUploaded": false,
+          "notes": "This file is the numeric authority. Concept art and derived PNG pixels are not dimensional sources."
+        }
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "spec": "tileable-part-texture",
+      "field": "power-of-two requirement",
+      "tried": "Roblox texture specifications and Studio importer documentation",
+      "note": "Official guidance uses power-of-two examples but does not state a general upload requirement."
+    },
+    {
+      "spec": "tileable-part-texture",
+      "field": "exact decoded or downsampled dimension",
+      "tried": "Roblox texture specifications",
+      "note": "The docs say clients begin with lower-quality versions and ramp by device resources, but publish no single decoded ceiling."
+    },
+    {
+      "spec": "tileable-part-texture",
+      "field": "Studio Asset Manager image file-size ceiling",
+      "tried": "Studio importer, texture specifications, and Open Cloud Assets API",
+      "note": "The 20 MB limit is confirmed for Open Cloud create/update calls, not established here as the Studio UI limit."
+    },
+    {
+      "spec": "surface-appearance-map-set",
+      "field": "ingest color space for every map slot",
+      "tried": "Roblox PBR, texture specification, and SurfaceAppearance documentation",
+      "note": "The docs specify bit depth and OpenGL tangent-space normals, and warn Blender normals should be Non-Color, but do not give one explicit ingest color-space table for all slots."
+    },
+    {
+      "spec": "surface-appearance-map-set",
+      "field": "per-place or per-model texture memory ceiling",
+      "tried": "Roblox texture and SurfaceAppearance documentation",
+      "note": "No published fixed ceiling was found; device quality can downsample textures."
+    },
+    {
+      "spec": "mesh-budget",
+      "field": "vertices per MeshPart",
+      "tried": "Roblox general modeling specifications, importer documentation, and MeshPart API",
+      "note": "The current official general specification publishes a 20,000-triangle ceiling but no separate vertex ceiling."
+    },
+    {
+      "spec": "mesh-budget",
+      "field": "bones or joints per rigged mesh",
+      "tried": "Roblox general modeling, rigging, character, and importer documentation",
+      "note": "A four-influences-per-vertex limit is published; a general maximum bone count was not found."
+    },
+    {
+      "spec": "mesh-budget",
+      "field": "mesh import bounding-box ceiling",
+      "tried": "Roblox modeling specifications, importer documentation, and BasePart API",
+      "note": "BasePart.Size is documented as 0.001–2048 per axis, but an independent source-file importer bounding-box rule was not found."
+    },
+    {
+      "spec": "mesh-budget",
+      "field": "ratified Trembus mesh tier budgets",
+      "tried": "Asset-Studio decisions, workflows, pipelines, skills, and prior Design screen",
+      "note": "The visible 4k, 12k, and 20k tiers were invented placeholders and have been withdrawn."
+    },
+    {
+      "spec": "mesh-budget",
+      "field": "RenderFidelity swap distances",
+      "tried": "RenderFidelity enum, RenderSettings API, and Roblox asset-library curriculum",
+      "note": "Automatic distance reduction is documented, but exact swap distances are not published."
+    },
+    {
+      "spec": "blender-export",
+      "field": "Studio importer support for .glb as a direct mesh selection",
+      "tried": "Studio importer and Open Cloud Assets API documentation",
+      "note": "Studio importer lists .fbx, .obj, and .gltf; Open Cloud model upload separately lists .glb."
+    },
+    {
+      "spec": "particle-effect",
+      "field": "ParticleEmitter.Rate hard ceiling",
+      "tried": "ParticleEmitter API and particle-emitter guide",
+      "note": "Rate semantics are documented, but no platform ceiling was found."
+    },
+    {
+      "spec": "particle-effect",
+      "field": "simultaneous particles per emitter or place",
+      "tried": "ParticleEmitter API and particle-emitter guide",
+      "note": "The docs describe device memory fallback for flipbooks but publish no fixed simultaneous-particle ceiling."
+    },
+    {
+      "spec": "particle-effect",
+      "field": "ParticleEmitter-specific texture dimension ceiling",
+      "tried": "ParticleEmitter API, particle-emitter guide, and general texture specifications",
+      "note": "A 1024×1024 8×8 example is documented, but no separate ParticleEmitter-only ceiling was found."
+    },
+    {
+      "spec": "beam-effect",
+      "field": "Beam.Segments hard ceiling",
+      "tried": "Beam API reference and effect documentation",
+      "note": "The default sample uses 10 and real project specimens use 12 or 16; no hard maximum was found."
+    },
+    {
+      "spec": "trail-effect",
+      "field": "Trembus Trail lifetime and texture budgets",
+      "tried": "Asset-Studio skills, workflows, shared Assets, and Roblox Trail API",
+      "note": "The engine range is known, but there is no Trembus preset, golden specimen, or accepted house profile."
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://create.roblox.com/docs/art/modeling/texture-specifications",
+      "read": "2026-07-25",
+      "covers": [
+        "4096 texture dimension",
+        "separate texture formats",
+        "PBR map encodings",
+        "single UV set",
+        "0–1 UV coordinates"
+      ]
+    },
+    {
+      "url": "https://create.roblox.com/docs/cloud/guides/usage-assets",
+      "read": "2026-07-25",
+      "covers": [
+        "Open Cloud 20 MB per-call asset upload limit",
+        "Open Cloud image and model formats",
+        "Open Cloud image dimensions below 8000×8000"
+      ]
+    },
+    {
+      "url": "https://create.roblox.com/docs/art/modeling/surface-appearance",
+      "read": "2026-07-25",
+      "covers": [
+        "Color, normal, roughness, and metalness roles",
+        "PBR alpha behavior",
+        "PBR authoring guidance"
+      ]
+    },
+    {
+      "url": "https://create.roblox.com/docs/reference/engine/classes/SurfaceAppearance",
+      "read": "2026-07-25",
+      "covers": [
+        "SurfaceAppearance properties",
+        "current emissive mask property",
+        "AlphaMode behavior"
+      ]
+    },
+    {
+      "url": "https://create.roblox.com/docs/reference/engine/enums/AlphaMode",
+      "read": "2026-07-25",
+      "covers": [
+        "Overlay",
+        "Transparency",
+        "TintMask",
+        "Opaque"
+      ]
+    },
+    {
+      "url": "https://create.roblox.com/docs/ui/9-slice",
+      "read": "2026-07-25",
+      "covers": [
+        "nine-slice behavior",
+        "SliceCenter editing"
+      ]
+    },
+    {
+      "url": "https://create.roblox.com/docs/studio/importer",
+      "read": "2026-07-25",
+      "covers": [
+        "Studio image formats",
+        "Studio mesh formats",
+        "importer object support"
+      ]
+    },
+    {
+      "url": "https://create.roblox.com/docs/art/modeling/specifications",
+      "read": "2026-07-25",
+      "covers": [
+        "20,000 triangles per individual mesh",
+        "four bone influences per vertex",
+        "rig transform requirements",
+        "single animation track"
+      ]
+    },
+    {
+      "url": "https://create.roblox.com/docs/art/modeling/export-requirements",
+      "read": "2026-07-25",
+      "covers": [
+        "FBX Unit Scale",
+        "Path Mode Copy",
+        "disable leaf bones",
+        "animation export behavior"
+      ]
+    },
+    {
+      "url": "https://create.roblox.com/docs/art/blender",
+      "read": "2026-07-25",
+      "covers": [
+        "Unit System None",
+        "Z Forward and Y Up",
+        "Blender and Studio scale setup"
+      ]
+    },
+    {
+      "url": "https://create.roblox.com/docs/reference/engine/classes/BasePart",
+      "read": "2026-07-25",
+      "covers": [
+        "BasePart.Size 0.001–2048 studs per axis"
+      ]
+    },
+    {
+      "url": "https://create.roblox.com/docs/reference/engine/enums/CollisionFidelity",
+      "read": "2026-07-25",
+      "covers": [
+        "Default",
+        "Hull",
+        "Box",
+        "PreciseConvexDecomposition"
+      ]
+    },
+    {
+      "url": "https://create.roblox.com/docs/reference/engine/enums/RenderFidelity",
+      "read": "2026-07-25",
+      "covers": [
+        "Automatic",
+        "Precise",
+        "Performance"
+      ]
+    },
+    {
+      "url": "https://create.roblox.com/docs/reference/engine/classes/ParticleEmitter",
+      "read": "2026-07-25",
+      "covers": [
+        "ParticleEmitter properties",
+        "flipbook layouts and modes",
+        "attachment and BasePart parenting"
+      ]
+    },
+    {
+      "url": "https://create.roblox.com/docs/effects/particle-emitters",
+      "read": "2026-07-25",
+      "covers": [
+        "30 fps flipbook maximum",
+        "frame spacing",
+        "memory fallback",
+        "quality-level testing"
+      ]
+    },
+    {
+      "url": "https://create.roblox.com/docs/reference/engine/classes/Beam",
+      "read": "2026-07-25",
+      "covers": [
+        "two beam attachments",
+        "TextureMode",
+        "TextureLength",
+        "TextureSpeed",
+        "Segments and curves"
+      ]
+    },
+    {
+      "url": "https://create.roblox.com/docs/reference/engine/classes/Trail",
+      "read": "2026-07-25",
+      "covers": [
+        "two trail attachments",
+        "Trail.Lifetime range",
+        "trail texture and width properties"
+      ]
+    }
+  ]
+}

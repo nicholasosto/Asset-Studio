@@ -1,13 +1,13 @@
 ---
 title: "Asset file metadata setup review"
-status: active
-updated: 2026-07-25
+status: completed
+updated: 2026-07-26
 tags: { last-active: 2026-07-25T08:38, kos: "assets-library, explorer, mediums" }
 ---
 
 # Asset file metadata setup review
 
-> **Status:** active (2026-07-25)
+> **Status:** completed (2026-07-26)
 
 ## Goal
 
@@ -72,16 +72,39 @@ registry), which tool owns each layer, and where the layers disagree.
 
 ## Outputs
 
-- <artifact produced>
+_(reconstructed at close-out, 2026-07-26)_
+
+- Commit `7f849ff` — "Registry reads the generation xattrs; Explorer surfaces them" (7 files,
+  +596/−19): `tools/build-asset-registry.mjs` attaches `rec.gen` + `counts.generation`;
+  `apps/command-center/src/registry.ts` + `AssetExplorer.tsx` add the Generation facet
+  (Tagged 47 / Untagged 284) and four inspector rows; registry, static bundle and dashboard
+  contracts rebuilt.
+- The metadata-layer map itself, recorded in this file's Decisions section: six layers (filename +
+  folder path, generation xattrs, Finder comment, `.trembus.json` / `.trembus.md` sidecars, Roblox
+  upload ledger), each attributed to its writer and reader.
+- Measured coverage baseline: generation xattrs 47/331 images (14%), `taggedOffMedium` 0, against
+  the upload ledger's 36/36.
 
 ## Blockers
 
-- <blocker, or “none”>
+- None.
 
 ## Next Action
 
-<the single next concrete action>
+_(reconstructed at close-out, 2026-07-26)_ — Decide whether the 14% generation-xattr coverage
+earns a backfill: the Explorer's Untagged facet (284 images) is now the worklist, and the
+measurement was taken explicitly to answer that question.
 
 ## Handoff Notes
 
-<what the next session needs to know>
+_(reconstructed at close-out, 2026-07-26)_
+
+- The session's governing finding: **a metadata layer without a validator drifts to near-zero
+  coverage.** Only the upload ledger had a write→validate→read loop, and only it sat at 36/36.
+  The generation layer now has a reader; it still has no validator.
+- Two layers remain write-only and unmeasured — Finder comments and the `.trembus.*` sidecars.
+  Neither was instrumented this session.
+- `--no-xattrs` produces a registry with `rec.gen` stripped everywhere; that output must never be
+  committed. A missing `xattr` binary aborts at exit 1 before the thumb bake.
+- Four First-Principles Candidates are queued in this file for /reflect or memory capture,
+  including the chunked `xattr -l` parsing rule and the CSS definite-`grid-row` placement trap.

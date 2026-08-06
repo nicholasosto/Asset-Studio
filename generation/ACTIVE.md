@@ -1,15 +1,14 @@
 ---
-batch: roguex-33-portrait
-contract: contracts/roguex-33-portrait.md
+batch: soul-steel-blood-sigils-transparent-v2
+contract: contracts/soul-steel-blood-sigils-transparent-v2.md
 compatibility: BATCH.md
-updated: 2026-07-24
+updated: 2026-07-29
 ---
 
 # Active generation batch
 
-The active batch is [`roguex-33-portrait`](contracts/roguex-33-portrait.md).
+The active batch is
+[`soul-steel-blood-sigils-transparent-v2`](contracts/soul-steel-blood-sigils-transparent-v2.md).
 
-`BATCH.md` remains the compatibility copy for the existing operator trigger. This batch predates the
-`generation/work/<batch-id>/` layout, so its contract continues to stage candidates in
-`generation/staging/`.
-
+`BATCH.md` remains the compatibility copy for the existing operator trigger. The candidate is
+bound to `generation/work/soul-steel-blood-sigils-transparent-v2/candidates/`.
