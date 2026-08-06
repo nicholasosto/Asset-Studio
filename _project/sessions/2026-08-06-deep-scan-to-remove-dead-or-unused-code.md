@@ -58,6 +58,11 @@ dead but is load-bearing.
 - **Over-exported ≠ dead.** ~40 exported TS types and a handful of functions (`copyText`,
   `viewOnlineUrl`, `taxonomy`, `domains`, `ROBLOX_UPLOAD_SCHEMA_VERSION`) have no cross-file
   consumer but are used inside their own module. Narrowing them is churn, not removal — left alone.
+- **Ran the first bridge review** ([reports/2026-08-06-bridge-review-1626](../reports/2026-08-06-bridge-review-1626.md),
+  window 2026-07-21T16:30..2026-07-26T07:02, 5 engrams). Headline: **this project had no memory
+  directory at all**, so ~15 candidates naming `memory` as their home across five sessions were
+  stranded. Created the layer and drained five. Follow-through split cleanly along whether the
+  destination existed — the roblox-brain vault landed 1/1, `memory` and `decision` landed 0/19.
 - **Closed out the dangling 2026-07-26 lore session as `completed`** (approved this session). The
   close-out re-measured the vault rather than assuming: `era:` moved 5 → 14 notes, but *entirely*
   via nine new Concepts authored 08:30–08:48 that day — none of the pre-existing 137 soul-steel
