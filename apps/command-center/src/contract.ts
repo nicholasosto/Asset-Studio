@@ -206,52 +206,6 @@ export function statusOrderForKind(kind: string): string[] {
   return Object.keys(bucket?.byStatus ?? {});
 }
 
-export interface BuildResult {
-  data: GraphContract;
-  dropped: RawEdge[];
-}
-
-// graph.json → @trembus/viz GraphContract.
-//  · Nodes come from the emitted nodes[] (real title/status), falling back to byKind ids.
-//  · Edges are joined by stripping the folder off `target` — `from` is a bare id but
-//    `target` is a `folder/id` path (the namespace asymmetry documented in the spec).
-//    Node ids are globally unique (verify-contract enforces), so the final segment resolves.
-//  · Unresolved edges are dropped and returned so the UI can flag contract drift.
-export function buildGraphContract(g: RawGraph = graph, h: RawHub = hub): BuildResult {
-  const ids = new Set<string>();
-  const nodes: GraphNode[] = rawNodes(g).map((n) => {
-    ids.add(n.id);
-    return {
-      id: n.id,
-      label: n.title ?? prettify(n.id),
-      kind: n.kind,
-      sub: n.status ?? n.kind,
-      tone: toneByKind[n.kind] ?? 'neutral',
-    };
-  });
-
-  const edges: GraphEdge[] = [];
-  const dropped: RawEdge[] = [];
-  for (const e of g.edges) {
-    const to = String(e.target).split('/').pop() ?? '';
-    if (ids.has(e.from) && ids.has(to)) edges.push({ from: e.from, to, label: e.rel });
-    else dropped.push(e);
-  }
-
-  return {
-    data: {
-      view: 'lineage',
-      brand: h.brand ?? g.project,
-      title: 'Entity graph',
-      caption: `${g.entities} entities · ${edges.length} typed links · ${g.counts.error} errors`,
-      direction: 'LR',
-      nodes,
-      edges,
-    },
-    dropped,
-  };
-}
-
 // ── Relationship surface ────────────────────────────────────────────────────────────────
 // Kind-agnostic projections of the emitted edges[], reused by the Decision Surface (and open to
 // any kind). `from` is a bare id; `target` is a `<folder>/<id>` path — the namespace asymmetry the

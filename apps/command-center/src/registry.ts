@@ -234,11 +234,10 @@ export const built: string = file.built ?? '(unknown)';
 // Two ABSOLUTE prefixes that resolve identically whether the SPA mounts at '/' (dev, :5175)
 // or '/app/' (static, :4317): the static python server (rooted at previews/) maps /_assets →
 // previews/_assets (a symlink to the shared library) and /thumbs → previews/thumbs; the dev
-// server's live-assets middleware intercepts the same two prefixes. Per-SEGMENT encoding keeps
-// spaces/parens in real asset paths intact. See decision serve-the-shared-asset-library-to-the-spa.
-const encPath = (p: string): string => p.split('/').map(encodeURIComponent).join('/');
-/** Served URL for a full asset by its library-relative path. (Records also carry a baked `src`.) */
-export const assetUrl = (p: string): string => `/_assets/${encPath(p)}`;
+// server's live-assets middleware intercepts the same two prefixes. Full-asset `/_assets/…` URLs
+// are baked per record by the builder (`rec.src`, which does the per-SEGMENT encoding that keeps
+// spaces/parens intact); only the thumb URL is composed here. See decision
+// serve-the-shared-asset-library-to-the-spa.
 /** Served URL for a baked thumbnail, from the record's bare `thumb` filename. */
 export const thumbUrl = (thumb?: string): string | undefined =>
   thumb ? `/thumbs/${encodeURIComponent(thumb)}` : undefined;

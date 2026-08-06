@@ -88,8 +88,8 @@ const DECISION_KINDS = ['decision']; // the bespoke Decision Surface (constellat
 
 // Default nav when config sets no `render.nav`: Overview + Roadmap, the Decision Surface (when the
 // project declares the decision kind), an auto-tab per remaining kind (declared order), then
-// Workflows iff any swimlane exists. The old Graph/Lineage view is retired (buildGraphContract +
-// @trembus/viz stay — the Decision Surface revives the latter for a scoped ego-graph).
+// Workflows iff any swimlane exists. The old Graph/Lineage view is retired; its builder went with
+// it, but @trembus/viz stays — the Decision Surface revives it for a scoped ego-graph.
 function deriveNav(): NavEntry[] {
   const consumed = new Set([...ROADMAP_KINDS, ...DECISION_KINDS, ...WORKFLOW_TABLE_KINDS, ...swimlaneKinds]);
   const nav: NavEntry[] = [

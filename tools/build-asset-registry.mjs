@@ -17,7 +17,7 @@
 // What is FAITHFULLY PORTED from the reference (unchanged semantics):
 //   walk · parseTgl · statusSuffix · inferDomain · KIND_BY_EXT · the scan()
 //   field set (p/area/dir/base/stem/ext/kind/size/mtime/mtimeMs/domain/tgl/
-//   status/conformance/issue) · inferInstance · classifySpec/resBucket ·
+//   status/conformance/issue) · inferInstance · classifySpec ·
 //   the CSV registry parse + join (parseCsvLine/loadRegistry/joinRegistry;
 //   the join key now also strips a "Collection: " display prefix — see there) ·
 //   the thumb NAMING (thumbName — sha1 of the library-relative PATH, not content).
@@ -108,7 +108,8 @@ const SKIP_EXTS = new Set([".pyc", ".blend1"]);
 // registry / sidecar reports living in ASSETS_ROOT root — never index ourselves
 const SKIP_SIDECAR_RE = /^__master-asset-ids|^__animation-/;
 
-const TGL_CATS = new Set(["PRP", "RIG", "EFX", "ENV", "LAY", "ACC", "ANI"]);
+// The TGL category vocabulary is not a constant here: parseTgl inlines it in its three regexes,
+// which are the single source of truth for the grammar.
 const TGL_STATUSES = new Set(["BLK", "ALPHA", "BETA", "FNL"]);
 const TGL_DOMAINS = new Set(["shared", "blood", "decay", "spirit", "robotic", "fateless", "hub"]);
 
@@ -262,15 +263,8 @@ function inferInstance(rec) {
 // ── spec-fit (verbatim port) ──────────────────────────────────────────────
 // With image dimensions DEFERRED in v1, the !rec.w guard yields 'n/a' for all
 // images — the contract is preserved, values fill in once a later pass measures.
-function resBucket(w, h) {
-  const m = Math.max(w, h);
-  if (m <= 256) return "≤256";
-  if (m <= 512) return "512";
-  if (m <= 1024) return "1024";
-  if (m <= 2048) return "2048";
-  return "4K+";
-}
-
+// The reference's resBucket() helper is NOT ported: classifySpec compares the
+// long edge inline and never bucketed, so it was carried unwired.
 function classifySpec(rec) {
   if (rec.kind !== "image" || !rec.w) return { spec: "n/a", issue: null };
   const m = Math.max(rec.w, rec.h);
