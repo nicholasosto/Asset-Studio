@@ -1,13 +1,13 @@
 ---
 title: "Lore system research — what a full-fledged lore system contains"
-status: active
-updated: 2026-07-26
+status: completed
+updated: 2026-08-06
 tags: { last-active: 2026-07-26T07:02, kos: "memory, mediums, decisions" }
 ---
 
 # Lore system research — what a full-fledged lore system contains
 
-> **Status:** active (2026-07-26)
+> **Status:** completed (2026-08-06)
 
 ## Goal
 
@@ -91,12 +91,19 @@ components, not the content — then audit what the two local brains (`lore-brai
   1 Dream / 0 Logs / 0 Reflexes / 0 Traces · realities soul-steel 137, tessera 13, cross-reality 1,
   claude-lab 1 (declared, content-empty) · 13-value `engram_subtype` vocabulary · canon 116 /
   speculative 36 · 104 notes carrying `lore_source_ref` · 22 with `sensory_assets`.
+- _(reconstructed at close-out, 2026-08-06)_ — The session's deliverables were all analytical and
+  all landed in this file; nothing was left half-written. The file itself was committed in `490f1b2`.
 
 ## Blockers
 
 - None.
 
 ## Next Action
+
+_(reconstructed at close-out, 2026-08-06)_ — **Never taken; still the live open thread.** No
+chronology decision entity was recorded and no `era:` backfill ran against the existing soul-steel
+corpus. What moved instead was new authoring — see the close-out measurement below. Carried forward
+unchanged:
 
 Decide whether to execute the chronology spine — populate `era:` across the soul-steel corpus
 against an ordered epoch list, per the `Narrative Timeline System` design already sitting in
@@ -125,3 +132,25 @@ artificial-brain — or record the layer model as a decision first and defer exe
 - `claude-lab` is a registered reality with a placeholder cortex and zero entities since
   2026-05-01. Either seed it or retire it; a declared-but-empty reality inflates the reality count
   without adding a setting.
+
+### Close-out measurement _(reconstructed at close-out, 2026-08-06)_
+
+Re-measured the vault at close-out, 11 days after the session's last recorded touch (07:02). The
+chronology axis moved — but **not by the mechanism this session proposed**:
+
+- **154 → 163 notes.** Nine new Concepts were authored the same day, 08:30–08:48 — i.e. *after*
+  the engram's last-active stamp, and never recorded here: the Luminari cluster (`Luminari`,
+  `Amber/Azure/Violet Luminari`, `The Luminari Nexus`) plus `The Chromatic Schism`,
+  `The Archive Wars`, `The Harmony Concord`, `Crystal Memory Core`. The `Soul Steel — Lore`
+  cortex was updated at 08:48. All nine are soul-steel (137 → 146); tessera stayed 13,
+  cross-reality 1, claude-lab still 1 and still content-empty.
+- **`era:` 5 → 14 notes (3% → 8.6%) — entirely from the nine new notes.** Every one carries `era:`;
+  the original five (`Universe Creation`, `First Sundering`, `The Great Sundering`,
+  `Current Conflicts`, `The Depot Audit`) are unchanged, and **not one of the pre-existing 137
+  soul-steel notes was backfilled.**
+- **Read this as a sharpening of the session's own law, not a refutation.** The audit primed the
+  author, so everything written *after* it carries the axis — but priming does not reach backwards.
+  A consumer makes an axis stick going forward; only a backfill fixes the corpus already written.
+  The 137-note debt is untouched and is exactly what the Next Action still buys.
+- Nothing lore-related landed in this repo since: the only commit after the session (`490f1b2`)
+  is the generation-contracts batch, and it contains this session file itself.
