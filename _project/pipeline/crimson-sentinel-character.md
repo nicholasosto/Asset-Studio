@@ -1,7 +1,7 @@
 ---
 title: "Crimson Sentinel character"
 status: build
-updated: 2026-07-29
+updated: 2026-08-17
 links:
   - { rel: references, target: workflows/character-creation }
 ---
@@ -23,8 +23,9 @@ Lore authority remains read-only during this pass:
 - identity image `lore-brain/Media/visual/Crimson-Sentinel_portrait.png`
 
 This pipeline does not promote new lore. The first run's concept is owner-accepted and filed to the
-shared Assets library as `_BLK`; Lore Brain filing, engram updates, upload registration, `_FNL`
-promotion, and publish remain separate gates.
+shared Assets library (`image/ui/portrait-crimson-sentinel.png` since the 2026-08-17 remap — no
+status token in the name, per ADR 0013); Lore Brain filing, engram updates, upload registration,
+and publish remain separate gates.
 
 ## Build plan
 

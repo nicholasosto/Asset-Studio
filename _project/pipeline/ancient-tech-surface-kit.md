@@ -1,11 +1,12 @@
 ---
 title: "Ancient-tech surface kit"
 status: build
-updated: 2026-07-22
+updated: 2026-08-17
 links:
   - { rel: references, target: workflows/image-generation }
   - { rel: references, target: mediums/image }
   - { rel: references, target: pipeline/roblox-textured-ui-reference-kit }
+  - { rel: references, target: decisions/0013-assets-by-medium-the-foundry-decides }
 ---
 
 # Ancient-tech surface kit
@@ -26,8 +27,8 @@ holds, `roguex-33-portrait`; this run never displaced it. This entity exists to 
 graph retroactively: the art is done and verified, filing is not.
 
 The family shares its palette with the `graphite-cyan` UI style kit
-(`Assets/templates/ui-style/graphite-cyan/`, from [[roblox-textured-ui-reference-kit]]) — the
-environment counterpart of that specimen set, though the two were briefed independently.
+(`Assets/image/reference/graphite-cyan-reference-*.png`, from [[roblox-textured-ui-reference-kit]]) —
+the environment counterpart of that specimen set, though the two were briefed independently.
 
 ## Source specification
 
@@ -39,18 +40,18 @@ out of `textures/` and remain with this record.
 
 Domain is `robotic` per the taxonomy ("tech, mechanical, cyber, hard-surface"); the `ancient-tech`
 family token is borrowed from the already-registered
-`templates/key-art/character-promo-robotic-ancient-tech-theme.png` rather than improvised. The
+`image/reference/character-promo-robotic-ancient-tech-theme.png` rather than improvised. The
 `exterior-` placement prefix follows the 2026-06-11 domain-wall set and applies to walls only —
 ground surfaces carry no placement token (`cursed-slate-ground`, `null-slate-floor-01`).
 
-| Codex output | Library name (`textures/tileable/robotic/`) | Tiling | Roblox config (**resolved** 2026-07-22) |
+| Codex output | Library name (`image/textures/tile/` — since the 2026-08-17 remap; the domain lives in the sidecar, not a folder, and no name carries a status token) | Tiling | Roblox config (**resolved** 2026-07-22) |
 |---|---|---|---|
-| `ancient-alien-wall-top-crown.png` | `ancient-tech-exterior-wall-crown-01_BLK.png` | H free · **V = 1 tile** | Band. `U = V =` the face's vertical extent |
-| `ancient-alien-wall-mid-main.png` | `ancient-tech-exterior-wall-field-01_BLK.png` | 4-way | `StudsPerTileU/V` = **12** |
-| `ancient-alien-wall-bottom-plinth.png` | `ancient-tech-exterior-wall-plinth-01_BLK.png` | H free · **V = 1 tile** | Band. `U = V =` the face's vertical extent |
-| `ancient-alien-road.png` | `ancient-tech-road-01_BLK.png` | 4-way, **directional** | `StudsPerTileU/V` = **12**, locked equal; lanes run along the part's local **Z** |
-| `ancient-alien-sidewalk.png` | `ancient-tech-sidewalk-01_BLK.png` | 4-way, rotate-safe | `StudsPerTileU/V` = **8** (dense pavers) |
-| `ancient-alien-walkway.png` | `ancient-tech-plaza-01_BLK.png` | 4-way, rotate-safe | `StudsPerTileU/V` = **12** (large slabs) |
+| `ancient-alien-wall-top-crown.png` | `ancient-tech-exterior-wall-crown-01.png` | H free · **V = 1 tile** | Band. `U = V =` the face's vertical extent |
+| `ancient-alien-wall-mid-main.png` | `ancient-tech-exterior-wall-field-01.png` | 4-way | `StudsPerTileU/V` = **12** |
+| `ancient-alien-wall-bottom-plinth.png` | `ancient-tech-exterior-wall-plinth-01.png` | H free · **V = 1 tile** | Band. `U = V =` the face's vertical extent |
+| `ancient-alien-road.png` | `ancient-tech-road-01.png` | 4-way, **directional** | `StudsPerTileU/V` = **12**, locked equal; lanes run along the part's local **Z** |
+| `ancient-alien-sidewalk.png` | `ancient-tech-sidewalk-01.png` | 4-way, rotate-safe | `StudsPerTileU/V` = **8** (dense pavers) |
+| `ancient-alien-walkway.png` | `ancient-tech-plaza-01.png` | 4-way, rotate-safe | `StudsPerTileU/V` = **12** (large slabs) |
 
 **Face-dependent V mapping** — the rule that decides what "one tile" means for a band.
 `StudsPerTileV` maps to a different part axis per face: Front/Back and Left/Right → part **Y**;
@@ -62,8 +63,9 @@ chamfered-slab concourse, not a footpath.
 
 **Runtime resolution: 1024²** (owner call, 2026-07-22). Roblox caps uploaded textures at 1024², so
 2048 ships bytes the platform discards; the downsample was re-seam-checked and holds. The 2048
-masters archive to `textures/tileable/robotic/_archive/2026-07-22/<name>.original-2048x2048.png`,
-the resize-provenance pattern `textures/skybox/soul-steel-01/` already uses.
+masters archive to `image/textures/tile/_archive/2026-07-22/<name>.original-2048x2048.png` (a nested
+`_archive/` moves whole with its parent), the resize-provenance pattern
+`image/textures/skybox-soul-steel-01/` already uses.
 
 **Consumption:** `Texture` instances with `StudsPerTileU/V` — not `SurfaceAppearance` (MeshPart-only)
 and not `Decal` (doesn't tile). Two standing gotchas, carried into every sidecar:
@@ -87,8 +89,10 @@ so the family shares one declared scale reference to stay consistent where surfa
    road lane axis confirmed, resolved values written back to the sidecars via
    `tools/patch-ancient-tech-sidecars.mjs`.
 3. **Rebuild the registry** — `node tools/build-asset-registry.mjs`, then confirm the six classify
-   as `mediumType: image` under `textures/tileable/robotic/` in the Explorer.
-4. **Owner acceptance → `_FNL`** — promotion is a rename, never a folder move.
+   as `mediumType: image` under `image/textures/tile/` in the Explorer.
+4. **Owner acceptance** — recorded here, never by renaming: no live name carries a status token
+   since 2026-08-17 ([[0013-assets-by-medium-the-foundry-decides]]); the upload registry says what
+   shipped.
 5. **Upload + ledger** — `Assets/_tools/roblox_asset_metadata.py register <path> <asset-id>` per tile
    once uploaded; never hand-edit the JSONL. Rebuild the registry and the static bundle after.
    Note: the lab currently consumes the tiles by **local path** (`rbxasset://trembus/…`, Pattern A) —
@@ -96,12 +100,12 @@ so the family shares one declared scale reference to stay consistent where surfa
 
 ## Exit criteria
 
-- Six correctly-named `_BLK` tiles in `textures/tileable/robotic/` with sidecars; 2048 masters
-  archived under the dated `_archive/`; QA repeats and previews kept out of the library.
+- Six correctly-named tiles (kebab-media, no status token) in `image/textures/tile/` with sidecars;
+  2048 masters archived under the dated `_archive/`; QA repeats and previews kept out of the library.
 - The Explorer lists all six with real thumbnails and no scan warnings.
 - A Studio pass has confirmed the crown/plinth band behaviour, the road lane axis, and one declared
   studs-per-tile per surface, written back into the sidecars.
-- Owner acceptance recorded before any `_FNL` promotion.
+- Owner acceptance recorded before any upload.
 
 ## Open threads
 
@@ -118,17 +122,17 @@ so the family shares one declared scale reference to stay consistent where surfa
     apertures (iris · triangular · hexagonal · mandorla · spiral · lens · octagonal · cruciform · C-ring).
   - `output/imagegen/ancient-alien-portal-material-study/` — a portal frame + iris-blade material study.
 
-  These are the *design* layer above the surface kit and read as `concept-art/` in the library (by
-  collection), not `textures/`. They may instead qualify as generated exemplars under
-  [[0010-templates-split-by-authorship-exemplars-get-a-library-templa]] if the intent is to generate
-  *from* them — that is an owner
-  call, and it decides the destination. They also arrived outside `generation/BATCH.md`, same as
+  These are the *design* layer above the surface kit and read as `image/concept/` in the library (a
+  board stays whole as its own folder), not `image/textures/`. They may instead belong in
+  `image/reference/` — the door for exemplars generators are fed — if the intent is to generate
+  *from* them ([[0013-assets-by-medium-the-foundry-decides]] dissolved 0010's templates zone into it);
+  that is an owner call, and it decides the destination. They also arrived outside `generation/BATCH.md`, same as
   run-1. Recommend a `concept-art` sibling pipeline rather than stretching this one, since nothing
   about the tileable contract transfers.
 - **Tileable budget drift.** The sidecar acceptance template says "512×512, under 500 KB"; these are
   1024² at ~1.6 MB. 512 would fit (394 KB) but loses the crown/plinth glyph detail. The budget line
   needs amending to a size-tiered rule, or these need an explicit exemption.
-- **No normal maps.** `generic-panel-01-normal_BLK.png` sets a precedent for the robotic domain;
+- **No normal maps.** `generic-panel-01-normal.png` sets a precedent for the robotic domain;
   these are colour-only, with lighting baked into the crown/plinth relief.
 - **The road cannot be rotated in-texture.** `Texture` has no rotation property, so a road running
   along world X needs its part rotated 90° about Y — or a pre-rotated `-02` variant authored. Worth

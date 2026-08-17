@@ -1,7 +1,7 @@
 ---
 title: "Vyra Ashbloom character"
 status: build
-updated: 2026-07-29
+updated: 2026-08-17
 links:
   - { rel: references, target: workflows/character-creation }
 ---
@@ -20,9 +20,9 @@ the visual language of the supplied ethereal-alien customizer.
 Lore Brain resolves that source under the speculative `Luminari` species engram and its concept
 board. Neither source says Vyra is Luminari. This run therefore combines two speculative designs
 for visual evaluation only. The roster-format concept is owner-accepted and filed to the shared
-Assets library as `_BLK`. That filing does not establish Vyra as Luminari; canon decisions, Lore
-Brain filing, graph edits, upload registration, `_FNL` promotion, upload, and publish remain
-separate gates.
+Assets library (`image/ui/portrait-vyra-ashbloom.png` since the 2026-08-17 remap — no status token
+in the name, per ADR 0013). That filing does not establish Vyra as Luminari; canon decisions, Lore
+Brain filing, graph edits, upload registration, upload, and publish remain separate gates.
 
 ## Build plan
 

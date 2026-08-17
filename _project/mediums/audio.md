@@ -1,9 +1,10 @@
 ---
 title: "Audio"
 status: experimental
-updated: 2026-07-12
+updated: 2026-08-17
 links:
   - { rel: references, target: workflows/audio-production }
+  - { rel: references, target: decisions/0013-assets-by-medium-the-foundry-decides }
 tags: { mediumType: audio-sfx, tool: elevenlabs, pattern: symlink }
 ---
 
@@ -18,9 +19,9 @@ the shared library. Process: [[audio-production]].
 
 ## Standard
 
-`wav` / `mp3` / `ogg` / `flac`. Kebab-case descriptor + `_BLK`; categorized by zone
-(`audio/{music, sfx, ui, ambient, voice}` — voice per-character subfoldered), per
-[[0008-restructure-the-shared-assets-library-into-staging-library-r]].
+`wav` / `mp3` / `ogg` / `flac`. `kebab-media` — `{slug}.{ext}`, **no status token**; placed by role
+(`audio/{ambient, music, sfx/{combat,world}, ui, voice/<character>}`), per
+[[0013-assets-by-medium-the-foundry-decides]].
 
 ## Tooling
 
@@ -29,8 +30,9 @@ for voice configuration.
 
 ## Output convention
 
-Staged in `_inbox/audio/` (`tts/` · `voice-previews/` · `sfx/`); finalized into
-`audio/{music, sfx, ui, ambient, voice}/`. Persona-bound audio places **by reference** into
+Staged in `_inbox/audio/` (`tts/` · `voice-previews/` — the only landing zone for unattended tool
+output); filed into `audio/{ambient, music, sfx/{combat,world}, ui, voice/<character>}/`.
+Persona-bound audio places **by reference** into
 lore-brain `Media/audio/` instead (Ghost in the Grid precedent).
 **Pattern A** (symlink, zero-upload) per [[0001-reference-the-shared-asset-library-via-external-locations]].
 

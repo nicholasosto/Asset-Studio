@@ -11,7 +11,7 @@
 //      removable-chip strip reflecting the active filters.
 //   3. RESULTS GRID — a count line + a CSS grid of asset cards (optionally grouped by mediumType).
 //   4. INSPECTOR — a Dialog modal (command Toolbar in the footer) + the move-confirm dialog.
-// Per-asset ACTIONS (copy id/path · reveal · view online · move to _resort/_archive) live in
+// Per-asset ACTIONS (copy id/path · reveal · view online · move to _inbox/_archive) live in
 // ./assetActions — one vocabulary shared by the inspector Toolbar and the tile ⋯ kebab Menu.
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
@@ -81,7 +81,7 @@ import { MediaFrame } from '@trembus/game-viz';
 import type { MediaFrameData } from '@trembus/game-viz';
 
 // The medium keys, in axis order — the order Stat tiles + Meter segments + Donut slices share.
-// 'video' joined 2026-08-17 (the library's video/ door); it rides the Select/grouping order only.
+// 'video' joined 2026-08-17 (the library's video/ door) — its own Stat tile + Meter segment too.
 const MEDIUM_ORDER: Medium[] = ['image', '3d', 'audio', 'video'];
 
 // Section order for VirtualAssetGrid's mediumType grouping (medium ▸ its types), source bucket last.
@@ -163,9 +163,10 @@ export function AssetExplorer() {
     return () => window.clearTimeout(t);
   }, [gridFlash]);
 
-  // The move flow (ADR 0011): archive always confirms; _resort confirms only when the record
-  // carries the Roblox ledger join (warn-don't-write). Explorer-level state because both the tile
-  // kebab and the inspector Toolbar route through the same confirm dialog.
+  // The move flow (ADR 0011; _resort/ → _inbox/<medium>/ since the remap 2026-08-17): archive
+  // always confirms; _inbox confirms only when the record carries the Roblox ledger join
+  // (warn-don't-write). Explorer-level state because both the tile kebab and the inspector
+  // Toolbar route through the same confirm dialog.
   const [confirmMove, setConfirmMove] = useState<{ record: AssetRecord; dest: MoveDest } | null>(null);
   const performMove = async (record: AssetRecord, dest: MoveDest) => {
     setConfirmMove(null);
@@ -360,6 +361,12 @@ export function AssetExplorer() {
                 tone={MEDIUM_STYLE.audio.tone}
                 onSelect={() => setMedium('audio')}
               />
+              <Stat
+                label="Video"
+                value={summary.video}
+                tone={MEDIUM_STYLE.video.tone}
+                onSelect={() => setMedium('video')}
+              />
             </div>
             <Meter
               variant="stacked"
@@ -368,6 +375,7 @@ export function AssetExplorer() {
                 { value: summary.image, tone: 'info', label: 'image' },
                 { value: summary.threeD, tone: 'accent', label: '3d' },
                 { value: summary.audio, tone: 'success', label: 'audio' },
+                { value: summary.video, tone: MEDIUM_STYLE.video.tone, label: 'video' },
               ]}
               label="Assets by medium"
             />
@@ -707,11 +715,11 @@ function AssetTile({
             </Menu.Item>
             <Menu.Separator />
             <Menu.Item
-              disabled={!moveEnabled(record, 'resort')}
+              disabled={!moveEnabled(record, 'inbox')}
               title={canMove ? undefined : MOVE_DISABLED_HINT}
-              onSelect={() => requestMove(record, 'resort')}
+              onSelect={() => requestMove(record, 'inbox')}
             >
-              <ResortIcon /> Move to _resort
+              <ResortIcon /> Move to _inbox
             </Menu.Item>
             <Menu.Item
               disabled={!moveEnabled(record, 'archive')}
@@ -891,11 +899,11 @@ function Inspector({
                 </Menu.Item>
                 <Menu.Separator />
                 <Menu.Item
-                  disabled={!moveEnabled(record, 'resort')}
+                  disabled={!moveEnabled(record, 'inbox')}
                   title={canMove ? undefined : MOVE_DISABLED_HINT}
-                  onSelect={() => requestMove(record, 'resort')}
+                  onSelect={() => requestMove(record, 'inbox')}
                 >
-                  <ResortIcon /> Move to _resort
+                  <ResortIcon /> Move to _inbox
                 </Menu.Item>
                 <Menu.Item
                   disabled={!moveEnabled(record, 'archive')}

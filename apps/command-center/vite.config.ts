@@ -18,6 +18,11 @@ const ASSETS_ROOT_REAL = (() => {
 })();
 const THUMBS_DIR = resolve(REPO_ROOT, 'previews/thumbs');
 
+// The library's medium doors (Foundry FOLDERS_ASSETS, remap 2026-08-17) — /api/move's triage
+// destination is _inbox/<medium>/, and these are the only <medium> values that exist. Mirrors
+// tools/build-asset-registry.mjs MEDIUM_DOORS.
+const MEDIUM_DOORS = new Set(['image', 'audio', 'video', '3d']);
+
 // Content-Type by extension for the streamed assets (images · audio · glTF + its .bin/textures).
 const MIME: Record<string, string> = {
   png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'image/webp', gif: 'image/gif', svg: 'image/svg+xml',
@@ -269,8 +274,18 @@ function liveAssets(): Plugin {
               dest = String(parsed.dest ?? '');
             } catch { return fail(400, 'bad json'); }
             if (!rel || rel.includes('\0')) return fail(400, 'bad path');
-            if (dest !== 'resort' && dest !== 'archive') return fail(400, 'bad dest');
+            if (dest !== 'inbox' && dest !== 'archive') return fail(400, 'bad dest');
             rel = rel.replace(/^external-locations\/assets\//, '').replace(/^\/+/, '');
+            // Triage lands in _inbox/<medium>/ (the remap 2026-08-17 dissolved the flat _resort/
+            // pen): the medium is the source's first segment, so only files under a medium door
+            // (or already one level inside _inbox/) can be sent to triage — server-owned, never
+            // caller-chosen.
+            const seg0 = rel.split('/')[0];
+            const seg1 = rel.split('/')[1];
+            const inboxMedium = MEDIUM_DOORS.has(seg0) ? seg0
+              : seg0 === '_inbox' && seg1 && MEDIUM_DOORS.has(seg1) ? seg1
+              : null;
+            if (dest === 'inbox' && !inboxMedium) return fail(400, 'no inbox door for this path');
             let assetsRoot: string;
             try { assetsRoot = realpathSync(resolve(REPO_ROOT, 'external-locations/assets')); }
             catch { return fail(404, 'assets root missing'); }
@@ -281,17 +296,17 @@ function liveAssets(): Plugin {
             let srcStat;
             try { srcStat = statSync(absSrc); } catch { return fail(404, 'not found'); }
             if (!srcStat.isFile()) return fail(400, 'not a file');
-            // Destination: flat _resort/ (a triage pen) or a dated _archive/ retirement folder,
-            // matching the zones' existing on-disk conventions.
-            const destRel = dest === 'resort'
-              ? `_resort/${basename(absSrc)}`
+            // Destination: _inbox/<medium>/ (the only triage pen — Assets/README rule 4) or a dated
+            // _archive/ retirement folder, matching the doors' existing on-disk conventions.
+            const destRel = dest === 'inbox'
+              ? `_inbox/${inboxMedium}/${basename(absSrc)}`
               : `_archive/${new Date().toISOString().slice(0, 10)}-explorer/${basename(absSrc)}`;
             const absDest = join(assetsRoot, destRel);
             if (existsSync(absDest)) return fail(409, 'destination exists');
             try {
               mkdirSync(dirname(absDest), { recursive: true });
               // Re-contain the REAL destination parent — guards a hostile symlink pre-planted
-              // at _resort/ or _archive/ redirecting the write outside the library.
+              // at _inbox/<medium>/ or _archive/ redirecting the write outside the library.
               const parentReal = realpathSync(dirname(absDest));
               if (!within(assetsRoot, parentReal)) return fail(403, 'forbidden');
               renameSync(absSrc, absDest); // same-volume tree; EXDEV out of scope for this dev tool

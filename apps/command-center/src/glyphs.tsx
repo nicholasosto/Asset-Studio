@@ -56,7 +56,7 @@ export function ArchiveIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-/** Two crossing routed arrows — move to `_resort/` (re-sorting/triage). */
+/** Two crossing routed arrows — move to `_inbox/<medium>/` (triage; was `_resort/` before the remap 2026-08-17). */
 export function ResortIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <Svg data-glyph="resort" {...props}>

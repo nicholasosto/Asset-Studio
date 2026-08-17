@@ -11,7 +11,7 @@
       "guarantee": "One measured sheet can dress a whole part class without turning the sheet into wallpaper.",
       "failureMode": "The whole sheet repeats across U, so every strip appears on every surface.",
       "produces": "a _BLK trim texture plus a measured strip-table sidecar",
-      "jump": "textures/tileable",
+      "jump": "image/textures/tile",
       "requirements": [
         {
           "label": "Runtime sheet budget",
@@ -119,7 +119,7 @@
         }
       ],
       "shape": [
-        "asset: ancient-tech-vert-trim-01_BLK.png",
+        "asset: ancient-tech-vert-trim-01.png",
         "status: _BLK",
         "repeatAxis: V",
         "wholeSheetTilesAcrossU: false",
@@ -169,7 +169,7 @@
       "guarantee": "A scalable Part keeps consistent material density and hides all four image edges.",
       "failureMode": "A stretched Decal, visible repeat seam, or wrong face axis turns the surface into a poster or stripe.",
       "produces": "a _BLK seamless raster plus density, direction, and QA metadata",
-      "jump": "textures/tileable",
+      "jump": "image/textures/tile",
       "requirements": [
         {
           "label": "Roblox texture dimension",
@@ -285,7 +285,7 @@
         }
       ],
       "shape": [
-        "asset: ancient-tech-road-01_BLK.png",
+        "asset: ancient-tech-road-01.png",
         "preset: tileable-part-texture",
         "status: _BLK",
         "directional: true",
@@ -324,7 +324,7 @@
       "guarantee": "One UV-mapped MeshPart receives a coherent, physically interpretable material family.",
       "failureMode": "A wrong normal convention, muddy metalness, baked lighting, or mismatched maps produces unstable material response.",
       "produces": "a named PBR map family and SurfaceAppearance binding manifest",
-      "jump": "textures",
+      "jump": "image/textures",
       "requirements": [
         {
           "label": "Standard PBR map slots",
@@ -495,7 +495,7 @@
       "guarantee": "Resizable frames, seamless fills, and state atlases remain sharp, legible, and semantically separate from live UI content.",
       "failureMode": "Borders collapse, atlas cells bleed, localizable text is baked into pixels, or Studio-only URIs are mistaken for shipped assets.",
       "produces": "a _BLK UI image set plus slice, tile, atlas, and lifecycle manifest",
-      "jump": "ui",
+      "jump": "image/ui",
       "requirements": [
         {
           "label": "Roblox texture dimension",
@@ -659,7 +659,7 @@
       "guarantee": "A selected Blender asset reaches Studio at the intended scale, orientation, hierarchy, and transform state.",
       "failureMode": "Default FBX scaling or axis assumptions produce a giant, rotated, duplicated, or leaf-bone-polluted import.",
       "produces": "an FBX or glTF-family export plus a recorded import manifest",
-      "jump": "source/blender",
+      "jump": "3d/source/blender",
       "requirements": [
         {
           "label": "Studio importer mesh formats",
@@ -832,7 +832,7 @@
       "guarantee": "Each imported mesh clears platform geometry constraints while project budgets remain explicit and revisable.",
       "failureMode": "A remembered cap or invented tier budget becomes production law without evidence.",
       "produces": "a preflighted mesh plus geometry, collision, and render-fidelity evidence",
-      "jump": "models",
+      "jump": "3d/models",
       "requirements": [
         {
           "label": "Triangles per individual mesh",
@@ -993,7 +993,7 @@
       "guarantee": "Texture animation and emitter behavior are reproducible without presenting one lab effect as a global performance budget.",
       "failureMode": "Frame bleed, unreadable sprites, or unsourced rate and live-particle caps get copied into every effect.",
       "produces": "a particle texture sidecar plus a reviewed ParticleEmitter property profile",
-      "jump": "textures/particles",
+      "jump": "image/textures",
       "requirements": [
         {
           "label": "Roblox texture dimension",
@@ -1159,7 +1159,7 @@
       "guarantee": "A two-endpoint strip curves, repeats, and scrolls in the intended direction without invented segment caps.",
       "failureMode": "The source strip is oriented incorrectly, fake transparency is baked into pixels, or one specimen's Segments value becomes a ceiling.",
       "produces": "a repeat-safe beam strip sidecar plus a reviewed Beam instance profile",
-      "jump": "textures/particles",
+      "jump": "image/textures",
       "requirements": [
         {
           "label": "Endpoint attachments",
@@ -1313,7 +1313,7 @@
       "guarantee": "A motion trail has explicit endpoint, lifetime, width, texture, and fading behavior.",
       "failureMode": "An unbounded lifetime or unrecorded attachment plane leaves excessive or invisible trail geometry.",
       "produces": "a trail texture sidecar plus a reviewed Trail instance profile",
-      "jump": "textures/particles",
+      "jump": "image/textures",
       "requirements": [
         {
           "label": "Endpoint attachments",

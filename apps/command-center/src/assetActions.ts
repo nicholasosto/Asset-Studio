@@ -86,10 +86,22 @@ export function creatorDashboardUrl(r: AssetRecord): string | null {
 export const canMove: boolean = import.meta.env.DEV;
 export const MOVE_DISABLED_HINT = 'Dev server only — run the app via pnpm dev';
 
-export type MoveDest = 'resort' | 'archive';
+export type MoveDest = 'inbox' | 'archive';
+
+// The library's medium doors (remap 2026-08-17). Triage lands in _inbox/<medium>/, and the medium
+// is the record's first path segment — a client mirror of the server rule (vite.config.ts).
+const MEDIUM_DOORS = new Set(['image', 'audio', 'video', '3d']);
+export function inboxMediumOf(r: AssetRecord): string | null {
+  const [seg0, seg1] = r.p.split('/');
+  if (MEDIUM_DOORS.has(seg0)) return seg0;
+  if (seg0 === '_inbox' && seg1 && MEDIUM_DOORS.has(seg1)) return seg1;
+  return null;
+}
 
 export function moveEnabled(r: AssetRecord, dest: MoveDest): boolean {
-  return canMove && !r.p.startsWith(dest === 'resort' ? '_resort/' : '_archive/');
+  if (!canMove) return false;
+  if (dest === 'archive') return !r.p.startsWith('_archive/');
+  return !r.p.startsWith('_inbox/') && inboxMediumOf(r) !== null;
 }
 
 export interface MoveResult {
@@ -132,9 +144,9 @@ export interface MoveConfirmFacts {
 export function buildMoveConfirm(r: AssetRecord, dest: MoveDest): MoveConfirmFacts {
   const date = new Date().toISOString().slice(0, 10);
   return {
-    title: dest === 'resort' ? 'Move to _resort?' : 'Move to _archive?',
+    title: dest === 'inbox' ? 'Move to _inbox?' : 'Move to _archive?',
     from: r.p,
-    to: dest === 'resort' ? `_resort/${r.base}` : `_archive/${date}-explorer/${r.base}`,
+    to: dest === 'inbox' ? `_inbox/${inboxMediumOf(r) ?? '<medium>'}/${r.base}` : `_archive/${date}-explorer/${r.base}`,
     robloxWarning: r.roblox
       ? `This file is joined to the Roblox upload ledger (asset ${r.roblox.active.assetId}). ` +
         `Moving it will NOT update the ledger — the mapping orphans until _catalog/` +
@@ -144,13 +156,13 @@ export function buildMoveConfirm(r: AssetRecord, dest: MoveDest): MoveConfirmFac
     destNote:
       dest === 'archive'
         ? 'Archived files leave the Explorer entirely on the next rebuild (the zone is skip-listed).'
-        : 'The file stays visible in the Explorer, under _resort/.',
+        : 'The file stays visible in the Explorer, under _inbox/<medium>/ — the triage pen.',
     rebuildNote: 'The registry rebuild takes a few seconds and reloads this page.',
-    confirmLabel: dest === 'resort' ? 'Move to _resort' : 'Move to _archive',
+    confirmLabel: dest === 'inbox' ? 'Move to _inbox' : 'Move to _archive',
   };
 }
 
-/** Archive always confirms; _resort confirms only when the Roblox ledger join is at stake. */
+/** Archive always confirms; _inbox confirms only when the Roblox ledger join is at stake. */
 export function needsMoveConfirm(r: AssetRecord, dest: MoveDest): boolean {
   return dest === 'archive' || Boolean(r.roblox);
 }

@@ -1,10 +1,11 @@
 ---
 title: "Roblox textured UI reference kit"
 status: build
-updated: 2026-07-22
+updated: 2026-08-17
 links:
   - { rel: references, target: workflows/roblox-textured-ui-ux }
   - { rel: references, target: pipeline/ancient-tech-surface-kit }
+  - { rel: references, target: decisions/0013-assets-by-medium-the-foundry-decides }
 ---
 
 # Roblox textured UI reference kit
@@ -42,9 +43,10 @@ shared `ui/` kit—not a Soul Steel-specific asset. No asset payload is written 
    checked `generation/BATCH.md` compatibility copy. Run candidates through the image-generation
    leaf into the contract-bound path (new default:
    `generation/work/<batch-id>/candidates/`), then review against seam/slice/atlas constraints.
-4. **Preflight + `_BLK` filing** — verify format, dimensions, alpha, file size, seam continuity,
+4. **Preflight + filing** — verify format, dimensions, alpha, file size, seam continuity,
    safe slice borders, atlas cell boundaries, tint behavior, and no baked localizable text. File
-   reviewed winners under the correct `~/Master-Managed/Assets/ui/.../*_BLK.png` paths.
+   reviewed winners under the correct `~/Master-Managed/Assets/image/ui/<slug>.png` paths (no status
+   token in a live name since 2026-08-17 — ADR 0013).
 5. **Studio proof** — in a connected Roblox Studio session, confirm the local asset link and build
    `ReplicatedStorage.UIMockups/TexturedUIReferenceKit` in Edit mode. Show the panel at short/wide/
    tall sizes, the tiled fill at multiple scales, and all four atlas cells; include hover, pressed,
@@ -55,7 +57,7 @@ shared `ui/` kit—not a Soul Steel-specific asset. No asset payload is written 
    slice-border overlap at the smallest supported control.
 7. **Owner acceptance gate** — present screenshots, property manifest, resolved local paths, test
    matrix, and remaining tradeoffs. Rejected checks loop only the failed art or implementation
-   layer; accepted art can be promoted from `_BLK` to `_FNL`.
+   layer; accepted art is recorded as accepted in this record — never by renaming the file.
 8. **Optional publish handoff** — only if plan approval includes upload: upload to the confirmed
    owner/group, wait for moderation, record IDs, replace `rbxasset://trembus/` with centralized
    `rbxassetid://` references in the shipping consumer, and rerun the same proof against cloud art.
@@ -65,11 +67,14 @@ shared `ui/` kit—not a Soul Steel-specific asset. No asset payload is written 
 ## Exit criteria
 
 - The source spec records ScaleType, filtering, slice/tile/atlas geometry, states, and target paths.
-- Three reviewed `_BLK` assets exist in the correct shared-library `ui/` slots with valid names.
+- Three reviewed assets exist in the correct shared-library slots with valid names — the specimen
+  kit at `image/reference/graphite-cyan-reference-{panel,tile,controls}.png`, its production copies
+  in `image/ui/`; no status token in any name.
 - A real Studio proof renders every technique and state without distortion, border overlap,
   broken atlas cells, baked localizable text, or silent missing-image failure.
 - Desktop, phone, tablet, and controller checks are recorded against the approved support matrix.
-- The owner has accepted the rendered Studio proof. Nothing is marked `_FNL` before that approval.
+- The owner has accepted the rendered Studio proof. Nothing is recorded as accepted before that
+  approval — and acceptance is a record here, never a rename.
 - If upload was authorized, moderation has cleared, production references use recorded
   `rbxassetid://` values, and the post-upload regression pass is clean.
 - The pipeline contains a final run record, and the Command Center contracts render with no errors.
@@ -77,9 +82,9 @@ shared `ui/` kit—not a Soul Steel-specific asset. No asset payload is written 
 ## Approval boundary
 
 Approving this plan authorizes Codex to carry out all **local** steps through the Studio QA report,
-including creating batch contracts, generated candidates, shared-library `_BLK` files, and a
-non-shipping mockup. It does not by itself authorize `_FNL` promotion or Roblox upload; those occur
-only at the owner acceptance gate, with the upload owner/group explicitly confirmed.
+including creating batch contracts, generated candidates, shared-library files, and a
+non-shipping mockup. It does not by itself authorize upload-ready acceptance or Roblox upload; those
+occur only at the owner acceptance gate, with the upload owner/group explicitly confirmed.
 
 ## Source specification
 
@@ -88,12 +93,14 @@ cool cyan; local Studio proof only. No `_FNL` promotion and no Roblox upload in 
 
 | Asset | Generated source | Runtime derivative | Roblox configuration | Shared-library target |
 |---|---:|---:|---|---|
-| 9-slice panel | 1024×1024 opaque PNG | 256×256 | `ScaleType.Slice`; draft `SliceCenter = Rect.new(32, 32, 224, 224)`; test `SliceScale` 0.5–1.0 | `ui/frames/graphite-cyan-reference-panel_BLK.png` |
-| Seamless fill | 1024×1024 opaque PNG | 256×256 | `ScaleType.Tile`; test `TileSize` 64, 128, 256 px; `ResampleMode.Default` | `ui/backgrounds/graphite-cyan-reference-tile_BLK.png` |
-| State atlas | 1024×1024 opaque PNG | 256×256, 2×2 | `ImageRectSize = Vector2.new(128,128)`; offsets `(0,0)`, `(128,0)`, `(0,128)`, `(128,128)`; never combine with `Tile` | `ui/sprites/graphite-cyan-reference-controls_BLK.png` |
+| 9-slice panel | 1024×1024 opaque PNG | 256×256 | `ScaleType.Slice`; draft `SliceCenter = Rect.new(32, 32, 224, 224)`; test `SliceScale` 0.5–1.0 | `image/reference/graphite-cyan-reference-panel.png` |
+| Seamless fill | 1024×1024 opaque PNG | 256×256 | `ScaleType.Tile`; test `TileSize` 64, 128, 256 px; `ResampleMode.Default` | `image/reference/graphite-cyan-reference-tile.png` |
+| State atlas | 1024×1024 opaque PNG | 256×256, 2×2 | `ImageRectSize = Vector2.new(128,128)`; offsets `(0,0)`, `(128,0)`, `(0,128)`, `(128,128)`; never combine with `Tile` | `image/reference/graphite-cyan-reference-controls.png` |
 
 Text stays native Roblox UI. The atlas carries only a geometric glyph. All three assets use exact
-lower-kebab names with `_BLK`; their local proof URIs are `rbxasset://trembus/` plus the paths above.
+lower-kebab names (no status token since 2026-08-17; the set moved `ui/*` → `templates/ui-style/`
+2026-07-18 → `image/reference/` 2026-08-17); their local proof URIs are `rbxasset://trembus/` plus
+the paths above.
 
 ## Runs
 
@@ -186,7 +193,9 @@ content delivery works end to end again. See [[ancient-tech-surface-kit]] run-2.
 was paused: rerun only the rendered-asset checks — confirm 3/3 preload, inspect the short/wide/tall
 9-slice panels, inspect 64/128/256 tiling seams, inspect all four atlas crops and state transitions,
 and capture the owner-acceptance screenshots. No new image generation or layout work is expected.
-`_FNL` promotion and upload remain unauthorized until the owner accepts at the gate.
+Upload-ready acceptance and upload remain unauthorized until the owner accepts at the gate. (The
+mockup's `Manifest` carries the URIs as filed 2026-07-12; the kit has moved twice since — check
+them against `image/reference/` before the preload check.)
 
 Note for next time: the link is broken by Roblox Studio app updates, and repairing it needs an
 interactive `sudo` with Studio quit —

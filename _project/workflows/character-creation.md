@@ -1,7 +1,7 @@
 ---
 title: "Character creation"
 status: active
-updated: 2026-07-11
+updated: 2026-08-17
 links:
   - { rel: references, target: workflows/lore-creation }
   - { rel: references, target: workflows/image-generation }
@@ -53,9 +53,10 @@ column + material swatch row. Attach the stage template to each generation run a
 composition reference and treat it as the stage's definition-of-done.
 
 Domain-skinned exemplar alternates for the modelsheet stage — five themed turnarounds (blood ·
-decay · fateless · robot · spirit; no `shared` variant yet) — live in the library
-`Assets/templates/turnaround-themes/` per ADR 0010; bind one in the brief when a domain-flavored
-sheet serves the character better than the neutral master. The full index is
+decay · fateless · robot · spirit; no `shared` variant yet) — live in the library at
+`Assets/image/reference/turnaround-<domain>-theme.png` (flat, the set in the name — ADR 0013 dissolved
+the templates zone into `image/reference/`); bind one in the brief when a domain-flavored sheet
+serves the character better than the neutral master. The full index is
 [[mediums/image]] § Template registry.
 
 ## Workflow

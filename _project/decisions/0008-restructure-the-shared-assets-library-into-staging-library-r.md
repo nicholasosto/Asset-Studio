@@ -1,15 +1,17 @@
 ---
 title: "Restructure the shared Assets library into staging, library, runtime, and machinery zones"
-status: accepted
-updated: 2026-07-03
+status: superseded
+updated: 2026-08-17
 links:
+  - { rel: superseded-by, target: decisions/0013-assets-by-medium-the-foundry-decides }
   - { rel: references, target: decisions/0001-reference-the-shared-asset-library-via-external-locations }
   - { rel: references, target: decisions/0002-adopt-medium-and-mediumtype-as-the-asset-explorer-taxonomy }
 ---
 
 # Restructure the shared Assets library into staging, library, runtime, and machinery zones
 
-> **Status:** accepted (2026-07-03)
+> **Status:** superseded (2026-08-17) — accepted 2026-07-03. The body below is history.
+> Superseded by ADR 0013 (2026-08-17, `asy-20260817-091725`).
 
 ## Context
 

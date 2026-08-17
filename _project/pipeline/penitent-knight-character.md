@@ -1,7 +1,7 @@
 ---
 title: "Penitent Knight character"
 status: build
-updated: 2026-07-29
+updated: 2026-08-17
 links:
   - { rel: references, target: workflows/character-creation }
 ---
@@ -24,8 +24,9 @@ Lore authority remains read-only during this pass:
 - the existing `Media/visual/Penitent-Knight_*` reference pack
 
 This run adds no new lore and does not promote the speculative Vowbrand artifact. Its promotional
-candidate is owner-accepted and filed to the shared Assets library as `_BLK`; graph edits, upload
-registration, `_FNL` promotion, upload, and publish remain separate gates.
+candidate is owner-accepted and filed to the shared Assets library (`image/ui/portrait-penitent-knight.png`
+since the 2026-08-17 remap — no status token in the name, per ADR 0013); graph edits, upload
+registration, upload, and publish remain separate gates.
 
 ## Build plan
 

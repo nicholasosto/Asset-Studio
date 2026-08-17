@@ -12,7 +12,9 @@ Claude is the planning and review side of the Asset-Studio image handoff:
 - preserve earlier contracts instead of overwriting prompt history;
 - review staged candidates against the brief, references, negatives, and mechanical checks;
 - record accepted outcomes and remaining gates in the owning `_project/pipeline/`;
-- invoke `roblox-dev:asset-conventions` before filing, registering, or proposing promotion.
+- invoke `roblox-dev:asset-conventions` before filing, registering, or proposing upload — it is
+  the routing guide; the Foundry decides the door and the name (ADR 0013), and no live name
+  carries a status token.
 
 Claude does not claim that a candidate was generated, registered, promoted, uploaded, published, or
 shipped without direct evidence for that gate.

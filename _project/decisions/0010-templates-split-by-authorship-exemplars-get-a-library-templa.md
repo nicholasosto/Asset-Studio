@@ -1,8 +1,9 @@
 ---
 title: "Templates split by authorship - exemplars get a library templates zone"
-status: accepted
-updated: 2026-07-18
+status: superseded
+updated: 2026-08-17
 links:
+  - { rel: superseded-by, target: decisions/0013-assets-by-medium-the-foundry-decides }
   - { rel: references, target: decisions/0001-reference-the-shared-asset-library-via-external-locations }
   - { rel: references, target: decisions/0008-restructure-the-shared-assets-library-into-staging-library-r }
   - { rel: references, target: mediums/image }
@@ -10,7 +11,8 @@ links:
 
 # Templates split by authorship - exemplars get a library templates zone
 
-> **Status:** accepted (2026-07-18)
+> **Status:** superseded (2026-08-17) — accepted 2026-07-18. The body below is history.
+> Superseded by ADR 0013 (2026-08-17, `asy-20260817-091725`).
 
 ## Context
 

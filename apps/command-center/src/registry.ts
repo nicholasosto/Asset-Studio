@@ -395,7 +395,7 @@ const folderSpine: FolderSpine[] = (() => {
 
 // Depth-0 zone identities — glyph NAMES from the registry bundled inside @trembus/ui (an unknown
 // name renders nothing, worse than the folder default — so only names that exist are mapped;
-// audio and _resort deliberately keep the stock folder glyph).
+// audio deliberately keeps the stock folder glyph; _resort/ no longer exists — remap 2026-08-17).
 const ZONE_ICON: Record<string, string> = {
   ui: 'component',
   textures: 'layers',

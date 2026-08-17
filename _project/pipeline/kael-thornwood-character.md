@@ -1,7 +1,7 @@
 ---
 title: "Kael Thornwood character"
 status: build
-updated: 2026-07-29
+updated: 2026-08-17
 links:
   - { rel: references, target: workflows/character-creation }
 ---
@@ -18,10 +18,10 @@ bark-hardened forearms, thorn scars, and a luminous green left eye—but provide
 physical-design section, model sheet, weapon, or face.
 
 This run's Rootscar Guardian promotional concept is owner-accepted and filed to the shared Assets
-library as `_BLK`. It separates established source cues from provisional visual choices and makes
+library (`image/ui/portrait-kael-thornwood.png` since the 2026-08-17 remap — no status token in the
+name, per ADR 0013). It separates established source cues from provisional visual choices and makes
 no Lore Brain mutation. Acceptance for filing does not canonize the provisional face, removed
-badge, or sword; canon decisions, upload registration, `_FNL` promotion, upload, and publish remain
-separate gates.
+badge, or sword; canon decisions, upload registration, upload, and publish remain separate gates.
 
 ## Build plan
 

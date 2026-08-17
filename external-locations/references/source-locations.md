@@ -15,24 +15,29 @@ their target payloads.
 Agent capability ownership and runtime installs are registered separately in
 `agent-assets/capabilities.yaml`.
 
-## Current shared-library zones
+## Current shared-library doors
+
+**The Foundry decides the tree and the names** — `Foundry/Core.html` `FOLDERS_ASSETS` · `NAME_RULES`
+(`kebab-media`, `tgl-asset`), measured by `Foundry/tools/scan-drift.mjs`. Decided 2026-08-17
+(`asy-20260817-091725`; ADR 0013 records it here). This map is a pointer, not the law.
 
 | Path under `assets/` | Purpose |
 |---|---|
-| `_inbox/{images,audio,models,character-packages}/` | Unattended or genuinely unclassified incoming work only |
+| `image/{ui,textures,concept,reference,source/pixelmator}/` | 2D — layer 1 is where a thing is consumed; `ui/icon/` and `textures/tile/` are the only rooms a Foundry contract has earned below it; a package stays whole as its own folder; the subject goes in the name, never a project folder |
+| `audio/{ambient,music,sfx,ui,voice/<character>}/` | Audio, by role |
+| `video/` | Moving image |
+| `3d/models/<category>/<slug>/` · `3d/source/{blender,terrain}/` | Per-asset 3D packages · DCC working files — no naming law under `3d/` |
+| `runtime/roblox/soul-steel/<category>/<domain>/` | Engine containers, `{CAT}_{SUB}_{Name}.rbxm` |
+| `_inbox/{image,audio,video,3d}/` | The only landing zone for unattended tool output |
 | `_catalog/` | Upload registry, validated ID tables, migration manifests, and inventory records |
-| `_tools/` | Shared-library validators and metadata tools |
-| `_archive/` | Historical and migration snapshots |
-| `source/{blender,pixelmator,terrain}/` | Editable source files |
-| `runtime/roblox/` | Roblox-ready runtime payloads, including project-specific packages |
-| `ui/{backgrounds,design,frames,icons,sprites}/` | Shared UI art |
-| `ui/<project>/` | Project-presupposing UI bundles |
-| `textures/{particles,skybox,surfaces,tileable}/` | Texture and VFX families |
-| `models/`, `audio/`, `concept-art/`, `templates/` | Medium-specific production libraries |
+| `_tools/` | Shared-library validators, metadata tools, and package scaffolds |
+| `_archive/` | Retired drops, bucketed by retire date — moved whole, never renamed |
 
-Do not route new work to the retired `ai-output/`, `library/`, `scripts/`, or `3D-asset-art/`
-top-level layouts. Invoke `roblox-dev:asset-conventions` for the current exact destination,
-filename grammar, `_BLK/_FNL` status, registry, and promotion rules.
+Do not route new work to the retired July zones (root-level `ui/ textures/ concept-art/ templates/
+models/ source/ _resort/`) or the older `ai-output/ library/ scripts/ 3D-asset-art/` layouts. No
+live name carries a `_BLK/_FNL` token. Invoke `roblox-dev:asset-conventions` as the routing guide
+for the exact destination, filename grammar, registry, and upload rules — it points at the Foundry;
+it is not the law.
 
 ## Delivery patterns
 
