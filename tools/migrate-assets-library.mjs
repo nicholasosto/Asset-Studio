@@ -21,7 +21,10 @@ import { readdirSync, statSync, existsSync, mkdirSync, renameSync, rmdirSync, un
 import { join, dirname, basename, posix } from "node:path";
 import { homedir } from "node:os";
 
-const MIGRATION_ID = "2026-07-03"; // ADR 0008 decision date — stable across sessions
+const MIGRATION_ID = "2026-08-17"; // the Assets remap — Foundry asy-20260817-091725 (was 2026-07-03 for ADR 0008, 2026-08-16 for the token sweep)
+// Doors that are allowed to be empty after a run — Drive's live staging dir, and the rooms the remap opens
+// before anything lands in them. Everything else that empties out is pruned, as before.
+const PRUNE_KEEP = new Set([".tmp.driveupload", "_inbox/video", "video"]);
 const MANIFEST_NAME = "__migration-manifest.csv";
 const FINAL_MANIFEST = `_catalog/migration-${MIGRATION_ID}.csv`;
 const FINAL_LOG = `_catalog/migration-${MIGRATION_ID}.log.json`;
@@ -237,7 +240,7 @@ function pruneEmptyDirs() {
       if (!e.isDirectory() || e.isSymbolicLink()) continue;
       sweep(rel ? `${rel}/${e.name}` : e.name);
     }
-    if (!rel) return;
+    if (!rel || PRUNE_KEEP.has(rel)) return;
     const entries = readdirSync(join(ROOT, rel));
     if (entries.length === 1 && entries[0] === ".DS_Store") unlinkSync(join(ROOT, rel, ".DS_Store"));
     if (readdirSync(join(ROOT, rel)).length === 0) { rmdirSync(join(ROOT, rel)); pruned++; }
@@ -262,6 +265,10 @@ function apply(mode) {
 
   const missing = rows.filter((r) => !existsSync(join(ROOT, r.oldP)));
   const conflicts = rows.filter((r) => existsSync(join(ROOT, r.newP)));
+  // two rows, one destination — renameSync would silently clobber the first; refuse (added 2026-08-17)
+  const seenDest = new Map(); const dupDest = [];
+  for (const r of rows) { if (!r.newP) continue; if (seenDest.has(r.newP)) dupDest.push(r); else seenDest.set(r.newP, r); }
+  if (dupDest.length) { console.error(`✗ ${dupDest.length} rows share a destination with an earlier row — aborting:`); dupDest.slice(0, 10).forEach((r) => console.error(`   ${r.oldP} → ${r.newP}`)); process.exit(1); }
   if (conflicts.length) { console.error(`✗ ${conflicts.length} destinations already exist — aborting:`); conflicts.slice(0, 10).forEach((r) => console.error(`   ${r.newP}`)); process.exit(1); }
   if (missing.length && !has("--force")) { console.error(`✗ ${missing.length} sources missing (use --force to skip them):`); missing.slice(0, 10).forEach((r) => console.error(`   ${r.oldP}`)); process.exit(1); }
 
