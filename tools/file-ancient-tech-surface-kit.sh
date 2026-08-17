@@ -13,13 +13,17 @@
 #
 #   Idempotent: refuses to clobber an existing destination. To re-run after a
 #   partial pass, remove the files it already wrote.
+#
+#   Re-pointed 2026-08-17 for the Assets remap: tileable textures live flat under
+#   image/textures/tile/ (the per-domain folder dissolved) and live filenames carry
+#   no _BLK/_FNL status token. Historic one-shot — already ran on 2026-07-22.
 
 set -euo pipefail
 
 ASSETS="$HOME/Master-Managed/Assets"
 STUDIO="$HOME/Master-Managed/Project-Spaces/Asset-Studio"
 SRC="$STUDIO/output/imagegen"
-DEST="$ASSETS/textures/tileable/robotic"
+DEST="$ASSETS/image/textures/tile"
 STAMP="2026-07-22"
 ARCHIVE="$DEST/_archive/$STAMP"
 RUNTIME_PX=1024
@@ -54,7 +58,7 @@ missing=0
 while IFS=$'\t' read -r rel slug _rest; do
   [[ -z "$rel" ]] && continue
   [[ -f "$SRC/$rel" ]] || { echo "MISSING SOURCE: $SRC/$rel"; missing=1; }
-  for existing in "$DEST/${slug}_BLK.png" "$DEST/${slug}_BLK.trembus.md"; do
+  for existing in "$DEST/${slug}.png" "$DEST/${slug}.trembus.md"; do
     [[ -e "$existing" ]] && { echo "DESTINATION EXISTS: $existing"; missing=1; }
   done
 done <<< "$TILES"
@@ -72,7 +76,7 @@ while IFS=$'\t' read -r rel slug surface tiling studs; do
   base=$(basename "$rel" .png)
   dims=$(sips -g pixelWidth -g pixelHeight "$src" | awk '/pixelWidth/{w=$2} /pixelHeight/{h=$2} END{print w"x"h}')
   master="$ARCHIVE/${slug}.original-${dims}.png"
-  runtime="$DEST/${slug}_BLK.png"
+  runtime="$DEST/${slug}.png"
 
   echo "$base"
   echo "  → $runtime  (${RUNTIME_PX}x${RUNTIME_PX})"
@@ -81,13 +85,13 @@ while IFS=$'\t' read -r rel slug surface tiling studs; do
   run cp "$src" "$master"
   run sips -Z "$RUNTIME_PX" "$src" --out "$runtime"
 
-  sidecar="$DEST/${slug}_BLK.trembus.md"
+  sidecar="$DEST/${slug}.trembus.md"
   echo "  → $sidecar"
   if [[ $CONFIRM -eq 1 ]]; then
     cat > "$sidecar" <<SIDECAR
 # Trembus Asset Sidecar
 
-- Asset: \`${slug}_BLK.png\`
+- Asset: \`${slug}.png\`
 - Preset: \`tileable-part-texture\`
 - Domain: \`robotic\`
 - Family: \`ancient-tech\` — the monumental cyan-on-graphite precursor lane
@@ -102,9 +106,9 @@ while IFS=$'\t' read -r rel slug surface tiling studs; do
 - Run record: \`Asset-Studio/_project/pipeline/ancient-tech-surface-kit.md\` - naming, domain,
   resolution and Roblox-config decisions, plus the seam-check evidence table.
 - Process: \`Asset-Studio/_project/workflows/image-generation.md\` - the leaf this run follows.
-- Routing authority: tileable surfaces live under \`textures/tileable/<domain>/\` with
-  \`_BLK\`/\`_FNL\` status suffixes; promotion is a rename, never a folder move.
-- Family token authority: \`templates/key-art/character-promo-robotic-ancient-tech-theme.png\`.
+- Routing authority: tileable surfaces live flat under \`image/textures/tile/\` (kebab-media —
+  \`{slug}.{ext}\`, no domain folder, no status token in the name; the registry carries status).
+- Family token authority: \`image/reference/character-promo-robotic-ancient-tech-theme.png\`.
 
 ## Roblox Configuration
 
@@ -117,7 +121,7 @@ while IFS=$'\t' read -r rel slug surface tiling studs; do
 
 ## Generated Output
 
-- Output: \`external-locations/assets/textures/tileable/robotic/${slug}_BLK.png\`
+- Output: \`external-locations/assets/image/textures/tile/${slug}.png\`
 - Method: Codex image generation, ${STAMP} (run outside the \`generation/BATCH.md\` contract —
   see the pipeline record's run-1 note).
 - Master: \`_archive/${STAMP}/${slug}.original-${dims}.png\` retained at source resolution;
@@ -140,8 +144,9 @@ while IFS=$'\t' read -r rel slug surface tiling studs; do
 
 ## Notes
 
-- \`_BLK\` means blockout/iterating, not upload-ready final.
-- Promote to \`_FNL\` only after human review and Studio material validation.
+- Blockout/iterating, not upload-ready final. (Filenames no longer carry a \`_BLK\`/\`_FNL\`
+  token since 2026-08-17 — readiness is recorded in the registry, not the name.)
+- Promote only after human review and Studio material validation.
 - On upload, register via \`Assets/_tools/roblox_asset_metadata.py register <path> <asset-id>\`.
   Never hand-edit \`_catalog/roblox-upload-registry.jsonl\`.
 SIDECAR
@@ -155,7 +160,7 @@ done <<< "$TILES"
 if [[ $CONFIRM -eq 1 ]]; then
   echo "Filed. Next:"
   echo "  node $STUDIO/tools/build-asset-registry.mjs"
-  echo "  then confirm the six appear in the Explorer under textures/tileable/robotic/"
+  echo "  then confirm the six appear in the Explorer under image/textures/tile/"
 else
   echo "Dry run complete. Re-run with --confirm to apply."
 fi

@@ -80,8 +80,9 @@ import type { AssetRecord, GenerationState, Medium, MediumType, RobloxUploadStat
 import { MediaFrame } from '@trembus/game-viz';
 import type { MediaFrameData } from '@trembus/game-viz';
 
-// The three medium keys, in axis order — the order Stat tiles + Meter segments + Donut slices share.
-const MEDIUM_ORDER: Medium[] = ['image', '3d', 'audio'];
+// The medium keys, in axis order — the order Stat tiles + Meter segments + Donut slices share.
+// 'video' joined 2026-08-17 (the library's video/ door); it rides the Select/grouping order only.
+const MEDIUM_ORDER: Medium[] = ['image', '3d', 'audio', 'video'];
 
 // Section order for VirtualAssetGrid's mediumType grouping (medium ▸ its types), source bucket last.
 const GROUP_ORDER: string[] = [...MEDIUM_ORDER.flatMap((m) => MEDIUM_TYPES[m]), '(source)'];

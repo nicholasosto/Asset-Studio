@@ -66,11 +66,12 @@ export interface RobloxRegistrySummary {
     message: string;
   }>;
 }
-export type Medium = 'image' | 'audio' | '3d';
+export type Medium = 'image' | 'audio' | 'video' | '3d';
 export type MediumType =
   | 'image'
   | 'texture'
   | 'ui'
+  | 'video'
   | '3d-model'
   | '3d-rig'
   | 'animation'
@@ -78,6 +79,9 @@ export type MediumType =
   | 'audio-sfx'
   | 'audio-voice'
   | 'unknown';
+// The retired filename grade. Since the 2026-08-17 library remap no live filename carries one, so
+// the builder emits `status: null` on every record and `taxonomy.statusVocab: []`. The type stays
+// for the ledger's historic rows; a null renders neutral / hidden, never as a token.
 export type RobloxStatus = 'BLK' | 'ALPHA' | 'BETA' | 'FNL';
 
 /**
@@ -258,10 +262,11 @@ export const robloxUploadState = (r: AssetRecord): RobloxUploadState => {
 // `real` excludes the medium===null source bucket — the default, non-empty view.
 const byMedium = counts.byMedium ?? {};
 export const summary = {
-  real: (byMedium.image ?? 0) + (byMedium['3d'] ?? 0) + (byMedium.audio ?? 0),
+  real: (byMedium.image ?? 0) + (byMedium['3d'] ?? 0) + (byMedium.audio ?? 0) + (byMedium.video ?? 0),
   image: byMedium.image ?? 0,
   threeD: byMedium['3d'] ?? 0,
   audio: byMedium.audio ?? 0,
+  video: byMedium.video ?? 0,
   source: byMedium['(source)'] ?? 0,
   total: counts.total ?? records.length,
 };
@@ -283,6 +288,7 @@ export const MEDIUM_STYLE: Record<MediumKey, MediumStyle> = {
   image: { label: 'Image', tone: 'info', hex: '#4aa8ff', glyph: '▦' },
   '3d': { label: '3D', tone: 'accent', hex: '#d4af37', glyph: '◈' },
   audio: { label: 'Audio', tone: 'success', hex: '#43aa8b', glyph: '♪' },
+  video: { label: 'Video', tone: 'info', hex: '#8b5cf6', glyph: '▶' }, // video/ door, remap 2026-08-17
   source: { label: 'Source', tone: 'neutral', hex: '#6b7280', glyph: '○' },
 };
 
@@ -299,7 +305,9 @@ export const STATUS_TONE: Record<string, ExplorerStatusTone> = {
   BLK: 'neutral',
   none: 'neutral',
 };
-export const statusTone = (s: string | null): ExplorerStatusTone => STATUS_TONE[s ?? 'none'] ?? 'neutral';
+// Null-safe by construction: a null/unknown status is the 'none' bucket → neutral. Since the
+// 2026-08-17 remap every record's status IS null, so this always answers 'neutral' today.
+export const statusTone = (s: string | null | undefined): ExplorerStatusTone => STATUS_TONE[s ?? 'none'] ?? 'neutral';
 
 // The mediumType options per medium — drives the dependent mediumType Select. Order is the
 // primary axis order (medium ▸ its types), matching the byMediumType split.
@@ -307,6 +315,7 @@ export const MEDIUM_TYPES: Record<Medium, MediumType[]> = {
   image: ['image', 'texture', 'ui'],
   '3d': ['3d-model', '3d-rig', 'animation'],
   audio: ['audio-music', 'audio-sfx', 'audio-voice'],
+  video: ['video'], // one type today — the builder emits mediumType 'video' for the video/ door
 };
 
 // Every mediumType present in the real (non-source) set, keyed to its owning medium — lets the

@@ -9,7 +9,8 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 
-const DIR = join(homedir(), 'Master-Managed/Assets/textures/tileable/robotic');
+// Re-pointed 2026-08-17 (Assets remap): tiles live flat under image/textures/tile/, no _BLK in the name.
+const DIR = join(homedir(), 'Master-Managed/Assets/image/textures/tile');
 const CONFIRM = process.argv.includes('--confirm');
 
 // Resolved from the Part-Texture-Testing-Lab sweep, 2026-07-22.
@@ -60,7 +61,7 @@ take \`V = Size.Z\`. Getting this wrong is what turns a band into a repeating st
 
 let changed = 0, skipped = 0;
 for (const [slug, r] of Object.entries(RESOLVED)) {
-  const path = join(DIR, `${slug}_BLK.trembus.md`);
+  const path = join(DIR, `${slug}.trembus.md`);
   let src = readFileSync(path, 'utf8');
   const before = src;
 

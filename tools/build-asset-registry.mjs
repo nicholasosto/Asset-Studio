@@ -15,7 +15,7 @@
 // (a top-level summary object + the records array).
 //
 // What is FAITHFULLY PORTED from the reference (unchanged semantics):
-//   walk · parseTgl · statusSuffix · inferDomain · KIND_BY_EXT · the scan()
+//   walk · parseTgl · inferDomain · KIND_BY_EXT · the scan()  (statusSuffix retired 2026-08-17)
 //   field set (p/area/dir/base/stem/ext/kind/size/mtime/mtimeMs/domain/tgl/
 //   status/conformance/issue) · inferInstance · classifySpec ·
 //   the CSV registry parse + join (parseCsvLine/loadRegistry/joinRegistry;
@@ -23,9 +23,17 @@
 //   the thumb NAMING (thumbName — sha1 of the library-relative PATH, not content).
 //
 // What is NEW here:
-//   deriveMedium(rec)      -> 'image' | 'audio' | '3d' | null
+//   deriveMedium(rec)      -> 'image' | 'audio' | 'video' | '3d' | null
 //   deriveMediumType(rec)  -> mediumType string | null   (see rules below)
-//   KIND_BY_EXT extended:  .ma -> model, .flac -> audio  (census: 1 each)
+//   KIND_BY_EXT extended:  .ma -> model, .flac -> audio  (census: 1 each), .mp4 -> video
+//
+// LIBRARY REMAP 2026-08-17 — the library is now filed BY MEDIUM FIRST: the first path segment is
+// the door (image | audio | video | 3d | runtime | _inbox …) and the second is the zone inside it
+// (image/ui, image/textures, 3d/models, 3d/source, …). Live filenames carry NO status token any
+// more (_BLK/_FNL/_ALPHA/_BETA survive only under _archive/, which the walk skips). So:
+//   · rec.area is the door, rec.zone the second segment; medium is read off the door
+//   · parseTgl accepts CAT_SUB_Name with no status tail (a legacy tail is tolerated, not required)
+//   · rec.status is always null and taxonomy.statusVocab is [] — nothing asserts a token
 //
 // What is NOW DONE (was deferred in v1) — the served-media layer for the app:
 //   image thumbnail generation via macOS sips → previews/thumbs/ (rec.thumb, bare name);
@@ -110,14 +118,19 @@ const SKIP_SIDECAR_RE = /^__master-asset-ids|^__animation-/;
 
 // The TGL category vocabulary is not a constant here: parseTgl inlines it in its three regexes,
 // which are the single source of truth for the grammar.
+// TGL_STATUSES: the retired status tail. Live names no longer carry one (remap 2026-08-17); it is
+// kept only so parseTgl can refuse a status token where a SUB belongs and tolerate a stray legacy tail.
 const TGL_STATUSES = new Set(["BLK", "ALPHA", "BETA", "FNL"]);
 const TGL_DOMAINS = new Set(["shared", "blood", "decay", "spirit", "robotic", "fateless", "hub"]);
+// The medium doors at the library root (remap 2026-08-17). _inbox/<medium>/… mirrors them one level down.
+const MEDIUM_DOORS = new Set(["image", "audio", "video", "3d"]);
 
-// KIND_BY_EXT — ported from reference, EXTENDED with .ma -> model, .flac -> audio.
+// KIND_BY_EXT — ported from reference, EXTENDED with .ma -> model, .flac -> audio, .mp4/.mov/.webm -> video.
 const KIND_BY_EXT = {
   ".rbxm": "model", ".fbx": "model", ".obj": "model", ".gltf": "model", ".glb": "model", ".blend": "model", ".ma": "model",
   ".png": "image", ".jpg": "image", ".jpeg": "image", ".webp": "image",
   ".mp3": "audio", ".wav": "audio", ".ogg": "audio", ".flac": "audio",
+  ".mp4": "video", ".mov": "video", ".webm": "video",
   ".csv": "data", ".json": "data", ".toml": "data", ".yaml": "data", ".yml": "data",
   ".md": "doc", ".txt": "doc",
   ".py": "script", ".mjs": "script", ".sh": "script",
@@ -193,28 +206,26 @@ function walk(dir, relBase = "") {
   return out;
 }
 
-// ── scan: TGL grammar (verbatim port) ─────────────────────────────────────
+// ── scan: TGL grammar (ported; status tail retired 2026-08-17) ─────────────
 // Parse a filename stem against TGL grammar. Returns { cat, sub, name, status, grade }
-// grade: "full" = CAT_SUB_Name_STATUS · "partial" = recognizable but malformed · null = not TGL-shaped
+// grade: "full" = CAT_SUB_Name · "partial" = recognizable but malformed · null = not TGL-shaped
+// The status tail (_BLK/_ALPHA/_BETA/_FNL) is no longer part of the live grammar — the Foundry's
+// tgl-asset law is {CAT}_{SUB}_{Name}.rbxm. A legacy tail is tolerated (stripped, reported in
+// `status`) so a straggler is still recognised, but its absence is never an issue. GUI joins the
+// category list: runtime/…/gui/ files are GUI_HUD_* / GUI_SCR_* and were mis-graded as strays.
 function parseTgl(stem) {
-  const full = stem.match(/^(PRP|RIG|EFX|ENV|LAY|ACC|ANI)_([A-Z0-9]{2,4})_(.+)_(BLK|ALPHA|BETA|FNL)$/);
+  let status = null;
+  const tail = stem.match(/^(.+)_(BLK|ALPHA|BETA|FNL)$/);
+  if (tail) { stem = tail[1]; status = tail[2]; }
+  const full = stem.match(/^(PRP|RIG|EFX|ENV|LAY|ACC|ANI|GUI)_([A-Z0-9]{2,4})_(.+)$/);
   if (full && !TGL_STATUSES.has(full[2])) {
-    return { cat: full[1], sub: full[2], name: full[3], status: full[4], grade: "full" };
+    return { cat: full[1], sub: full[2], name: full[3], status, grade: "full" };
   }
-  const noSub = stem.match(/^(PRP|RIG|EFX|ENV|LAY|ACC|ANI)_(.+)_(BLK|ALPHA|BETA|FNL)$/);
-  if (noSub) {
-    return { cat: noSub[1], sub: null, name: noSub[2], status: noSub[3], grade: "partial", issue: "missing SUB segment" };
-  }
-  const catOnly = stem.match(/^(PRP|RIG|EFX|ENV|LAY|ACC|ANI)_(.+)$/);
+  const catOnly = stem.match(/^(PRP|RIG|EFX|ENV|LAY|ACC|ANI|GUI)_(.+)$/);
   if (catOnly) {
-    return { cat: catOnly[1], sub: null, name: catOnly[2], status: null, grade: "partial", issue: "missing Status suffix" };
+    return { cat: catOnly[1], sub: null, name: catOnly[2], status, grade: "partial", issue: "missing SUB segment" };
   }
   return null;
-}
-
-function statusSuffix(stem) {
-  const m = stem.match(/_(BLK|ALPHA|BETA|FNL)$/);
-  return m ? m[1] : null;
 }
 
 function inferDomain(relPath) {
@@ -230,6 +241,7 @@ function inferDomain(relPath) {
 // TGL CAT + folder + filename hints. Heuristic — unchanged from reference.
 function inferInstance(rec) {
   if (rec.kind === "audio") return "Sound";
+  if (rec.kind === "video") return "VideoFrame";
   if (rec.kind === "model") return "MeshPart";
   if (rec.kind !== "image") return null;
   const p = rec.p.toLowerCase();
@@ -251,8 +263,8 @@ function inferInstance(rec) {
   // beams / trails
   if (/\b(beam|trail|ribbon|slash|streak|laser)\b/.test(p))
     return "Beam/Trail";
-  // UI imagery
-  if (rec.area === "ui" || /(^|\/)ui(\/|$)|\b(hud|button|btn|frame|panel|badge|cursor|icon[s]?)\b/.test(p))
+  // UI imagery (image/ui/… since the remap; the path regex still catches _inbox/…/ui/…)
+  if ((rec.area === "image" && rec.zone === "ui") || /(^|\/)ui(\/|$)|\b(hud|button|btn|frame|panel|badge|cursor|icon[s]?)\b/.test(p))
     return "ImageLabel/Button";
   // surface decals / tiled textures
   if (/\b(decal|texture|tile|wall|floor|ground|brick|fabric)\b/.test(p))
@@ -280,13 +292,20 @@ function classifySpec(rec) {
 // Deterministic, total, precedence top-to-bottom / first-match-wins. Pure
 // functions of fields already set by scan (kind, ext, area, segs, tgl, p, stem).
 
-// deriveMedium — purely a function of kind.
-// 'image' | 'audio' | '3d' | null (null = the hidden Source & Docs bucket).
+// deriveMedium — the DOOR decides (remap 2026-08-17), kind decides whether the file is an asset.
+// 'image' | 'audio' | 'video' | '3d' | null (null = the hidden Source & Docs bucket).
+//   · non-asset kinds (data | doc | source | script | other) are null wherever they sit — a
+//     .trembus.md sidecar under image/ is still a doc, not an image
+//   · asset kinds under a medium door take the door; under _inbox/<medium>/ the second segment;
+//     under runtime/ (Roblox payloads, filed by category not medium) and anywhere else, kind
 function deriveMedium(rec) {
-  if (rec.kind === "image") return "image";
-  if (rec.kind === "audio") return "audio";
-  if (rec.kind === "model") return "3d";
-  return null; // data | doc | source | script | other
+  const byKind = { image: "image", audio: "audio", video: "video", model: "3d" }[rec.kind] ?? null;
+  if (byKind === null) return null;
+  const segs = rec.segs || rec.p.split("/");
+  const door = segs.length > 1 ? segs[0] : null;
+  if (door && MEDIUM_DOORS.has(door)) return door;
+  if (door === "_inbox" && segs.length > 2 && MEDIUM_DOORS.has(segs[1])) return segs[1];
+  return byKind;
 }
 
 // deriveMediumType — mediumType string, or null iff deriveMedium is null.
@@ -297,13 +316,16 @@ function deriveMediumType(rec) {
   if (medium === null) return null;
 
   const segs = rec.segs || rec.p.split("/");
-  const seg1 = segs[0]?.toLowerCase();
-  const seg2 = segs[1]?.toLowerCase();
+  const seg1 = segs[0]?.toLowerCase(); // the door (image | audio | video | 3d | runtime | _inbox …)
+  const seg2 = segs[1]?.toLowerCase(); // the zone inside it (image/ui, image/textures, audio/voice …)
   const cat = rec.tgl?.cat;
   const s = rec.stem.toLowerCase();
   const p = rec.p.toLowerCase();
 
-  // ── MEDIUM === '3d' (kind model) — lean on TGL category prefix first ──
+  // ── MEDIUM === 'video' — one type today; the door is the whole taxonomy ──
+  if (medium === "video") return "video";
+
+  // ── MEDIUM === '3d' (3d/ door · runtime/ payloads · kind model) — TGL category prefix first ──
   if (medium === "3d") {
     if (cat === "RIG") return "3d-rig";                               // 3a
     if (cat === "ANI") return "animation";                           // 3b
@@ -317,13 +339,15 @@ function deriveMediumType(rec) {
     return "3d-model";                                                // 3i safe default
   }
 
-  // ── MEDIUM === 'image' (kind image) — folder area strongest, then tokens ──
+  // ── MEDIUM === 'image' (image/ door) — the zone is strongest, then tokens ──
+  //   image/textures → texture · image/ui → ui · image/concept|reference|source → generic image
   if (medium === "image") {
-    if (rec.area === "textures") return "texture";                   // iA
+    if (seg1 === "image" && seg2 === "textures") return "texture";  // iA zone
     if (cat === "EFX") return "texture";                             // iB effect texture/flipbook
     if (RE_PBR.test(s)) return "texture";                            // iC PBR channel token
     if (RE_TEXTURE_PATH.test(p)) return "texture";                  // iD PBR/material path tokens
-    if (rec.area === "ui" || seg1 === "ui" || /(^|\/)ui(\/|$)/.test(p)) return "ui"; // iE
+    if (seg1 === "image" && seg2 === "ui") return "ui";              // iE zone
+    if (/(^|\/)ui(\/|$)/.test(p)) return "ui";                       // iE' a ui/ folder anywhere (_inbox, runtime)
     if (RE_UI_PATH.test(p)) return "ui";                            // iF UI tokens
     return "image";                                                  // iG generic image (total)
   }
@@ -367,28 +391,25 @@ function scan() {
     const base = relPath.split("/").pop();
     const stem = base.slice(0, base.length - extDotted.length);
     const segs = relPath.split("/");
-    const area = segs.length > 1 ? segs[0] : "(root)";
-    const inRuntime = area === "runtime"; // runtime/<platform>/<project>/<cat>/… (was library/<cat>/…)
+    const area = segs.length > 1 ? segs[0] : "(root)"; // the DOOR since the remap: image | audio | video | 3d | runtime | _inbox
+    const zone = segs.length > 2 ? segs[1] : null;     // the second segment: image/ui · image/textures · 3d/models · audio/voice …
+    const inRuntime = area === "runtime"; // runtime/<platform>/<project>/<cat>/<domain>/CAT_SUB_Name.rbxm
     const tgl = parseTgl(stem);
     const kind = KIND_BY_EXT[extDotted] || "other";   // lookup uses the DOTTED ext
 
     // Conformance is only *expected* of files in runtime/, and only for
     // asset payloads (models/images/audio) — docs and data are exempt.
+    // The grammar is CAT_SUB_Name (no status tail since 2026-08-17); runtime/…/gui/ screens
+    // follow it too (GUI_HUD_*, GUI_SCR_*), so the old bare-Name_STATUS carve-out is gone.
     let conformance = "n/a";
     if (inRuntime && ["model", "image", "audio"].includes(kind)) {
-      // runtime …/ui/screens uses bare Name_STATUS by convention — status stamp only
-      if (segs[3] === "ui") {
-        conformance = statusSuffix(stem) ? "ok" : "stray";
-      } else if (tgl?.grade === "full") {
-        conformance = "ok";
-      } else {
-        conformance = "stray";
-      }
+      conformance = tgl?.grade === "full" ? "ok" : "stray";
     }
 
     records.push({
       p: relPath,
       area,
+      zone,
       dir: segs.slice(0, -1).join("/"),
       base,
       stem,
@@ -399,7 +420,10 @@ function scan() {
       mtimeMs: st.mtime.getTime(),
       domain: inferDomain(relPath), // tag only — never a grouping axis (decision 0002)
       tgl,
-      status: tgl?.status || statusSuffix(stem),
+      // status: the _BLK/_ALPHA/_BETA/_FNL grade left every live filename on 2026-08-17 (only
+      // _archive/ keeps it, and the walk never enters _archive/). Kept as an explicit null so the
+      // app's `status: RobloxStatus | null` contract holds and nothing here asserts a token.
+      status: null,
       conformance,
       issue: conformance === "stray" ? (tgl?.issue || "not TGL-shaped") : null,
       segs, // transient — used by derive(), stripped before emit
@@ -712,7 +736,9 @@ function main() {
     builtMs: now.getTime(),
     assetsRootHint: "external-locations/assets",
     assetsRootAbs: realpathSync(ASSETS_ROOT), // absolute library root — the copy-abs / reveal-fallback path
-    taxonomy: { version: 1, axis: "medium/mediumType", statusVocab: ["BLK", "ALPHA", "BETA", "FNL"] },
+    // statusVocab is EMPTY since the 2026-08-17 remap: no live filename carries a grade token, so the
+    // status Select has no real options and byStatus is all "(none)". Not a bug — the vocab retired.
+    taxonomy: { version: 1, axis: "medium/mediumType", statusVocab: [] },
     // counts keys come verbatim from the CSV status column — spread FIRST so a status
     // value literally named "total" can never clobber the row count.
     registry: { ...registry.counts, total: registry.rows.length },

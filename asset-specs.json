@@ -133,11 +133,11 @@
       "examples": [
         {
           "name": "Ancient-tech vertical service trim 01",
-          "path": "/Users/nicholasosto/Master-Managed/Assets/textures/tileable/robotic/ancient-tech-vert-trim-01_BLK.png",
+          "path": "/Users/nicholasosto/Master-Managed/Assets/image/textures/tile/ancient-tech-vert-trim-01.png",
           "status": "_BLK",
           "dimensions": "1024×1024",
           "bytes": 1846145,
-          "sidecar": "/Users/nicholasosto/Master-Managed/Assets/textures/tileable/robotic/ancient-tech-vert-trim-01_BLK.trembus.md",
+          "sidecar": "/Users/nicholasosto/Master-Managed/Assets/image/textures/tile/ancient-tech-vert-trim-01.trembus.md",
           "validator": null,
           "studioEvidence": "First consumed by the Blender WallIris specimen; no Roblox upload or publish proof.",
           "assetExplorerRegistered": true,
@@ -301,11 +301,11 @@
       "examples": [
         {
           "name": "Ancient-tech road 01",
-          "path": "/Users/nicholasosto/Master-Managed/Assets/textures/tileable/robotic/ancient-tech-road-01_BLK.png",
+          "path": "/Users/nicholasosto/Master-Managed/Assets/image/textures/tile/ancient-tech-road-01.png",
           "status": "_BLK",
           "dimensions": "1024×1024 runtime; 2048×2048 archived master",
           "bytes": 1577153,
-          "sidecar": "/Users/nicholasosto/Master-Managed/Assets/textures/tileable/robotic/ancient-tech-road-01_BLK.trembus.md",
+          "sidecar": "/Users/nicholasosto/Master-Managed/Assets/image/textures/tile/ancient-tech-road-01.trembus.md",
           "validator": "/Users/nicholasosto/Master-Managed/Project-Spaces/Asset-Studio/tools/file-ancient-tech-surface-kit.sh",
           "studioEvidence": "Four-way seam check and 2/4/8/12-stud Texture sweep passed in Part-Texture-Testing-Lab.",
           "assetExplorerRegistered": true,
@@ -614,8 +614,8 @@
         "sliceCenter: [45, 36, 205, 196]",
         "sliceScale: 0.55",
         "contentInsets: [16, 14, 16, 14]",
-        "body: rbxasset://trembus/ui/frames/panel-ancient-tech-compact-tight-body_BLK.png",
-        "signal: rbxasset://trembus/ui/frames/panel-ancient-tech-compact-tight-signal_BLK.png",
+        "body: rbxasset://trembus/image/ui/panel-ancient-tech-compact-tight-body.png",
+        "signal: rbxasset://trembus/image/ui/panel-ancient-tech-compact-tight-signal.png",
         "upload: false",
         "placePublish: false"
       ],
@@ -794,14 +794,14 @@
       "examples": [
         {
           "name": "Roblox avatar setup FBX profile",
-          "path": "/Users/nicholasosto/Master-Managed/Assets/source/blender/soul-steel/autorig-fix-20260517/roblox_fbx_export_config.json",
+          "path": "/Users/nicholasosto/Master-Managed/Assets/3d/source/blender/soul-steel/autorig-fix-20260517/roblox_fbx_export_config.json",
           "status": "real machine-readable export profile",
           "dimensions": null,
           "bytes": 1808,
-          "artifact": "/Users/nicholasosto/Master-Managed/Assets/source/blender/soul-steel/autorig-fix-20260517/roblox_avatar_hierarchy_avatar_setup.fbx",
+          "artifact": "/Users/nicholasosto/Master-Managed/Assets/3d/source/blender/soul-steel/autorig-fix-20260517/roblox_avatar_hierarchy_avatar_setup.fbx",
           "artifactBytes": 2757596,
-          "sidecar": "/Users/nicholasosto/Master-Managed/Assets/source/blender/soul-steel/autorig-fix-20260517/roblox_fbx_export_config.json",
-          "validator": "/Users/nicholasosto/Master-Managed/Assets/source/blender/soul-steel/autorig-fix-20260517/export_body_geom_for_roblox.py",
+          "sidecar": "/Users/nicholasosto/Master-Managed/Assets/3d/source/blender/soul-steel/autorig-fix-20260517/roblox_fbx_export_config.json",
+          "validator": "/Users/nicholasosto/Master-Managed/Assets/3d/source/blender/soul-steel/autorig-fix-20260517/export_body_geom_for_roblox.py",
           "studioEvidence": "The profile produced roblox_avatar_hierarchy_avatar_setup.fbx; this evidence is avatar/autorig-specific, not yet a generic export authority.",
           "assetExplorerRegistered": false,
           "robloxUploaded": false,
@@ -809,7 +809,7 @@
         },
         {
           "name": "WallIris measured lookdev specimen",
-          "path": "/Users/nicholasosto/Master-Managed/Assets/source/blender/wall-iris/WallIris.blend",
+          "path": "/Users/nicholasosto/Master-Managed/Assets/3d/source/blender/wall-iris/WallIris.blend",
           "status": "lab test geometry",
           "dimensions": "12-stud module · 3528 triangulated faces total",
           "bytes": null,
@@ -970,7 +970,7 @@
       "examples": [
         {
           "name": "WallIris shared leaf mesh",
-          "path": "/Users/nicholasosto/Master-Managed/Assets/source/blender/wall-iris/WallIris.blend",
+          "path": "/Users/nicholasosto/Master-Managed/Assets/3d/source/blender/wall-iris/WallIris.blend",
           "status": "lab test geometry",
           "dimensions": "10 repeated articulated leaves",
           "bytes": null,
@@ -1123,7 +1123,7 @@
       "examples": [
         {
           "name": "Particle blood droplet",
-          "path": "/Users/nicholasosto/Master-Managed/Assets/textures/particles/particle-blood-droplet_BLK.png",
+          "path": "/Users/nicholasosto/Master-Managed/Assets/image/textures/particle-blood-droplet.png",
           "status": "legacy _BLK",
           "dimensions": "619×820",
           "bytes": 277704,
@@ -1277,7 +1277,7 @@
       "examples": [
         {
           "name": "Straight chain beam strip",
-          "path": "/Users/nicholasosto/Master-Managed/Assets/textures/particles/beam-straight-chain_BLK.png",
+          "path": "/Users/nicholasosto/Master-Managed/Assets/image/textures/beam-straight-chain.png",
           "status": "legacy _BLK",
           "dimensions": "384×256",
           "bytes": 29659,
