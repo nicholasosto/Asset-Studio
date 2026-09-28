@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codex.local/schemas/image-template-v1.schema.json",
+  "title": "ImageTemplateV1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "templateId",
+    "reference",
+    "profile",
+    "slots",
+    "constraints",
+    "target",
+    "generation",
+    "validation",
+    "provenance"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "templateId": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "mimeType", "width", "height", "role"],
+      "properties": {
+        "path": { "const": "assets/reference.png" },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "mimeType": { "const": "image/png" },
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 },
+        "role": {
+          "enum": ["template", "composition", "identity", "style", "palette-material", "lighting", "typography"]
+        }
+      }
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intendedUse", "assetType", "composition", "visualHierarchy", "palette", "typography", "materials", "lighting", "brandElements", "unknowns"],
+      "properties": {
+        "intendedUse": { "type": "string", "minLength": 1 },
+        "assetType": { "type": "string", "minLength": 1 },
+        "composition": { "$ref": "#/$defs/stringList" },
+        "visualHierarchy": { "$ref": "#/$defs/stringList" },
+        "palette": { "$ref": "#/$defs/stringList" },
+        "typography": { "$ref": "#/$defs/stringList" },
+        "materials": { "$ref": "#/$defs/stringList" },
+        "lighting": { "$ref": "#/$defs/stringList" },
+        "brandElements": { "$ref": "#/$defs/stringList" },
+        "unknowns": { "$ref": "#/$defs/stringList" }
+      }
+    },
+    "slots": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "type", "required", "verbatim", "description"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+          "type": { "enum": ["text", "image", "subject", "palette", "style"] },
+          "required": { "type": "boolean" },
+          "verbatim": { "type": "boolean" },
+          "description": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mustKeep", "allowedChanges", "mustAvoid", "exactLayers"],
+      "properties": {
+        "mustKeep": { "$ref": "#/$defs/nonEmptyStringList" },
+        "allowedChanges": { "$ref": "#/$defs/nonEmptyStringList" },
+        "mustAvoid": { "$ref": "#/$defs/stringList" },
+        "exactLayers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "kind", "source", "placement", "verification"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+              "kind": { "enum": ["copy", "logo", "data", "legal", "other"] },
+              "source": { "type": "string", "minLength": 1 },
+              "placement": { "type": "string", "minLength": 1 },
+              "verification": { "const": "deterministic-overlay-required" }
+            }
+          }
+        }
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height", "format", "sizePolicy", "cropPolicy", "background", "requiresTransparency", "safeZonePx"],
+      "properties": {
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 },
+        "format": { "const": "png" },
+        "sizePolicy": { "enum": ["match-reference", "match-aspect", "exact"] },
+        "cropPolicy": { "enum": ["preserve", "fit", "fill", "none"] },
+        "background": { "enum": ["preserve", "transparent", "opaque", "auto"] },
+        "requiresTransparency": { "type": "boolean" },
+        "safeZonePx": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["top", "right", "bottom", "left"],
+          "properties": {
+            "top": { "type": "integer", "minimum": 0 },
+            "right": { "type": "integer", "minimum": 0 },
+            "bottom": { "type": "integer", "minimum": 0 },
+            "left": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "generation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "executor", "actualReferenceRequired", "quality", "variants", "outputNamingPattern"],
+      "properties": {
+        "mode": { "const": "edit" },
+        "executor": { "const": "builtin-imagegen" },
+        "actualReferenceRequired": { "const": true },
+        "quality": { "enum": ["low", "medium", "high", "auto"] },
+        "variants": { "type": "integer", "minimum": 1, "maximum": 4 },
+        "outputNamingPattern": { "type": "string", "minLength": 1 }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["structural", "visual", "humanAcceptanceRequired"],
+      "properties": {
+        "structural": { "$ref": "#/$defs/nonEmptyStringList" },
+        "visual": { "$ref": "#/$defs/nonEmptyStringList" },
+        "humanAcceptanceRequired": { "const": true }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceFilename", "createdAt", "extractor", "extractorVersion"],
+      "properties": {
+        "sourceFilename": { "type": "string", "minLength": 1 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "extractor": { "const": "reference-image-kernel" },
+        "extractorVersion": { "type": "string", "pattern": "^[0-9]+(?:\\.[0-9]+){0,2}$" }
+      }
+    }
+  },
+  "$defs": {
+    "stringList": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "nonEmptyStringList": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  }
+}

@@ -39,8 +39,19 @@ function readFrontmatter(file) {
     const field = line.match(/^([a-zA-Z][a-zA-Z0-9_-]*):\s*(.+?)\s*$/);
     if (field) result[field[1]] = field[2].replace(/^["']|["']$/g, "");
   }
+  // Skill metadata is a flat string mapping; preserve legacy version compatibility.
+  const metadata = match[1].match(/^metadata:\s*\n((?:[ \t]+[^\n]*(?:\n|$))*)/m);
+  if (metadata) {
+    result.metadata = {};
+    for (const line of metadata[1].split("\n")) {
+      const field = line.match(/^  ([a-zA-Z][a-zA-Z0-9_-]*):\s*(.+?)\s*$/);
+      if (field) result.metadata[field[1]] = field[2].replace(/^["']|["']$/g, "");
+    }
+  }
   return result;
 }
+
+const skillVersion = (frontmatter) => frontmatter.metadata?.source_version ?? frontmatter.version;
 
 function walkTextFiles(directory) {
   const found = [];
@@ -166,9 +177,9 @@ if (registry) {
       if (frontmatter.name !== capability.id) {
         error(`${capability.id}: SKILL name is ${frontmatter.name ?? "(missing)"}`);
       }
-      if (frontmatter.version !== capability.version) {
+      if (skillVersion(frontmatter) !== capability.version) {
         error(
-          `${capability.id}: registry version ${capability.version} does not match SKILL ${frontmatter.version ?? "(missing)"}`
+          `${capability.id}: registry version ${capability.version} does not match SKILL ${skillVersion(frontmatter) ?? "(missing)"}`
         );
       }
 
@@ -207,9 +218,9 @@ if (registry) {
       const skillFile = path.join(canonical, "SKILL.md");
       if (fs.existsSync(skillFile)) {
         const frontmatter = readFrontmatter(skillFile);
-        if (frontmatter.version !== capability.version) {
+        if (skillVersion(frontmatter) !== capability.version) {
           error(
-            `${capability.id}: registered version ${capability.version} does not match source ${frontmatter.version ?? "(missing)"}`
+            `${capability.id}: registered version ${capability.version} does not match source ${skillVersion(frontmatter) ?? "(missing)"}`
           );
         }
       }
@@ -371,7 +382,11 @@ if (registry) {
     if (!owned.has(directory)) error(`unregistered owned skill directory: ${directory}`);
   }
   for (const id of owned) {
-    if (!skillDirectories.includes(id)) error(`registered owned skill directory missing: ${id}`);
+    const capability = registry.capabilities.find((item) => item.id === id);
+    const canonical = resolveRegisteredPath(capability.canonicalPath);
+    if (!canonical || !fs.existsSync(path.join(canonical, "SKILL.md"))) {
+      error(`registered owned skill directory missing: ${id}`);
+    }
   }
 
   for (const [runtime, skillsRoot] of [
@@ -383,9 +398,11 @@ if (registry) {
       frontmatter: readFrontmatter(file)
     }));
     for (const id of owned) {
-      const canonicalSkill = fs.realpathSync.native(
-        path.join(root, "agent-assets", "plugins", "asset-production", "skills", id, "SKILL.md")
-      );
+      const capability = registry.capabilities.find((item) => item.id === id);
+      if (!(capability.installs ?? []).some((install) => install.runtime.toLowerCase() === runtime.toLowerCase())) continue;
+      const canonicalPath = resolveRegisteredPath(capability.canonicalPath);
+      if (!canonicalPath || !fs.existsSync(path.join(canonicalPath, "SKILL.md"))) continue;
+      const canonicalSkill = fs.realpathSync.native(path.join(canonicalPath, "SKILL.md"));
       const matches = discoveredSkills.filter(({ frontmatter }) => frontmatter.name === id);
       if (matches.length !== 1) {
         error(`${runtime} discovers ${matches.length} copies of owned skill ${id}; expected exactly one`);

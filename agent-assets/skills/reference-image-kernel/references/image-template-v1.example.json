@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "templateId": "example-launch-visual",
+  "reference": {
+    "path": "assets/reference.png",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "mimeType": "image/png",
+    "width": 1024,
+    "height": 1024,
+    "role": "template"
+  },
+  "profile": {
+    "intendedUse": "Create launch visuals that retain the reference image's visual system.",
+    "assetType": "campaign image",
+    "composition": ["Centered subject with a quiet perimeter."],
+    "visualHierarchy": ["One dominant subject and one secondary support region."],
+    "palette": ["Record observed color roles rather than inventing brand tokens."],
+    "typography": [],
+    "materials": ["Record only visible surface treatments."],
+    "lighting": ["Preserve the observed light direction and contrast relationship."],
+    "brandElements": [],
+    "unknowns": ["Official brand palette is not established by the reference alone."]
+  },
+  "slots": [
+    {
+      "id": "primary-subject",
+      "type": "subject",
+      "required": true,
+      "verbatim": false,
+      "description": "The subject supplied by the user for this variant."
+    }
+  ],
+  "constraints": {
+    "mustKeep": ["Composition hierarchy and safe perimeter."],
+    "allowedChanges": ["slot:primary-subject"],
+    "mustAvoid": ["Extra text, logos, watermarks, or unrequested objects."],
+    "exactLayers": []
+  },
+  "target": {
+    "width": 1024,
+    "height": 1024,
+    "format": "png",
+    "sizePolicy": "match-aspect",
+    "cropPolicy": "preserve",
+    "background": "preserve",
+    "requiresTransparency": false,
+    "safeZonePx": { "top": 64, "right": 64, "bottom": 64, "left": 64 }
+  },
+  "generation": {
+    "mode": "edit",
+    "executor": "builtin-imagegen",
+    "actualReferenceRequired": true,
+    "quality": "auto",
+    "variants": 1,
+    "outputNamingPattern": "example-launch-visual-v{variant}.png"
+  },
+  "validation": {
+    "structural": ["decode", "reference-digest", "dimensions", "no-overwrite"],
+    "visual": ["composition", "requested-change", "invariants", "defects"],
+    "humanAcceptanceRequired": true
+  },
+  "provenance": {
+    "sourceFilename": "reference.png",
+    "createdAt": "2026-08-09T00:00:00Z",
+    "extractor": "reference-image-kernel",
+    "extractorVersion": "1"
+  }
+}

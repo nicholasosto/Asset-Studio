@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codex.local/schemas/template-image-run-receipt-v1.schema.json",
+  "title": "TemplateImageRunReceiptV1",
+  "$comment": "Validate with validate_template.py as well: pinned-profile gate coverage, unique check IDs, file integrity and observed PNG properties require cross-file checks. Authority fields are recorded claims, not independently verified actions.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "runId", "templateId", "createdAt", "inputs", "execution", "output", "validation", "authority"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "runId": { "type": "string", "minLength": 1 },
+    "templateId": { "type": "string", "minLength": 1 },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["references", "profilePath", "profileSha256", "promptPath", "promptSha256", "requestedChanges"],
+      "properties": {
+        "references": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "sha256", "role"],
+            "properties": {
+              "path": { "type": "string", "minLength": 1 },
+              "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+              "role": { "enum": ["template", "composition", "identity", "style", "palette-material", "lighting", "typography"] }
+            }
+          }
+        },
+        "profilePath": { "type": "string", "minLength": 1 },
+        "profileSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "promptPath": { "type": "string", "minLength": 1 },
+        "promptSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "requestedChanges": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["route", "resolvedModel", "attempt"],
+      "properties": {
+        "route": { "enum": ["builtin-imagegen", "openai-image-api-cli"] },
+        "resolvedModel": { "type": "string", "minLength": 1 },
+        "attempt": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "format", "width", "height", "hasActualTransparency"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "format": { "const": "png" },
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 },
+        "hasActualTransparency": { "type": "boolean" }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["structural", "visual", "exactLayers"],
+      "properties": {
+        "structural": { "$ref": "#/$defs/checks" },
+        "visual": { "$ref": "#/$defs/checks" },
+        "exactLayers": { "$ref": "#/$defs/checks" }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["generation", "humanAcceptance", "save", "export", "promotion", "publication"],
+      "properties": {
+        "generation": { "enum": ["completed", "failed"] },
+        "humanAcceptance": { "enum": ["pending", "accepted", "rejected"] },
+        "save": { "enum": ["not-requested", "completed", "failed"] },
+        "export": { "enum": ["not-requested", "completed", "failed"] },
+        "promotion": { "enum": ["not-requested", "completed", "failed"] },
+        "publication": { "enum": ["not-requested", "completed", "failed"] }
+      }
+    }
+  },
+  "$defs": {
+    "checks": {
+      "type": "array",
+      "description": "Cover each applicable pinned-profile gate or exact-layer ID exactly once. Missing checks remain incomplete; not-applicable needs a reason. Additional uniquely identified checks are permitted.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "status", "detail"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "status": { "enum": ["passed", "failed", "pending", "not-applicable"] },
+          "detail": { "type": "string" }
+        },
+        "allOf": [{
+          "if": { "properties": { "status": { "const": "not-applicable" } }, "required": ["status"] },
+          "then": { "properties": { "detail": { "pattern": "\\S" } } }
+        }]
+      }
+    }
+  }
+}

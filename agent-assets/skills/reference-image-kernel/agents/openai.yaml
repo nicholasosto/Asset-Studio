@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reference Image Kernel"
+  short_description: "Generate from retained image templates with explicit fidelity and proof gates"
+  default_prompt: "Use the retained reference image as an actual edit input, preserve its declared invariants, validate the candidate, and keep human acceptance and export separate."

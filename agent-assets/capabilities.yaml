@@ -20,6 +20,28 @@
   },
   "capabilities": [
     {
+      "id": "reference-image-kernel",
+      "kind": "owned-skill",
+      "owner": "Asset-Studio",
+      "version": "0.2.0",
+      "canonicalPath": "agent-assets/skills/reference-image-kernel",
+      "authority": [
+        "template-reference roles",
+        "image invariants",
+        "template validation",
+        "candidate receipts"
+      ],
+      "constraint": "generation remains candidate-only; human acceptance and every later save, export, registration, promotion, upload, and publication gate remain separate",
+      "installs": [
+        {
+          "runtime": "codex",
+          "scope": "global",
+          "mode": "symlink",
+          "path": "/Users/nicholasosto/.codex/skills/reference-image-kernel"
+        }
+      ]
+    },
+    {
       "id": "trembus-image",
       "kind": "owned-skill",
       "owner": "Asset-Studio",
