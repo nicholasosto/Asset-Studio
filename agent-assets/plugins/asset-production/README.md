@@ -21,6 +21,16 @@ It deliberately does not duplicate:
 Runtime installs are derived from this directory and are checked by
 `tools/check-agent-capabilities.mjs`.
 
+## Unreleased guidance correction
+
+`fix.asset-workflow-guidance` preserves actual-reference requirements in the batch
+executor: a text description cannot satisfy `actualReferenceRequired: true`. The
+shared workflow-gap procedure and companion workflow corrections live with their
+Assets and Asset-Studio owners. This correction does not update bundle manifests,
+install runtime packages, or establish a release or asset acceptance. Source-version
+and capability-registry reconciliation remain a separate checkpoint because the
+active workspace has earlier uncommitted capability migrations.
+
 ## Distribution status
 
 This bundle is a local canonical source, consumed through the registered runtime skill symlinks. It

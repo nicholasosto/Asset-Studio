@@ -13,16 +13,20 @@ links:
 
 ## Purpose
 
-A 3D prop taken from concept board through a Blender blockout, modeling/texturing, and export, then
-imported into Studio and validated. Modeling runs through the Blender MCP (see the `blender-mcp-craft`
-skill); 3D follows **Pattern B** (upload into `ServerStorage.TrembusGameLibrary`) per
-[[0001-reference-the-shared-asset-library-via-external-locations]].
+A 3D prop taken from concept board through Blender blockout, modeling/texturing,
+export and Studio inspection. Use `blender-mcp` and its selected Roblox interchange
+profile. Local import, remote upload, metadata registration and consumer binding
+require separate evidence. `ServerStorage.TrembusGameLibrary` is an in-place
+container, not a remote upload destination. The owning pipeline supplies any later
+authorized upload, moderation and consumer-regression gates per
+[[0001-reference-the-shared-asset-library-via-external-locations]]. This workflow
+remains draft; it does not select an uploader, account, place or shipping consumer.
 
 ## Workflow
 
 ```json
 {
-  "caption": "A 3D prop: concept → Blender blockout → export → validated Pattern-B import.",
+  "caption": "A 3D prop: concept → Blender blockout → export → local Studio inspection; later remote and consumer gates are pipeline-owned.",
   "lanes": [
     { "id": "concept", "label": "Concept", "kind": "human" },
     { "id": "model", "label": "Blender", "kind": "tool" },
@@ -38,7 +42,7 @@ skill); 3D follows **Pattern B** (upload into `ServerStorage.TrembusGameLibrary`
       "to": ["blockout"]
     },
     {
-      "id": "blockout", "lane": "model", "label": "Blockout in Blender", "detail": "blender-mcp-craft",
+      "id": "blockout", "lane": "model", "label": "Blockout in Blender", "detail": "blender-mcp",
       "note": "Greybox the form at correct scale before detailing.", "status": "pending",
       "substeps": [
         "Greybox the form at correct scale",
@@ -69,12 +73,12 @@ skill); 3D follows **Pattern B** (upload into `ServerStorage.TrembusGameLibrary`
     },
     { "id": "validate-art", "lane": "qa", "label": "_tools/validate-3d-asset-art.mjs", "detail": "3d/models package check", "status": "pending", "to": ["studio-import"] },
     {
-      "id": "studio-import", "lane": "import", "label": "Import (Pattern B upload)", "detail": "ServerStorage.TrembusGameLibrary", "status": "pending",
+      "id": "studio-import", "lane": "import", "label": "Import and inspect locally in Studio", "detail": "ServerStorage.TrembusGameLibrary", "note": "Verify the intended Studio place and inspect geometry, materials, scale and pivots. Record any actual remote upload separately; local presence is not upload, moderation, registration or adoption proof.", "status": "pending",
       "inputs": ["The .rbxm from export", "ServerStorage.TrembusGameLibrary target"],
       "outputs": ["Assets/runtime/roblox/soul-steel/props/<domain>/PRP_SUB_Name.rbxm"],
       "to": ["validate-ids"]
     },
-    { "id": "validate-ids", "lane": "qa", "label": "_tools/validate_asset_ids.py", "detail": "registry check", "status": "pending", "to": [] }
+    { "id": "validate-ids", "lane": "qa", "label": "Check observed upload mappings when present", "detail": "conditional registry check; later shipping gates remain pending", "note": "Use the owning registry checks only for actual observed uploaded IDs and exact local bytes. Without such an ID report the remote gate as pending. Registration records an existing upload; it does not upload bytes or establish consumer binding.", "status": "pending", "to": [] }
   ]
 }
 ```

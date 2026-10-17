@@ -29,6 +29,11 @@ registered version, path, or summary disagrees with its canonical skill, repair 
 derived install. For other conflicts, verify the higher authority and repair or supersede the lower
 one.
 
+For missing, conflicting, stale or unverifiable asset workflow guidance, follow
+`~/Master-Managed/Assets/_catalog/workflow-gap.md`. Preserve the selected production
+contract's exact work slots; the library inbox is a fallback for unbound drops.
+Continue independently authorized work and pause only the affected unsupported step.
+
 ## Map
 
 | Path | Purpose |
@@ -105,7 +110,9 @@ second production lane under `output/imagegen/`.
 
 - Asset-Studio stores contracts, process, deterministic tools, manifests, and run evidence—not
   production payloads.
-- Reviewed image payloads route through `roblox-dev:asset-conventions`.
+- Reviewed image payloads route through `roblox-dev:asset-conventions`. Unattended
+  shared-library drops without an approved bound work path use `_inbox/<medium>/`;
+  preserve exact candidate/work slots selected by a production contract.
 - New shared UI/texture assets default to `_BLK`.
 - `_FNL`, upload, registry entry, package publish, and consumer shipping are separate gates.
 - Authored structural templates live under `templates/`; generated exemplars live under
@@ -132,7 +139,9 @@ Trembus-Component-Library repository. Do not edit dependency code through a cach
 
 - Preserve unrelated dirty work in every connected repository.
 - Use caches and runtime installs as diagnostics, never sources.
-- Keep ignored candidates, refs, intermediate rasters, and QA images disposable.
+- Keep generated candidates, refs, intermediate rasters and QA images outside Git
+  according to their owning contracts. Ignored or untracked status does not authorize
+  deletion; preserve candidate originals, provenance and referenced evidence.
 - Promote durable rules, manifests, builders, and validators into tracked authority before relying
   on them.
 - During skill-heavy work, a quick daily `node tools/check-agent-capabilities.mjs` review is useful

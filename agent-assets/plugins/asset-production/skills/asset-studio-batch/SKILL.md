@@ -29,9 +29,13 @@ description: >
 
 For each requested candidate:
 
-1. Attach every named composition or style reference when the tool accepts it.
-2. When an input cannot be attached, encode its composition constraints textually in every prompt:
-   aspect, crop/full-body framing, ground/contact behavior, safe margins, and locked style traits.
+1. Attach every required composition, identity or style reference as an actual tool input.
+   If a required reference cannot be attached, stop and report the unsatisfied input.
+   A textual description cannot satisfy `actualReferenceRequired: true`.
+2. Use textual fallback only when the owning contract explicitly permits it and no
+   actual-reference requirement applies. Record the limitation and encode the permitted
+   composition constraints in every prompt: aspect, crop/full-body framing,
+   ground/contact behavior, safe margins and locked style traits.
 3. Never reproduce guides, annotations, magenta lines, labels, or template chrome in the output.
 4. Append the contract's negative block to every generation request.
 5. Write candidates only to the immutable contract's bound output path and filename. New
