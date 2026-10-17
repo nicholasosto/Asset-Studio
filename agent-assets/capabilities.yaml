@@ -1,11 +1,26 @@
 {
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "2.0.0",
   "verifiedAt": "2026-07-24",
+  "observation": {
+    "observedAt": "2026-10-17",
+    "scope": "Approved five-file source-only reconciliation; committed provenance, native registrations and artifact integrity; no feature promotion, install, hook execution or asset acceptance."
+  },
+  "sourceRepository": {
+    "root": "/Users/nicholasosto/Master-Managed/Project-Spaces/Asset-Studio",
+    "repository": "https://github.com/nicholasosto/Asset-Studio.git",
+    "commit": "f5fe513e0e8db06caa2233ea8da56fd9281cef28"
+  },
   "pluginBundle": {
     "id": "asset-production",
     "version": "0.1.0",
     "distribution": "local-source",
     "marketplaceReady": false
+  },
+  "workingBundleObservation": {
+    "observedAt": "2026-10-17",
+    "scope": "Original dirty checkout manifests only; unreviewed local changes retained.",
+    "version": "0.1.3",
+    "state": "unreviewed"
   },
   "policy": {
     "memoryAuthority": "evidence-only",
@@ -23,74 +38,638 @@
       "id": "trembus-image",
       "kind": "owned-skill",
       "owner": "Asset-Studio",
-      "version": "0.1.0",
       "canonicalPath": "agent-assets/plugins/asset-production/skills/trembus-image",
-      "authority": ["raster presets", "prompt construction", "image validation", "macOS metadata"],
-      "delegates": ["roblox-dev:asset-conventions", "asset-studio-batch"],
+      "authority": [
+        "raster presets",
+        "prompt construction",
+        "image validation",
+        "macOS metadata"
+      ],
+      "delegates": [
+        "roblox-dev:asset-conventions",
+        "asset-studio-batch"
+      ],
+      "historicalInstalls": [
+        {
+          "observedAt": "2026-07-24",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "codex",
+            "mode": "symlink",
+            "path": "/Users/nicholasosto/.codex/skills/trembus-image"
+          }
+        },
+        {
+          "observedAt": "2026-07-24",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "claude",
+            "mode": "symlink",
+            "path": "/Users/nicholasosto/.claude/skills/trembus-image"
+          }
+        }
+      ],
+      "version": "0.1.0",
+      "sourceStatus": "committed",
+      "sourceArtifact": {
+        "repository": "https://github.com/nicholasosto/Asset-Studio.git",
+        "root": "/Users/nicholasosto/Master-Managed/Project-Spaces/Asset-Studio",
+        "commit": "f5fe513e0e8db06caa2233ea8da56fd9281cef28",
+        "path": "agent-assets/plugins/asset-production/skills/trembus-image",
+        "files": {
+          "SKILL.md": {
+            "mode": "100644",
+            "sha256": "7cad6205d526ad736e943014fbb64225eb7a1abd235d4ed0f5b3331be06bac8f"
+          },
+          "agents/openai.yaml": {
+            "mode": "100644",
+            "sha256": "4f37e346b85ed026d15d475e9ed13b48a639f5abc3d9b23ef3048d14aadd924c"
+          },
+          "references/metadata.md": {
+            "mode": "100644",
+            "sha256": "09e6df955756d7d8b563a79402028992bfd42f3d7c1af23170d5e790b8dbf119"
+          },
+          "references/presets.yaml": {
+            "mode": "100644",
+            "sha256": "895e906e478f813c33d2628d8bd52868952cd39919747eab46b1d0dc732c5d4f"
+          },
+          "references/roblox-texture-tiling.md": {
+            "mode": "100644",
+            "sha256": "a1da1b409c13b90a273d343ac0c82120568646d92a9f95cf4993354f4c54e8b2"
+          },
+          "references/roblox-vfx-textures.md": {
+            "mode": "100644",
+            "sha256": "1ad17c39ddc3b0cef0970db8f877704d2ad4ac7388a281bb1311f25c64fee6fb"
+          },
+          "scripts/derive_asset_filename.py": {
+            "mode": "100644",
+            "sha256": "b94f1dddcc35b7aa6e87dbcdcdfa75aec915b38ffebd6f7be123ad3c3b64a320"
+          },
+          "scripts/validate_icon_asset.py": {
+            "mode": "100755",
+            "sha256": "becba43e684746581924fcdc6064d86ded6eeb150235a7c0167dbfbbf908dd71"
+          },
+          "scripts/write_asset_metadata.py": {
+            "mode": "100644",
+            "sha256": "09e00f49e94e36f9e183d8d0e605dfd156848ebe7a91002bea2daf053b759f01"
+          }
+        },
+        "version": "0.1.0"
+      },
+      "workingObservation": {
+        "observedAt": "2026-10-17",
+        "scope": "Version/path observation of dirty canonical source; no feature approval.",
+        "version": "0.1.3",
+        "state": "unreviewed"
+      },
       "installs": [
-        {"runtime": "codex", "mode": "symlink", "path": "/Users/nicholasosto/.codex/skills/trembus-image"},
-        {"runtime": "claude", "mode": "symlink", "path": "/Users/nicholasosto/.claude/skills/trembus-image"}
+        {
+          "runtime": "codex",
+          "mode": "symlink",
+          "path": "/Users/nicholasosto/.codex/skills/trembus-image",
+          "role": "active",
+          "state": "available",
+          "observedAt": "2026-10-17",
+          "observationScope": "Read-only path, source and configured discovery observation; no workflow execution.",
+          "execution": "unverified"
+        },
+        {
+          "runtime": "claude",
+          "mode": "symlink",
+          "path": "/Users/nicholasosto/.claude/skills/trembus-image",
+          "role": "active",
+          "state": "available",
+          "observedAt": "2026-10-17",
+          "observationScope": "Read-only path, source and configured discovery observation; no workflow execution.",
+          "execution": "unverified"
+        }
+      ],
+      "requiredActiveRuntimes": [
+        "codex",
+        "claude"
       ]
     },
     {
       "id": "asset-studio-batch",
       "kind": "owned-skill",
       "owner": "Asset-Studio",
-      "version": "0.1.0",
       "canonicalPath": "agent-assets/plugins/asset-production/skills/asset-studio-batch",
-      "authority": ["immutable contracts", "candidate work paths", "generator stop boundary"],
-      "delegates": ["imagegen", "trembus-image"],
+      "authority": [
+        "immutable contracts",
+        "candidate work paths",
+        "generator stop boundary"
+      ],
+      "delegates": [
+        "imagegen",
+        "trembus-image"
+      ],
+      "historicalInstalls": [
+        {
+          "observedAt": "2026-07-24",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "codex",
+            "mode": "symlink",
+            "path": "/Users/nicholasosto/.codex/skills/asset-studio-batch"
+          }
+        },
+        {
+          "observedAt": "2026-07-24",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "claude",
+            "mode": "symlink",
+            "path": "/Users/nicholasosto/.claude/skills/asset-studio-batch"
+          }
+        }
+      ],
+      "version": "0.1.0",
+      "sourceStatus": "committed",
+      "sourceArtifact": {
+        "repository": "https://github.com/nicholasosto/Asset-Studio.git",
+        "root": "/Users/nicholasosto/Master-Managed/Project-Spaces/Asset-Studio",
+        "commit": "f5fe513e0e8db06caa2233ea8da56fd9281cef28",
+        "path": "agent-assets/plugins/asset-production/skills/asset-studio-batch",
+        "files": {
+          "SKILL.md": {
+            "mode": "100644",
+            "sha256": "b778e9a5ec2bdf35c81169641753f6fcb9a8cdc9eeaaaa757843e4c1292f39ac"
+          }
+        },
+        "version": "0.1.0"
+      },
+      "workingObservation": {
+        "observedAt": "2026-10-17",
+        "scope": "Version/path observation of dirty canonical source; no feature approval.",
+        "version": "0.1.4",
+        "state": "unreviewed"
+      },
       "installs": [
-        {"runtime": "codex", "mode": "symlink", "path": "/Users/nicholasosto/.codex/skills/asset-studio-batch"},
-        {"runtime": "claude", "mode": "symlink", "path": "/Users/nicholasosto/.claude/skills/asset-studio-batch"}
+        {
+          "runtime": "codex",
+          "mode": "symlink",
+          "path": "/Users/nicholasosto/.codex/skills/asset-studio-batch",
+          "role": "active",
+          "state": "available",
+          "observedAt": "2026-10-17",
+          "observationScope": "Read-only path, source and configured discovery observation; no workflow execution.",
+          "execution": "unverified"
+        },
+        {
+          "runtime": "claude",
+          "mode": "symlink",
+          "path": "/Users/nicholasosto/.claude/skills/asset-studio-batch",
+          "role": "active",
+          "state": "available",
+          "observedAt": "2026-10-17",
+          "observationScope": "Read-only path, source and configured discovery observation; no workflow execution.",
+          "execution": "unverified"
+        }
+      ],
+      "requiredActiveRuntimes": [
+        "codex",
+        "claude"
       ]
     },
     {
       "id": "textured-ui-asset-production",
       "kind": "owned-skill",
       "owner": "Asset-Studio",
-      "version": "0.1.0",
       "canonicalPath": "agent-assets/plugins/asset-production/skills/textured-ui-asset-production",
-      "authority": ["image-backed Roblox UI art contracts", "raster preflight", "visual acceptance"],
-      "delegates": ["asset-studio-batch", "roblox-dev:asset-conventions", "roblox-ui-studio"],
+      "authority": [
+        "image-backed Roblox UI art contracts",
+        "raster preflight",
+        "visual acceptance"
+      ],
+      "delegates": [
+        "asset-studio-batch",
+        "roblox-dev:asset-conventions",
+        "roblox-ui-studio"
+      ],
+      "historicalInstalls": [
+        {
+          "observedAt": "2026-07-24",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "codex",
+            "mode": "symlink",
+            "path": "/Users/nicholasosto/.codex/skills/textured-ui-asset-production"
+          }
+        },
+        {
+          "observedAt": "2026-07-24",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "claude",
+            "mode": "symlink",
+            "path": "/Users/nicholasosto/.claude/skills/textured-ui-asset-production"
+          }
+        }
+      ],
+      "version": "0.1.0",
+      "sourceStatus": "committed",
+      "sourceArtifact": {
+        "repository": "https://github.com/nicholasosto/Asset-Studio.git",
+        "root": "/Users/nicholasosto/Master-Managed/Project-Spaces/Asset-Studio",
+        "commit": "f5fe513e0e8db06caa2233ea8da56fd9281cef28",
+        "path": "agent-assets/plugins/asset-production/skills/textured-ui-asset-production",
+        "files": {
+          "SKILL.md": {
+            "mode": "100644",
+            "sha256": "9042164842936e81dae029f9f8a2124022a70de99391815c96bc6f1e3a85337f"
+          }
+        },
+        "version": "0.1.0"
+      },
+      "workingObservation": {
+        "observedAt": "2026-10-17",
+        "scope": "Version/path observation of dirty canonical source; no feature approval.",
+        "version": "0.1.2",
+        "state": "unreviewed"
+      },
       "installs": [
-        {"runtime": "codex", "mode": "symlink", "path": "/Users/nicholasosto/.codex/skills/textured-ui-asset-production"},
-        {"runtime": "claude", "mode": "symlink", "path": "/Users/nicholasosto/.claude/skills/textured-ui-asset-production"}
+        {
+          "runtime": "codex",
+          "mode": "symlink",
+          "path": "/Users/nicholasosto/.codex/skills/textured-ui-asset-production",
+          "role": "active",
+          "state": "available",
+          "observedAt": "2026-10-17",
+          "observationScope": "Read-only path, source and configured discovery observation; no workflow execution.",
+          "execution": "unverified"
+        },
+        {
+          "runtime": "claude",
+          "mode": "symlink",
+          "path": "/Users/nicholasosto/.claude/skills/textured-ui-asset-production",
+          "role": "active",
+          "state": "available",
+          "observedAt": "2026-10-17",
+          "observationScope": "Read-only path, source and configured discovery observation; no workflow execution.",
+          "execution": "unverified"
+        }
+      ],
+      "requiredActiveRuntimes": [
+        "codex",
+        "claude"
       ]
     },
     {
       "id": "roblox-dev:asset-conventions",
       "kind": "external-skill",
       "owner": "roblox-dev",
-      "version": "0.5.0",
-      "sourceCommit": "d18fc382fa0aea198ce471b95f5cf1293e9cadbc",
-      "canonicalPath": "/Users/nicholasosto/Master-Managed/Repositories/Vault-Repositories/roblox-dev/skills/asset-conventions",
-      "authority": ["asset zones", "filename grammar", "status", "registration", "promotion"],
+      "canonicalPath": "/Users/nicholasosto/Master-Managed/Repositories/plugins/roblox-dev/skills/asset-conventions",
+      "authority": [
+        "Assets-owned storage/naming policy routing",
+        "Roblox filing, registration and upload guidance; consumer gates remain pipeline-owned"
+      ],
+      "historicalInstalls": [
+        {
+          "observedAt": "2026-07-24",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "claude",
+            "mode": "plugin-source-symlink",
+            "path": "/Users/nicholasosto/.claude/plugins/marketplaces/local-desktop-app-uploads/roblox-dev/skills/asset-conventions",
+            "registry": "/Users/nicholasosto/.claude/plugins/installed_plugins.json",
+            "registryId": "roblox-dev@local-desktop-app-uploads",
+            "pluginVersion": "0.7.0"
+          }
+        },
+        {
+          "observedAt": "2026-07-24",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "codex",
+            "mode": "generated-plugin-cache",
+            "path": "/Users/nicholasosto/.codex/plugins/cache/assets-repo-local/roblox-dev/0.7.0/skills/asset-conventions"
+          }
+        },
+        {
+          "observedAt": "2026-09-28",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "claude",
+            "mode": "generated-plugin-cache",
+            "state": "installed-byte-verified-reload-required",
+            "path": "/Users/nicholasosto/.claude/plugins/cache/local-desktop-app-uploads/roblox-dev/0.8.3/skills/asset-conventions",
+            "registry": "/Users/nicholasosto/.claude/plugins/installed_plugins.json",
+            "registryId": "roblox-dev@local-desktop-app-uploads",
+            "pluginVersion": "0.8.3",
+            "lastObserved": "2026-09-28",
+            "restartRequired": true,
+            "runtimeAcceptance": "installer success and source byte comparison; current session reload and hook execution not exercised"
+          }
+        },
+        {
+          "observedAt": "2026-09-28",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "codex",
+            "mode": "generated-plugin-cache",
+            "state": "installed-byte-verified-reload-required",
+            "path": "/Users/nicholasosto/.codex/plugins/cache/assets-repo-local/roblox-dev/0.8.3/skills/asset-conventions",
+            "pluginVersion": "0.8.3",
+            "lastObserved": "2026-09-28",
+            "restartRequired": true,
+            "runtimeAcceptance": "installer success and source byte comparison; current session reload and hook execution not exercised"
+          }
+        }
+      ],
+      "version": "1.0.3",
+      "sourceStatus": "committed",
+      "sourceArtifact": {
+        "repository": "https://github.com/nicholasosto/trembus.git",
+        "root": "/Users/nicholasosto/Master-Managed/Repositories/plugins",
+        "commit": "0b98fb61e2af452c6fc5187f0795126a2815290a",
+        "path": "roblox-dev/skills/asset-conventions",
+        "files": {
+          "SKILL.md": {
+            "mode": "100644",
+            "sha256": "c0e6ccb0ab3773445ce9c09979e39515a032c1b54738d96972be45ac29a0634c"
+          },
+          "references/01-zones-and-folders.md": {
+            "mode": "100644",
+            "sha256": "49532ff0b219dcda7c0ecf066797295a8f4e029a6693a0eb07a7ce921e4548d0"
+          },
+          "references/02-filename-grammar.md": {
+            "mode": "100644",
+            "sha256": "7811bb2e2468d19d036440280289d2bbe2c65f48abf78d03982ce50615a257e2"
+          },
+          "references/03-studio-consumption.md": {
+            "mode": "100644",
+            "sha256": "adf50ddfe655ab46e76fe15c63f62c1d1cce69a4509e8400c5b5994c884fbddf"
+          },
+          "templates/taxonomy.yaml": {
+            "mode": "100644",
+            "sha256": "7d673494e93c94eac34a208527185366305bbe688b65a3ed0291d322ce5ad34a"
+          }
+        },
+        "version": "1.0.3"
+      },
       "installs": [
-        {"runtime": "claude", "mode": "plugin-source-symlink", "path": "/Users/nicholasosto/.claude/plugins/marketplaces/local-desktop-app-uploads/roblox-dev/skills/asset-conventions", "registry": "/Users/nicholasosto/.claude/plugins/installed_plugins.json", "registryId": "roblox-dev@local-desktop-app-uploads", "pluginVersion": "0.7.0"},
-        {"runtime": "codex", "mode": "generated-plugin-cache", "path": "/Users/nicholasosto/.codex/plugins/cache/assets-repo-local/roblox-dev/0.7.0/skills/asset-conventions"}
+        {
+          "pluginId": "roblox-dev@trembus",
+          "pluginVersion": "0.8.3",
+          "execution": "unverified",
+          "observedAt": "2026-10-17",
+          "runtime": "codex",
+          "mode": "frozen-plugin-cache",
+          "role": "active",
+          "state": "enabled",
+          "path": "/Users/nicholasosto/.codex/plugins/cache/trembus/roblox-dev/0.8.3/skills/asset-conventions",
+          "pluginRoot": "/Users/nicholasosto/.codex/plugins/cache/trembus/roblox-dev/0.8.3",
+          "marketplaceSource": "/Users/nicholasosto/Master-Managed/Repositories/plugins/artifacts/codex-candidates/hardening/candidate",
+          "selection": {
+            "path": "/Users/nicholasosto/Master-Managed/Repositories/plugins/catalog/codex-candidates.json",
+            "name": "roblox-dev"
+          },
+          "artifact": {
+            "repository": "https://github.com/nicholasosto/trembus.git",
+            "root": "/Users/nicholasosto/Master-Managed/Repositories/plugins",
+            "commit": "217a280fab3f847ecebe9f2c3cf045967bcc021f",
+            "path": "roblox-dev/skills/asset-conventions",
+            "files": {
+              "SKILL.md": {
+                "mode": "100644",
+                "sha256": "c10690c861c3de978f79a1d705ef49ab56c22e734390c252803ca6e13432036d"
+              },
+              "references/01-zones-and-folders.md": {
+                "mode": "100644",
+                "sha256": "53a03237c9f865461ab77c1d4fde913d2d177278a7d68d19c1fe52909118e6c1"
+              },
+              "references/02-filename-grammar.md": {
+                "mode": "100644",
+                "sha256": "7811bb2e2468d19d036440280289d2bbe2c65f48abf78d03982ce50615a257e2"
+              },
+              "references/03-studio-consumption.md": {
+                "mode": "100644",
+                "sha256": "adf50ddfe655ab46e76fe15c63f62c1d1cce69a4509e8400c5b5994c884fbddf"
+              },
+              "templates/taxonomy.yaml": {
+                "mode": "100644",
+                "sha256": "59d38c3be86364620986fad6f4dd5b50fa0623b1de0830339e29eb8da6cf3b8f"
+              }
+            },
+            "version": "1.0.2"
+          },
+          "observationScope": "Enabled local Trembus selection and five-file skill integrity; session skill exposed; no new workflow invocation."
+        },
+        {
+          "pluginId": "roblox-dev@trembus",
+          "pluginVersion": "0.8.3",
+          "execution": "unverified",
+          "observedAt": "2026-10-17",
+          "runtime": "claude",
+          "mode": "directory-source",
+          "role": "active",
+          "state": "enabled",
+          "path": "/Users/nicholasosto/Master-Managed/Repositories/plugins/roblox-dev/skills/asset-conventions",
+          "pluginRoot": "/Users/nicholasosto/.claude/plugins/cache/trembus/roblox-dev/0.8.3",
+          "sourceFolder": "/Users/nicholasosto/Master-Managed/Repositories/plugins/roblox-dev",
+          "observationScope": "Native CLI readFromFolder identifies canonical source folder; fresh Claude invocation remains unverified."
+        },
+        {
+          "pluginId": "roblox-dev@trembus",
+          "pluginVersion": "0.8.3",
+          "execution": "unverified",
+          "observedAt": "2026-10-17",
+          "runtime": "claude",
+          "mode": "frozen-plugin-cache",
+          "role": "observed",
+          "state": "retained",
+          "path": "/Users/nicholasosto/.claude/plugins/cache/trembus/roblox-dev/0.8.3/skills/asset-conventions",
+          "pluginRoot": "/Users/nicholasosto/.claude/plugins/cache/trembus/roblox-dev/0.8.3",
+          "artifact": {
+            "repository": "https://github.com/nicholasosto/trembus.git",
+            "root": "/Users/nicholasosto/Master-Managed/Repositories/plugins",
+            "commit": "217a280fab3f847ecebe9f2c3cf045967bcc021f",
+            "path": "roblox-dev/skills/asset-conventions",
+            "files": {
+              "SKILL.md": {
+                "mode": "100644",
+                "sha256": "c10690c861c3de978f79a1d705ef49ab56c22e734390c252803ca6e13432036d"
+              },
+              "references/01-zones-and-folders.md": {
+                "mode": "100644",
+                "sha256": "53a03237c9f865461ab77c1d4fde913d2d177278a7d68d19c1fe52909118e6c1"
+              },
+              "references/02-filename-grammar.md": {
+                "mode": "100644",
+                "sha256": "7811bb2e2468d19d036440280289d2bbe2c65f48abf78d03982ce50615a257e2"
+              },
+              "references/03-studio-consumption.md": {
+                "mode": "100644",
+                "sha256": "adf50ddfe655ab46e76fe15c63f62c1d1cce69a4509e8400c5b5994c884fbddf"
+              },
+              "templates/taxonomy.yaml": {
+                "mode": "100644",
+                "sha256": "59d38c3be86364620986fad6f4dd5b50fa0623b1de0830339e29eb8da6cf3b8f"
+              }
+            },
+            "version": "1.0.2"
+          },
+          "observationScope": "Five-file cached skill tree only; effective Claude source is the directory record, not this cache."
+        }
+      ],
+      "requiredActiveRuntimes": [
+        "codex",
+        "claude"
       ]
     },
     {
       "id": "trembus-consumer",
       "kind": "external-skill",
       "owner": "Trembus-Component-Library",
-      "canonicalPath": "/Users/nicholasosto/Master-Managed/Repositories/Trembus-Component-Library/skills/trembus-consumer",
-      "authority": ["web UI components", "tokens", "theming", "consumer QA"],
+      "canonicalPath": "/Users/nicholasosto/Master-Managed/Repositories/packages/Trembus-Component-Library/skills/trembus-consumer",
+      "authority": [
+        "web UI components",
+        "tokens",
+        "theming",
+        "consumer QA"
+      ],
+      "historicalInstalls": [
+        {
+          "observedAt": "2026-07-24",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "claude",
+            "mode": "symlink",
+            "path": "/Users/nicholasosto/.claude/skills/trembus-consumer"
+          }
+        },
+        {
+          "observedAt": "2026-07-24",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "codex",
+            "mode": "symlink",
+            "path": "/Users/nicholasosto/.codex/skills/trembus-consumer"
+          }
+        }
+      ],
       "installs": [
-        {"runtime": "claude", "mode": "symlink", "path": "/Users/nicholasosto/.claude/skills/trembus-consumer"},
-        {"runtime": "codex", "mode": "symlink", "path": "/Users/nicholasosto/.codex/skills/trembus-consumer"}
+        {
+          "runtime": "claude",
+          "mode": "symlink",
+          "path": "/Users/nicholasosto/.claude/skills/trembus-consumer",
+          "role": "active",
+          "state": "available",
+          "observedAt": "2026-10-17",
+          "observationScope": "Read-only path, source and configured discovery observation; no workflow execution.",
+          "execution": "unverified"
+        },
+        {
+          "runtime": "codex",
+          "mode": "symlink",
+          "path": "/Users/nicholasosto/.codex/skills/trembus-consumer",
+          "role": "active",
+          "state": "available",
+          "observedAt": "2026-10-17",
+          "observationScope": "Read-only path, source and configured discovery observation; no workflow execution.",
+          "execution": "unverified"
+        }
+      ],
+      "sourceArtifact": {
+        "repository": "https://github.com/nicholasosto/Trembus-Component-Library.git",
+        "root": "/Users/nicholasosto/Master-Managed/Repositories/packages/Trembus-Component-Library",
+        "commit": "a055c210019123708d812afe6f3ad06fe19109e7",
+        "path": "skills/trembus-consumer",
+        "files": {
+          "SKILL.md": {
+            "mode": "100644",
+            "sha256": "7b204a37413e52eaeb81284201def36b13237a5a29b89c09f85ca87969b80e8a"
+          },
+          "references/RECIPES.md": {
+            "mode": "100644",
+            "sha256": "3cfc1153bbdd85869c75b72361b791b71538ace5b2c5b2f534c7775a73fab21e"
+          },
+          "references/components-gameviz.md": {
+            "mode": "100644",
+            "sha256": "6da673dbfa0d8c9584947dc70404a75580bc59c98c12c7cac37e8226c9cda09b"
+          },
+          "references/components-ui.md": {
+            "mode": "100644",
+            "sha256": "8dd65a5c5d6ccf86980a740181f3ce2906364bc2045c84000c2b594b6e36ae25"
+          },
+          "references/components-viz.md": {
+            "mode": "100644",
+            "sha256": "100e2307aedfa8442d6a95a69d35d2abca62707b44e22e7fc7645920b94d7cb5"
+          }
+        }
+      },
+      "sourceStatus": "committed",
+      "requiredActiveRuntimes": [
+        "claude",
+        "codex"
       ]
     },
     {
       "id": "trembus-template",
       "kind": "external-skill",
       "owner": "Trembus-Component-Library",
-      "canonicalPath": "/Users/nicholasosto/Master-Managed/Repositories/Trembus-Component-Library/templates/skill/trembus-template",
-      "authority": ["owned page templates"],
+      "canonicalPath": "/Users/nicholasosto/Master-Managed/Repositories/packages/Trembus-Component-Library/templates/skill/trembus-template",
+      "authority": [
+        "owned page templates"
+      ],
+      "historicalInstalls": [
+        {
+          "observedAt": "2026-07-24",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "claude",
+            "mode": "symlink",
+            "path": "/Users/nicholasosto/.claude/skills/trembus-template"
+          }
+        },
+        {
+          "observedAt": "2026-07-24",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "codex",
+            "mode": "symlink",
+            "path": "/Users/nicholasosto/.codex/skills/trembus-template"
+          }
+        }
+      ],
       "installs": [
-        {"runtime": "claude", "mode": "symlink", "path": "/Users/nicholasosto/.claude/skills/trembus-template"},
-        {"runtime": "codex", "mode": "symlink", "path": "/Users/nicholasosto/.codex/skills/trembus-template"}
+        {
+          "runtime": "claude",
+          "mode": "symlink",
+          "path": "/Users/nicholasosto/.claude/skills/trembus-template",
+          "role": "active",
+          "state": "available",
+          "observedAt": "2026-10-17",
+          "observationScope": "Read-only path, source and configured discovery observation; no workflow execution.",
+          "execution": "unverified"
+        },
+        {
+          "runtime": "codex",
+          "mode": "symlink",
+          "path": "/Users/nicholasosto/.codex/skills/trembus-template",
+          "role": "active",
+          "state": "available",
+          "observedAt": "2026-10-17",
+          "observationScope": "Read-only path, source and configured discovery observation; no workflow execution.",
+          "execution": "unverified"
+        }
+      ],
+      "sourceArtifact": {
+        "repository": "https://github.com/nicholasosto/Trembus-Component-Library.git",
+        "root": "/Users/nicholasosto/Master-Managed/Repositories/packages/Trembus-Component-Library",
+        "commit": "a055c210019123708d812afe6f3ad06fe19109e7",
+        "path": "templates/skill/trembus-template",
+        "files": {
+          "SKILL.md": {
+            "mode": "100644",
+            "sha256": "d0d4005c885ae9039f46cc4e2f47bcf869f22790cd17ce8ba0a4c468fb9ff754"
+          }
+        }
+      },
+      "sourceStatus": "committed",
+      "requiredActiveRuntimes": [
+        "claude",
+        "codex"
       ]
     },
     {
@@ -99,69 +678,505 @@
       "owner": "Roblox-UI-Studio",
       "availability": "project-local-handoff",
       "canonicalPath": "/Users/nicholasosto/Master-Managed/Project-Spaces/Roblox-Development/Roblox-UI-Studio/.agents/skills/roblox-ui-studio",
-      "authority": ["runtime-neutral Roblox UI prototypes", "Studio evidence", "device and input QA"],
+      "authority": [
+        "runtime-neutral Roblox UI prototypes",
+        "Studio evidence",
+        "device and input QA"
+      ],
       "constraint": "open the owning Roblox-UI-Studio workspace before invoking; this skill is not globally installed",
+      "historicalInstalls": [
+        {
+          "observedAt": "2026-07-24",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "codex",
+            "scope": "project-local",
+            "mode": "project-skill",
+            "path": "/Users/nicholasosto/Master-Managed/Project-Spaces/Roblox-Development/Roblox-UI-Studio/.agents/skills/roblox-ui-studio"
+          }
+        },
+        {
+          "observedAt": "2026-07-24",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "claude",
+            "scope": "project-local",
+            "mode": "skill-file-symlink",
+            "path": "/Users/nicholasosto/Master-Managed/Project-Spaces/Roblox-Development/Roblox-UI-Studio/.claude/skills/roblox-ui-studio"
+          }
+        }
+      ],
       "installs": [
-        {"runtime": "codex", "scope": "project-local", "mode": "project-skill", "path": "/Users/nicholasosto/Master-Managed/Project-Spaces/Roblox-Development/Roblox-UI-Studio/.agents/skills/roblox-ui-studio"},
-        {"runtime": "claude", "scope": "project-local", "mode": "skill-file-symlink", "path": "/Users/nicholasosto/Master-Managed/Project-Spaces/Roblox-Development/Roblox-UI-Studio/.claude/skills/roblox-ui-studio"}
+        {
+          "runtime": "codex",
+          "scope": "project-local",
+          "mode": "project-skill",
+          "path": "/Users/nicholasosto/Master-Managed/Project-Spaces/Roblox-Development/Roblox-UI-Studio/.agents/skills/roblox-ui-studio",
+          "role": "active",
+          "state": "available",
+          "observedAt": "2026-10-17",
+          "observationScope": "Read-only path, source and configured discovery observation; no workflow execution.",
+          "execution": "unverified"
+        },
+        {
+          "runtime": "claude",
+          "scope": "project-local",
+          "mode": "skill-file-symlink",
+          "path": "/Users/nicholasosto/Master-Managed/Project-Spaces/Roblox-Development/Roblox-UI-Studio/.claude/skills/roblox-ui-studio",
+          "role": "active",
+          "state": "available",
+          "observedAt": "2026-10-17",
+          "observationScope": "Read-only path, source and configured discovery observation; no workflow execution.",
+          "execution": "unverified"
+        }
+      ],
+      "sourceArtifact": {
+        "repository": "https://github.com/nicholasosto/Roblox-UI-Studio.git",
+        "root": "/Users/nicholasosto/Master-Managed/Project-Spaces/Roblox-Development/Roblox-UI-Studio",
+        "commit": "96532fd4db077ab8489aa9b6fa87022b79844580",
+        "path": ".agents/skills/roblox-ui-studio",
+        "files": {
+          "SKILL.md": {
+            "mode": "100644",
+            "sha256": "96f6aa32d873805cc4512fd7683238487925a619c1721dbeda2386bf157a1b38"
+          }
+        }
+      },
+      "sourceStatus": "committed",
+      "requiredActiveRuntimes": [
+        "codex",
+        "claude"
       ]
     },
     {
-      "id": "imagegen",
+      "id": "imagegen-built-in",
       "kind": "vendor-adapter",
       "owner": "OpenAI",
+      "authority": [
+        "image generation and editing execution"
+      ],
+      "historicalInstalls": [
+        {
+          "observedAt": "2026-05-06",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "codex",
+            "mode": "vendor-skill",
+            "state": "installed",
+            "path": "/Users/nicholasosto/.codex/skills/imagegen",
+            "lastUpdated": "2026-05-06"
+          }
+        },
+        {
+          "observedAt": "2026-07-24",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "claude",
+            "mode": "handoff",
+            "state": "not-locally-available",
+            "lastObserved": "2026-07-24"
+          }
+        }
+      ],
       "version": "unversioned",
-      "canonicalPath": "/Users/nicholasosto/.codex/skills/imagegen",
-      "authority": ["image generation and editing execution"],
       "installs": [
-        {"runtime": "codex", "mode": "vendor-skill", "state": "installed", "path": "/Users/nicholasosto/.codex/skills/imagegen", "lastUpdated": "2026-05-06"},
-        {"runtime": "claude", "mode": "handoff", "state": "not-locally-available", "lastObserved": "2026-07-24"}
+        {
+          "runtime": "codex",
+          "mode": "built-in-tool",
+          "role": "active",
+          "state": "session-exposed",
+          "observedAt": "2026-10-17",
+          "observationScope": "Current session image generation tool and system skill exposure only.",
+          "execution": "unverified"
+        },
+        {
+          "runtime": "claude",
+          "mode": "handoff",
+          "role": "unverified",
+          "state": "not-locally-available",
+          "observedAt": "2026-10-17",
+          "observationScope": "No local Claude execution adapter verified.",
+          "execution": "unverified"
+        }
+      ],
+      "requiredActiveRuntimes": [
+        "codex"
       ]
     },
     {
       "id": "figma",
       "kind": "vendor-adapter",
       "owner": "Figma/OpenAI",
-      "version": "2.0.16",
-      "authority": ["authoritative Figma design context and fidelity"],
+      "authority": [
+        "authoritative Figma design context and fidelity"
+      ],
       "constraint": "Codex has one current remote plugin; Claude connector availability is unverified and must not be claimed",
+      "historicalInstalls": [
+        {
+          "observedAt": "2026-07-18",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "codex",
+            "mode": "vendor-plugin-cache",
+            "state": "installed-enabled",
+            "path": "/Users/nicholasosto/.codex/plugins/cache/openai-curated-remote/figma/2.0.16",
+            "lastUpdated": "2026-07-18"
+          }
+        },
+        {
+          "observedAt": "2026-07-24",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "claude",
+            "mode": "remote-connector",
+            "state": "unverified",
+            "lastObserved": "2026-07-24"
+          }
+        },
+        {
+          "observedAt": "2026-09-28",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "codex",
+            "mode": "vendor-plugin-cache",
+            "state": "installed-enabled",
+            "path": "/Users/nicholasosto/.codex/plugins/cache/openai-curated-remote/figma/13.0.0",
+            "lastObserved": "2026-09-28",
+            "observationScope": "13.0.0 manifest/path and active session skill/tool exposure; no Figma document operation performed"
+          }
+        },
+        {
+          "observedAt": "2026-08-09",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "claude",
+            "mode": "remote-connector",
+            "state": "unverified",
+            "lastObserved": "2026-08-09"
+          }
+        }
+      ],
+      "version": "16.0.0",
       "installs": [
-        {"runtime": "codex", "mode": "vendor-plugin-cache", "state": "installed-enabled", "path": "/Users/nicholasosto/.codex/plugins/cache/openai-curated-remote/figma/2.0.16", "lastUpdated": "2026-07-18"},
-        {"runtime": "claude", "mode": "remote-connector", "state": "unverified", "lastObserved": "2026-07-24"}
+        {
+          "runtime": "codex",
+          "mode": "vendor-plugin-cache",
+          "role": "active",
+          "state": "session-exposed",
+          "path": "/Users/nicholasosto/.codex/plugins/cache/openai-curated-remote/figma/16.0.0",
+          "observedAt": "2026-10-17",
+          "observationScope": "Manifest 16.0.0 and current session skill/tool exposure; remote enablement, permissions and document operations are not reverified.",
+          "execution": "unverified"
+        },
+        {
+          "runtime": "claude",
+          "mode": "remote-connector",
+          "role": "unverified",
+          "state": "unverified",
+          "observedAt": "2026-10-17",
+          "observationScope": "Claude connector availability remains unverified.",
+          "execution": "unverified"
+        }
+      ],
+      "requiredActiveRuntimes": [
+        "codex"
       ]
     },
     {
       "id": "creative-production",
       "kind": "vendor-adapter",
       "owner": "OpenAI",
-      "version": "0.1.25",
-      "authority": ["explicit ideation and creative-board workflows"],
+      "authority": [
+        "explicit ideation and creative-board workflows"
+      ],
       "constraint": "never overrides Asset-Studio batch paths or review ownership",
+      "historicalInstalls": [
+        {
+          "observedAt": "2026-07-18",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "codex",
+            "mode": "vendor-plugin-cache",
+            "state": "installed-enabled",
+            "path": "/Users/nicholasosto/.codex/plugins/cache/openai-curated-remote/creative-production/0.1.25",
+            "lastUpdated": "2026-07-18"
+          }
+        },
+        {
+          "observedAt": "2026-08-09",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "codex",
+            "mode": "vendor-plugin-cache",
+            "state": "session-injected-unverified",
+            "path": "/Users/nicholasosto/.codex/plugins/cache/openai-curated-remote/creative-production/0.1.25",
+            "lastObserved": "2026-08-09"
+          }
+        }
+      ],
+      "version": "0.1.25",
       "installs": [
-        {"runtime": "codex", "mode": "vendor-plugin-cache", "state": "installed-enabled", "path": "/Users/nicholasosto/.codex/plugins/cache/openai-curated-remote/creative-production/0.1.25", "lastUpdated": "2026-07-18"}
-      ]
+        {
+          "runtime": "codex",
+          "mode": "vendor-plugin-cache",
+          "path": "/Users/nicholasosto/.codex/plugins/cache/openai-curated-remote/creative-production/0.1.25",
+          "role": "observed",
+          "state": "cached-unverified",
+          "observedAt": "2026-10-17",
+          "observationScope": "Read-only path, source and configured discovery observation; no workflow execution.",
+          "execution": "unverified"
+        }
+      ],
+      "requiredActiveRuntimes": []
     },
     {
       "id": "frontend-design",
       "kind": "vendor-adapter",
       "owner": "Anthropic",
-      "authority": ["generic frontend aesthetic guidance"],
+      "authority": [
+        "generic frontend aesthetic guidance"
+      ],
       "constraint": "lowest UI precedence; never overrides a design source, domain skill, or consumer design system",
+      "historicalInstalls": [
+        {
+          "observedAt": "2026-07-24",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "codex",
+            "mode": "vendor-plugin-cache",
+            "state": "installed-enabled",
+            "path": "/Users/nicholasosto/.codex/plugins/cache/claude-plugins-official/frontend-design/local",
+            "versionLabel": "local",
+            "lastUpdated": "2026-07-24"
+          }
+        },
+        {
+          "observedAt": "2026-07-22",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "claude",
+            "mode": "vendor-plugin-cache",
+            "state": "installed-enabled",
+            "path": "/Users/nicholasosto/.claude/plugins/cache/claude-plugins-official/frontend-design/unknown",
+            "versionLabel": "unknown",
+            "registryLastUpdated": "2026-07-22"
+          }
+        }
+      ],
       "installs": [
-        {"runtime": "codex", "mode": "vendor-plugin-cache", "state": "installed-enabled", "path": "/Users/nicholasosto/.codex/plugins/cache/claude-plugins-official/frontend-design/local", "versionLabel": "local", "lastUpdated": "2026-07-24"},
-        {"runtime": "claude", "mode": "vendor-plugin-cache", "state": "installed-enabled", "path": "/Users/nicholasosto/.claude/plugins/cache/claude-plugins-official/frontend-design/unknown", "versionLabel": "unknown", "registryLastUpdated": "2026-07-22"}
+        {
+          "runtime": "codex",
+          "mode": "vendor-plugin-cache",
+          "path": "/Users/nicholasosto/.codex/plugins/cache/claude-plugins-official/frontend-design/local",
+          "versionLabel": "local",
+          "role": "active",
+          "state": "enabled",
+          "observedAt": "2026-10-17",
+          "observationScope": "Read-only path, source and configured discovery observation; no workflow execution.",
+          "execution": "unverified",
+          "pluginId": "frontend-design@claude-plugins-official",
+          "pluginRoot": "/Users/nicholasosto/.codex/plugins/cache/claude-plugins-official/frontend-design/local"
+        },
+        {
+          "runtime": "claude",
+          "mode": "vendor-plugin-cache",
+          "path": "/Users/nicholasosto/.claude/plugins/cache/claude-plugins-official/frontend-design/ea10b213686c",
+          "versionLabel": "ea10b213686c",
+          "role": "active",
+          "state": "enabled",
+          "observedAt": "2026-10-17",
+          "observationScope": "Read-only path, source and configured discovery observation; no workflow execution.",
+          "execution": "unverified",
+          "pluginId": "frontend-design@claude-plugins-official",
+          "pluginRoot": "/Users/nicholasosto/.claude/plugins/cache/claude-plugins-official/frontend-design/ea10b213686c"
+        }
+      ],
+      "requiredActiveRuntimes": [
+        "codex",
+        "claude"
       ]
     },
     {
       "id": "game-studio",
       "kind": "vendor-adapter",
       "owner": "OpenAI",
-      "version": "0.1.2",
-      "authority": ["browser-game UI, sprite, and web-game asset workflows"],
+      "authority": [
+        "browser-game UI, sprite, and web-game asset workflows"
+      ],
       "constraint": "not an authority for Roblox UI, Studio QA, or shared-library promotion",
+      "historicalInstalls": [
+        {
+          "observedAt": "2026-07-10",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "codex",
+            "mode": "vendor-plugin-cache",
+            "state": "installed-enabled",
+            "path": "/Users/nicholasosto/.codex/.tmp/plugins/plugins/game-studio",
+            "lastUpdated": "2026-07-10"
+          }
+        },
+        {
+          "observedAt": "2026-09-20",
+          "reason": "Historical observation retained; current role is selected separately below.",
+          "record": {
+            "runtime": "codex",
+            "mode": "vendor-plugin-cache",
+            "state": "cached-not-session-exposed",
+            "path": "/Users/nicholasosto/.codex/.tmp/plugins/plugins/game-studio",
+            "lastUpdated": "2026-07-10",
+            "lastObserved": "2026-09-20",
+            "observationScope": "package files and manifest exist; no game-studio skills appear in the active session catalog; current installation enablement not verified"
+          }
+        }
+      ],
+      "version": "0.1.2",
       "installs": [
-        {"runtime": "codex", "mode": "vendor-plugin-cache", "state": "installed-enabled", "path": "/Users/nicholasosto/.codex/.tmp/plugins/plugins/game-studio", "lastUpdated": "2026-07-10"}
+        {
+          "runtime": "codex",
+          "mode": "vendor-plugin-cache",
+          "path": "/Users/nicholasosto/.codex/.tmp/plugins/plugins/game-studio",
+          "observationScope": "Read-only path, source and configured discovery observation; no workflow execution.",
+          "role": "observed",
+          "state": "cached-unverified",
+          "observedAt": "2026-10-17",
+          "execution": "unverified"
+        }
+      ],
+      "requiredActiveRuntimes": []
+    },
+    {
+      "id": "openai-image-api-cli",
+      "owner": "Codex local",
+      "version": "0.1.1",
+      "canonicalPath": "/Users/nicholasosto/.codex/skills/openai-image-api-cli",
+      "authority": [
+        "explicit OpenAI Images API execution",
+        "JSONL generation batches",
+        "adapter request and file receipts"
+      ],
+      "constraint": "explicit API or CLI use only; never the default interactive or template-reference route; verify current model capabilities before consequential live execution",
+      "kind": "external-skill",
+      "sourceStatus": "local-unreviewed",
+      "workingObservation": {
+        "observedAt": "2026-10-17",
+        "scope": "Read-only local source observation; no source promotion or release acceptance.",
+        "version": "0.1.1",
+        "state": "unreviewed"
+      },
+      "installs": [
+        {
+          "runtime": "codex",
+          "mode": "local-skill",
+          "path": "/Users/nicholasosto/.codex/skills/openai-image-api-cli",
+          "role": "active",
+          "state": "available",
+          "observedAt": "2026-10-17",
+          "observationScope": "Read-only path, source and configured discovery observation; no workflow execution.",
+          "execution": "unverified"
+        }
+      ],
+      "historicalInstalls": [
+        {
+          "observedAt": "2026-08-09",
+          "reason": "Prior local installation observation; no feature promotion inferred.",
+          "record": {
+            "runtime": "codex",
+            "mode": "local-skill",
+            "path": "/Users/nicholasosto/.codex/skills/openai-image-api-cli",
+            "lastObserved": "2026-08-09"
+          }
+        }
+      ],
+      "requiredActiveRuntimes": [
+        "codex"
+      ]
+    },
+    {
+      "id": "reference-image-kernel",
+      "owner": "Asset-Studio",
+      "version": "0.2.0",
+      "canonicalPath": "agent-assets/skills/reference-image-kernel",
+      "authority": [
+        "template-reference roles",
+        "image invariants",
+        "template validation",
+        "candidate receipts"
+      ],
+      "constraint": "generation remains candidate-only; human acceptance and every later save, export, registration, promotion, upload, and publication gate remain separate",
+      "migrationReceipt": "agent-assets/reference-image-kernel-migration-2026-09-28.json",
+      "kind": "pending-local-skill",
+      "sourceStatus": "local-unreviewed",
+      "workingObservation": {
+        "observedAt": "2026-10-17",
+        "scope": "Read-only local source observation; no source promotion or release acceptance.",
+        "version": "0.2.0",
+        "state": "unreviewed"
+      },
+      "installs": [
+        {
+          "runtime": "codex",
+          "scope": "global",
+          "mode": "symlink",
+          "path": "/Users/nicholasosto/.codex/skills/reference-image-kernel",
+          "role": "active",
+          "state": "available",
+          "observedAt": "2026-10-17",
+          "observationScope": "Read-only path, source and configured discovery observation; no workflow execution.",
+          "execution": "unverified"
+        }
+      ],
+      "historicalInstalls": [
+        {
+          "observedAt": "2026-10-17",
+          "reason": "Undated prior local record captured on 2026-10-17; original installation/observation date unknown. Historical migration receipt is separate evidence.",
+          "record": {
+            "runtime": "codex",
+            "scope": "global",
+            "mode": "symlink",
+            "path": "/Users/nicholasosto/.codex/skills/reference-image-kernel"
+          }
+        }
+      ],
+      "requiredActiveRuntimes": [
+        "codex"
       ]
     }
-  ]
+  ],
+  "historicalObservations": [
+    {
+      "observedAt": "2026-08-09",
+      "scope": "Retained prior capability inventory date; not renewed by this delivery.",
+      "record": {
+        "verifiedAt": "2026-08-09"
+      }
+    },
+    {
+      "observedAt": "2026-09-28",
+      "scope": "Preserved previous maintenance receipt; its validation is historical.",
+      "record": {
+        "observedAt": "2026-09-28",
+        "scope": "Asset policy ownership migration; preserved previous dirty work; retained draft schemas and independent reference-image kernel",
+        "validation": "10 reference-image kernel tests; 5 skill frontmatter checks; 6 bounded policy cases; 79 selected icon filenames; 2 retained draft schemas; 7 source hashes; two identical plugin stages, payload check and supported Codex/Claude 0.8.3 installation; reload remains required"
+      }
+    }
+  ],
+  "workflowGapReview": {
+    "observedAt": "2026-10-17",
+    "scope": "Guidance publication identity; no wider feature or runtime adoption.",
+    "sourceApplication": {
+      "Asset-Studio": {
+        "commit": "f5fe513e0e8db06caa2233ea8da56fd9281cef28",
+        "paths": "Eight guidance documents only"
+      },
+      "Trembus": {
+        "commit": "0b98fb61e2af452c6fc5187f0795126a2815290a",
+        "skillVersion": "1.0.3"
+      },
+      "Assets": "Approved procedure and policy remain local outside Git",
+      "capabilityFeatures": "Unreviewed source changes remain local"
+    },
+    "runtimeBoundary": "Source symlinks are observed as configured; frozen Codex package is retained, newer guidance not adopted.",
+    "remoteStorage": "Account/folder/sync binding remains unverified."
+  }
 }
