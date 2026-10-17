@@ -29,6 +29,11 @@ registered version, path, or summary disagrees with its canonical skill, repair 
 derived install. For other conflicts, verify the higher authority and repair or supersede the lower
 one.
 
+For missing, conflicting, stale or unverifiable asset workflow guidance, follow
+`~/Master-Managed/Assets/_catalog/workflow-gap.md`. Preserve the selected production
+contract's exact work slots; the library inbox is a fallback for unbound drops.
+Continue independently authorized work and pause only the affected unsupported step.
+
 ## Map
 
 | Path | Purpose |
@@ -52,7 +57,8 @@ Read `agent-assets/capabilities.yaml` when image/UI work crosses tools or runtim
 - Raster craft and metadata: `trembus-image`
 - Immutable batch handoff: `asset-studio-batch`
 - Textured Roblox UI art: `textured-ui-asset-production`
-- Asset paths, naming, status, registration, and promotion: `roblox-dev:asset-conventions`
+- Assets owns shared-library storage and naming through `~/Master-Managed/Assets/_catalog/asset-policy.md`
+  and `asset-policy.json`; `roblox-dev:asset-conventions` routes filing, registration and upload.
 - Web UI components and themes: `trembus-consumer` and `trembus-template`
 - Roblox UI prototypes and Studio QA: hand off into the sibling Roblox-UI-Studio workspace, then
   load its project-local `roblox-ui-studio` skill
@@ -105,11 +111,14 @@ second production lane under `output/imagegen/`.
 
 - Asset-Studio stores contracts, process, deterministic tools, manifests, and run evidence—not
   production payloads.
-- Reviewed image payloads route through `roblox-dev:asset-conventions`.
-- New shared UI/texture assets default to `_BLK`.
-- `_FNL`, upload, registry entry, package publish, and consumer shipping are separate gates.
+- Reviewed image payloads route through `roblox-dev:asset-conventions`. Unattended
+  shared-library drops without an approved bound work path use `_inbox/<medium>/`;
+  preserve exact candidate/work slots selected by a production contract.
+- Names describe identity under the Assets policy; no lifecycle status suffix belongs in a live name.
+- Review, acceptance, upload, registry entry, package publish and consumer shipping are separate
+  gates recorded by the owning contract or pipeline.
 - Authored structural templates live under `templates/`; generated exemplars live under
-  `~/Master-Managed/Assets/templates/`.
+  `~/Master-Managed/Assets/image/reference/`.
 
 ## Generated contracts and app builds
 
@@ -132,7 +141,9 @@ Trembus-Component-Library repository. Do not edit dependency code through a cach
 
 - Preserve unrelated dirty work in every connected repository.
 - Use caches and runtime installs as diagnostics, never sources.
-- Keep ignored candidates, refs, intermediate rasters, and QA images disposable.
+- Keep generated candidates, refs, intermediate rasters and QA images outside Git
+  according to their owning contracts. Ignored or untracked status does not authorize
+  deletion; preserve candidate originals, provenance and referenced evidence.
 - Promote durable rules, manifests, builders, and validators into tracked authority before relying
   on them.
 - During skill-heavy work, a quick daily `node tools/check-agent-capabilities.mjs` review is useful

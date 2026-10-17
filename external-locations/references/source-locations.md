@@ -10,29 +10,37 @@ their target payloads.
 | Link | Target | Authority |
 |---|---|---|
 | `external-locations/assets` | `~/Master-Managed/Assets/` | Canonical shared asset library, catalog, ingestion zones, and validators |
-| `external-locations/canonical` | `…/Project-Spaces/LLM-Agent-Development/canonical/` | Legacy shared visual-grammar kit and a small set of canonical skills |
+| `external-locations/canonical` | `…/Project-Spaces/LLM-Agent-Development/canonical/` | Historical locator; target unavailable when inspected on 2026-10-17. Do not use as active authority; resolve current capability owners through the registry. |
 
 Agent capability ownership and runtime installs are registered separately in
 `agent-assets/capabilities.yaml`.
 
-## Current shared-library zones
+## Current shared-library doors
+
+**Assets owns the operational tree and names** through `_catalog/asset-policy.md`
+and its machine-readable `asset-policy.json` in `~/Master-Managed/Assets/`.
+Use `Assets/_tools/check-asset-policy.py --path <library-relative-path>` for bounded,
+read-only checks. Former Foundry rules and migration receipts remain historical
+evidence; do not run the retired estate-wide scanner. This map is a pointer, not the policy.
 
 | Path under `assets/` | Purpose |
 |---|---|
-| `_inbox/{images,audio,models,character-packages}/` | Unattended or genuinely unclassified incoming work only |
+| `image/{ui,textures,concept,reference,source/pixelmator}/` | 2D — layer 1 is where a thing is consumed; `ui/icon/` and `textures/tile/` are recorded by Assets policy with retained draft contracts; a package stays whole as its own folder; the subject goes in the name, never a project folder |
+| `audio/{ambient,music,sfx,ui,voice/<character>}/` | Audio, by role |
+| `video/` | Moving image |
+| `3d/models/<category>/<slug>/` · `3d/source/{blender,terrain}/` | Per-asset 3D packages · DCC working files — no naming law under `3d/` |
+| `runtime/roblox/soul-steel/<category>/<domain>/` | Engine containers, `{CAT}_{SUB}_{Name}.rbxm` |
+| `_inbox/{image,audio,video,3d}/` | Unattended shared-library drops without an approved bound work path |
 | `_catalog/` | Upload registry, validated ID tables, migration manifests, and inventory records |
-| `_tools/` | Shared-library validators and metadata tools |
-| `_archive/` | Historical and migration snapshots |
-| `source/{blender,pixelmator,terrain}/` | Editable source files |
-| `runtime/roblox/` | Roblox-ready runtime payloads, including project-specific packages |
-| `ui/{backgrounds,design,frames,icons,sprites}/` | Shared UI art |
-| `ui/<project>/` | Project-presupposing UI bundles |
-| `textures/{particles,skybox,surfaces,tileable}/` | Texture and VFX families |
-| `models/`, `audio/`, `concept-art/`, `templates/` | Medium-specific production libraries |
+| `_tools/` | Shared-library validators, metadata tools, and package scaffolds |
+| `_archive/` | Retired drops, bucketed by retire date — moved whole, never renamed |
 
-Do not route new work to the retired `ai-output/`, `library/`, `scripts/`, or `3D-asset-art/`
-top-level layouts. Invoke `roblox-dev:asset-conventions` for the current exact destination,
-filename grammar, `_BLK/_FNL` status, registry, and promotion rules.
+Do not route new work to the retired July zones (root-level `ui/ textures/ concept-art/ templates/
+models/ source/ _resort/`) or the older `ai-output/ library/ scripts/ 3D-asset-art/` layouts. No
+live name carries a `_BLK/_FNL` token. Invoke `roblox-dev:asset-conventions` as the routing guide
+for the exact destination, filename grammar, registry, and upload rules. Assets owns
+the substantive storage and naming policy. Use `Assets/_catalog/workflow-gap.md`
+when the next step lacks adequate guidance.
 
 ## Delivery patterns
 
